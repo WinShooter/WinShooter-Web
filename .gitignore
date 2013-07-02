@@ -55,6 +55,12 @@ ipch/
 # ReSharper is a .NET coding add-in
 _ReSharper*
 
+# StyleCop is a .NET coding add-in
+StyleCop.Cache
+
+# DotCover is a .NET test runner add-in
+*.DotSettings
+
 # NCrunch
 *.ncrunch*
 .*crunch*.local.xml
