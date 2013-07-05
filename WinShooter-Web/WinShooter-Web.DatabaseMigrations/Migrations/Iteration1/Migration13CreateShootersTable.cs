@@ -10,7 +10,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             Create.Table(ShootersTableName)
-                .WithColumn("Id").AsGuid()
+                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("CardNumber").AsString()
                 .WithColumn("Surname").AsString()
                 .WithColumn("Givenname").AsString()

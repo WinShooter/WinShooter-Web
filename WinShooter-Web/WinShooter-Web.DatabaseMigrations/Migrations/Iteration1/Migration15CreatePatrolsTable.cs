@@ -10,7 +10,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             Create.Table(PatrolsTableName)
-                .WithColumn("Id").AsGuid()
+                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("PatrolId").AsInt32()
                 .WithColumn("StartTime").AsDateTime()
                 .WithColumn("CompetitionId").AsGuid()

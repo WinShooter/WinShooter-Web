@@ -10,7 +10,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             Create.Table(TeamToCompetitorTableName)
-                .WithColumn("Id").AsGuid()
+                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("TeamId").AsGuid()
                 .WithColumn("CompetitorId").AsGuid();
         }

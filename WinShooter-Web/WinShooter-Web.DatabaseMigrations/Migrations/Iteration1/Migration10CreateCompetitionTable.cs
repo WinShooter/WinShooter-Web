@@ -10,7 +10,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             Create.Table(CompetitionTableName)
-                .WithColumn("Id").AsGuid()
+                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("Name").AsString()
                 .WithColumn("StartDate").AsDateTime()
                 .WithColumn("CompetitionType").AsInt32()
