@@ -43,7 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\Iteration1\Mig1_UserTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration10CreateCompetitionTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration11CreateStationsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration12CreateWeaponsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration13CreateShootersTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration14CreateClubsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration15CreatePatrolsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration16CreateCompetitorsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration17CreateCompetitorResultsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration18CreateTeamsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration19CreateTeamToCompetitorTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
