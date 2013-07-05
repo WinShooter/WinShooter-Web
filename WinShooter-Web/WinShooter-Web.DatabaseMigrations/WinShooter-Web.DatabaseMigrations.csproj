@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Migrations\Iteration1\Migration10CreateCompetitionTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration110CreateForeignKeys.cs" />
     <Compile Include="Migrations\Iteration1\Migration11CreateStationsTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration12CreateWeaponsTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration13CreateShootersTable.cs" />
