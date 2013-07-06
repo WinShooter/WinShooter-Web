@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web", "WinShooter-Web\WinShooter-Web.csproj", "{AA41F758-486B-4A5E-BCC4-0E38A9A007C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web", "WinShooter-Web\WinShooter-Web.csproj", "{C4230171-0BC5-4779-8F19-18BCAE3BE683}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.Tests", "WinShooter-Web.Tests\WinShooter-Web.Tests.csproj", "{9A8CFC24-4EAC-454C-8063-82D4FF8C52FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AA41F758-486B-4A5E-BCC4-0E38A9A007C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA41F758-486B-4A5E-BCC4-0E38A9A007C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA41F758-486B-4A5E-BCC4-0E38A9A007C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA41F758-486B-4A5E-BCC4-0E38A9A007C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4230171-0BC5-4779-8F19-18BCAE3BE683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4230171-0BC5-4779-8F19-18BCAE3BE683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4230171-0BC5-4779-8F19-18BCAE3BE683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4230171-0BC5-4779-8F19-18BCAE3BE683}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A8CFC24-4EAC-454C-8063-82D4FF8C52FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A8CFC24-4EAC-454C-8063-82D4FF8C52FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A8CFC24-4EAC-454C-8063-82D4FF8C52FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A8CFC24-4EAC-454C-8063-82D4FF8C52FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
