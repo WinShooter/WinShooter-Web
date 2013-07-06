@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>WinShooter @ViewBag.CompetitionName</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/bootstrap")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -18,13 +20,13 @@
             @if (!string.IsNullOrEmpty(ViewBag.CompetitionName))
             {
                 <ul class="nav">
-@*                    <li class="active">@Html.ActionLink("Tävlingsinfo", "Competition", "Home")</li>
+                    <li class="active">@Html.ActionLink("Tävlingsinfo", "Competition", "Home")</li>
                     <li>@Html.ActionLink("Klubbar", "Clubs", "Home")</li>
                     <li>@Html.ActionLink("Vapen", "Weapons", "Home")</li>
                     <li>@Html.ActionLink("Stationer", "Stations", "Home")</li>
                     <li>@Html.ActionLink("Tävlande", "Competitors", "Home")</li>
                     <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home")</li>
-                    <li>@Html.ActionLink("Resultat", "Results", "Home")</li>*@
+                    <li>@Html.ActionLink("Resultat", "Results", "Home")</li>
                 </ul>
             }
             <a class="brand" href="~/">@ViewBag.CompetitionName</a>
