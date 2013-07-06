@@ -25,7 +25,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace WinShooter_Web.Controllers
+namespace WinShooter.Controllers
 {
     /// <summary>
     /// The home controller.

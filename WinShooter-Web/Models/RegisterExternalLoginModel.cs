@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Global.asax.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="RegisterExternalLoginModel.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,39 +15,31 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The mvc application.
+//   The register external login model.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter
+namespace WinShooter.Models
 {
-    using System.Web.Http;
-    using System.Web.Mvc;
-    using System.Web.Optimization;
-    using System.Web.Routing;
-
-    using WinShooter.App_Start;
-
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
-    /// The MVC application.
+    /// The register external login model.
     /// </summary>
-    public class MvcApplication : System.Web.HttpApplication
+    public class RegisterExternalLoginModel
     {
-        /// <summary>
-        /// The application start.
-        /// </summary>
-        protected void Application_Start()
-        {
-            AreaRegistration.RegisterAllAreas();
+        [Required]
+        [Display(Name = "Epost")]
+        public string Email { get; set; }
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AuthConfig.RegisterAuth();
-        }
+        [Required]
+        [Display(Name = "Namn")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Skyttekortsnummer")]
+        public string ShooterCardNumber { get; set; }
+
+        public string ExternalLoginData { get; set; }
     }
 }

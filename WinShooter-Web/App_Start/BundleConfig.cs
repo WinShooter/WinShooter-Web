@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace WinShooter_Web
+namespace WinShooter
 {
     public class BundleConfig
     {
