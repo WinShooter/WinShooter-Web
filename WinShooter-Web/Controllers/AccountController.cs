@@ -23,15 +23,13 @@ namespace WinShooter.Controllers
 {
     using System.Web.Mvc;
 
-    using DotNetOpenAuth.AspNet;
+    using log4net;
 
     using Microsoft.Web.WebPages.OAuth;
 
     using WebMatrix.WebData;
 
     using WinShooter.Models;
-
-    using log4net;
 
     /// <summary>
     /// The home controller.
@@ -129,7 +127,7 @@ namespace WinShooter.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginCallback(string returnUrl)
         {
-            AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
+            var result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
             if (!result.IsSuccessful)
             {
                 return this.RedirectToAction("ExternalLoginFailure");
@@ -146,14 +144,12 @@ namespace WinShooter.Controllers
                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);
                 return this.RedirectToLocal(returnUrl);
             }
-            else
-            {
-                // User is new, ask for their desired membership name
-                string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
-                ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
-                ViewBag.ReturnUrl = returnUrl;
-                return this.View("ExternalLoginConfirmation", new RegisterExternalLoginModel { Email = result.UserName, ExternalLoginData = loginData });
-            }
+
+            // User is new, ask for their desired membership name
+            var loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
+            this.ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
+            this.ViewBag.ReturnUrl = returnUrl;
+            return this.View("ExternalLoginConfirmation", new RegisterExternalLoginModel { Email = result.UserName, ExternalLoginData = loginData });
         }
 
         /// <summary>
@@ -165,6 +161,7 @@ namespace WinShooter.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
+            this.log.Info("External login failed.");
             return this.View();
         }
 
@@ -195,27 +192,11 @@ namespace WinShooter.Controllers
 
             if (ModelState.IsValid)
             {
-                // TODO Insert a new user into the database
-                //using (UsersContext db = new UsersContext())
-                //{
-                //    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-                //    // Check if user already exists
-                //    if (user == null)
-                //    {
-                //        // Insert name into the profile table
-                //        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
-                //        db.SaveChanges();
-
+                // TODO Insert the new user into the database
                 OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.Email);
                 OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
 
-                return RedirectToLocal(returnUrl);
-                //    }
-                //    else
-                //    {
-                //        ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
-                //    }
-                //}
+                return this.RedirectToLocal(returnUrl);
             }
 
             ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;

@@ -277,8 +277,8 @@ namespace WinShooter.Providers
         /// <param name="user">A <see cref="T:System.Web.Security.MembershipUser"/> object that represents the user to update and the updated information for the user. </param>
         public override void UpdateUser(MembershipUser user)
         {
-            this.log.Debug("UpdateUser");
             // TODO Implement
+            this.log.Debug("UpdateUser");
         }
 
         /// <summary>
