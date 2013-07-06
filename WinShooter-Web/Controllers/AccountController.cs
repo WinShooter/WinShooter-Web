@@ -21,7 +21,6 @@
 
 namespace WinShooter.Controllers
 {
-    using System.Collections.Generic;
     using System.Web.Mvc;
 
     using DotNetOpenAuth.AspNet;
@@ -37,15 +36,30 @@ namespace WinShooter.Controllers
     /// </summary>
     public class AccountController : Controller
     {
-        //
-        // GET: /Home/
-
+        /// <summary>
+        /// Called by GET: /Home/
+        /// </summary>
+        /// <param name="returnUrl">
+        /// The return url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         public ActionResult Index(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return this.RedirectToAction("Login", "Account");
         }
 
+        /// <summary>
+        /// Called by GET: /Home/?returnUrl=...
+        /// </summary>
+        /// <param name="returnUrl">
+        /// The return url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -53,9 +67,12 @@ namespace WinShooter.Controllers
             return this.View(OAuthWebSecurity.RegisteredClientData);
         }
 
-        //
-        // POST: /Account/LogOff
-
+        /// <summary>
+        /// Called by POST: /Account/LogOff
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -65,9 +82,18 @@ namespace WinShooter.Controllers
             return this.RedirectToAction("Index", "Home");
         }
 
-        //
-        // POST: /Account/ExternalLogin
-
+        /// <summary>
+        /// Called by POST: /Account/ExternalLogin
+        /// </summary>
+        /// <param name="provider">
+        /// The provider.
+        /// </param>
+        /// <param name="returnUrl">
+        /// The return url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -75,27 +101,16 @@ namespace WinShooter.Controllers
         {
             return new ExternalLoginResult(provider, Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
         }
-
-        internal class ExternalLoginResult : ActionResult
-        {
-            public ExternalLoginResult(string provider, string returnUrl)
-            {
-                Provider = provider;
-                ReturnUrl = returnUrl;
-            }
-
-            public string Provider { get; private set; }
-            public string ReturnUrl { get; private set; }
-
-            public override void ExecuteResult(ControllerContext context)
-            {
-                OAuthWebSecurity.RequestAuthentication(Provider, ReturnUrl);
-            }
-        }
         
-        //
-        // GET: /Account/ExternalLoginCallback
-
+        /// <summary>
+        /// Called by GET: /Account/ExternalLoginCallback.
+        /// </summary>
+        /// <param name="returnUrl">
+        /// The return url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         [AllowAnonymous]
         public ActionResult ExternalLoginCallback(string returnUrl)
         {
@@ -114,7 +129,7 @@ namespace WinShooter.Controllers
             {
                 // If the current user is logged in add the new account
                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);
-                return RedirectToLocal(returnUrl);
+                return this.RedirectToLocal(returnUrl);
             }
             else
             {
@@ -122,22 +137,34 @@ namespace WinShooter.Controllers
                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
                 ViewBag.ReturnUrl = returnUrl;
-                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { Email = result.UserName, ExternalLoginData = loginData });
+                return this.View("ExternalLoginConfirmation", new RegisterExternalLoginModel { Email = result.UserName, ExternalLoginData = loginData });
             }
         }
 
-        //
-        // GET: /Account/ExternalLoginFailure
-
+        /// <summary>
+        /// Called by GET: /Account/ExternalLoginFailure
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
-            return View();
+            return this.View();
         }
-        
-        //
-        // POST: /Account/ExternalLoginConfirmation
 
+        /// <summary>
+        /// Called by POST: /Account/ExternalLoginConfirmation.
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        /// <param name="returnUrl">
+        /// The return url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -148,7 +175,7 @@ namespace WinShooter.Controllers
 
             if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
             {
-                return RedirectToAction("Manage");
+                return this.RedirectToAction("Manage");
             }
 
             if (ModelState.IsValid)
@@ -178,19 +205,67 @@ namespace WinShooter.Controllers
 
             ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
             ViewBag.ReturnUrl = returnUrl;
-            return View(model);
+            return this.View(model);
         }
 
-
+        /// <summary>
+        /// Redirects to a local action.
+        /// </summary>
+        /// <param name="returnUrl">
+        /// The return url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
             {
-                return Redirect(returnUrl);
+                return this.Redirect(returnUrl);
             }
-            else
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// The external login result.
+        /// </summary>
+        internal class ExternalLoginResult : ActionResult
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ExternalLoginResult"/> class.
+            /// </summary>
+            /// <param name="provider">
+            /// The provider.
+            /// </param>
+            /// <param name="returnUrl">
+            /// The return url.
+            /// </param>
+            public ExternalLoginResult(string provider, string returnUrl)
             {
-                return RedirectToAction("Index", "Home");
+                this.Provider = provider;
+                this.ReturnUrl = returnUrl;
+            }
+
+            /// <summary>
+            /// Gets the provider.
+            /// </summary>
+            public string Provider { get; private set; }
+
+            /// <summary>
+            /// Gets the return url.
+            /// </summary>
+            public string ReturnUrl { get; private set; }
+
+            /// <summary>
+            /// The execute result.
+            /// </summary>
+            /// <param name="context">
+            /// The context.
+            /// </param>
+            public override void ExecuteResult(ControllerContext context)
+            {
+                OAuthWebSecurity.RequestAuthentication(this.Provider, this.ReturnUrl);
             }
         }
     }
