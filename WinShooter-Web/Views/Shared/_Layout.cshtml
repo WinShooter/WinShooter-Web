@@ -3,11 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>WinShooter @ViewBag.CompetitionName</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <div id="userSettings">
+        @Html.Partial("_UserSettings")
+    </div>
+
     <div class="navbar">
         <div class="navbar-inner">
             <a class="brand" href="~/">WinShooter</a>
