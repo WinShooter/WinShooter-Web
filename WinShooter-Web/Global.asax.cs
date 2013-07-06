@@ -21,11 +21,16 @@
 
 namespace WinShooter
 {
-    using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
 
+    using Funq;
+
+    using ServiceStack.WebHost.Endpoints;
+
+    using WinShooter.Api;
+    using WinShooter.Api.Configuration;
     using WinShooter.App_Start;
 
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -36,6 +41,8 @@ namespace WinShooter
     /// </summary>
     public class MvcApplication : System.Web.HttpApplication
     {
+        
+
         /// <summary>
         /// The application start.
         /// </summary>
@@ -45,11 +52,11 @@ namespace WinShooter
 
             AreaRegistration.RegisterAllAreas();
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+            new HelloAppHost().Init();
         }
     }
 }
