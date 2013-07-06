@@ -31,11 +31,26 @@ namespace WinShooter.Controllers
 
     using WinShooter.Models;
 
+    using log4net;
+
     /// <summary>
     /// The home controller.
     /// </summary>
     public class AccountController : Controller
     {
+        /// <summary>
+        /// The log.
+        /// </summary>
+        private readonly ILog log;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountController"/> class.
+        /// </summary>
+        public AccountController()
+        {
+            this.log = LogManager.GetLogger(this.GetType());
+        }
+
         /// <summary>
         /// Called by GET: /Home/
         /// </summary>
@@ -191,10 +206,10 @@ namespace WinShooter.Controllers
                 //        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
                 //        db.SaveChanges();
 
-                //        OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-                //        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
+                OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.Email);
+                OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
 
-                //        return RedirectToLocal(returnUrl);
+                return RedirectToLocal(returnUrl);
                 //    }
                 //    else
                 //    {
