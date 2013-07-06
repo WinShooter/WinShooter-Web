@@ -135,10 +135,10 @@ namespace WinShooter.Controllers
                 return this.RedirectToAction("ExternalLoginFailure");
             }
 
-            //if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))
-            //{
-            //    return this.RedirectToLocal(returnUrl);
-            //}
+            if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))
+            {
+                return this.RedirectToLocal(returnUrl);
+            }
 
             if (User.Identity.IsAuthenticated)
             {

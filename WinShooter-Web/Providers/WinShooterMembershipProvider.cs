@@ -23,6 +23,7 @@ namespace WinShooter.Providers
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.Security;
 
     using log4net;
@@ -597,24 +598,62 @@ namespace WinShooter.Providers
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// When overridden in a derived class, creates a new OAuth membership account, or updates an existing OAuth Membership account.
+        /// </summary>
+        /// <param name="provider">The OAuth or OpenID provider.</param><param name="providerUserId">The OAuth or OpenID provider user ID. This is not the user ID of the user account, but the user ID on the OAuth or Open ID provider.</param><param name="userName">The user name.</param>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public override void CreateOrUpdateOAuthAccount(string provider, string providerUserId, string userName)
         {
             // TODO Implement
             this.log.Debug("CreateOrUpdateOAuthAccount");
         }
 
+        /// <summary>
+        /// When overridden in a derived class, returns the user ID for the specified OAuth or OpenID provider and provider user ID.
+        /// </summary>
+        /// <param name="provider">
+        /// The name of the OAuth or OpenID provider.
+        /// </param>
+        /// <param name="providerUserId">
+        /// The OAuth or OpenID provider user ID. This is not the user ID of the user account, but the user ID on the OAuth or Open ID provider.
+        /// </param>
+        /// <returns>
+        /// The UserId of the application.
+        /// </returns>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public override int GetUserIdFromOAuth(string provider, string providerUserId)
         {
             // TODO Implement
             this.log.Debug("GetUserIdFromOAuth");
-            return 42;
+            if (provider == "google"
+                && providerUserId == "https://www.google.com/accounts/o8/id?id=AItOawmsw82S-x8Vu3TlX4pW9DfF8e-6f0bwz_c")
+            {
+                // sm0uda@gmail.com
+                return 42;
+            }
+
+            return -1;
         }
 
+        /// <summary>
+        /// Returns the user name that is associated with the specified user ID.
+        /// </summary>
+        /// <returns>
+        /// The user name.
+        /// </returns>
+        /// <param name="userId">The user ID to get the name for.</param>
         public override string GetUserNameFromId(int userId)
         {           
             // TODO Implement
             this.log.Debug("GetUserNameFromId");
-            return "sm0uda@gmail.com";
+
+            if (userId == 42)
+            {
+                return "sm0uda@gmail.com";
+            }
+
+            return null;
         }
     }
 }
