@@ -259,6 +259,13 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Home\Competition.cshtml" />
+    <Content Include="Views\Home\Clubs.cshtml" />
+    <Content Include="Views\Home\Weapons.cshtml" />
+    <Content Include="Views\Home\Stations.cshtml" />
+    <Content Include="Views\Home\Competitors.cshtml" />
+    <Content Include="Views\Home\EnterResults.cshtml" />
+    <Content Include="Views\Home\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

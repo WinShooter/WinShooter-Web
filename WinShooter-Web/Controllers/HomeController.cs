@@ -19,26 +19,101 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
 namespace WinShooter.Controllers
 {
+    using System.Web.Mvc;
+
     /// <summary>
     /// The home controller.
     /// </summary>
     public class HomeController : Controller
     {
-        //
-        // GET: /Home/
-
+        /// <summary>
+        /// GET: /Home/
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
         public ActionResult Index()
         {
             return this.View();
         }
 
+        /// <summary>
+        /// The competition info.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Competition()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// The clubs.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Clubs()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// The weapons.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Weapons()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// The stations.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Stations()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// The competitors.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Competitors()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// The enter results.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult EnterResults()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// The results.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Results()
+        {
+            return this.View();
+        }
     }
 }
