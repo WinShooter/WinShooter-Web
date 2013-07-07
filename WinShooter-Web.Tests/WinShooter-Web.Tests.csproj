@@ -9,7 +9,7 @@
     <ProjectGuid>{9A8CFC24-4EAC-454C-8063-82D4FF8C52FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WinShooter_Web.Tests</RootNamespace>
+    <RootNamespace>WinShooter.Tests</RootNamespace>
     <AssemblyName>WinShooter-Web.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

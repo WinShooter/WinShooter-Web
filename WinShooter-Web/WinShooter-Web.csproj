@@ -291,7 +291,6 @@
     <Content Include="Views\Home\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
