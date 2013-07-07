@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HelloService.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitionsService.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,18 +15,20 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Defines the HelloService type.
+//   The competitions service.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace WinShooter.Api
 {
+    using System.Collections.Generic;
+
     using ServiceStack.ServiceInterface;
 
     /// <summary>
-    /// The hello service.
+    /// The competitions service.
     /// </summary>
-    public class HelloService : Service
+    public class CompetitionsService : Service
     {
         /// <summary>
         /// The any.
@@ -37,9 +39,31 @@ namespace WinShooter.Api
         /// <returns>
         /// The <see cref="HelloResponse"/>.
         /// </returns>
-        public HelloResponse Any(Hello request)
+        public List<CompetitionResponse> Get(Competitions request)
         {
-            return new HelloResponse { Result = "Hello, " + request.Name };
+            return new List<CompetitionResponse>
+                       {
+                           new CompetitionResponse
+                               {
+                                   Name = "Tävlingen1",
+                                   Guid = "1"
+                               }, 
+                               new CompetitionResponse
+                               {
+                                   Name = "Tävlingen1",
+                                   Guid = "2"
+                               },  
+                               new CompetitionResponse
+                               {
+                                   Name = "Tävlingen1",
+                                   Guid = "3"
+                               },  
+                               new CompetitionResponse
+                               {
+                                   Name = "Tävlingen1",
+                                   Guid = "4"
+                               },
+                       };
         }
     }
 }

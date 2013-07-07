@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="WinShooterApiHost.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Competitions.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,42 +15,23 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The hello app host.
+//   Represents a competition from the client.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace WinShooter.Api
 {
-    using Funq;
-
-    using ServiceStack.WebHost.Endpoints;
+    using ServiceStack.ServiceHost;
 
     /// <summary>
-    /// The hello app host.
+    /// Represents a competition from the client.
     /// </summary>
-    public class WinShooterApiHost : AppHostBase
+    [Route("/api/competitions")]
+    public class Competitions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WinShooterApiHost"/> class.
-        /// Tell Service Stack the name of your application and 
-        /// where to find your web services.
+        /// Gets or sets a value indicating whether to include public competitions.
         /// </summary>
-        public WinShooterApiHost()
-            : base("WinShooter Web Services", typeof(Competitions).Assembly)
-        {
-        }
-
-        /// <summary>
-        /// Configure the given container with the 
-        /// registrations provided by the service.
-        /// </summary>
-        /// <param name="container">Container to register.</param>
-        public override void Configure(Container container)
-        {
-            // register user-defined REST-ful urls
-            this.Routes
-              .Add<Competitions>("/api/competitions")
-              .Add<Competition>("/api/competition/{Guid}");
-        }
+        public bool IncludePublic { get; set; }
     }
 }

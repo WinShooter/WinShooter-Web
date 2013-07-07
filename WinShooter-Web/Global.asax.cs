@@ -25,7 +25,7 @@ namespace WinShooter
     using System.Web.Optimization;
     using System.Web.Routing;
 
-    using WinShooter.Api.Configuration;
+    using WinShooter.Api;
     using WinShooter.App_Start;
 
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
