@@ -50,17 +50,17 @@ namespace WinShooter.Api
                                }, 
                                new CompetitionResponse
                                {
-                                   Name = "Tävlingen1",
+                                   Name = "Tävlingen2",
                                    Guid = "2"
                                },  
                                new CompetitionResponse
                                {
-                                   Name = "Tävlingen1",
+                                   Name = "Tävlingen3",
                                    Guid = "3"
                                },  
                                new CompetitionResponse
                                {
-                                   Name = "Tävlingen1",
+                                   Name = "Tävlingen4",
                                    Guid = "4"
                                },
                        };
