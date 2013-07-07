@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Global.asax.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="HelloService.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,41 +15,31 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The mvc application.
+//   Defines the HelloService type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter
+namespace WinShooter.Api
 {
-    using System.Web.Mvc;
-    using System.Web.Optimization;
-    using System.Web.Routing;
-
-    using WinShooter.Api.Configuration;
-    using WinShooter.App_Start;
-
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
+    using ServiceStack.ServiceInterface;
 
     /// <summary>
-    /// The MVC application.
+    /// The hello service.
     /// </summary>
-    public class MvcApplication : System.Web.HttpApplication
+    public class HelloService : Service
     {
         /// <summary>
-        /// The application start.
+        /// The any.
         /// </summary>
-        protected void Application_Start()
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="HelloResponse"/>.
+        /// </returns>
+        public HelloResponse Any(Hello request)
         {
-            log4net.Config.XmlConfigurator.Configure();
-            new WinShooterApiHost().Init();
-
-            AreaRegistration.RegisterAllAreas();
-
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AuthConfig.RegisterAuth();
+            return new HelloResponse { Result = "Hello, " + request.Name };
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Global.asax.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="HelloAppHost.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,41 +15,42 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The mvc application.
+//   The hello app host.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter
+namespace WinShooter.Api.Configuration
 {
-    using System.Web.Mvc;
-    using System.Web.Optimization;
-    using System.Web.Routing;
+    using Funq;
 
-    using WinShooter.Api.Configuration;
-    using WinShooter.App_Start;
-
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
+    using ServiceStack.WebHost.Endpoints;
 
     /// <summary>
-    /// The MVC application.
+    /// The hello app host.
     /// </summary>
-    public class MvcApplication : System.Web.HttpApplication
+    public class WinShooterApiHost : AppHostBase
     {
         /// <summary>
-        /// The application start.
+        /// Initializes a new instance of the <see cref="WinShooterApiHost"/> class.
+        /// Tell Service Stack the name of your application and 
+        /// where to find your web services.
         /// </summary>
-        protected void Application_Start()
+        public WinShooterApiHost()
+            : base("WinShooter Web Services", typeof(HelloService).Assembly)
         {
-            log4net.Config.XmlConfigurator.Configure();
-            new WinShooterApiHost().Init();
+        }
 
-            AreaRegistration.RegisterAllAreas();
-
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AuthConfig.RegisterAuth();
+        /// <summary>
+        /// Configure the given container with the 
+        /// registrations provided by the service.
+        /// </summary>
+        /// <param name="container">Container to register.</param>
+        public override void Configure(Container container)
+        {
+            // register user-defined REST-ful urls
+            Routes
+              .Add<Hello>("/api/hello")
+              .Add<Hello>("/api/hello/{Name}");
         }
     }
 }
