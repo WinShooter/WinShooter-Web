@@ -21,7 +21,6 @@
 
 namespace WinShooter.Controllers
 {
-    using System;
     using System.Web.Mvc;
 
     /// <summary>
@@ -56,77 +55,147 @@ namespace WinShooter.Controllers
         /// <summary>
         /// The competition info.
         /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
         /// The <see cref="ActionResult"/>.
         /// </returns>
-        public ActionResult Competition()
+        public ActionResult Competition(string id)
         {
+            if (id == null)
+            {
+                return this.RedirectToActionPermanent("Index");
+            }
+
+            // TODO Get competition from database
+            // TODO Check user rights on database
             return this.View();
         }
 
         /// <summary>
         /// The clubs.
         /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
         /// The <see cref="ActionResult"/>.
         /// </returns>
-        public ActionResult Clubs()
+        public ActionResult Clubs(string id)
         {
+            if (id == null)
+            {
+                return this.RedirectToActionPermanent("Index");
+            }
+
+            // TODO Get competition from database
+            // TODO Check user rights on database
             return this.View();
         }
 
         /// <summary>
         /// The weapons.
         /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
         /// The <see cref="ActionResult"/>.
         /// </returns>
-        public ActionResult Weapons()
+        public ActionResult Weapons(string id)
         {
+            if (id == null)
+            {
+                return this.RedirectToActionPermanent("Index");
+            }
+
+            // TODO Get competition from database
+            // TODO Check user rights on database
             return this.View();
         }
 
         /// <summary>
         /// The stations.
         /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
         /// The <see cref="ActionResult"/>.
         /// </returns>
-        public ActionResult Stations()
+        public ActionResult Stations(string id)
         {
+            if (id == null)
+            {
+                return this.RedirectToActionPermanent("Index");
+            }
+
+            // TODO Get competition from database
+            // TODO Check user rights on database
             return this.View();
         }
 
         /// <summary>
         /// The competitors.
         /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
         /// The <see cref="ActionResult"/>.
         /// </returns>
-        public ActionResult Competitors()
+        public ActionResult Competitors(string id)
         {
+            if (id == null)
+            {
+                return this.RedirectToActionPermanent("Index");
+            }
+
+            // TODO Get competition from database
+            // TODO Check user rights on database
             return this.View();
         }
 
         /// <summary>
         /// The enter results.
         /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
         /// The <see cref="ActionResult"/>.
         /// </returns>
-        public ActionResult EnterResults()
+        public ActionResult EnterResults(string id)
         {
+            if (id == null)
+            {
+                return this.RedirectToActionPermanent("Index");
+            }
+
+            // TODO Get competition from database
+            // TODO Check user rights on database
             return this.View();
         }
 
         /// <summary>
         /// The results.
         /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
         /// The <see cref="ActionResult"/>.
         /// </returns>
-        public ActionResult Results()
+        public ActionResult Results(string id)
         {
+            if (id == null)
+            {
+                return this.RedirectToActionPermanent("Index");
+            }
+
+            // TODO Get competition from database
+            // TODO Check user rights on database
             return this.View();
         }
     }
