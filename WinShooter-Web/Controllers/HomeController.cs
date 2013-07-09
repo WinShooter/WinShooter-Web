@@ -70,6 +70,8 @@ namespace WinShooter.Controllers
 
             // TODO Get competition from database
             // TODO Check user rights on database
+            this.ViewBag.CompetitionName = "Höstsaluten";
+            this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
 
@@ -91,6 +93,8 @@ namespace WinShooter.Controllers
 
             // TODO Get competition from database
             // TODO Check user rights on database
+            this.ViewBag.CompetitionName = "Höstsaluten";
+            this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
 
@@ -112,6 +116,8 @@ namespace WinShooter.Controllers
 
             // TODO Get competition from database
             // TODO Check user rights on database
+            this.ViewBag.CompetitionName = "Höstsaluten";
+            this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
 
@@ -133,6 +139,8 @@ namespace WinShooter.Controllers
 
             // TODO Get competition from database
             // TODO Check user rights on database
+            this.ViewBag.CompetitionName = "Höstsaluten";
+            this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
 
@@ -154,6 +162,8 @@ namespace WinShooter.Controllers
 
             // TODO Get competition from database
             // TODO Check user rights on database
+            this.ViewBag.CompetitionName = "Höstsaluten";
+            this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
 
@@ -175,6 +185,8 @@ namespace WinShooter.Controllers
 
             // TODO Get competition from database
             // TODO Check user rights on database
+            this.ViewBag.CompetitionName = "Höstsaluten";
+            this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
 
@@ -196,6 +208,8 @@ namespace WinShooter.Controllers
 
             // TODO Get competition from database
             // TODO Check user rights on database
+            this.ViewBag.CompetitionName = "Höstsaluten";
+            this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
     }

@@ -20,13 +20,13 @@
                 <ul class="nav">
                     @if (!string.IsNullOrEmpty(ViewBag.CompetitionName))
                     {
-                        <li class="active">@Html.ActionLink("Tävlingsinfo", "Competition", "Home")</li>
-                        <li>@Html.ActionLink("Klubbar", "Clubs", "Home")</li>
-                        <li>@Html.ActionLink("Vapen", "Weapons", "Home")</li>
-                        <li>@Html.ActionLink("Stationer", "Stations", "Home")</li>
-                        <li>@Html.ActionLink("Tävlande", "Competitors", "Home")</li>
-                        <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home")</li>
-                        <li>@Html.ActionLink("Resultat", "Results", "Home")</li>
+                        <li class="active">@Html.ActionLink("Tävlingsinfo", "Competition", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Klubbar", "Clubs", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Vapen", "Weapons", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
                     }
                     <li>@Html.Partial("_UserSettings")</li>
                 </ul>
