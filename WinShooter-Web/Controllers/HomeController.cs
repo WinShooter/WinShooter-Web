@@ -21,6 +21,7 @@
 
 namespace WinShooter.Controllers
 {
+    using System;
     using System.Web.Mvc;
 
     /// <summary>
@@ -29,13 +30,26 @@ namespace WinShooter.Controllers
     public class HomeController : Controller
     {
         /// <summary>
-        /// GET: /Home/
+        /// GET: /Home/Index/{id}
         /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
         /// The <see cref="ActionResult"/>.
         /// </returns>
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
+            if (id == null)
+            {
+                return this.View();
+            }
+
+            // TODO Get competition from database
+            // TODO Check user rights on database
+            this.ViewBag.CompetitionName = "Höstsaluten";
+            this.ViewBag.CompetitionGuid = id;
+
             return this.View();
         }
 

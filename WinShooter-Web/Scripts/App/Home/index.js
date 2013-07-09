@@ -15,6 +15,10 @@ var ViewModel = function (competitions) {
         }
         return this.selectedCompetition().Guid;
     }, this);
+
+    this.selectCompetitionOnServer = function () {
+        window.location.href = "/home/index/" + this.selectedCompetition().Guid;
+    };
 };
 
 var competitionsApi = "/api/competitions";

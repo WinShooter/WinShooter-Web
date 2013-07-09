@@ -11,28 +11,40 @@
     <li>skapa en ny tävling</li>
 </ul>
 
-<div>Befintlig tävling:
-    <select data-bind="options: competitions, optionsText: 'Name', value: selectedCompetition, optionsCaption: 'Välj...'"></select>
-    <br />
-    <button type="submit" >Välj tävling</button>
+<div class="row">
+    <div class="span2">
+        Befintlig tävling:
+    </div>
+    <div class="span4">
+        <select data-bind="options: competitions, optionsText: 'Name', value: selectedCompetition, optionsCaption: 'Välj...'"></select>
+    </div>
+</div>
+<div class="row">
+    <div class="span2"></div>
+    <div class="span4">
+        <button type="submit" data-bind="click: selectCompetitionOnServer">Välj tävling</button>
+    </div>
 </div>
 
-
-<h3>Vald Tävlingsinformation</h3>
+<h3>Information om den valda tävlingen</h3>
 <div class="row">
-    <div class="span1"></div>
     <div class="span1">Namn:</div>
-    <div class="span5" data-bind="text: selectedCompetitionName" ></div>
+    <div class="span5" data-bind="text: selectedCompetitionName"></div>
 </div>
 <div class="row">
-    <div class="span1"></div>
     <div class="span1">GUID:</div>
-    <div class="span5" data-bind="text: selectedCompetitionGuid" ></div>
+    <div class="span5" data-bind="text: selectedCompetitionGuid"></div>
 </div>
 
-
-
-
+<h3>Skapa ny tävling</h3>
+<div class="row">
+    <div class="span1">Namn:</div>
+    <div class="span5"><input data-bind="text: newCompetitionName"/></div>
+</div>
+<div class="row">
+    <div class="span1">Startar:</div>
+    <div class="span5"></div>
+</div>
 
 @section scripts {
     @Scripts.Render("~/Scripts/App/Home/index.js")
