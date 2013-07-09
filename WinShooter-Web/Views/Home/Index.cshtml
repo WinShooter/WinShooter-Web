@@ -12,18 +12,12 @@
 </ul>
 
 <div class="row">
-    <div class="span2">
-        Befintlig tävling:
-    </div>
-    <div class="span4">
-        <select data-bind="options: competitions, optionsText: 'Name', value: selectedCompetition, optionsCaption: 'Välj...'"></select>
-    </div>
+    <div class="span2">Befintlig tävling:</div>
+    <div class="span4"><select data-bind="options: competitions, optionsText: 'Name', value: selectedCompetition, optionsCaption: 'Välj...'"></select></div>
 </div>
 <div class="row">
     <div class="span2"></div>
-    <div class="span4">
-        <button type="submit" data-bind="click: selectCompetitionOnServer">Välj tävling</button>
-    </div>
+    <div class="span4"><button type="submit" data-bind="click: selectCompetitionOnServer">Välj tävling</button></div>
 </div>
 
 <h3>Information om den valda tävlingen</h3>
