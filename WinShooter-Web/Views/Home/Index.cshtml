@@ -3,6 +3,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Välkommen till WinShooter!</h2>
 
-<p>Detta är startsidan för WinShooter.</p>
+<p>Du kan nu</p>
+<ul>
+    <li>välja en befintlig tävling att titta på eller</li>
+    <li>skapa en ny tävling</li>
+</ul>
+
+<div>Befintlig tävling:
+    <select data-bind="options: competitions, optionsText: 'Name', value: selectedCompetition, optionsCaption: 'Välj...'"></select>
+    <br />
+    <button type="submit" >Välj tävling</button>
+</div>
+
+
+<h3>Vald Tävlingsinformation</h3>
+<div class="row">
+    <div class="span1"></div>
+    <div class="span1">Namn:</div>
+    <div class="span5" data-bind="text: selectedCompetitionName" ></div>
+</div>
+<div class="row">
+    <div class="span1"></div>
+    <div class="span1">GUID:</div>
+    <div class="span5" data-bind="text: selectedCompetitionGuid" ></div>
+</div>
+
+
+
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/App/Home/index.js")
+}

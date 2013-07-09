@@ -32,7 +32,7 @@ namespace WinShooter.Api
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the guid.
+        /// Gets or sets the <see cref="Guid"/>.
         /// </summary>
         public string Guid { get; set; }
     }
