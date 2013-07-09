@@ -21,12 +21,15 @@
 
 namespace WinShooter
 {
+    using System.Configuration;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
 
     using WinShooter.Api;
     using WinShooter.App_Start;
+
+    using WinShooter_Web.DatabaseMigrations;
 
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
@@ -50,6 +53,8 @@ namespace WinShooter
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+            var sqlDatabaseMigrator = new SqlDatabaseMigrator();
+            sqlDatabaseMigrator.MigrateToLatest(ConfigurationManager.ConnectionStrings["WinShooterConnection"].ConnectionString);
         }
     }
 }
