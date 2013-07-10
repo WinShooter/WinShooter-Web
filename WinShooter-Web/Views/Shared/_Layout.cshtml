@@ -5,12 +5,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>WinShooter @ViewBag.CompetitionName</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/Content/bootstrap")
-    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/knockout")
-    @Scripts.Render("~/Scripts/App/common.js")
 </head>
     <body>
         <div id="competitionid">@ViewBag.CompetitionId</div>
@@ -37,6 +33,10 @@
             @RenderBody()
         </div>
 
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/knockout")
+        @Scripts.Render("~/Scripts/App/common.js")
         @RenderSection("scripts", required: false)
     </body>
 </html>
