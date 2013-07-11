@@ -39,10 +39,22 @@ namespace WinShooter
         /// </param>
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            // Enable CDN support
+            bundles.UseCdn = true;
+#if !DEBUG
+            BundleTable.EnableOptimizations = true;
+#endif
+
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/jquery", 
+                    "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js").Include(
                         "~/Scripts/jquery-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/jqueryui",
+                    "http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.24/jquery-ui.js").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -50,14 +62,24 @@ namespace WinShooter
                         "~/Scripts/jquery.validate*"));
 
 #if DEBUG
-            bundles.Add(new ScriptBundle("~/bundles/knockout").Include("~/Scripts/knockout-2.2.0.debug.js"));
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/knockout",
+                    "http://ajax.aspnetcdn.com/ajax/knockout/gurka/knockout-2.2.0.js").Include(
+                    "~/Scripts/knockout-2.2.0.debug.js"));
 #else
-            bundles.Add(new ScriptBundle("~/bundles/knockout").Include("~/Scripts/knockout-2.2.0.js"));
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/knockout",
+                    "http://ajax.aspnetcdn.com/ajax/knockout/gurka/knockout-2.2.0.debug.js").Include(
+                    "~/Scripts/knockout-2.2.0.js"));
 #endif
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
