@@ -413,10 +413,10 @@ namespace WinShooter.Providers
         }
 
         /// <summary>
-        /// When overridden in a derived class, returns all OAuth membership accounts associated with the specified user name.
+        /// When overridden in a derived class, returns all OAuthentication membership accounts associated with the specified user name.
         /// </summary>
         /// <returns>
-        /// A list of all OAuth membership accounts associated with the specified user name.
+        /// A list of all OAuthentication membership accounts associated with the specified user name.
         /// </returns>
         /// <param name="userName">The user name.</param>
         public override ICollection<OAuthAccountData> GetAccountsForUser(string userName)
