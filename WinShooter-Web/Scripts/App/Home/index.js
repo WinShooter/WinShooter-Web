@@ -26,6 +26,9 @@ var ViewModel = function (competitions) {
         }
         window.location.href = newLocation;
     };
+    
+    // Attributes for creating a new competition
+    this.newCompetitionName = ko.observable('');
 };
 
 // Add datepicker to the newCompetitionStartDate field

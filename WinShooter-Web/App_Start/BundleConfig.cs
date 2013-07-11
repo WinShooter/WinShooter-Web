@@ -54,7 +54,7 @@ namespace WinShooter
             bundles.Add(
                 new ScriptBundle(
                     "~/bundles/jqueryui",
-                    "http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.24/jquery-ui.js").Include(
+                    "http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.js").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
