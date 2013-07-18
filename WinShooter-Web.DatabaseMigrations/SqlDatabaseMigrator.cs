@@ -22,11 +22,11 @@ namespace WinShooter_Web.DatabaseMigrations
 
             var migrationContext = new RunnerContext(announcer)
             {
-                Namespace = "WinShooter_Web.DatabaseMigrations"
+                Target = assembly.FullName
             };
 
             var options = new MigrationOptions { PreviewOnly = false, Timeout = 60 };
-            var factory = new FluentMigrator.Runner.Processors.SqlServer.SqlServer2008ProcessorFactory();
+            var factory = new FluentMigrator.Runner.Processors.SqlServer.SqlServer2012ProcessorFactory();
             var processor = factory.Create(connectionString, announcer, options);
             var runner = new MigrationRunner(assembly, migrationContext, processor);
             runner.MigrateUp(true);
