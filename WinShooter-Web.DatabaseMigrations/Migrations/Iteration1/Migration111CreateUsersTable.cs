@@ -50,7 +50,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             Create.Table(UsersTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
+                .WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn("CardNumber").AsString()
                 .WithColumn("Surname").AsString()
                 .WithColumn("Givenname").AsString()
@@ -61,7 +61,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
 
             Create.Table(UsersLoginInfoTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
-                .WithColumn("UserId").AsGuid()
+                .WithColumn("UserId").AsInt32().NotNullable()
                 .WithColumn("IdentityProvider").AsString().Indexed()
                 .WithColumn("IdentityProviderId").AsString().Indexed();
 
