@@ -2,8 +2,8 @@
 
 namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
 {
-    [Migration(17)]
-    public class Migration17CreateCompetitorResultsTable : Migration
+    [Migration(107)]
+    public class Migration107CreateCompetitorResultsTable : Migration
     {
         public const string CompetitorResultsTableName = "CompetitorResults";
 

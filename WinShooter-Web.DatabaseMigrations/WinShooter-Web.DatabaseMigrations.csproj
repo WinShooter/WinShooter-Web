@@ -49,17 +49,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISqlDatabaseMigrator.cs" />
-    <Compile Include="Migrations\Iteration1\Migration10CreateCompetitionTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration111CreateUsersTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration100CreateCompetitionTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration110CreateForeignKeys.cs" />
-    <Compile Include="Migrations\Iteration1\Migration11CreateStationsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration12CreateWeaponsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration13CreateShootersTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration14CreateClubsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration15CreatePatrolsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration16CreateCompetitorsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration17CreateCompetitorResultsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration18CreateTeamsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration19CreateTeamToCompetitorTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration101CreateStationsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration102CreateWeaponsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration103CreateShootersTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration104CreateClubsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration105CreatePatrolsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration106CreateCompetitorsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration107CreateCompetitorResultsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration108CreateTeamsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration109CreateTeamToCompetitorTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlDatabaseMigrator.cs" />
   </ItemGroup>

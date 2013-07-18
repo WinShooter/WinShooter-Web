@@ -2,8 +2,8 @@
 
 namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
 {
-    [Migration(13)]
-    public class Migration13CreateShootersTable : Migration
+    [Migration(103)]
+    public class Migration103CreateShootersTable : Migration
     {
         private const string ShootersTableName = "Shooters";
 
