@@ -211,7 +211,10 @@ namespace WinShooter.Controllers
                         {
                             var newUser = new User
                                               {
+                                                  // TODO Add ClubId
                                                   CardNumber = model.ShooterCardNumber,
+                                                  Surname = model.Surname,
+                                                  Givenname = model.GivenName,
                                                   Email = model.Email,
                                                   LastLogin = DateTime.Now,
                                                   LastUpdated = DateTime.Now
