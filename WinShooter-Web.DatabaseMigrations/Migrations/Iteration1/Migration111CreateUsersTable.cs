@@ -63,7 +63,8 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("UserId").AsInt32().NotNullable()
                 .WithColumn("IdentityProvider").AsString().Indexed()
-                .WithColumn("IdentityProviderId").AsString().Indexed();
+                .WithColumn("IdentityProviderId").AsString().Indexed()
+                .WithColumn("LastLogin").AsDateTime();
 
             Create.ForeignKey(UsersLoginInfoForeignKeyName)
                 .FromTable(UsersLoginInfoTableName).ForeignColumn("UserId")
