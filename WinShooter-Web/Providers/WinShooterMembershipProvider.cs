@@ -24,11 +24,16 @@ namespace WinShooter.Providers
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using System.Web.Security;
 
     using log4net;
 
+    using NHibernate.Linq;
+
     using WebMatrix.WebData;
+
+    using WinShooter.Database;
 
     /// <summary>
     /// The WinShooter membership provider.
@@ -624,16 +629,21 @@ namespace WinShooter.Providers
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public override int GetUserIdFromOAuth(string provider, string providerUserId)
         {
-            // TODO Implement
-            this.log.Debug("GetUserIdFromOAuth");
-            if (provider == "google"
-                && providerUserId == "https://www.google.com/accounts/o8/id?id=AItOawmsw82S-x8Vu3TlX4pW9DfF8e-6f0bwz_c")
+            using (var session = NHibernateHelper.OpenSession())
             {
-                // sm0uda@gmail.com
-                return 42;
-            }
+                var userLoginInfo = (from info in session.Query<UserLoginInfo>()
+                            where
+                                info.IdentityProvider == provider
+                                && info.IdentityProviderId == providerUserId
+                            select info).SingleOrDefault();
 
-            return -1;
+                if (userLoginInfo == null)
+                {
+                    return -1;
+                }
+
+                return userLoginInfo.User.Id;
+            }
         }
 
         /// <summary>
@@ -644,16 +654,14 @@ namespace WinShooter.Providers
         /// </returns>
         /// <param name="userId">The user ID to get the name for.</param>
         public override string GetUserNameFromId(int userId)
-        {           
-            // TODO Implement
-            this.log.Debug("GetUserNameFromId");
-
-            if (userId == 42)
+        {
+            using (var session = NHibernateHelper.OpenSession())
             {
-                return "sm0uda@gmail.com";
-            }
+                var userLoginInfo =
+                    (from info in session.Query<UserLoginInfo>() where info.User.Id == userId select info).Single();
 
-            return null;
+                return userLoginInfo.User.Givenname + " " + userLoginInfo.User.Surname;
+            }
         }
     }
 }
