@@ -5,41 +5,54 @@
     <meta name="viewport" content="width=device-width" />
     <title>WinShooter @ViewBag.CompetitionName</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/Content/bootstrap")
-    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/knockout")
 </head>
-<body>
-    <div id="userSettings">
-        @Html.Partial("_UserSettings")
-    </div>
-
-    <div class="navbar">
-        <div class="navbar-inner">
-            <a class="brand" href="~/">WinShooter</a>
-            @if (!string.IsNullOrEmpty(ViewBag.CompetitionName))
-            {
+    <body>
+        <div id="competitionid">@ViewBag.CompetitionId</div>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="~/">WinShooter @ViewBag.CompetitionName</a>
                 <ul class="nav">
-                    <li class="active">@Html.ActionLink("Tävlingsinfo", "Competition", "Home")</li>
-                    <li>@Html.ActionLink("Klubbar", "Clubs", "Home")</li>
-                    <li>@Html.ActionLink("Vapen", "Weapons", "Home")</li>
-                    <li>@Html.ActionLink("Stationer", "Stations", "Home")</li>
-                    <li>@Html.ActionLink("Tävlande", "Competitors", "Home")</li>
-                    <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home")</li>
-                    <li>@Html.ActionLink("Resultat", "Results", "Home")</li>
+                    @if (!string.IsNullOrEmpty(ViewBag.CompetitionName))
+                    {
+                        <li class="active">@Html.ActionLink("Tävlingsinfo", "Competition", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Klubbar", "Clubs", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Vapen", "Weapons", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        <li>@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                    }
+                    <li>@Html.Partial("_UserSettings")</li>
                 </ul>
-            }
-            <a class="brand" href="~/">@ViewBag.CompetitionName</a>
+            </div>
         </div>
-    </div>
 
-    <div id="body">
-        @RenderBody()
-    </div>
+        <div id="body">
+            @RenderBody()
+        </div>
+        
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/knockout")
+        @Scripts.Render("~/Scripts/App/common.js")
+        
+        <!-- fallback for CDN -->
+        <script>
+            // Fallback to loading jQuery from a local path if the CDN is unavailable
+            (window.jQuery === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-1.9.1.js")"><\/script>'));
+        </script>
+        <script>
+            // Fallback to loading jQuery.ui from a local path if the CDN is unavailable
+            (window.jQuery.ui === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.js")"><\/script>'));
+        </script>
+        <script>
+            // Fallback to loading knockout from a local path if the CDN is unavailable
+            (window.ko === undefined && document.write('<script src="@Url.Content("~/Scripts/knockout-2.2.0.js")"><\/script>'));
+        </script>
 
-    
-    @RenderSection("scripts", required: false)
-</body>
+        @RenderSection("scripts", required: false)
+    </body>
 </html>
