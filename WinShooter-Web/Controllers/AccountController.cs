@@ -21,7 +21,13 @@
 
 namespace WinShooter.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Web.Mvc;
+
+    using NHibernate.Linq;
+
+    using WinShooter.Database;
 
     using log4net;
 
@@ -192,7 +198,38 @@ namespace WinShooter.Controllers
 
             if (ModelState.IsValid)
             {
-                // TODO Insert the new user into the database
+                // Insert the new user into the database
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    var userLoginInfo = (from info in session.Query<UserLoginInfo>()
+                                         where
+                                             info.IdentityProvider == provider && info.IdentityProviderId == providerUserId
+                                         select info).SingleOrDefault();
+                    if (userLoginInfo == null)
+                    {
+                        using (var transaction = session.BeginTransaction())
+                        {
+                            var newUser = new User
+                                              {
+                                                  CardNumber = model.ShooterCardNumber,
+                                                  Email = model.Email,
+                                                  LastLogin = DateTime.Now,
+                                                  LastUpdated = DateTime.Now
+                                              };
+                            var newUserLoginInfo = new UserLoginInfo
+                                                       {
+                                                           IdentityProvider = provider,
+                                                           IdentityProviderId = providerUserId,
+                                                           LastLogin = DateTime.Now,
+                                                           User = newUser
+                                                       };
+                            session.Save(newUser);
+                            session.Save(newUserLoginInfo);
+                            transaction.Commit();
+                        }
+                    }
+                }
+
                 OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.Email);
                 OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
 

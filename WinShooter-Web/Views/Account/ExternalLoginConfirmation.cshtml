@@ -24,9 +24,14 @@
                     <td>@Html.ValidationMessageFor(m => m.Email)</td>
                 </tr>
                 <tr>
-                    <td>@Html.LabelFor(m => m.Name)</td>
-                    <td>@Html.TextBoxFor(m => m.Name)</td>
-                    <td>@Html.ValidationMessageFor(m => m.Name)</td>
+                    <td>@Html.LabelFor(m => m.GivenName)</td>
+                    <td>@Html.TextBoxFor(m => m.GivenName)</td>
+                    <td>@Html.ValidationMessageFor(m => m.GivenName)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.Surname)</td>
+                    <td>@Html.TextBoxFor(m => m.Surname)</td>
+                    <td>@Html.ValidationMessageFor(m => m.Surname)</td>
                 </tr>
                 <tr>
                     <td>@Html.LabelFor(m => m.ShooterCardNumber)</td>

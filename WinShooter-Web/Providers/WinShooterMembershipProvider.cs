@@ -606,7 +606,9 @@ namespace WinShooter.Providers
         /// <summary>
         /// When overridden in a derived class, creates a new OAuth membership account, or updates an existing OAuth Membership account.
         /// </summary>
-        /// <param name="provider">The OAuth or OpenID provider.</param><param name="providerUserId">The OAuth or OpenID provider user ID. This is not the user ID of the user account, but the user ID on the OAuth or Open ID provider.</param><param name="userName">The user name.</param>
+        /// <param name="provider">The OAuth or OpenID provider.</param>
+        /// <param name="providerUserId">The OAuth or OpenID provider user ID. This is not the user ID of the user account, but the user ID on the OAuth or Open ID provider.</param>
+        /// <param name="userName">The user name.</param>
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public override void CreateOrUpdateOAuthAccount(string provider, string providerUserId, string userName)
         {
@@ -632,14 +634,22 @@ namespace WinShooter.Providers
             using (var session = NHibernateHelper.OpenSession())
             {
                 var userLoginInfo = (from info in session.Query<UserLoginInfo>()
-                            where
-                                info.IdentityProvider == provider
-                                && info.IdentityProviderId == providerUserId
-                            select info).SingleOrDefault();
+                                     where
+                                         info.IdentityProvider == provider
+                                         && info.IdentityProviderId == providerUserId
+                                     select info).SingleOrDefault();
 
                 if (userLoginInfo == null)
                 {
                     return -1;
+                }
+
+                using (var transaction = session.BeginTransaction())
+                {
+                    userLoginInfo.LastLogin = DateTime.Now;
+                    userLoginInfo.User.LastLogin = DateTime.Now;
+                    session.SaveOrUpdate(userLoginInfo);
+                    transaction.Commit();
                 }
 
                 return userLoginInfo.User.Id;
@@ -660,7 +670,7 @@ namespace WinShooter.Providers
                 var userLoginInfo =
                     (from info in session.Query<UserLoginInfo>() where info.User.Id == userId select info).Single();
 
-                return userLoginInfo.User.Givenname + " " + userLoginInfo.User.Surname;
+                return userLoginInfo.User.Email;
             }
         }
     }
