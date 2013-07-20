@@ -64,6 +64,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("UserId").AsInt32().NotNullable()
                 .WithColumn("IdentityProvider").AsString().Indexed()
                 .WithColumn("IdentityProviderId").AsString().Indexed()
+                .WithColumn("IdentityProviderUsername").AsString()
                 .WithColumn("LastLogin").AsDateTime();
 
             Create.ForeignKey(UsersLoginInfoForeignKeyName)
