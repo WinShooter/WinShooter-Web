@@ -27,6 +27,8 @@ namespace WinShooter.Providers
     using System.Linq;
     using System.Web.Security;
 
+    using Remotion.Linq.Utilities;
+
     using log4net;
 
     using NHibernate.Linq;
@@ -223,6 +225,7 @@ namespace WinShooter.Providers
         {
             // TODO Implement
             this.log.Debug("CreateUser");
+            throw new NotImplementedException();
             status = MembershipCreateStatus.Success;
             return new MembershipUser("google", "a", null, "a@a.com", "a", "a", true, false, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now);
         }
@@ -612,8 +615,26 @@ namespace WinShooter.Providers
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public override void CreateOrUpdateOAuthAccount(string provider, string providerUserId, string userName)
         {
-            // TODO Implement
             this.log.Debug("CreateOrUpdateOAuthAccount");
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                var userLoginInfo = (from info in session.Query<UserLoginInfo>()
+                                     where
+                                         info.IdentityProvider == provider && info.IdentityProviderId == providerUserId
+                                     select info).SingleOrDefault();
+
+                if (userLoginInfo == null)
+                {
+                    throw new NotSupportedException("The account already needs to exist");
+                }
+
+                userLoginInfo.IdentityProviderUsername = userName;
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Update(userLoginInfo);
+                    transaction.Commit();
+                }
+            }
         }
 
         /// <summary>

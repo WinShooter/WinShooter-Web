@@ -32,6 +32,7 @@ namespace WinShooter.Database
         public virtual User User { get; set; }
         public virtual string IdentityProvider { get; set; }
         public virtual string IdentityProviderId { get; set; }
+        public virtual string IdentityProviderUsername { get; set; }
         public virtual DateTime LastLogin { get; set; }
     }
 }
