@@ -35,7 +35,7 @@ namespace WinShooter.Api
         /// The request.
         /// </param>
         /// <returns>
-        /// The <see cref="HelloResponse"/>.
+        /// The <see cref="CompetitionResponse"/>.
         /// </returns>
         public CompetitionResponse Any(Competition request)
         {
