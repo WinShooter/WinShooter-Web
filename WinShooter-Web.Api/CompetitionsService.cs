@@ -41,29 +41,24 @@ namespace WinShooter.Api
         /// </returns>
         public List<CompetitionResponse> Get(Competitions request)
         {
+            var sess = this.GetSession();
+
+            if (sess.IsAuthenticated)
+            {
+                return new List<CompetitionResponse>
+                           {
+                               new CompetitionResponse { Name = "Tävlingen1", Guid = "1" },
+                               new CompetitionResponse { Name = "Tävlingen2", Guid = "2" },
+                               new CompetitionResponse { Name = "Tävlingen3", Guid = "3" },
+                               new CompetitionResponse { Name = "Tävlingen4", Guid = "4" }
+                           };
+            }
+
             return new List<CompetitionResponse>
-                       {
-                           new CompetitionResponse
-                               {
-                                   Name = "Tävlingen1",
-                                   Guid = "1"
-                               }, 
-                               new CompetitionResponse
-                               {
-                                   Name = "Tävlingen2",
-                                   Guid = "2"
-                               },  
-                               new CompetitionResponse
-                               {
-                                   Name = "Tävlingen3",
-                                   Guid = "3"
-                               },  
-                               new CompetitionResponse
-                               {
-                                   Name = "Tävlingen4",
-                                   Guid = "4"
-                               },
-                       };
+                           {
+                               new CompetitionResponse { Name = "Tävlingen1", Guid = "1" }
+                           };
+
         }
     }
 }
