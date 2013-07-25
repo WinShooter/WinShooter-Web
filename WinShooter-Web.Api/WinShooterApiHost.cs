@@ -23,6 +23,12 @@ namespace WinShooter.Api
 {
     using Funq;
 
+    //using ServiceStack.Authentication.OpenId;
+    using ServiceStack.CacheAccess;
+    using ServiceStack.CacheAccess.Providers;
+    using ServiceStack.Configuration;
+    using ServiceStack.ServiceInterface;
+    using ServiceStack.ServiceInterface.Auth;
     using ServiceStack.WebHost.Endpoints;
 
     /// <summary>
@@ -47,10 +53,39 @@ namespace WinShooter.Api
         /// <param name="container">Container to register.</param>
         public override void Configure(Container container)
         {
-            // register user-defined REST-ful urls
+            // Access Web.Config AppSettings
+            var appSettings = new AppSettings();
+            container.Register(appSettings);
+
+            // register REST-ful urls
+            this.ConfigureRoutes();
+
+            // Adds caching
+            container.Register<ICacheClient>(new MemoryCacheClient());
+
+            // Adds persistent user repository
+            var userRep = new InMemoryAuthRepository();
+            container.Register<IUserAuthRepository>(userRep);
+
+            // Add all the Auth Providers to allow registration with
+            this.ConfigureAuth();
+        }
+
+        /// <summary>
+        /// Configures the routes.
+        /// </summary>
+        private void ConfigureRoutes()
+        {
             this.Routes
               .Add<Competitions>("/api/competitions")
               .Add<Competition>("/api/competition/{Guid}");
+        }
+
+        /// <summary>
+        /// Configures authentication options.
+        /// </summary>
+        private void ConfigureAuth()
+        {
         }
     }
 }
