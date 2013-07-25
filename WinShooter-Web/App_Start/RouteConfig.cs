@@ -32,6 +32,10 @@ namespace WinShooter
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("api/{*pathInfo}");
+            routes.IgnoreRoute("metadata/{*pathInfo}");
+            routes.IgnoreRoute("json/{*pathInfo}");
+            routes.IgnoreRoute("login/{*pathInfo}");
+            routes.IgnoreRoute("auth/{*pathInfo}");
 
             routes.MapRoute(
                 name: "Default",
