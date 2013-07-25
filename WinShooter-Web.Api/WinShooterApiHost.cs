@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HelloAppHost.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="WinShooterApiHost.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -19,10 +19,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Configuration
+namespace WinShooter.Api
 {
     using Funq;
 
+    //using ServiceStack.Authentication.OpenId;
+    using ServiceStack.CacheAccess;
+    using ServiceStack.CacheAccess.Providers;
+    using ServiceStack.Configuration;
+    using ServiceStack.ServiceInterface;
+    using ServiceStack.ServiceInterface.Auth;
     using ServiceStack.WebHost.Endpoints;
 
     /// <summary>
@@ -36,7 +42,7 @@ namespace WinShooter.Api.Configuration
         /// where to find your web services.
         /// </summary>
         public WinShooterApiHost()
-            : base("WinShooter Web Services", typeof(HelloService).Assembly)
+            : base("WinShooter Web Services", typeof(Competitions).Assembly)
         {
         }
 
@@ -47,10 +53,39 @@ namespace WinShooter.Api.Configuration
         /// <param name="container">Container to register.</param>
         public override void Configure(Container container)
         {
-            // register user-defined REST-ful urls
-            Routes
-              .Add<Hello>("/api/hello")
-              .Add<Hello>("/api/hello/{Name}");
+            // Access Web.Config AppSettings
+            var appSettings = new AppSettings();
+            container.Register(appSettings);
+
+            // register REST-ful urls
+            this.ConfigureRoutes();
+
+            // Adds caching
+            container.Register<ICacheClient>(new MemoryCacheClient());
+
+            // Adds persistent user repository
+            var userRep = new InMemoryAuthRepository();
+            container.Register<IUserAuthRepository>(userRep);
+
+            // Add all the Auth Providers to allow registration with
+            this.ConfigureAuth();
+        }
+
+        /// <summary>
+        /// Configures the routes.
+        /// </summary>
+        private void ConfigureRoutes()
+        {
+            this.Routes
+              .Add<Competitions>("/competitions")
+              .Add<Competition>("/competition/{Guid}");
+        }
+
+        /// <summary>
+        /// Configures authentication options.
+        /// </summary>
+        private void ConfigureAuth()
+        {
         }
     }
 }

@@ -24,11 +24,16 @@ namespace WinShooter.Providers
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using System.Web.Security;
 
     using log4net;
 
+    using NHibernate.Linq;
+
     using WebMatrix.WebData;
+
+    using WinShooter.Database;
 
     /// <summary>
     /// The WinShooter membership provider.
@@ -216,10 +221,8 @@ namespace WinShooter.Providers
             object providerUserKey,
             out MembershipCreateStatus status)
         {
-            // TODO Implement
             this.log.Debug("CreateUser");
-            status = MembershipCreateStatus.Success;
-            return new MembershipUser("google", "a", null, "a@a.com", "a", "a", true, false, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now);
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -232,7 +235,8 @@ namespace WinShooter.Providers
         public override bool ChangePasswordQuestionAndAnswer(
             string username, string password, string newPasswordQuestion, string newPasswordAnswer)
         {
-            throw new NotImplementedException();
+            this.log.Debug("ChangePasswordQuestionAndAnswer");
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -244,7 +248,8 @@ namespace WinShooter.Providers
         /// <param name="username">The user to retrieve the password for. </param><param name="answer">The password answer for the user. </param>
         public override string GetPassword(string username, string answer)
         {
-            throw new NotImplementedException();
+            this.log.Debug("GetPassword");
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -256,7 +261,7 @@ namespace WinShooter.Providers
         /// <param name="username">The user to update the password for. </param><param name="oldPassword">The current password for the specified user. </param><param name="newPassword">The new password for the specified user. </param>
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -268,7 +273,7 @@ namespace WinShooter.Providers
         /// <param name="username">The user to reset the password for. </param><param name="answer">The password answer for the specified user. </param>
         public override string ResetPassword(string username, string answer)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -277,8 +282,8 @@ namespace WinShooter.Providers
         /// <param name="user">A <see cref="T:System.Web.Security.MembershipUser"/> object that represents the user to update and the updated information for the user. </param>
         public override void UpdateUser(MembershipUser user)
         {
-            // TODO Implement
             this.log.Debug("UpdateUser");
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -290,7 +295,7 @@ namespace WinShooter.Providers
         /// <param name="username">The name of the user to validate. </param><param name="password">The password for the specified user. </param>
         public override bool ValidateUser(string username, string password)
         {
-            return false;
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -302,7 +307,7 @@ namespace WinShooter.Providers
         /// <param name="userName">The membership user whose lock status you want to clear.</param>
         public override bool UnlockUser(string userName)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -314,9 +319,8 @@ namespace WinShooter.Providers
         /// <param name="providerUserKey">The unique identifier for the membership user to get information for.</param><param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user information without updating the last-activity date/time stamp for the user.</param>
         public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
         {
-            // TODO Implement
             this.log.Debug("GetUser");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -330,7 +334,7 @@ namespace WinShooter.Providers
         {
             // TODO Implement
             this.log.Debug("GetUser");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -342,9 +346,8 @@ namespace WinShooter.Providers
         /// <param name="email">The e-mail address to search for. </param>
         public override string GetUserNameByEmail(string email)
         {
-            // TODO Implement
             this.log.Debug("GetUserNameByEmail");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -356,9 +359,8 @@ namespace WinShooter.Providers
         /// <param name="username">The name of the user to delete.</param><param name="deleteAllRelatedData">true to delete data related to the user from the database; false to leave data related to the user in the database.</param>
         public override bool DeleteUser(string username, bool deleteAllRelatedData)
         {
-            // TODO Implement
             this.log.Debug("DeleteUser");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -371,7 +373,7 @@ namespace WinShooter.Providers
         public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
         {
             this.log.Debug("GetAllUsers");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -383,7 +385,7 @@ namespace WinShooter.Providers
         public override int GetNumberOfUsersOnline()
         {
             this.log.Debug("GetNumberOfUsersOnline");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -396,7 +398,7 @@ namespace WinShooter.Providers
         public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             this.log.Debug("FindUsersByName");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -409,14 +411,14 @@ namespace WinShooter.Providers
         public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             this.log.Debug("FindUsersByEmail");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
-        /// When overridden in a derived class, returns all OAuth membership accounts associated with the specified user name.
+        /// When overridden in a derived class, returns all OAuthentication membership accounts associated with the specified user name.
         /// </summary>
         /// <returns>
-        /// A list of all OAuth membership accounts associated with the specified user name.
+        /// A list of all OAuthentication membership accounts associated with the specified user name.
         /// </returns>
         /// <param name="userName">The user name.</param>
         public override ICollection<OAuthAccountData> GetAccountsForUser(string userName)
@@ -434,9 +436,8 @@ namespace WinShooter.Providers
         /// <param name="userName">The user name.</param><param name="password">The password.</param><param name="requireConfirmation">(Optional) true to specify that the user account must be confirmed; otherwise, false. The default is false.</param><param name="values">(Optional) A dictionary that contains additional user attributes to store in the user profile. The default is null.</param>
         public override string CreateUserAndAccount(string userName, string password, bool requireConfirmation, IDictionary<string, object> values)
         {
-            // TODO Implement
             this.log.Debug("CreateUserAndAccount");
-            return "sm0uda@gmail.com";
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -448,9 +449,8 @@ namespace WinShooter.Providers
         /// <param name="userName">The user name.</param><param name="password">The password.</param><param name="requireConfirmationToken">(Optional) true to specify that the account must be confirmed; otherwise, false. The default is false.</param>
         public override string CreateAccount(string userName, string password, bool requireConfirmationToken)
         {
-            // TODO Implement
             this.log.Debug("CreateAccount");
-            return "sm0uda@gmail.com";
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -463,8 +463,7 @@ namespace WinShooter.Providers
         public override bool ConfirmAccount(string userName, string accountConfirmationToken)
         {
             this.log.Debug("ConfirmAccount");
-            return true;
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -477,8 +476,7 @@ namespace WinShooter.Providers
         public override bool ConfirmAccount(string accountConfirmationToken)
         {
             this.log.Debug("ConfirmAccount");
-            return true;
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -490,8 +488,9 @@ namespace WinShooter.Providers
         /// <param name="userName">The user name.</param>
         public override bool DeleteAccount(string userName)
         {
+            // TODO Implement
             this.log.Debug("DeleteAccount");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -504,7 +503,7 @@ namespace WinShooter.Providers
         public override string GeneratePasswordResetToken(string userName, int tokenExpirationInMinutesFromNow)
         {
             this.log.Debug("GeneratePasswordResetToken");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -517,7 +516,7 @@ namespace WinShooter.Providers
         public override int GetUserIdFromPasswordResetToken(string token)
         {
             this.log.Debug("GetUserIdFromPasswordResetToken");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -530,7 +529,7 @@ namespace WinShooter.Providers
         public override bool IsConfirmed(string userName)
         {
             this.log.Debug("IsConfirmed");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -543,7 +542,7 @@ namespace WinShooter.Providers
         public override bool ResetPasswordWithToken(string token, string newPassword)
         {
             this.log.Debug("ResetPasswordWithToken");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -556,7 +555,7 @@ namespace WinShooter.Providers
         public override int GetPasswordFailuresSinceLastSuccess(string userName)
         {
             this.log.Debug("GetPasswordFailuresSinceLastSuccess");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -568,6 +567,7 @@ namespace WinShooter.Providers
         /// <param name="userName">The user name of the account.</param>
         public override DateTime GetCreateDate(string userName)
         {
+            // TODO Implement
             this.log.Debug("GetCreateDate");
             throw new NotImplementedException();
         }
@@ -582,7 +582,7 @@ namespace WinShooter.Providers
         public override DateTime GetPasswordChangedDate(string userName)
         {
             this.log.Debug("GetPasswordChangedDate");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
@@ -595,18 +595,38 @@ namespace WinShooter.Providers
         public override DateTime GetLastPasswordFailureDate(string userName)
         {
             this.log.Debug("GetLastPasswordFailureDate");
-            throw new NotImplementedException();
+            throw new NotSupportedException("We will never create local accounts");
         }
 
         /// <summary>
         /// When overridden in a derived class, creates a new OAuth membership account, or updates an existing OAuth Membership account.
         /// </summary>
-        /// <param name="provider">The OAuth or OpenID provider.</param><param name="providerUserId">The OAuth or OpenID provider user ID. This is not the user ID of the user account, but the user ID on the OAuth or Open ID provider.</param><param name="userName">The user name.</param>
+        /// <param name="provider">The OAuth or OpenID provider.</param>
+        /// <param name="providerUserId">The OAuth or OpenID provider user ID. This is not the user ID of the user account, but the user ID on the OAuth or Open ID provider.</param>
+        /// <param name="userName">The user name.</param>
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public override void CreateOrUpdateOAuthAccount(string provider, string providerUserId, string userName)
         {
-            // TODO Implement
             this.log.Debug("CreateOrUpdateOAuthAccount");
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                var userLoginInfo = (from info in session.Query<UserLoginInfo>()
+                                     where
+                                         info.IdentityProvider == provider && info.IdentityProviderId == providerUserId
+                                     select info).SingleOrDefault();
+
+                if (userLoginInfo == null)
+                {
+                    throw new NotSupportedException("The account already needs to exist");
+                }
+
+                userLoginInfo.IdentityProviderUsername = userName;
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Update(userLoginInfo);
+                    transaction.Commit();
+                }
+            }
         }
 
         /// <summary>
@@ -624,16 +644,29 @@ namespace WinShooter.Providers
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         public override int GetUserIdFromOAuth(string provider, string providerUserId)
         {
-            // TODO Implement
-            this.log.Debug("GetUserIdFromOAuth");
-            if (provider == "google"
-                && providerUserId == "https://www.google.com/accounts/o8/id?id=AItOawmsw82S-x8Vu3TlX4pW9DfF8e-6f0bwz_c")
+            using (var session = NHibernateHelper.OpenSession())
             {
-                // sm0uda@gmail.com
-                return 42;
-            }
+                var userLoginInfo = (from info in session.Query<UserLoginInfo>()
+                                     where
+                                         info.IdentityProvider == provider
+                                         && info.IdentityProviderId == providerUserId
+                                     select info).SingleOrDefault();
 
-            return -1;
+                if (userLoginInfo == null)
+                {
+                    return -1;
+                }
+
+                using (var transaction = session.BeginTransaction())
+                {
+                    userLoginInfo.LastLogin = DateTime.Now;
+                    userLoginInfo.User.LastLogin = DateTime.Now;
+                    session.SaveOrUpdate(userLoginInfo);
+                    transaction.Commit();
+                }
+
+                return userLoginInfo.User.Id;
+            }
         }
 
         /// <summary>
@@ -644,16 +677,14 @@ namespace WinShooter.Providers
         /// </returns>
         /// <param name="userId">The user ID to get the name for.</param>
         public override string GetUserNameFromId(int userId)
-        {           
-            // TODO Implement
-            this.log.Debug("GetUserNameFromId");
-
-            if (userId == 42)
+        {
+            using (var session = NHibernateHelper.OpenSession())
             {
-                return "sm0uda@gmail.com";
-            }
+                var userLoginInfo =
+                    (from info in session.Query<UserLoginInfo>() where info.User.Id == userId select info).Single();
 
-            return null;
+                return userLoginInfo.User.Email;
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HelloService.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Competitions.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,31 +15,23 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Defines the HelloService type.
+//   Represents a competition from the client.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace WinShooter.Api
 {
-    using ServiceStack.ServiceInterface;
+    using ServiceStack.ServiceHost;
 
     /// <summary>
-    /// The hello service.
+    /// Represents a competition from the client.
     /// </summary>
-    public class HelloService : Service
+    [Route("/api/competitions")]
+    public class Competitions
     {
         /// <summary>
-        /// The any.
+        /// Gets or sets a value indicating whether to include public competitions.
         /// </summary>
-        /// <param name="request">
-        /// The request.
-        /// </param>
-        /// <returns>
-        /// The <see cref="HelloResponse"/>.
-        /// </returns>
-        public HelloResponse Any(Hello request)
-        {
-            return new HelloResponse { Result = "Hello, " + request.Name };
-        }
+        public bool IncludePublic { get; set; }
     }
 }

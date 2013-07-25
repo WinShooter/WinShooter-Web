@@ -28,18 +28,36 @@ namespace WinShooter.Models
     /// </summary>
     public class RegisterExternalLoginModel
     {
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
         [Required]
         [Display(Name = "Epost")]
         public string Email { get; set; }
 
+        /// <summary>
+        /// Gets or sets the given name.
+        /// </summary>
         [Required]
-        [Display(Name = "Namn")]
-        public string Name { get; set; }
+        [Display(Name = "Förnamn")]
+        public string GivenName { get; set; }
 
+        /// <summary>
+        /// Gets or sets the surname.
+        /// </summary>
         [Required]
-        [Display(Name = "Skyttekortsnummer")]
+        [Display(Name = "Efteramn")]
+        public string Surname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the shooter card number.
+        /// </summary>
+        [Display(Name = "Skyttekortsnummer (lämnas blankt om du inte har något)")]
         public string ShooterCardNumber { get; set; }
 
+        /// <summary>
+        /// Gets or sets the external login data.
+        /// </summary>
         public string ExternalLoginData { get; set; }
     }
 }
