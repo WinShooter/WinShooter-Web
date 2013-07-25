@@ -77,8 +77,8 @@ namespace WinShooter.Api
         private void ConfigureRoutes()
         {
             this.Routes
-              .Add<Competitions>("/api/competitions")
-              .Add<Competition>("/api/competition/{Guid}");
+              .Add<Competitions>("/competitions")
+              .Add<Competition>("/competition/{Guid}");
         }
 
         /// <summary>
