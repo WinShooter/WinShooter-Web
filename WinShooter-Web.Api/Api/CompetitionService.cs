@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api
+namespace WinShooter.Api.Api
 {
     using ServiceStack.ServiceInterface;
 
@@ -37,9 +37,24 @@ namespace WinShooter.Api
         /// <returns>
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
-        public CompetitionResponse Any(Competition request)
+        public CompetitionResponse Get(Competition request)
         {
             return new CompetitionResponse { Name = "Tävlingens namn" };
+        }
+
+        /// <summary>
+        /// The put.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="CompetitionResponse"/>.
+        /// </returns>
+        [Authenticate]
+        public CompetitionResponse Put(Competition request)
+        {
+            return new CompetitionResponse { Guid = request.Guid, Name = request.Name };
         }
     }
 }

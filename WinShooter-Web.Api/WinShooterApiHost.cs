@@ -22,8 +22,6 @@
 namespace WinShooter.Api
 {
     using Funq;
-
-    //using ServiceStack.Authentication.OpenId;
     using ServiceStack.Authentication.OpenId;
     using ServiceStack.CacheAccess;
     using ServiceStack.CacheAccess.Providers;
@@ -32,6 +30,7 @@ namespace WinShooter.Api
     using ServiceStack.ServiceInterface.Auth;
     using ServiceStack.WebHost.Endpoints;
 
+    using WinShooter.Api.Api;
     using WinShooter.Api.Authentication;
 
     /// <summary>

@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api
+namespace WinShooter.Api.Api
 {
     using ServiceStack.ServiceHost;
 

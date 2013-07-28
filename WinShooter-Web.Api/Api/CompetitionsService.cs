@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api
+namespace WinShooter.Api.Api
 {
     using System.Collections.Generic;
 
@@ -58,7 +58,6 @@ namespace WinShooter.Api
                            {
                                new CompetitionResponse { Name = "Tävlingen1", Guid = "1" }
                            };
-
         }
     }
 }

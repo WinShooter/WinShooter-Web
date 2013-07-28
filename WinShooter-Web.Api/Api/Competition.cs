@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api
+namespace WinShooter.Api.Api
 {
     using ServiceStack.ServiceHost;
 
@@ -33,5 +33,10 @@ namespace WinShooter.Api
         /// Gets or sets the <see cref="Guid"/>.
         /// </summary>
         public string Guid { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Guid"/>.
+        /// </summary>
+        public string Name { get; set; }
     }
 }
