@@ -64,6 +64,7 @@ namespace WinShooter.Api.Authentication
         public override void OnAuthenticated(IServiceBase authService, IAuthSession session, IOAuthTokens tokens, Dictionary<string, string> authInfo)
         {
             base.OnAuthenticated(authService, session, tokens, authInfo);
+            TimeSpan defaultSessionValidity = new TimeSpan(1,0,0,0);
 
             var userLoginInfos = new List<UserLoginInfo>();
 
@@ -118,8 +119,8 @@ namespace WinShooter.Api.Authentication
                     }
                 }
 
-                // Resolve the DbFactory from the IOC and persist the user info
-                // authService.TryResolve<IDbConnectionFactory>().Run(db => db.Save(user));
+                // Save the session
+                authService.SaveSession(session, defaultSessionValidity);
             }
         }
 
