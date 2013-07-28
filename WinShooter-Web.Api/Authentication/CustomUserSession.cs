@@ -92,38 +92,35 @@ namespace WinShooter.Api.Authentication
                         transaction.Commit();
                     }
                 }
-            }
 
-            UserLoginInfo currentUserLoginInfo;
-            if (userLoginInfos.Count == 0)
-            {
-                currentUserLoginInfo = CreateNewUser(session.ProviderOAuthAccess);
-            }
-            else
-            {
-                currentUserLoginInfo = userLoginInfos[0];
-            }
-
-            session.UserAuthId = currentUserLoginInfo.User.Id.ToString();
-            session.UserAuthName = currentUserLoginInfo.User.Email;
-
-            this.User = currentUserLoginInfo.User;
-
-            if (WinShooterApiHost.AppConfig.AdminUserNames.Contains(currentUserLoginInfo.User.Email)
-                && !session.HasRole(RoleNames.Admin))
-            {
-                using (var assignRoles = authService.ResolveService<AssignRolesService>())
+                UserLoginInfo currentUserLoginInfo;
+                if (userLoginInfos.Count == 0)
                 {
-                    assignRoles.Post(new AssignRoles
-                    {
-                        UserName = session.UserAuthName,
-                        Roles = { RoleNames.Admin }
-                    });
+                    currentUserLoginInfo = CreateNewUser(session.ProviderOAuthAccess);
                 }
-            }
+                else
+                {
+                    currentUserLoginInfo = userLoginInfos[0];
+                }
 
-            // Resolve the DbFactory from the IOC and persist the user info
-            // authService.TryResolve<IDbConnectionFactory>().Run(db => db.Save(user));
+                session.UserAuthId = currentUserLoginInfo.User.Id.ToString();
+                session.UserAuthName = currentUserLoginInfo.User.Email;
+
+                this.User = currentUserLoginInfo.User;
+
+                if (WinShooterApiHost.AppConfig.AdminUserNames.Contains(currentUserLoginInfo.User.Email)
+                    && !session.HasRole(RoleNames.Admin))
+                {
+                    using (var assignRoles = authService.ResolveService<AssignRolesService>())
+                    {
+                        assignRoles.Post(
+                            new AssignRoles { UserName = session.UserAuthName, Roles = { RoleNames.Admin } });
+                    }
+                }
+
+                // Resolve the DbFactory from the IOC and persist the user info
+                // authService.TryResolve<IDbConnectionFactory>().Run(db => db.Save(user));
+            }
         }
 
         /// <summary>
