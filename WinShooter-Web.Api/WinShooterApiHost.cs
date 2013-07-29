@@ -48,7 +48,10 @@ namespace WinShooter.Api
         {
         }
 
-        internal static AppConfig AppConfig;
+        /// <summary>
+        /// Gets the app config.
+        /// </summary>
+        internal static AppConfig AppConfig { get; private set; }
 
         /// <summary>
         /// Configure the given container with the 
@@ -97,21 +100,20 @@ namespace WinShooter.Api
 
             var authProviders = new IAuthProvider[]
                                     {
-                                        //Existing Auth Providers
-                                        new CredentialsAuthProvider(),
-                                        //HTML Form post of UserName/Password credentials
-                                        new TwitterAuthProvider(appSettings), //Sign-in with Twitter
-                                        new FacebookAuthProvider(appSettings), //Sign-in with Facebook
-                                        new DigestAuthProvider(appSettings), //Sign-in with Digest Auth
-                                        new BasicAuthProvider(), //Sign-in with Basic Auth
+                                        // Sign-in with Twitter
+                                        new TwitterAuthProvider(appSettings), 
 
-                                        //Register new OpenId providers you want to allow authentication with
+                                        // Sign-in with Facebook
+                                        new FacebookAuthProvider(appSettings),
+
+                                        // Register new OpenId providers you want to allow authentication with
                                         new GoogleOpenIdOAuthProvider(appSettings),
-                                        //Sign-in with Goolge OpenId
+
+                                        // Sign-in with Goolge OpenId
                                         new YahooOpenIdOAuthProvider(appSettings),
-                                        //Sign-in with Yahoo OpenId
-                                        new OpenIdOAuthProvider(appSettings),
-                                        //Sign-in with any Custom OpenId Provider
+
+                                        // Sign-in with Yahoo OpenId
+                                        new OpenIdOAuthProvider(appSettings)
                                     };
 
             Plugins.Add(new AuthFeature(() => new CustomUserSession(), authProviders));
