@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WinShooter")]
+[assembly: AssemblyTitle("WinShooter_Web2")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WinShooter")]
+[assembly: AssemblyProduct("WinShooter_Web2")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f41bd455-10fa-4779-a9e0-7de5eda23bab")]
+[assembly: Guid("aad0449b-ace7-4e76-b724-4d12c4177af1")]
 
 // Version information for an assembly consists of the following four values:
 //

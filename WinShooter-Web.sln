@@ -22,8 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.Database", "WinShooter-Web.Database\WinShooter-Web.Database.csproj", "{457DCBB2-7BFC-466F-96E7-72C22630D74A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web2", "WinShooter-Web2\WinShooter-Web2.csproj", "{E6C897A3-D670-4662-9CF6-4A925C80EC25}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,10 +52,6 @@ Global
 		{457DCBB2-7BFC-466F-96E7-72C22630D74A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{457DCBB2-7BFC-466F-96E7-72C22630D74A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{457DCBB2-7BFC-466F-96E7-72C22630D74A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6C897A3-D670-4662-9CF6-4A925C80EC25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6C897A3-D670-4662-9CF6-4A925C80EC25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6C897A3-D670-4662-9CF6-4A925C80EC25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6C897A3-D670-4662-9CF6-4A925C80EC25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

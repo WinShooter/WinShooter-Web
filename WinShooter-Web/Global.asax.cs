@@ -15,13 +15,15 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The mvc application.
+//   Defines the Global type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace WinShooter
 {
+    using System;
     using System.Configuration;
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
@@ -31,28 +33,32 @@ namespace WinShooter
 
     using WinShooter_Web.DatabaseMigrations;
 
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
     /// <summary>
-    /// The MVC application.
+    /// The global.
     /// </summary>
-    public class MvcApplication : System.Web.HttpApplication
+    public class Global : HttpApplication
     {
         /// <summary>
-        /// The application start.
+        /// The application start, where everything is setup.
         /// </summary>
-        protected void Application_Start()
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        protected void Application_Start(object sender, EventArgs e)
         {
             log4net.Config.XmlConfigurator.Configure();
             new WinShooterApiHost().Init();
 
-            AreaRegistration.RegisterAllAreas();
+            //AreaRegistration.RegisterAllAreas();
 
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AuthConfig.RegisterAuth();
+
             var sqlDatabaseMigrator = new SqlDatabaseMigrator();
             sqlDatabaseMigrator.MigrateToLatest(ConfigurationManager.ConnectionStrings["WinShooterConnection"].ConnectionString);
         }

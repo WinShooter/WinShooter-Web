@@ -1,22 +1,31 @@
-﻿@model ICollection<AuthenticationClientData>
-
-@{
-    ViewBag.Title = "WinShooter - Logga in";
+﻿@{
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>title</h2>
+<h2>Välkommen att logga in</h2>
 
-@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
-    {
-    @Html.AntiForgeryToken()
-<fieldset id="socialLoginList">
-    <legend>Log in using another service</legend>
-    <p>
-        @foreach (AuthenticationClientData p in Model)
-        {
-            <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" title="Log in using your @p.DisplayName account">@p.DisplayName</button>
-        }
-    </p>
-</fieldset>
-}
+<h2>Logga in</h2>
+
+<div id="google-signin">
+    <form action="@Url.Content("~/api/auth/googleopenid")" method="POST">
+        <input type="image" src="@Url.Content("~/Content/images/sign-in-with-google.png")" alt="Sign in with Google">
+    </form>
+</div>
+
+<div id="yahoo-signin">
+    <form action="@Url.Content("~/api/auth/yahooopenid")" method="POST">
+        <input type="image" src="@Url.Content("~/Content/images/sign-in-with-yahoo.png")" alt="Sign in with Yahoo!">
+    </form>
+</div>
+
+<div id="facebook-signin">
+    <a href="@Url.Content("~/api/auth/facebook")">
+        <img src="@Url.Content("~/Content/images/sign-in-with-facebook.png")" alt="Sign-in with Facebook" /></a>
+</div>
+
+<div id="twitter-signin">
+    <a href="@Url.Content("~/api/auth/twitter")">
+        <img src="@Url.Content("~/Content/images/sign-in-with-twitter-l.png")" alt="Sign-in with Twitter" /></a>
+</div>
+
