@@ -142,6 +142,7 @@
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\sign-in-with-facebook.png" />
     <Content Include="Content\images\sign-in-with-google.png" />
+    <Content Include="Content\images\sign-in-with-linkedin.png" />
     <Content Include="Content\images\sign-in-with-twitter-l.png" />
     <Content Include="Content\images\sign-in-with-yahoo.png" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />

@@ -92,6 +92,7 @@
     <Compile Include="Api\Competitions.cs" />
     <Compile Include="AppConfig.cs" />
     <Compile Include="Authentication\CustomUserSession.cs" />
+    <Compile Include="LinkedinAuthProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WinShooterApiHost.cs" />
   </ItemGroup>
