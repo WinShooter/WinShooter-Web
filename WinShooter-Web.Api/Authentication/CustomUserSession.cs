@@ -27,6 +27,7 @@ namespace WinShooter.Api.Authentication
     using System.Collections.Generic;
     using System.Linq;
 
+    using NHibernate;
     using NHibernate.Linq;
 
     using ServiceStack.ServiceInterface;
@@ -42,9 +43,19 @@ namespace WinShooter.Api.Authentication
     public class CustomUserSession : AuthUserSession
     {
         /// <summary>
-        /// Gets or sets the authenticated user.
+        /// The default session validity.
         /// </summary>
-        public User User { get; set; }
+        private readonly TimeSpan defaultSessionValidity = new TimeSpan(1, 0, 0, 0);
+
+        /// <summary>
+        /// Gets the authenticated user.
+        /// </summary>
+        public User User { get; private set; }
+
+        /// <summary>
+        /// Gets the array of <see cref="UserLoginInfo"/>.
+        /// </summary>
+        public List<UserLoginInfo> UserLoginInfos { get; private set; }
 
         /// <summary>
         /// Called when the user authenticates.
@@ -64,12 +75,12 @@ namespace WinShooter.Api.Authentication
         public override void OnAuthenticated(IServiceBase authService, IAuthSession session, IOAuthTokens tokens, Dictionary<string, string> authInfo)
         {
             base.OnAuthenticated(authService, session, tokens, authInfo);
-            TimeSpan defaultSessionValidity = new TimeSpan(1,0,0,0);
 
             var userLoginInfos = new List<UserLoginInfo>();
 
             using (var dbsession = NHibernateHelper.OpenSession())
             {
+                // Using all tokens, search for a user
                 foreach (var token in session.ProviderOAuthAccess)
                 {
                     var userLoginInfo = (from info in dbsession.Query<UserLoginInfo>()
@@ -94,33 +105,32 @@ namespace WinShooter.Api.Authentication
                     }
                 }
 
-                UserLoginInfo currentUserLoginInfo;
                 if (userLoginInfos.Count == 0)
                 {
-                    currentUserLoginInfo = CreateNewUser(session.ProviderOAuthAccess);
+                    userLoginInfos.Add(CreateNewUser(session.ProviderOAuthAccess));
                 }
-                else
-                {
-                    currentUserLoginInfo = userLoginInfos[0];
-                }
+
+                var currentUserLoginInfo = userLoginInfos[0];
+                this.User = currentUserLoginInfo.User;
+                this.UserLoginInfos = userLoginInfos;
 
                 session.UserAuthId = currentUserLoginInfo.User.Id.ToString();
                 session.UserAuthName = currentUserLoginInfo.User.Email;
 
-                this.User = currentUserLoginInfo.User;
+                if (session.ProviderOAuthAccess.Count != userLoginInfos.Count)
+                {
+                    // Add all provider infos to the same user
+                    this.AddAllTokensToUser(dbsession, this.User, session.ProviderOAuthAccess);
+                }
 
                 if (WinShooterApiHost.AppConfig.AdminUserNames.Contains(currentUserLoginInfo.User.Email)
                     && !session.HasRole(RoleNames.Admin))
                 {
-                    using (var assignRoles = authService.ResolveService<AssignRolesService>())
-                    {
-                        assignRoles.Post(
-                            new AssignRoles { UserName = session.UserAuthName, Roles = { RoleNames.Admin } });
-                    }
+                    this.Roles.Add(RoleNames.Admin);
                 }
 
                 // Save the session
-                authService.SaveSession(session, defaultSessionValidity);
+                authService.SaveSession(session, this.defaultSessionValidity);
             }
         }
 
@@ -154,14 +164,7 @@ namespace WinShooter.Api.Authentication
 
                     foreach (var authToken in providerOAuthAccess)
                     {
-                        var userLoginInfo = new UserLoginInfo
-                                                {
-                                                    User = user,
-                                                    LastLogin = DateTime.Now,
-                                                    IdentityProvider = authToken.Provider,
-                                                    IdentityProviderId = authToken.UserId,
-                                                    IdentityProviderUsername = authToken.Email
-                                                };
+                        var userLoginInfo = CreateLoginInfoFromAuthToken(authToken, user);
                         currentUserLoginInfo = userLoginInfo;
 
                         user.Email = authToken.Email;
@@ -190,6 +193,69 @@ namespace WinShooter.Api.Authentication
             }
 
             return currentUserLoginInfo;
+        }
+
+        /// <summary>
+        /// Create a <see cref="UserLoginInfo"/> from a provider token.
+        /// </summary>
+        /// <param name="authToken">
+        /// The token.
+        /// </param>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <returns>
+        /// The <see cref="UserLoginInfo"/>.
+        /// </returns>
+        private static UserLoginInfo CreateLoginInfoFromAuthToken(IOAuthTokens authToken, User user)
+        {
+            return new UserLoginInfo
+            {
+                User = user,
+                LastLogin = DateTime.Now,
+                IdentityProvider = authToken.Provider,
+                IdentityProviderId = authToken.UserId,
+                IdentityProviderUsername = authToken.Email
+            };
+        }
+
+        /// <summary>
+        /// Make sure to have all tokens in database for the user.
+        /// </summary>
+        /// <param name="dbsession">
+        /// The database session.
+        /// </param>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <param name="providerTokens">
+        /// The provider tokens.
+        /// </param>
+        private void AddAllTokensToUser(ISession dbsession, User user, IEnumerable<IOAuthTokens> providerTokens)
+        {
+            // Using all tokens, search for a user
+            foreach (var authToken in providerTokens)
+            {
+                var userLoginInfo = (from info in dbsession.Query<UserLoginInfo>()
+                                     where
+                                         info.IdentityProvider == authToken.Provider
+                                         && info.IdentityProviderId == authToken.UserId
+                                     select info).SingleOrDefault();
+
+                if (userLoginInfo != null)
+                {
+                    // A connection already exist
+                    continue;
+                }
+
+                using (var transaction = dbsession.BeginTransaction())
+                {
+                    var newUserLoginInfo = CreateLoginInfoFromAuthToken(authToken, user);
+                    dbsession.SaveOrUpdate(newUserLoginInfo);
+                    transaction.Commit();
+                    this.UserLoginInfos.Add(newUserLoginInfo);
+                }
+            }
         }
     }
 }
