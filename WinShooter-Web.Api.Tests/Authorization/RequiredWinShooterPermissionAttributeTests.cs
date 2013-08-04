@@ -1,10 +1,14 @@
 ﻿namespace WinShooter.Api.Tests.Authorization
 {
     using System;
-    using System.Diagnostics;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using ServiceStack.ServiceInterface;
+
+    using WinShooter.Api.Authentication;
     using WinShooter.Api.Authorization;
+    using WinShooter.Api.Tests.Dummys;
     using WinShooter.Database;
 
     [TestClass]
@@ -45,12 +49,45 @@
         {
             var user = new User();
             var competitionId = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5e9");
-            Trace.WriteLine(competitionId.ToString());
 
             var rights = new UserCompetitionRights(competitionId, user);
             rights.Permissions.Add("AddCompetition");
 
-            throw new NotImplementedException();
+            var requiredWinShooterPermissionAttribute = new RequiredWinShooterPermissionAttribute(
+                ApplyTo.All,
+                rights,
+                "AddCompetition");
+
+            var session = new CustomUserSession();
+
+            var httpRequest = new DummyHttpRequest();
+
+            var userAuthRepo = new DummyUserAuthRepository();
+
+            Assert.IsTrue(requiredWinShooterPermissionAttribute.HasAllPermissions(httpRequest, session, userAuthRepo));
+        }
+
+        [TestMethod]
+        public void TestIncorrectRights()
+        {
+            var user = new User();
+            var competitionId = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5e9");
+
+            var rights = new UserCompetitionRights(competitionId, user);
+            rights.Permissions.Add("AddCompetition");
+
+            var requiredWinShooterPermissionAttribute = new RequiredWinShooterPermissionAttribute(
+                ApplyTo.All,
+                rights,
+                "RemoveCompetition");
+
+            var session = new CustomUserSession();
+
+            var httpRequest = new DummyHttpRequest();
+
+            var userAuthRepo = new DummyUserAuthRepository(); 
+            
+            Assert.IsFalse(requiredWinShooterPermissionAttribute.HasAllPermissions(httpRequest, session, userAuthRepo));
         }
     }
 }
