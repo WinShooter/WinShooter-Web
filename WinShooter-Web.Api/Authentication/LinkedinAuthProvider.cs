@@ -1,4 +1,4 @@
-﻿namespace WinShooter.Api
+﻿namespace WinShooter.Api.Authentication
 {
     using System;
     using System.Collections.Generic;
@@ -30,7 +30,7 @@
         public override object Authenticate(
             IServiceBase authService, IAuthSession session, ServiceStack.ServiceInterface.Auth.Auth request)
         {
-            var tokens = Init(authService, ref session, request);
+            var tokens = this.Init(authService, ref session, request);
             var code = authService.RequestContext.Get<IHttpRequest>().QueryString["code"];
             var error = authService.RequestContext.Get<IHttpRequest>().QueryString["error"];
             var isPreAuthError = !string.IsNullOrEmpty(error);
@@ -44,12 +44,12 @@
                 var preAuthUrl = Realm
                                  + "authorization?response_type=code&client_id={0}&scope={1}&state={2}&redirect_uri={3}";
                 preAuthUrl = preAuthUrl.Fmt(
-                    ConsumerKey,
+                    this.ConsumerKey,
                     "r_fullprofile%20r_emailaddress",
                     Guid.NewGuid().ToString(),
                     this.CallbackUrl.UrlEncode());
 
-                authService.SaveSession(session, SessionExpiry);
+                authService.SaveSession(session, this.SessionExpiry);
                 return authService.Redirect(preAuthUrl);
             }
 
@@ -64,8 +64,8 @@
                 var authInfo = JsonObject.Parse(contents);
                 tokens.AccessTokenSecret = authInfo["access_token"];
                 session.IsAuthenticated = true;
-                authService.SaveSession(session, SessionExpiry);
-                OnAuthenticated(authService, session, tokens, authInfo.ToDictionary());
+                authService.SaveSession(session, this.SessionExpiry);
+                this.OnAuthenticated(authService, session, tokens, authInfo.ToDictionary());
 
 
                 return authService.Redirect(session.ReferrerUrl.AddHashParam("s", "1"));
@@ -96,7 +96,7 @@
             tokens.LastName = obj.Get("lastName");
             tokens.Email = obj.Get("emailAddress");
 
-            LoadUserOAuthProvider(userSession, tokens);
+            this.LoadUserOAuthProvider(userSession, tokens);
         }
 
         public override void LoadUserOAuthProvider(IAuthSession authSession, IOAuthTokens tokens)

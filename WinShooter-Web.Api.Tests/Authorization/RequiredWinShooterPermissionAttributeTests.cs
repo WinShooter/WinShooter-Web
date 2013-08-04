@@ -1,6 +1,8 @@
-﻿namespace WinShooter.Api.Tests.Authorization
+﻿
+namespace WinShooter.Api.Tests.Authorization
 {
     using System;
+    using System.Collections.Generic;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -50,8 +52,7 @@
             var user = new User();
             var competitionId = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5e9");
 
-            var rights = new UserCompetitionRights(competitionId, user);
-            rights.Permissions.Add("AddCompetition");
+            var rights = new UserCompetitionRights(competitionId, new List<string>(new []{"AddCompetition"}));
 
             var requiredWinShooterPermissionAttribute = new RequiredWinShooterPermissionAttribute(
                 ApplyTo.All,
@@ -73,17 +74,16 @@
             var user = new User();
             var competitionId = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5e9");
 
-            var rights = new UserCompetitionRights(competitionId, user);
-            rights.Permissions.Add("AddCompetition");
+            var rights = new UserCompetitionRights(competitionId, new List<string>(new[] { "AddCompetition" }));
 
             var requiredWinShooterPermissionAttribute = new RequiredWinShooterPermissionAttribute(
                 ApplyTo.All,
                 rights,
                 "RemoveCompetition");
 
-            var session = new CustomUserSession() { User = user };
+            var session = new CustomUserSession { User = user };
 
-            var httpRequest = new DummyHttpRequest() { PathInfo = "/Competition/" + competitionId + "/" };
+            var httpRequest = new DummyHttpRequest { PathInfo = "/Competition/" + competitionId + "/" };
 
             var userAuthRepo = new DummyUserAuthRepository(); 
             
