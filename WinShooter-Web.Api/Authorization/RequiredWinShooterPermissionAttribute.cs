@@ -47,7 +47,7 @@ namespace WinShooter.Api.Authorization
         /// <param name="permissions">
         /// The permissions.
         /// </param>
-        public RequiredWinShooterPermissionAttribute(params string[] permissions) 
+        public RequiredWinShooterPermissionAttribute(params string[] permissions)
             : this(ApplyTo.All, permissions)
         {
         }
@@ -61,7 +61,8 @@ namespace WinShooter.Api.Authorization
         /// <param name="permissions">
         /// The permissions.
         /// </param>
-        public RequiredWinShooterPermissionAttribute(ApplyTo applyTo, params string[] permissions) : this(applyTo, null, permissions)
+        public RequiredWinShooterPermissionAttribute(ApplyTo applyTo, params string[] permissions)
+            : this(applyTo, null, permissions)
         {
         }
 
@@ -162,11 +163,29 @@ namespace WinShooter.Api.Authorization
         /// <summary>
         /// Gets the competitionID from request URL.
         /// </summary>
-        /// <param name="httpRequest">The HTTP request.</param>
+        /// <param name="relativeUrl"></param>
         /// <returns>The <see cref="Guid"/> for the competition or null of none is found</returns>
         public static Guid GetCompetitionIdFromUrl(string relativeUrl)
         {
-            throw new NotImplementedException();
+            try
+            {
+                relativeUrl = relativeUrl.TrimEnd(new[] { '/' });
+
+                var lastSlash = relativeUrl.LastIndexOf('/');
+
+                if (lastSlash == -1)
+                {
+                    return Guid.Empty;
+                }
+
+                var guidString = relativeUrl.Substring(lastSlash + 1);
+
+                return Guid.Parse(guidString);
+            }
+            catch (Exception)
+            {
+                return Guid.Empty;
+            }
         }
     }
 }
