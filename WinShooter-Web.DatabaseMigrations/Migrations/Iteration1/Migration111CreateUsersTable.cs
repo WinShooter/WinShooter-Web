@@ -32,7 +32,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// <summary>
         /// The users table name.
         /// </summary>
-        private const string UsersTableName = "Users";
+        internal const string UsersTableName = "Users";
 
         /// <summary>
         /// The users login info table name.
@@ -50,7 +50,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             Create.Table(UsersTableName)
-                .WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+                .WithColumn("Id").AsString().NotNullable().Unique().PrimaryKey()
                 .WithColumn("CardNumber").AsString()
                 .WithColumn("Surname").AsString()
                 .WithColumn("Givenname").AsString()
@@ -61,7 +61,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
 
             Create.Table(UsersLoginInfoTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
-                .WithColumn("UserId").AsInt32().NotNullable()
+                .WithColumn("UserId").AsString()
                 .WithColumn("IdentityProvider").AsString().Indexed()
                 .WithColumn("IdentityProviderId").AsString().Indexed()
                 .WithColumn("IdentityProviderUsername").AsString()

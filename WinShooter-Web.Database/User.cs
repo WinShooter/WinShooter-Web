@@ -28,7 +28,7 @@ namespace WinShooter.Database
     /// </summary>
     public class User
     {
-        public virtual int Id { get; set; }
+        public virtual string Id { get; set; }
         public virtual string CardNumber { get; set; }
         public virtual string Surname { get; set; }
         public virtual string Givenname { get; set; }
