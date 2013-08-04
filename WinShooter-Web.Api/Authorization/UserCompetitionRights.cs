@@ -23,6 +23,9 @@ namespace WinShooter.Api.Authorization
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+
+    using NHibernate.Mapping;
 
     using WinShooter.Database;
 
@@ -57,17 +60,19 @@ namespace WinShooter.Api.Authorization
         /// <summary>
         /// Check if a user has a certain permission.
         /// </summary>
-        /// <param name="permission">
+        /// <param name="requestedPermission">
         /// The permission.
         /// </param>
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        internal bool HasPermission(string permission)
+        internal bool HasPermission(string requestedPermission)
         {
-            permission = permission.ToUpperInvariant();
+            requestedPermission = requestedPermission.ToUpperInvariant();
 
-            return this.Permissions.Contains(permission);
+            return (from permision in this.Permissions
+                where permision.ToUpperInvariant() == requestedPermission
+                select permision.ToUpperInvariant()).Any();
         }
     }
 }
