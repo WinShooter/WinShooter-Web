@@ -91,6 +91,9 @@
     <Compile Include="Api\CompetitionService.cs" />
     <Compile Include="Api\CompetitionsService.cs" />
     <Compile Include="Api\Competitions.cs" />
+    <Compile Include="Api\RightsResponse.cs" />
+    <Compile Include="Api\RightsService.cs" />
+    <Compile Include="Api\Rights.cs" />
     <Compile Include="AppConfig.cs" />
     <Compile Include="Authentication\CustomUserSession.cs" />
     <Compile Include="Authorization\RequiredWinShooterPermissionAttribute.cs" />
