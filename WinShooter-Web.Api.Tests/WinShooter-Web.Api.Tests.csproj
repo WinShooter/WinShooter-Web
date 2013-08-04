@@ -74,6 +74,8 @@
   <ItemGroup>
     <Compile Include="Authorization\UserCompetitionRightsTests.cs" />
     <Compile Include="Authorization\RequiredWinShooterPermissionAttributeTests.cs" />
+    <Compile Include="Dummys\DummyHttpRequest.cs" />
+    <Compile Include="Dummys\DummyUserAuthRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
