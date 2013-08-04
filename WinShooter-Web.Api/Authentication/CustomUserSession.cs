@@ -25,6 +25,7 @@ namespace WinShooter.Api.Authentication
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
     using NHibernate;
@@ -33,6 +34,7 @@ namespace WinShooter.Api.Authentication
     using ServiceStack.ServiceInterface;
     using ServiceStack.ServiceInterface.Auth;
 
+    using WinShooter.Api.Authorization;
     using WinShooter.Database;
 
     /// <summary>
@@ -56,6 +58,11 @@ namespace WinShooter.Api.Authentication
         /// Gets the array of <see cref="UserLoginInfo"/>.
         /// </summary>
         public List<UserLoginInfo> UserLoginInfos { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="UserCompetitionRights"/>.
+        /// </summary>
+        internal UserCompetitionRights UserCompetitionRights { get; set; }
 
         /// <summary>
         /// Called when the user authenticates.
@@ -114,7 +121,7 @@ namespace WinShooter.Api.Authentication
                 this.User = currentUserLoginInfo.User;
                 this.UserLoginInfos = userLoginInfos;
 
-                session.UserAuthId = currentUserLoginInfo.User.Id.ToString();
+                session.UserAuthId = currentUserLoginInfo.User.Id.ToString(CultureInfo.InvariantCulture);
                 session.UserAuthName = currentUserLoginInfo.User.Email;
 
                 if (session.ProviderOAuthAccess.Count != userLoginInfos.Count)

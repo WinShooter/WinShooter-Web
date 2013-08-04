@@ -117,7 +117,12 @@ namespace WinShooter.Api.Authorization
 
             if (this.rights == null || this.rights.CompetitionId != competitionId)
             {
-                this.rights = session == null ? new UserCompetitionRights(competitionId, null) : new UserCompetitionRights(competitionId, session.User);
+                this.rights = session == null ? new UserCompetitionRights(competitionId) : new UserCompetitionRights(competitionId, session.User);
+            }
+
+            if (session != null)
+            {
+                session.UserCompetitionRights = this.rights;
             }
 
             if (this.HasAllPermissions(httpRequest, session))
