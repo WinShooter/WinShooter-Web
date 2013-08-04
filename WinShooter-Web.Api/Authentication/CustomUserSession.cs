@@ -50,7 +50,7 @@ namespace WinShooter.Api.Authentication
         /// <summary>
         /// Gets the authenticated user.
         /// </summary>
-        public User User { get; private set; }
+        public User User { get; set; }
 
         /// <summary>
         /// Gets the array of <see cref="UserLoginInfo"/>.

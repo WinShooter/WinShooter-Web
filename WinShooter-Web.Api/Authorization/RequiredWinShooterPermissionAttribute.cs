@@ -157,7 +157,29 @@ namespace WinShooter.Api.Authorization
                 return true;
             }
 
-            return false;
+            var competitionId = GetCompetitionIdFromUrl(httpRequest.PathInfo);
+
+            var customUserSession = session as CustomUserSession;
+            if (customUserSession == null || customUserSession.User == null || (Guid.Empty == competitionId))
+            {
+                // Anonymous
+                // TODO Implement
+                return false;
+            }
+            else
+            {
+                if (this.rights == null)
+                {
+                    this.rights = new UserCompetitionRights(competitionId, customUserSession.User);
+                }
+
+                var missingRights =
+                    (from requiredRight in this.RequiredPermissions
+                        where !this.rights.HasPermission(requiredRight)
+                        select requiredRight).Any();
+
+                return !missingRights;
+            }
         }
 
         /// <summary>

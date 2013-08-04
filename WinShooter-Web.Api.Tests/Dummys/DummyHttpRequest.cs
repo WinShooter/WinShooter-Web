@@ -42,7 +42,7 @@ namespace WinShooter.Api.Tests.Dummys
         public string XRealIp { get; private set; }
         public bool IsSecureConnection { get; private set; }
         public string[] AcceptTypes { get; private set; }
-        public string PathInfo { get; private set; }
+        public string PathInfo { get; set; }
         public Stream InputStream { get; private set; }
         public long ContentLength { get; private set; }
         public IFile[] Files { get; private set; }

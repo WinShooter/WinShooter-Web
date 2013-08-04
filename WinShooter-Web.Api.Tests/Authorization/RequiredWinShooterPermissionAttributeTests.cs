@@ -58,9 +58,9 @@
                 rights,
                 "AddCompetition");
 
-            var session = new CustomUserSession();
+            var session = new CustomUserSession { User = user };
 
-            var httpRequest = new DummyHttpRequest();
+            var httpRequest = new DummyHttpRequest { PathInfo = "/Competition/" + competitionId + "/" };
 
             var userAuthRepo = new DummyUserAuthRepository();
 
@@ -81,9 +81,9 @@
                 rights,
                 "RemoveCompetition");
 
-            var session = new CustomUserSession();
+            var session = new CustomUserSession() { User = user };
 
-            var httpRequest = new DummyHttpRequest();
+            var httpRequest = new DummyHttpRequest() { PathInfo = "/Competition/" + competitionId + "/" };
 
             var userAuthRepo = new DummyUserAuthRepository(); 
             
