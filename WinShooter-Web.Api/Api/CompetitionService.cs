@@ -23,6 +23,8 @@ namespace WinShooter.Api.Api
 {
     using ServiceStack.ServiceInterface;
 
+    using WinShooter.Api.Authorization;
+
     /// <summary>
     /// The competition service.
     /// </summary>
@@ -52,9 +54,10 @@ namespace WinShooter.Api.Api
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
         [Authenticate]
+        [RequiredWinShooterPermission("ReadCompetition")]
         public CompetitionResponse Put(Competition request)
         {
-            return new CompetitionResponse { Guid = request.Guid, Name = request.Name };
+            return new CompetitionResponse { CompetitionId = request.CompetitionId, Name = request.Name };
         }
     }
 }

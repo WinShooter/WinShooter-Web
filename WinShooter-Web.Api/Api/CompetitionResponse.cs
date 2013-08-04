@@ -19,8 +19,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api
+namespace WinShooter.Api.Api
 {
+    using System;
+
     /// <summary>
     /// Represents the competition response.
     /// </summary>
@@ -34,6 +36,6 @@ namespace WinShooter.Api
         /// <summary>
         /// Gets or sets the <see cref="Guid"/>.
         /// </summary>
-        public string Guid { get; set; }
+        public string CompetitionId { get; set; }
     }
 }

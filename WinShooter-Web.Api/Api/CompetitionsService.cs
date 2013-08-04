@@ -25,6 +25,8 @@ namespace WinShooter.Api.Api
 
     using ServiceStack.ServiceInterface;
 
+    using WinShooter.Api.Authorization;
+
     /// <summary>
     /// The competitions service.
     /// </summary>
@@ -39,6 +41,8 @@ namespace WinShooter.Api.Api
         /// <returns>
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
+        [Authenticate]
+        [RequiredWinShooterPermission("ReadCompetition")]
         public List<CompetitionResponse> Get(Competitions request)
         {
             var sess = this.GetSession();
@@ -47,16 +51,16 @@ namespace WinShooter.Api.Api
             {
                 return new List<CompetitionResponse>
                            {
-                               new CompetitionResponse { Name = "Tävlingen1", Guid = "1" },
-                               new CompetitionResponse { Name = "Tävlingen2", Guid = "2" },
-                               new CompetitionResponse { Name = "Tävlingen3", Guid = "3" },
-                               new CompetitionResponse { Name = "Tävlingen4", Guid = "4" }
+                               new CompetitionResponse { Name = "Tävlingen1", CompetitionId = "1" },
+                               new CompetitionResponse { Name = "Tävlingen2", CompetitionId = "2" },
+                               new CompetitionResponse { Name = "Tävlingen3", CompetitionId = "3" },
+                               new CompetitionResponse { Name = "Tävlingen4", CompetitionId = "4" }
                            };
             }
 
             return new List<CompetitionResponse>
                            {
-                               new CompetitionResponse { Name = "Tävlingen1", Guid = "1" }
+                               new CompetitionResponse { Name = "Tävlingen1", CompetitionId = "1" }
                            };
         }
     }

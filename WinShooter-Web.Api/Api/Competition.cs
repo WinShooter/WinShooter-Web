@@ -21,18 +21,20 @@
 
 namespace WinShooter.Api.Api
 {
+    using System;
+
     using ServiceStack.ServiceHost;
 
     /// <summary>
     /// Represents a competition from the client.
     /// </summary>
-    [Route("/api/competition")]
+    [Route("/competition/{CompetitionId}")]
     public class Competition
     {
         /// <summary>
         /// Gets or sets the <see cref="Guid"/>.
         /// </summary>
-        public string Guid { get; set; }
+        public string CompetitionId { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="Guid"/>.

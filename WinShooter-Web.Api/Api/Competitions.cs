@@ -26,7 +26,7 @@ namespace WinShooter.Api.Api
     /// <summary>
     /// Represents a competition from the client.
     /// </summary>
-    [Route("/api/competitions")]
+    [Route("/competitions")]
     public class Competitions
     {
         /// <summary>
