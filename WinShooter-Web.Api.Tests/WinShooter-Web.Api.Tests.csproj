@@ -40,7 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\UserCompetitionRightsTests.cs" />
+    <Compile Include="Authorization\RequiredWinShooterPermissionAttributeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WinShooter-Web.Api\WinShooter-Web.Api.csproj">
+      <Project>{86af05c5-4135-4730-a92b-31a3713501eb}</Project>
+      <Name>WinShooter-Web.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinShooter-Web.Database\WinShooter-Web.Database.csproj">
+      <Project>{457dcbb2-7bfc-466f-96e7-72c22630d74a}</Project>
+      <Name>WinShooter-Web.Database</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
