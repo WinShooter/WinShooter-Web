@@ -25,8 +25,6 @@ namespace WinShooter.Api.Authorization
     using System.Collections.Generic;
     using System.Linq;
 
-    using NHibernate.Mapping;
-
     using WinShooter.Database;
 
     /// <summary>
@@ -34,6 +32,17 @@ namespace WinShooter.Api.Authorization
     /// </summary>
     internal class UserCompetitionRights
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserCompetitionRights"/> class.
+        /// </summary>
+        /// <param name="competitionId">
+        /// The competition id.
+        /// </param>
+        internal UserCompetitionRights(Guid competitionId)
+        {
+            this.CompetitionId = competitionId;
+            this.Permissions = new List<string>();
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserCompetitionRights"/> class.
@@ -48,6 +57,26 @@ namespace WinShooter.Api.Authorization
         {
             this.CompetitionId = competitionId;
             this.Permissions = new List<string>();
+
+            using (var dbsession = NHibernateHelper.OpenSession())
+            {
+                // TODO Implement fetching rights from database
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserCompetitionRights"/> class.
+        /// </summary>
+        /// <param name="competitionId">
+        /// The competition id.
+        /// </param>
+        /// <param name="permissions">
+        /// The permissions.
+        /// </param>
+        internal UserCompetitionRights(Guid competitionId, List<string> permissions)
+        {
+            this.CompetitionId = competitionId;
+            this.Permissions = permissions;
         }
 
         /// <summary>

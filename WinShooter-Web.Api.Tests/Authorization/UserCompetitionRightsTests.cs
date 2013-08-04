@@ -20,5 +20,17 @@
             Assert.IsTrue(rights.HasPermission("AddCompetition"));
             Assert.IsFalse(rights.HasPermission("DestroyEverything"));
         }
+
+        [TestMethod]
+        public void TestFetchingRightsFromDatabase()
+        {
+            var user = new User { Id = 42 };
+            var competitionId = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5e9");
+
+            var rights = new UserCompetitionRights(competitionId, user);
+            rights.Permissions.Add("AddCompetition");
+            Assert.IsTrue(rights.HasPermission("AddCompetition"));
+            Assert.IsFalse(rights.HasPermission("DestroyEverything"));
+        }
     }
 }
