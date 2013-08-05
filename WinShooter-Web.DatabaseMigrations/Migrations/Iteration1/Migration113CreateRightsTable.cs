@@ -32,12 +32,12 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// <summary>
         /// The users table name.
         /// </summary>
-        private const string RightsTableName = "Rights";
+        internal const string RightsTableName = "Rights";
 
         /// <summary>
         /// The users login info table name.
         /// </summary>
-        private const string RoleRightsInfoTableName = "RoleRightsInfo";
+        internal const string RoleRightsInfoTableName = "RoleRightsInfo";
 
         /// <summary>
         /// The name of the foreign key between <see cref="RightsTableName"/> and <see cref="RoleRightsInfoTableName"/> tables.
@@ -56,10 +56,10 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         {
             Create.Table(RightsTableName)
                 .WithColumn("Id").AsString().NotNullable().PrimaryKey()
-                .WithColumn("Right").AsString().NotNullable();
+                .WithColumn("Name").AsString().NotNullable();
 
             Create.Table(RoleRightsInfoTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
+                .WithColumn("Id").AsInt32().Identity()
                 .WithColumn("RoleId").AsString().NotNullable()
                 .WithColumn("RightId").AsString().NotNullable();
 
