@@ -51,6 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RightMap.cs" />
+    <Compile Include="Right.cs" />
+    <Compile Include="RoleMap.cs" />
+    <Compile Include="Role.cs" />
     <Compile Include="DatabaseConsts.cs" />
     <Compile Include="NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
