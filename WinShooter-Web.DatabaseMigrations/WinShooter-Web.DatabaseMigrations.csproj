@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISqlDatabaseMigrator.cs" />
+    <Compile Include="Migrations\Iteration1\Migration113CreateRightsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration112CreateRolesTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration111CreateUsersTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration100CreateCompetitionTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration110CreateForeignKeys.cs" />
