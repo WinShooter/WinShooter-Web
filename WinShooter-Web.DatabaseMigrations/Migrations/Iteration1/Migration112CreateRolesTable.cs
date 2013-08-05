@@ -56,7 +56,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         {
             Create.Table(RolesTableName)
                 .WithColumn("Id").AsString().NotNullable().Unique()
-                .WithColumn("Role").AsString().NotNullable();
+                .WithColumn("RoleName").AsString().NotNullable();
 
             Create.Table(UserRolesInfoTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()

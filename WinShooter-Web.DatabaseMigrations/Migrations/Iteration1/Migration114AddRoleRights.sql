@@ -18,22 +18,21 @@ insert into Rights (Id, Name) values ('f67b15e9-2fd3-4d99-8015-3fa92c0f65a5', 'D
 insert into Rights (Id, Name) values ('9c57c1b8-b281-4f8c-a747-4cf1ed5badb4', 'GetCompetitionResults')
 
 /* Role Owner */
-insert into Roles (Id, Role) values ('21e30b68-2b58-4252-9858-7f5cbcc29a66', 'CompetitionOwner')
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where Role='CompetitionOwner'), (select Id from Rights where Name='DeleteCompetition'))
+insert into Roles (Id, RoleName) values ('21e30b68-2b58-4252-9858-7f5cbcc29a66', 'CompetitionOwner')
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='DeleteCompetition'))
 
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where Role='CompetitionOwner'), (select Id from Rights where Name='ReadCompetitors'))
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where Role='CompetitionOwner'), (select Id from Rights where Name='UpdateCompetitors'))
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where Role='CompetitionOwner'), (select Id from Rights where Name='DeleteCompetitors'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='ReadCompetitors'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='UpdateCompetitors'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='DeleteCompetitors'))
 
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where Role='CompetitionOwner'), (select Id from Rights where Name='ReadCompetitorResults'))
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where Role='CompetitionOwner'), (select Id from Rights where Name='AddCompetitorResults'))
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where Role='CompetitionOwner'), (select Id from Rights where Name='UpdateCompetitorResults'))
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where Role='CompetitionOwner'), (select Id from Rights where Name='DeleteCompetitorResults'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='ReadCompetitorResults'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='AddCompetitorResults'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='UpdateCompetitorResults'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='DeleteCompetitorResults'))
 
 /* Role Reader */
-insert into Roles (Id, Role) values ('2a846801-5ae3-4318-8c54-68709f15f8a9', 'Reader')
+insert into Roles (Id, RoleName) values ('2a846801-5ae3-4318-8c54-68709f15f8a9', 'Reader')
 
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where Role='Reader'), (select Id from Rights where Name='ReadCompetitors'))
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where Role='Reader'), (select Id from Rights where Name='GetCompetitionResults'))
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where Role='Reader'), (select Id from Rights where Name='ReadCompetitorResults'))
-
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='Reader'), (select Id from Rights where Name='ReadCompetitors'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='Reader'), (select Id from Rights where Name='GetCompetitionResults'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='Reader'), (select Id from Rights where Name='ReadCompetitorResults'))
