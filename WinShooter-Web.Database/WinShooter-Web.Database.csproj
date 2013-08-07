@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RoleRightsInfoMap.cs" />
+    <Compile Include="RoleRightsInfo.cs" />
     <Compile Include="RightMap.cs" />
     <Compile Include="Right.cs" />
     <Compile Include="RoleMap.cs" />
