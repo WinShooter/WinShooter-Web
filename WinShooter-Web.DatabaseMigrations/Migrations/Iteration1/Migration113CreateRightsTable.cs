@@ -55,7 +55,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             Create.Table(RightsTableName)
-                .WithColumn("Id").AsString().NotNullable().PrimaryKey()
+                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("Name").AsString().NotNullable();
 
             Create.Table(RoleRightsInfoTableName)

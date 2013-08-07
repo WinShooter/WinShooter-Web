@@ -60,14 +60,14 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             Create.Table(RolesTableName)
-                .WithColumn("Id").AsString().NotNullable().Unique()
+                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("RoleName").AsString().NotNullable();
 
             Create.Table(UserRolesInfoTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
-                .WithColumn("UserId").AsString().NotNullable()
-                .WithColumn("RoleId").AsString().NotNullable()
-                .WithColumn("CompetitionId").AsString().NotNullable();
+                .WithColumn("UserId").AsGuid().NotNullable()
+                .WithColumn("RoleId").AsGuid().NotNullable()
+                .WithColumn("CompetitionId").AsGuid().NotNullable();
 
             Create.ForeignKey(UserRolesInfoRolesForeignKeyName)
                 .FromTable(UserRolesInfoTableName).ForeignColumn("RoleId")
@@ -87,6 +87,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
+            Delete.ForeignKey(UserRolesInfoCompetitionForeignKeyName);
             Delete.ForeignKey(UserRolesInfoUsersForeignKeyName);
             Delete.ForeignKey(UserRolesInfoRolesForeignKeyName);
             Delete.Table(RolesTableName);
