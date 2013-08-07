@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserLoginInfoMap.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Competition.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,34 +15,24 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Creates the mapping between the <see cref="UserLoginInfo" /> class and the database.
+//   The representation of the database User Roles Info.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace WinShooter.Database
 {
-    using FluentNHibernate.Mapping;
+    using System;
 
     /// <summary>
-    /// Creates the mapping between the <see cref="UserLoginInfo"/> class and the database.
+    /// The representation of the database competition.
     /// </summary>
-    public class UserLoginInfoMap : ClassMap<UserLoginInfo>
+    public class Competition
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserLoginInfoMap"/> class.
-        /// </summary>
-        public UserLoginInfoMap()
-        {
-            this.Id(x => x.Id);
-
-            this.Map(x => x.IdentityProvider);
-            this.Map(x => x.IdentityProviderId);
-            this.Map(x => x.IdentityProviderUsername);
-            this.Map(x => x.LastLogin);
-
-            References(x => x.User).Column("User");
-
-            this.Table("UsersLoginInfo");
-        }
+        public virtual int Id { get; set; }
+        public virtual string Name { get; set; }
+        public virtual DateTime StartDate { get; set; }
+        public virtual int CompetitionType { get; set; }
+        public virtual bool UseNorwegianCount { get; set; }
+        public virtual bool IsPublic { get; set; }
     }
 }

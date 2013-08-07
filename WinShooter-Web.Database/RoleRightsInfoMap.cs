@@ -36,7 +36,7 @@ namespace WinShooter.Database
             this.Id(x => x.Id);
 
             References(x => x.Role).Column("RoleId");
-            References(x => x.Role).Column("RightId");
+            References(x => x.Right).Column("RightId");
 
             this.Table("RoleRightsInfo");
         }
