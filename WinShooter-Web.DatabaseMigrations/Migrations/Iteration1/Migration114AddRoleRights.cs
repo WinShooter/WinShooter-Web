@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserLoginInfoMap.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Migration111CreateUsersTable.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,34 +15,36 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Creates the mapping between the <see cref="UserLoginInfo" /> class and the database.
+//   Creates the users users table.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Database
+namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
 {
-    using FluentNHibernate.Mapping;
+    using FluentMigrator;
 
     /// <summary>
-    /// Creates the mapping between the <see cref="UserLoginInfo"/> class and the database.
+    /// Creates the users users table.
     /// </summary>
-    public class UserLoginInfoMap : ClassMap<UserLoginInfo>
+    [Migration(114)]
+    public class Migration114AddRoleRights : Migration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserLoginInfoMap"/> class.
+        /// Migrates the database up.
         /// </summary>
-        public UserLoginInfoMap()
+        public override void Up()
         {
-            this.Id(x => x.Id);
+            Execute.EmbeddedScript("Migration114AddRoleRights.sql");
+        }
 
-            this.Map(x => x.IdentityProvider);
-            this.Map(x => x.IdentityProviderId);
-            this.Map(x => x.IdentityProviderUsername);
-            this.Map(x => x.LastLogin);
-
-            References(x => x.User).Column("User");
-
-            this.Table("UsersLoginInfo");
+        /// <summary>
+        /// Migrates the database down.
+        /// </summary>
+        public override void Down()
+        {
+            Execute.Sql("DELETE FROM " + Migration112CreateRolesTable.RolesTableName);
+            Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RightsTableName);
+            Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RoleRightsInfoTableName);
         }
     }
 }

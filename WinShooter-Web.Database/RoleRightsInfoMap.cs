@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Creates the mapping between the <see cref="UserLoginInfo" /> class and the database.
+//   Creates the mapping between the <see cref="RoleRightsInfo" /> class and the database.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,25 +24,21 @@ namespace WinShooter.Database
     using FluentNHibernate.Mapping;
 
     /// <summary>
-    /// Creates the mapping between the <see cref="UserLoginInfo"/> class and the database.
+    /// Creates the mapping between the <see cref="RoleRightsInfo"/> class and the database.
     /// </summary>
-    public class UserLoginInfoMap : ClassMap<UserLoginInfo>
+    public class RoleRightsInfoMap : ClassMap<RoleRightsInfo>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UserLoginInfoMap"/> class.
         /// </summary>
-        public UserLoginInfoMap()
+        public RoleRightsInfoMap()
         {
             this.Id(x => x.Id);
 
-            this.Map(x => x.IdentityProvider);
-            this.Map(x => x.IdentityProviderId);
-            this.Map(x => x.IdentityProviderUsername);
-            this.Map(x => x.LastLogin);
+            References(x => x.Role).Column("RoleId");
+            References(x => x.Right).Column("RightId");
 
-            References(x => x.User).Column("User");
-
-            this.Table("UsersLoginInfo");
+            this.Table("RoleRightsInfo");
         }
     }
 }

@@ -51,6 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Competition.cs" />
+    <Compile Include="CompetitionMap.cs" />
+    <Compile Include="UserRolesInfoMap.cs" />
+    <Compile Include="UserRolesInfo.cs" />
+    <Compile Include="RoleRightsInfoMap.cs" />
+    <Compile Include="RoleRightsInfo.cs" />
+    <Compile Include="RightMap.cs" />
+    <Compile Include="Right.cs" />
+    <Compile Include="RoleMap.cs" />
+    <Compile Include="Role.cs" />
     <Compile Include="DatabaseConsts.cs" />
     <Compile Include="NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

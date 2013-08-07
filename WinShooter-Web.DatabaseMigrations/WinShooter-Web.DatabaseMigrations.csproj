@@ -49,6 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISqlDatabaseMigrator.cs" />
+    <Compile Include="Migrations\Iteration1\Migration114AddRoleRights.cs" />
+    <Compile Include="Migrations\Iteration1\Migration113CreateRightsTable.cs" />
+    <Compile Include="Migrations\Iteration1\Migration112CreateRolesTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration111CreateUsersTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration100CreateCompetitionTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration110CreateForeignKeys.cs" />
@@ -67,7 +70,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\Iteration1\Migration114AddRoleRights.sql">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

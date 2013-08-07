@@ -26,50 +26,50 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
     /// <summary>
     /// Creates the users users table.
     /// </summary>
-    [Migration(111)]
-    public class Migration111CreateUsersTable : Migration
+    [Migration(113)]
+    public class Migration113CreateRightsTable : Migration
     {
         /// <summary>
         /// The users table name.
         /// </summary>
-        internal const string UsersTableName = "Users";
+        internal const string RightsTableName = "Rights";
 
         /// <summary>
         /// The users login info table name.
         /// </summary>
-        private const string UsersLoginInfoTableName = "UsersLoginInfo";
+        internal const string RoleRightsInfoTableName = "RoleRightsInfo";
 
         /// <summary>
-        /// The name of the foreign key between <see cref="UsersTableName"/> and <see cref="UsersLoginInfoTableName"/> tables.
+        /// The name of the foreign key between <see cref="RightsTableName"/> and <see cref="RoleRightsInfoTableName"/> tables.
         /// </summary>
-        private const string UsersLoginInfoForeignKeyName = "FK_Users_UsersLoginInfo";
+        private const string RoleRightsInfoRolesForeignKeyName = "FK_RoleRightsInfo_Roles";
+
+        /// <summary>
+        /// The name of the foreign key between <see cref="RightsTableName"/> and <see cref="RoleRightsInfoTableName"/> tables.
+        /// </summary>
+        private const string RoleRightsInfoRightsForeignKeyName = "FK_RoleRightsInfo_Rights";
 
         /// <summary>
         /// Migrates the database up.
         /// </summary>
         public override void Up()
         {
-            Create.Table(UsersTableName)
+            Create.Table(RightsTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
-                .WithColumn("CardNumber").AsString()
-                .WithColumn("Surname").AsString()
-                .WithColumn("Givenname").AsString()
-                .WithColumn("Email").AsString()
-                .WithColumn("ClubId").AsGuid()
-                .WithColumn("LastUpdated").AsDateTime()
-                .WithColumn("LastLogin").AsDateTime();
+                .WithColumn("Name").AsString().NotNullable();
 
-            Create.Table(UsersLoginInfoTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
-                .WithColumn("UserId").AsGuid()
-                .WithColumn("IdentityProvider").AsString().Indexed()
-                .WithColumn("IdentityProviderId").AsString().Indexed()
-                .WithColumn("IdentityProviderUsername").AsString()
-                .WithColumn("LastLogin").AsDateTime();
+            Create.Table(RoleRightsInfoTableName)
+                .WithColumn("Id").AsInt32().Identity()
+                .WithColumn("RoleId").AsString().NotNullable()
+                .WithColumn("RightId").AsString().NotNullable();
 
-            Create.ForeignKey(UsersLoginInfoForeignKeyName)
-                .FromTable(UsersLoginInfoTableName).ForeignColumn("UserId")
-                .ToTable(UsersTableName).PrimaryColumn("Id");
+            Create.ForeignKey(RoleRightsInfoRolesForeignKeyName)
+                .FromTable(RoleRightsInfoTableName).ForeignColumn("RoleId")
+                .ToTable(Migration112CreateRolesTable.RolesTableName).PrimaryColumn("Id");
+
+            Create.ForeignKey(RoleRightsInfoRightsForeignKeyName)
+                .FromTable(RoleRightsInfoTableName).ForeignColumn("RightId")
+                .ToTable(RightsTableName).PrimaryColumn("Id");
         }
 
         /// <summary>
@@ -77,9 +77,10 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            Delete.ForeignKey(UsersLoginInfoForeignKeyName);
-            Delete.Table(UsersTableName);
-            Delete.Table(UsersLoginInfoTableName);
+            Delete.ForeignKey(RoleRightsInfoRightsForeignKeyName);
+            Delete.ForeignKey(RoleRightsInfoRolesForeignKeyName);
+            Delete.Table(RightsTableName);
+            Delete.Table(RoleRightsInfoTableName);
         }
     }
 }
