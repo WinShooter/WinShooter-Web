@@ -47,7 +47,12 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// <summary>
         /// The name of the foreign key between <see cref="RolesTableName"/> and <see cref="UserRolesInfoTableName"/> tables.
         /// </summary>
-        private const string UsersUserRolesInfoForeignKeyName = "FK_Users_UserRolesInfo";
+        private const string UserRolesInfoUsersForeignKeyName = "FK_UserRolesInfo_Users";
+
+        /// <summary>
+        /// The name of the foreign key between <see cref="RolesTableName"/> and <see cref="UserRolesInfoTableName"/> tables.
+        /// </summary>
+        private const string UserRolesInfoCompetitionForeignKeyName = "FK_UserRolesInfo_Competition";
 
         /// <summary>
         /// Migrates the database up.
@@ -68,9 +73,13 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
                 .FromTable(UserRolesInfoTableName).ForeignColumn("RoleId")
                 .ToTable(RolesTableName).PrimaryColumn("Id");
 
-            Create.ForeignKey(UsersUserRolesInfoForeignKeyName)
+            Create.ForeignKey(UserRolesInfoUsersForeignKeyName)
                 .FromTable(UserRolesInfoTableName).ForeignColumn("UserId")
                 .ToTable(Migration111CreateUsersTable.UsersTableName).PrimaryColumn("Id");
+
+            Create.ForeignKey(UserRolesInfoCompetitionForeignKeyName)
+                .FromTable(UserRolesInfoTableName).ForeignColumn("CompetitionId")
+                .ToTable(Migration100CreateCompetitionTable.CompetitionTableName).PrimaryColumn("Id");
         }
 
         /// <summary>
@@ -78,7 +87,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            Delete.ForeignKey(UsersUserRolesInfoForeignKeyName);
+            Delete.ForeignKey(UserRolesInfoUsersForeignKeyName);
             Delete.ForeignKey(UserRolesInfoRolesForeignKeyName);
             Delete.Table(RolesTableName);
             Delete.Table(UserRolesInfoTableName);
