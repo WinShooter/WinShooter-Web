@@ -40,7 +40,7 @@ namespace WinShooter.Database
             this.Map(x => x.IdentityProviderUsername);
             this.Map(x => x.LastLogin);
 
-            References(x => x.User).Column("User");
+            References(x => x.User).Column("UserId");
 
             this.Table("UsersLoginInfo");
         }
