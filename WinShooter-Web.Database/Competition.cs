@@ -40,7 +40,7 @@ namespace WinShooter.Database
         public virtual Guid Id { get; set; }
         public virtual string Name { get; set; }
         public virtual DateTime StartDate { get; set; }
-        public virtual int CompetitionType { get; set; }
+        public virtual CompetitionType CompetitionType { get; set; }
         public virtual bool UseNorwegianCount { get; set; }
         public virtual bool IsPublic { get; set; }
     }

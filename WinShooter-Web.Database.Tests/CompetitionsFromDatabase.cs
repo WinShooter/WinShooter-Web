@@ -67,7 +67,7 @@ namespace WinShooter.Database.Tests
                 var toAdd = new Competition
                                 {
                                     Name = tempName,
-                                    CompetitionType = (int)CompetitionType.Field,
+                                    CompetitionType = CompetitionType.Field,
                                     IsPublic = true,
                                     StartDate = DateTime.Now,
                                     UseNorwegianCount = false

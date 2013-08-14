@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserMap.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitionMap.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Creates the mapping between the user class and the database.
+//   Creates the mapping between the competition class and the database.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,7 +24,7 @@ namespace WinShooter.Database
     using FluentNHibernate.Mapping;
 
     /// <summary>
-    /// Creates the mapping between the user class and the database.
+    /// Creates the mapping between the competition class and the database.
     /// </summary>
     public class CompetitionMap : ClassMap<Competition>
     {
@@ -37,7 +37,7 @@ namespace WinShooter.Database
 
             this.Map(x => x.Name);
             this.Map(x => x.StartDate);
-            this.Map(x => x.CompetitionType);
+            this.Map(x => x.CompetitionType).CustomType<CompetitionType>();
             this.Map(x => x.UseNorwegianCount);
             this.Map(x => x.IsPublic);
 
