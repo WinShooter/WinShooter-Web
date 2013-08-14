@@ -37,23 +37,26 @@ namespace WinShooter.Api.Authorization
     /// The authorization filter.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class RequiredWinShooterPermissionAttribute : AuthenticateAttribute
+    public class RequiredWinShooterCompetitionPermissionAttribute : AuthenticateAttribute
     {
+        /// <summary>
+        /// The rights.
+        /// </summary>
         private UserCompetitionRights rights;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequiredWinShooterPermissionAttribute"/> class.
+        /// Initializes a new instance of the <see cref="RequiredWinShooterCompetitionPermissionAttribute"/> class.
         /// </summary>
         /// <param name="permissions">
         /// The permissions.
         /// </param>
-        public RequiredWinShooterPermissionAttribute(params string[] permissions)
+        public RequiredWinShooterCompetitionPermissionAttribute(params string[] permissions)
             : this(ApplyTo.All, permissions)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequiredWinShooterPermissionAttribute"/> class.
+        /// Initializes a new instance of the <see cref="RequiredWinShooterCompetitionPermissionAttribute"/> class.
         /// </summary>
         /// <param name="applyTo">
         /// The apply to.
@@ -61,13 +64,13 @@ namespace WinShooter.Api.Authorization
         /// <param name="permissions">
         /// The permissions.
         /// </param>
-        public RequiredWinShooterPermissionAttribute(ApplyTo applyTo, params string[] permissions)
+        public RequiredWinShooterCompetitionPermissionAttribute(ApplyTo applyTo, params string[] permissions)
             : this(applyTo, null, permissions)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequiredWinShooterPermissionAttribute"/> class.
+        /// Initializes a new instance of the <see cref="RequiredWinShooterCompetitionPermissionAttribute"/> class.
         /// </summary>
         /// <param name="applyTo">
         /// The apply to.
@@ -78,7 +81,7 @@ namespace WinShooter.Api.Authorization
         /// <param name="permissions">
         /// The permissions.
         /// </param>
-        internal RequiredWinShooterPermissionAttribute(ApplyTo applyTo, UserCompetitionRights rights, params string[] permissions)
+        internal RequiredWinShooterCompetitionPermissionAttribute(ApplyTo applyTo, UserCompetitionRights rights, params string[] permissions)
         {
             this.rights = rights;
             this.RequiredPermissions = permissions.ToList();
@@ -90,6 +93,41 @@ namespace WinShooter.Api.Authorization
         /// Gets or sets the required permissions.
         /// </summary>
         public List<string> RequiredPermissions { get; set; }
+
+        /// <summary>
+        /// Gets the competitionID from request URL.
+        /// </summary>
+        /// <param name="relativeUrl">The URL</param>
+        /// <returns>The <see cref="Guid"/> for the competition or null of none is found</returns>
+        public static Guid GetCompetitionIdFromUrl(string relativeUrl)
+        {
+            const string CompetitionString = "/COMPETITION/";
+
+            try
+            {
+                relativeUrl = relativeUrl.ToUpperInvariant();
+                var competitionStart = relativeUrl.IndexOf(CompetitionString, StringComparison.Ordinal);
+
+                if (competitionStart == -1)
+                {
+                    return Guid.Empty;
+                }
+
+                relativeUrl = relativeUrl.Substring(competitionStart + CompetitionString.Length);
+
+                var lastSlash = relativeUrl.IndexOf('/');
+                if (lastSlash > -1)
+                {
+                    relativeUrl = relativeUrl.Substring(0, lastSlash);
+                }
+
+                return Guid.Parse(relativeUrl);
+            }
+            catch (Exception)
+            {
+                return Guid.Empty;
+            }
+        }
 
         /// <summary>
         /// The execute.
@@ -150,7 +188,7 @@ namespace WinShooter.Api.Authorization
         /// The session.
         /// </param>
         /// <param name="userAuthRepo">
-        /// The user auth repo.
+        /// The user authentication repository.
         /// </param>
         /// <returns>
         /// The <see cref="bool"/>.
@@ -184,34 +222,6 @@ namespace WinShooter.Api.Authorization
                         select requiredRight).Any();
 
                 return !missingRights;
-            }
-        }
-
-        /// <summary>
-        /// Gets the competitionID from request URL.
-        /// </summary>
-        /// <param name="relativeUrl"></param>
-        /// <returns>The <see cref="Guid"/> for the competition or null of none is found</returns>
-        public static Guid GetCompetitionIdFromUrl(string relativeUrl)
-        {
-            try
-            {
-                relativeUrl = relativeUrl.TrimEnd(new[] { '/' });
-
-                var lastSlash = relativeUrl.LastIndexOf('/');
-
-                if (lastSlash == -1)
-                {
-                    return Guid.Empty;
-                }
-
-                var guidString = relativeUrl.Substring(lastSlash + 1);
-
-                return Guid.Parse(guidString);
-            }
-            catch (Exception)
-            {
-                return Guid.Empty;
             }
         }
     }

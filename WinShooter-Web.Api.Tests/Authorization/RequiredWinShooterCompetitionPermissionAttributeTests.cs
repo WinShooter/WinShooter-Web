@@ -13,15 +13,28 @@ namespace WinShooter.Api.Tests.Authorization
     using WinShooter.Api.Tests.Dummys;
     using WinShooter.Database;
 
+    /// <summary>
+    /// The WinShooter permission attribute tests.
+    /// </summary>
     [TestClass]
-    public class RequiredWinShooterPermissionAttributeTests
+    public class RequiredWinShooterCompetitionPermissionAttributeTests
     {
         [TestMethod]
         public void TestRetrievingCompetitionIdFromUrl()
         {
             const string Url = "/Competition/731bc7fd-1ab6-49ae-8056-92b507eef5e9";
 
-            var guid = RequiredWinShooterPermissionAttribute.GetCompetitionIdFromUrl(Url);
+            var guid = RequiredWinShooterCompetitionPermissionAttribute.GetCompetitionIdFromUrl(Url);
+
+            Assert.AreEqual(Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5e9"), guid);
+        }
+
+        [TestMethod]
+        public void TestRetrievingCompetitionIdFromShooterUrl()
+        {
+            const string Url = "/Competition/731bc7fd-1ab6-49ae-8056-92b507eef5e9/Shooter/aa1bc7fd-1ab6-49ae-8056-92b507eef5e9/";
+
+            var guid = RequiredWinShooterCompetitionPermissionAttribute.GetCompetitionIdFromUrl(Url);
 
             Assert.AreEqual(Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5e9"), guid);
         }
@@ -31,7 +44,7 @@ namespace WinShooter.Api.Tests.Authorization
         {
             const string Url = "/Competition/";
 
-            var guid = RequiredWinShooterPermissionAttribute.GetCompetitionIdFromUrl(Url);
+            var guid = RequiredWinShooterCompetitionPermissionAttribute.GetCompetitionIdFromUrl(Url);
 
             Assert.AreEqual(guid, Guid.Empty);
         }
@@ -41,7 +54,7 @@ namespace WinShooter.Api.Tests.Authorization
         {
             const string Url = "/Competition/731bc7fd-1ab6-49ae-/";
 
-            var guid = RequiredWinShooterPermissionAttribute.GetCompetitionIdFromUrl(Url);
+            var guid = RequiredWinShooterCompetitionPermissionAttribute.GetCompetitionIdFromUrl(Url);
 
             Assert.AreEqual(Guid.Empty, guid);
         }
@@ -54,7 +67,7 @@ namespace WinShooter.Api.Tests.Authorization
 
             var rights = new UserCompetitionRights(competitionId, new List<string>(new []{"AddCompetition"}));
 
-            var requiredWinShooterPermissionAttribute = new RequiredWinShooterPermissionAttribute(
+            var requiredWinShooterPermissionAttribute = new RequiredWinShooterCompetitionPermissionAttribute(
                 ApplyTo.All,
                 rights,
                 "AddCompetition");
@@ -76,7 +89,7 @@ namespace WinShooter.Api.Tests.Authorization
 
             var rights = new UserCompetitionRights(competitionId, new List<string>(new[] { "AddCompetition" }));
 
-            var requiredWinShooterPermissionAttribute = new RequiredWinShooterPermissionAttribute(
+            var requiredWinShooterPermissionAttribute = new RequiredWinShooterCompetitionPermissionAttribute(
                 ApplyTo.All,
                 rights,
                 "RemoveCompetition");

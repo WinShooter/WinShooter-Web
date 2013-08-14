@@ -54,7 +54,7 @@ namespace WinShooter.Api.Api
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
         [Authenticate]
-        [RequiredWinShooterPermission("ReadCompetition")]
+        [RequiredWinShooterCompetitionPermission("ReadCompetition")]
         public CompetitionResponse Put(Competition request)
         {
             return new CompetitionResponse { CompetitionId = request.CompetitionId, Name = request.Name };

@@ -96,7 +96,7 @@
     <Compile Include="Api\Rights.cs" />
     <Compile Include="AppConfig.cs" />
     <Compile Include="Authentication\CustomUserSession.cs" />
-    <Compile Include="Authorization\RequiredWinShooterPermissionAttribute.cs" />
+    <Compile Include="Authorization\RequiredWinShooterCompetitionPermissionAttribute.cs" />
     <Compile Include="Authorization\UserCompetitionRights.cs" />
     <Compile Include="Authentication\LinkedinAuthProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
