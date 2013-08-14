@@ -51,8 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Club.cs" />
     <Compile Include="Competition.cs" />
     <Compile Include="CompetitionMap.cs" />
+    <Compile Include="ClubMap.cs" />
     <Compile Include="UserRolesInfoMap.cs" />
     <Compile Include="UserRolesInfo.cs" />
     <Compile Include="RoleRightsInfoMap.cs" />
