@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ClubsFromDatabase.cs" />
     <Compile Include="CompetitionsFromDatabase.cs" />
+    <Compile Include="ShootersFromDatabase.cs" />
     <Compile Include="TestOpening.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

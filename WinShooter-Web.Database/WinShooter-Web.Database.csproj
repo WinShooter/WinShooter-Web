@@ -56,6 +56,9 @@
     <Compile Include="CompetitionMap.cs" />
     <Compile Include="ClubMap.cs" />
     <Compile Include="CompetitionType.cs" />
+    <Compile Include="ShooterMap.cs" />
+    <Compile Include="Shooter.cs" />
+    <Compile Include="ShootersClassEnum.cs" />
     <Compile Include="UserRolesInfoMap.cs" />
     <Compile Include="UserRolesInfo.cs" />
     <Compile Include="RoleRightsInfoMap.cs" />
