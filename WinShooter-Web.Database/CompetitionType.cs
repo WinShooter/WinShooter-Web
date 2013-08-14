@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Competition.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitionType.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,33 +15,37 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The representation of the database User Roles Info.
+//   CompetitionTypeEnum
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace WinShooter.Database
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// The representation of the database competition.
+    /// The Competition type enumeration.
     /// </summary>
-    public class Competition
+    [Serializable]
+    public enum CompetitionType
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Competition"/> class.
+        /// Fältskytte tävling.
         /// </summary>
-        public Competition()
-        {
-            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
-            this.Id = Guid.NewGuid();
-        }
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        Field = 0,
 
-        public virtual Guid Id { get; set; }
-        public virtual string Name { get; set; }
-        public virtual DateTime StartDate { get; set; }
-        public virtual int CompetitionType { get; set; }
-        public virtual bool UseNorwegianCount { get; set; }
-        public virtual bool IsPublic { get; set; }
+        /// <summary>
+        /// Precision tävling.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        Precision = 1,
+
+        /// <summary>
+        /// Fältskytte tävling (magum).
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        MagnumField = 2
     }
 }
