@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CompetitionsFromDatabase.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="ShootersFromDatabase.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Read and write competitions from database.
+//   Read and write shooters from database.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ namespace WinShooter.Database.Tests
     using WinShooter_Web.DatabaseMigrations;
 
     /// <summary>
-    /// Read and write competitions from database.
+    /// Read and write shooters from database.
     /// </summary>
     [TestClass]
     public class ShootersFromDatabase
