@@ -56,6 +56,12 @@
     <Compile Include="CompetitionMap.cs" />
     <Compile Include="ClubMap.cs" />
     <Compile Include="CompetitionType.cs" />
+    <Compile Include="Competitor.cs" />
+    <Compile Include="CompetitorMap.cs" />
+    <Compile Include="PatrolMap.cs" />
+    <Compile Include="Patrol.cs" />
+    <Compile Include="PatrolClassEnum.cs" />
+    <Compile Include="WeaponMap.cs" />
     <Compile Include="ShooterMap.cs" />
     <Compile Include="Shooter.cs" />
     <Compile Include="ShootersClassEnum.cs" />
@@ -74,6 +80,8 @@
     <Compile Include="UserLoginInfo.cs" />
     <Compile Include="UserLoginInfoMap.cs" />
     <Compile Include="UserMap.cs" />
+    <Compile Include="Weapon.cs" />
+    <Compile Include="WeaponClassEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
