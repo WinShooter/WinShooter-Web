@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserLoginInfoMap.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="ShooterMap.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Creates the mapping between the <see cref="UserLoginInfo" /> class and the database.
+//   Creates the mapping between the Shooter class and the database.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,25 +24,32 @@ namespace WinShooter.Database
     using FluentNHibernate.Mapping;
 
     /// <summary>
-    /// Creates the mapping between the <see cref="UserLoginInfo"/> class and the database.
+    /// Creates the mapping between the Shooter class and the database.
     /// </summary>
-    public class UserLoginInfoMap : ClassMap<UserLoginInfo>
+    public class ShooterMap : ClassMap<Shooter>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserLoginInfoMap"/> class.
+        /// Initializes a new instance of the <see cref="ShooterMap"/> class.
         /// </summary>
-        public UserLoginInfoMap()
+        public ShooterMap()
         {
             this.Id(x => x.Id);
 
-            this.Map(x => x.IdentityProvider);
-            this.Map(x => x.IdentityProviderId);
-            this.Map(x => x.IdentityProviderUsername);
-            this.Map(x => x.LastLogin);
+            this.Map(x => x.CardNumber);
+            this.Map(x => x.Surname);
+            this.Map(x => x.Givenname);
+            this.Map(x => x.Email);
+            this.Map(x => x.Paid);
+            this.Map(x => x.HasArrived);
+            this.Map(x => x.SendResultsByEmail);
+            this.Map(x => x.LastUpdated);
 
-            References(x => x.User).Column("UserId");
+            this.Map(x => x.Class).CustomType<ShootersClassEnum>();
 
-            this.Table("UsersLoginInfo");
+            References(x => x.Competition).Column("CompetitionId");
+            References(x => x.Club).Column("ClubId");
+
+            this.Table("Shooters");
         }
     }
 }

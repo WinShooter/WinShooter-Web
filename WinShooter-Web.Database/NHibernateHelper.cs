@@ -80,8 +80,13 @@ namespace WinShooter.Database
 
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<User>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<UserLoginInfo>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Right>())
 
-                .ExposeConfiguration(cfg => new SchemaExport(cfg).Create(true, true))
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Competition>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Role>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<RoleRightsInfo>())
+
+                .ExposeConfiguration(cfg => new SchemaExport(cfg))
 
                 .BuildSessionFactory();
         }

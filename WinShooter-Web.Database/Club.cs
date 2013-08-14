@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserLoginInfoMap.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Club.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,34 +15,39 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Creates the mapping between the <see cref="UserLoginInfo" /> class and the database.
+//   The club.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace WinShooter.Database
 {
-    using FluentNHibernate.Mapping;
+    using System;
 
     /// <summary>
-    /// Creates the mapping between the <see cref="UserLoginInfo"/> class and the database.
+    /// The club.
     /// </summary>
-    public class UserLoginInfoMap : ClassMap<UserLoginInfo>
+    public class Club
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserLoginInfoMap"/> class.
+        /// Initializes a new instance of the <see cref="Club"/> class.
         /// </summary>
-        public UserLoginInfoMap()
+        public Club()
         {
-            this.Id(x => x.Id);
-
-            this.Map(x => x.IdentityProvider);
-            this.Map(x => x.IdentityProviderId);
-            this.Map(x => x.IdentityProviderUsername);
-            this.Map(x => x.LastLogin);
-
-            References(x => x.User).Column("UserId");
-
-            this.Table("UsersLoginInfo");
+            // ReSharper disable DoNotCallOverridableMethodsInConstructor
+            this.Id = Guid.NewGuid();
+            this.Email = string.Empty;
+            this.Plusgiro = string.Empty;
+            this.Bankgiro = string.Empty;
+            this.LastUpdated = DateTime.Now;
         }
+
+        public virtual Guid Id { get; set; }
+        public virtual string ClubId { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Country { get; set; }
+        public virtual string Email { get; set; }
+        public virtual string Plusgiro { get; set; }
+        public virtual string Bankgiro { get; set; }
+        public virtual DateTime LastUpdated { get; set; }
     }
 }

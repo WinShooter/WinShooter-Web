@@ -60,8 +60,8 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
 
             Create.Table(RoleRightsInfoTableName)
                 .WithColumn("Id").AsInt32().Identity()
-                .WithColumn("RoleId").AsString().NotNullable()
-                .WithColumn("RightId").AsString().NotNullable();
+                .WithColumn("RoleId").AsGuid().NotNullable()
+                .WithColumn("RightId").AsGuid().NotNullable();
 
             Create.ForeignKey(RoleRightsInfoRolesForeignKeyName)
                 .FromTable(RoleRightsInfoTableName).ForeignColumn("RoleId")

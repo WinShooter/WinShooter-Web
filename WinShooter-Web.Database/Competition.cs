@@ -28,10 +28,19 @@ namespace WinShooter.Database
     /// </summary>
     public class Competition
     {
-        public virtual int Id { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Competition"/> class.
+        /// </summary>
+        public Competition()
+        {
+            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
+            this.Id = Guid.NewGuid();
+        }
+
+        public virtual Guid Id { get; set; }
         public virtual string Name { get; set; }
         public virtual DateTime StartDate { get; set; }
-        public virtual int CompetitionType { get; set; }
+        public virtual CompetitionType CompetitionType { get; set; }
         public virtual bool UseNorwegianCount { get; set; }
         public virtual bool IsPublic { get; set; }
     }
