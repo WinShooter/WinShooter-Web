@@ -59,6 +59,7 @@
     <Compile Include="Competitor.cs" />
     <Compile Include="CompetitorMap.cs" />
     <Compile Include="CompetitorResult.cs" />
+    <Compile Include="CompetitorResultMap.cs" />
     <Compile Include="StationMap.cs" />
     <Compile Include="PatrolMap.cs" />
     <Compile Include="Patrol.cs" />
