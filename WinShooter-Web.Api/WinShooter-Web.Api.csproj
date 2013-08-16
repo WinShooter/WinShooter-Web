@@ -91,6 +91,9 @@
     <Compile Include="Api\CompetitionService.cs" />
     <Compile Include="Api\CompetitionsService.cs" />
     <Compile Include="Api\Competitions.cs" />
+    <Compile Include="Api\CompetitionRights.cs" />
+    <Compile Include="Api\CompetitionRightsResponse.cs" />
+    <Compile Include="Api\CompetitionRightsService.cs" />
     <Compile Include="Api\RightsResponse.cs" />
     <Compile Include="Api\RightsService.cs" />
     <Compile Include="Api\Rights.cs" />

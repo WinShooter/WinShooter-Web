@@ -114,14 +114,14 @@ namespace WinShooter.Api.Authentication
 
                 if (userLoginInfos.Count == 0)
                 {
-                    userLoginInfos.Add(CreateNewUser(session.ProviderOAuthAccess));
+                    userLoginInfos.Add(CreateNewUser(dbsession, session.ProviderOAuthAccess));
                 }
 
                 var currentUserLoginInfo = userLoginInfos[0];
                 this.User = currentUserLoginInfo.User;
                 this.UserLoginInfos = userLoginInfos;
 
-                session.UserAuthId = currentUserLoginInfo.User.Id.ToString(CultureInfo.InvariantCulture);
+                session.UserAuthId = currentUserLoginInfo.User.Id.ToString();
                 session.UserAuthName = currentUserLoginInfo.User.Email;
 
                 if (session.ProviderOAuthAccess.Count != userLoginInfos.Count)
@@ -144,13 +144,14 @@ namespace WinShooter.Api.Authentication
         /// <summary>
         /// Crates a  new user.
         /// </summary>
+        /// <param name="dbsession">Database session</param>
         /// <param name="providerOAuthAccess">
-        /// The provider information.
+        ///     The provider information.
         /// </param>
         /// <returns>
         /// The <see cref="UserLoginInfo"/>.
         /// </returns>
-        private static UserLoginInfo CreateNewUser(List<IOAuthTokens> providerOAuthAccess)
+        private static UserLoginInfo CreateNewUser(ISession dbsession, List<IOAuthTokens> providerOAuthAccess)
         {
             if (providerOAuthAccess.Count == 0)
             {
@@ -161,42 +162,39 @@ namespace WinShooter.Api.Authentication
             string userDisplayName = null;
             string firstName = null;
             string lastName = null;
-            using (var dbsession = NHibernateHelper.OpenSession())
+
+            using (var transaction = dbsession.BeginTransaction())
             {
-                using (var transaction = dbsession.BeginTransaction())
+                var user = new User { LastLogin = DateTime.Now, LastUpdated = DateTime.Now };
+
+                dbsession.Save(user);
+
+                foreach (var authToken in providerOAuthAccess)
                 {
-                    var user = new User { LastLogin = DateTime.Now, LastUpdated = DateTime.Now };
+                    var userLoginInfo = CreateLoginInfoFromAuthToken(authToken, user);
+                    currentUserLoginInfo = userLoginInfo;
 
-                    dbsession.SaveOrUpdate(user);
+                    user.Email = authToken.Email;
 
-                    foreach (var authToken in providerOAuthAccess)
+                    if (authToken.DisplayName != null && userDisplayName == null)
                     {
-                        var userLoginInfo = CreateLoginInfoFromAuthToken(authToken, user);
-                        currentUserLoginInfo = userLoginInfo;
-
-                        user.Email = authToken.Email;
-
-                        if (authToken.DisplayName != null && userDisplayName == null)
-                        {
-                            userDisplayName = authToken.DisplayName;
-                        }
-
-                        if (authToken.FirstName != null && firstName == null)
-                        {
-                            firstName = authToken.FirstName;
-                        }
-
-                        if (authToken.LastName != null && lastName == null)
-                        {
-                            lastName = authToken.LastName;
-                        }
-
-                        dbsession.SaveOrUpdate(userLoginInfo);
+                        userDisplayName = authToken.DisplayName;
                     }
 
-                    dbsession.SaveOrUpdate(user);
-                    transaction.Commit();
+                    if (authToken.FirstName != null && firstName == null)
+                    {
+                        firstName = authToken.FirstName;
+                    }
+
+                    if (authToken.LastName != null && lastName == null)
+                    {
+                        lastName = authToken.LastName;
+                    }
+
+                    dbsession.Save(userLoginInfo);
                 }
+
+                transaction.Commit();
             }
 
             return currentUserLoginInfo;

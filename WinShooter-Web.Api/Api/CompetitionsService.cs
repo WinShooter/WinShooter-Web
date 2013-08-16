@@ -41,8 +41,6 @@ namespace WinShooter.Api.Api
         /// <returns>
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
-        [Authenticate]
-        [RequiredWinShooterCompetitionPermission("ReadCompetition")]
         public List<CompetitionResponse> Get(Competitions request)
         {
             var sess = this.GetSession();

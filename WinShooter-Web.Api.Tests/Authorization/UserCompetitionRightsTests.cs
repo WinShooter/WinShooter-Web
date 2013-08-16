@@ -23,7 +23,7 @@
         [TestMethod]
         public void TestFetchingRightsFromDatabase()
         {
-            var user = new User { Id = "731bc7fd-1ab6-49ae-8056-92b507eef5f0" };
+            var user = new User { Id = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5f0") };
             var competitionId = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5e9");
 
             var rights = new UserCompetitionRights(competitionId, user);
