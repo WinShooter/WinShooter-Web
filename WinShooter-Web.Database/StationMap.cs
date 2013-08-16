@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Competitor.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="StationMap.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,36 +15,35 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The competitor.
+//   Creates the mapping between the user class and the database.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace WinShooter.Database
 {
-    using System;
+    using FluentNHibernate.Mapping;
 
     /// <summary>
-    /// The competitor.
+    /// Creates the mapping between the station class and the database.
     /// </summary>
-    public class Competitor
+    public class StationMap : ClassMap<Station>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Competitor"/> class.
+        /// Initializes a new instance of the <see cref="StationMap"/> class.
         /// </summary>
-        public Competitor()
+        public StationMap()
         {
-            // ReSharper disable DoNotCallOverridableMethodsInConstructor
-            this.Id = Guid.NewGuid();
-            // ReSharper restore DoNotCallOverridableMethodsInConstructor
-        }
+            this.Id(x => x.Id);
 
-        public virtual Guid Id { get; set; }
-        public virtual Competition Competition { get; set; }
-        public virtual Shooter Shooter { get; set; }
-        public virtual ShootersClassEnum ShooterClass { get; set; }
-        public virtual Weapon Weapon { get; set; }
-        public virtual Patrol Patrol { get; set; }
-        public virtual int PatrolLane { get; set; }
-        public virtual int FinalShootingPlace { get; set; }
+            this.Map(x => x.NumberOfTargets);
+            this.Map(x => x.NumberOfShots);
+            this.Map(x => x.Points);
+            this.Map(x => x.Distinguish);
+            this.Map(x => x.StationNumber);
+
+            this.References(x => x.Competition).Column("CompetitionId");
+
+            this.Table("Stations");
+        }
     }
 }

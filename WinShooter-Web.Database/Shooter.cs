@@ -28,6 +28,16 @@ namespace WinShooter.Database
     /// </summary>
     public class Shooter
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Shooter"/> class.
+        /// </summary>
+        public Shooter()
+        {
+            // ReSharper disable DoNotCallOverridableMethodsInConstructor
+            this.Id = Guid.NewGuid();
+            // ReSharper restore DoNotCallOverridableMethodsInConstructor
+        }
+
         public virtual Guid Id { get; set; }
 
         public virtual Competition Competition { get; set; }
@@ -39,7 +49,7 @@ namespace WinShooter.Database
 
         public virtual Club Club { get; set; }
         public virtual int Paid { get; set; }
-        public virtual int Class { get; set; }
+        public virtual ShootersClassEnum Class { get; set; }
         public virtual bool HasArrived { get; set; }
         public virtual bool SendResultsByEmail { get; set; }
         public virtual DateTime LastUpdated { get; set; }

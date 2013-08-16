@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Competitor.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitorResult.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The competitor.
+//   Defines the CompetitorResult type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,14 +24,14 @@ namespace WinShooter.Database
     using System;
 
     /// <summary>
-    /// The competitor.
+    /// The competitor result.
     /// </summary>
-    public class Competitor
+    public class CompetitorResult
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Competitor"/> class.
+        /// Initializes a new instance of the <see cref="CompetitorResult"/> class.
         /// </summary>
-        public Competitor()
+        public CompetitorResult()
         {
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
             this.Id = Guid.NewGuid();
@@ -39,12 +39,9 @@ namespace WinShooter.Database
         }
 
         public virtual Guid Id { get; set; }
-        public virtual Competition Competition { get; set; }
-        public virtual Shooter Shooter { get; set; }
-        public virtual ShootersClassEnum ShooterClass { get; set; }
-        public virtual Weapon Weapon { get; set; }
-        public virtual Patrol Patrol { get; set; }
-        public virtual int PatrolLane { get; set; }
-        public virtual int FinalShootingPlace { get; set; }
+        public virtual Competitor Competitor { get; set; }
+        public virtual Station Station { get; set; }
+        public virtual int Points { get; set; }
+        public virtual int TargetHits { get; set; }
     }
 }

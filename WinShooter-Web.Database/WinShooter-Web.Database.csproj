@@ -58,9 +58,12 @@
     <Compile Include="CompetitionType.cs" />
     <Compile Include="Competitor.cs" />
     <Compile Include="CompetitorMap.cs" />
+    <Compile Include="CompetitorResult.cs" />
+    <Compile Include="StationMap.cs" />
     <Compile Include="PatrolMap.cs" />
     <Compile Include="Patrol.cs" />
     <Compile Include="PatrolClassEnum.cs" />
+    <Compile Include="Station.cs" />
     <Compile Include="WeaponMap.cs" />
     <Compile Include="ShooterMap.cs" />
     <Compile Include="Shooter.cs" />

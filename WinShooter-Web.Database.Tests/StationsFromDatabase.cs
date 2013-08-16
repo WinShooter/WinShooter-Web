@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ShootersFromDatabase.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="StationsFromDatabase.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -35,15 +35,11 @@ namespace WinShooter.Database.Tests
     /// Read and write shooters from database.
     /// </summary>
     [TestClass]
-    public class ShootersFromDatabase
+    public class StationsFromDatabase
     {
         private const string CompetitionName = "UnitTestCompetitionName";
 
-        private const string ClubName = "UnitTestClubName";
-
         private Competition testCompetition;
-
-        private Club testClub;
 
         /// <summary>
         /// Make sure the database is latest version.
@@ -56,6 +52,7 @@ namespace WinShooter.Database.Tests
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
+                // Make sure there is a competition
                 this.testCompetition =
                     (from competition in databaseSession.Query<Competition>()
                      where competition.Name == CompetitionName
@@ -78,23 +75,20 @@ namespace WinShooter.Database.Tests
                     }
                 }
 
-                this.testClub = (from club in databaseSession.Query<Club>()
-                                 where club.Name == ClubName
-                                 select club).FirstOrDefault();
+                // Clear out all current stations
+                var stations = from station in databaseSession.Query<Station>()
+                               where station.Competition == this.testCompetition
+                               select station;
 
-                if (this.testClub == null)
+                if (stations.Any())
                 {
-                    // No test club found
-                    this.testClub = new Club
-                    {
-                        ClubId = "1-123",
-                        Country = "SE",
-                        Name = ClubName
-                    };
-
                     using (var transaction = databaseSession.BeginTransaction())
                     {
-                        databaseSession.Save(this.testClub);
+                        foreach (var station in stations)
+                        {
+                            databaseSession.Delete(station);
+                        }
+                        
                         transaction.Commit();
                     }
                 }
@@ -108,30 +102,23 @@ namespace WinShooter.Database.Tests
         [TestMethod]
         public void WriteAndRead()
         {
-            var tempName = Guid.NewGuid().ToString();
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
-                var shooters = from shooter in databaseSession.Query<Shooter>()
-                                   where shooter.Surname == tempName &&
-                                   shooter.Givenname == tempName
-                                   select shooter;
+                var stations = from station in databaseSession.Query<Station>()
+                                   where station.Competition == this.testCompetition
+                                   select station;
 
-                Assert.IsNotNull(shooters);
-                Assert.AreEqual(0, shooters.Count());
+                Assert.IsNotNull(stations);
+                Assert.AreEqual(0, stations.Count());
 
-                var toAdd = new Shooter
+                var toAdd = new Station
                                 {
-                                    Surname = tempName,
-                                    Givenname = tempName,
+                                    StationNumber = 1,
                                     Competition = this.testCompetition,
-                                    CardNumber = "123",
-                                    Class = ShootersClassEnum.Klass1,
-                                    Club = this.testClub,
-                                    Email = string.Empty,
-                                    HasArrived = false,
-                                    LastUpdated = DateTime.Now, 
-                                    Paid = 0, 
-                                    SendResultsByEmail = false
+                                    NumberOfTargets = 5,
+                                    NumberOfShots = 6,
+                                    Distinguish = false,
+                                    Points = 10
                                 };
 
                 using (var transaction = databaseSession.BeginTransaction())
@@ -143,30 +130,28 @@ namespace WinShooter.Database.Tests
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
-                var shooters = from shooter in databaseSession.Query<Shooter>()
-                               where shooter.Surname == tempName &&
-                               shooter.Givenname == tempName
-                               select shooter;
+                var stations = from station in databaseSession.Query<Station>()
+                               where station.Competition == this.testCompetition
+                               select station;
 
-                Assert.IsNotNull(shooters);
-                Assert.AreEqual(1, shooters.Count());
+                Assert.IsNotNull(stations);
+                Assert.AreEqual(1, stations.Count());
 
                 using (var transaction = databaseSession.BeginTransaction())
                 {
-                    databaseSession.Delete(shooters.ToArray()[0]);
+                    databaseSession.Delete(stations.ToArray()[0]);
                     transaction.Commit();
                 }
             }
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
-                var shooters = from shooter in databaseSession.Query<Shooter>()
-                               where shooter.Surname == tempName &&
-                               shooter.Givenname == tempName
-                               select shooter;
+                var stations = from station in databaseSession.Query<Station>()
+                               where station.Competition == this.testCompetition
+                               select station;
 
-                Assert.IsNotNull(shooters);
-                Assert.AreEqual(0, shooters.Count());
+                Assert.IsNotNull(stations);
+                Assert.AreEqual(0, stations.Count());
             }
         }
     }
