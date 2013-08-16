@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ShootersFromDatabase.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitorsFromDatabase.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Read and write shooters from database.
+//   Defines the ClubsFromDatabase type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -32,10 +32,10 @@ namespace WinShooter.Database.Tests
     using WinShooter_Web.DatabaseMigrations;
 
     /// <summary>
-    /// Read and write shooters from database.
+    /// Read and write clubs from database.
     /// </summary>
     [TestClass]
-    public class ShootersFromDatabase
+    public class CompetitorsFromDatabase
     {
         private const string CompetitionName = "UnitTestCompetitionName";
 
@@ -56,6 +56,7 @@ namespace WinShooter.Database.Tests
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
+                // Make sure there is a test competition
                 this.testCompetition =
                     (from competition in databaseSession.Query<Competition>()
                      where competition.Name == CompetitionName
@@ -65,11 +66,11 @@ namespace WinShooter.Database.Tests
                 {
                     // No test competition found
                     this.testCompetition = new Competition
-                                               {
-                                                   CompetitionType = CompetitionType.Field,
-                                                   Name = CompetitionName,
-                                                   StartDate = DateTime.Now
-                                               };
+                    {
+                        CompetitionType = CompetitionType.Field,
+                        Name = CompetitionName,
+                        StartDate = DateTime.Now
+                    };
 
                     using (var transaction = databaseSession.BeginTransaction())
                     {
@@ -78,6 +79,7 @@ namespace WinShooter.Database.Tests
                     }
                 }
 
+                // Make sure there is a test club
                 this.testClub = (from club in databaseSession.Query<Club>()
                                  where club.Name == ClubName
                                  select club).FirstOrDefault();
@@ -98,12 +100,27 @@ namespace WinShooter.Database.Tests
                         transaction.Commit();
                     }
                 }
+
+                // Clear out the current competitors
+                var competitors = from competitor in databaseSession.Query<Competitor>()
+                                  where competitor.Competition == this.testCompetition
+                                  select competitor;
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    foreach (var competitor in competitors)
+                    {
+                        databaseSession.Delete(competitor);
+                    }
+                    
+                    transaction.Commit();
+                }
             }
         }
 
         /// <summary>
-        /// Fetch all shooters, add one, fetch all and check it has been added.
-        /// Remove shooter, fetch all and check it has been added
+        /// Fetch all weapons, add one, fetch all and check it has been added.
+        /// Remove weapon, fetch all and check it has been added
         /// </summary>
         [TestMethod]
         public void WriteAndRead()
@@ -111,62 +128,45 @@ namespace WinShooter.Database.Tests
             var tempName = Guid.NewGuid().ToString();
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
-                var shooters = from shooter in databaseSession.Query<Shooter>()
-                                   where shooter.Surname == tempName &&
-                                   shooter.Givenname == tempName
-                                   select shooter;
+                var competitors = from competitor in databaseSession.Query<Competitor>()
+                                  where competitor.Competition == this.testCompetition
+                                  select competitor;
 
-                Assert.IsNotNull(shooters);
-                Assert.AreEqual(0, shooters.Count());
+                Assert.IsNotNull(competitors);
+                Assert.AreEqual(0, competitors.Count());
 
-                var toAdd = new Shooter
-                                {
-                                    Surname = tempName,
-                                    Givenname = tempName,
-                                    Competition = this.testCompetition,
-                                    CardNumber = "123",
-                                    Class = ShootersClassEnum.Klass1,
-                                    Club = this.testClub,
-                                    Email = string.Empty,
-                                    HasArrived = false,
-                                    LastUpdated = DateTime.Now, 
-                                    Paid = 0, 
-                                    SendResultsByEmail = false
-                                };
-
+                var clubToAdd = new Weapon { Manufacturer = tempName, Caliber = "Caliber", Class = WeaponClassEnum.A1, Model = "Model" };
                 using (var transaction = databaseSession.BeginTransaction())
                 {
-                    databaseSession.Save(toAdd);
+                    databaseSession.Save(clubToAdd);
                     transaction.Commit();
                 }
             }
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
-                var shooters = from shooter in databaseSession.Query<Shooter>()
-                               where shooter.Surname == tempName &&
-                               shooter.Givenname == tempName
-                               select shooter;
+                var weapons = from weapon in databaseSession.Query<Weapon>()
+                              where weapon.Manufacturer == tempName
+                              select weapon;
 
-                Assert.IsNotNull(shooters);
-                Assert.AreEqual(1, shooters.Count());
+                Assert.IsNotNull(weapons);
+                Assert.AreEqual(1, weapons.Count());
 
                 using (var transaction = databaseSession.BeginTransaction())
                 {
-                    databaseSession.Delete(shooters.ToArray()[0]);
+                    databaseSession.Delete(weapons.ToArray()[0]);
                     transaction.Commit();
                 }
             }
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
-                var shooters = from shooter in databaseSession.Query<Shooter>()
-                               where shooter.Surname == tempName &&
-                               shooter.Givenname == tempName
-                               select shooter;
+                var weapons = from weapon in databaseSession.Query<Weapon>()
+                              where weapon.Manufacturer == tempName
+                              select weapon;
 
-                Assert.IsNotNull(shooters);
-                Assert.AreEqual(0, shooters.Count());
+                Assert.IsNotNull(weapons);
+                Assert.AreEqual(0, weapons.Count());
             }
         }
     }

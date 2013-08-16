@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Shooter.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Weapon.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The shooter.
+//   The weapon.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,34 +24,26 @@ namespace WinShooter.Database
     using System;
 
     /// <summary>
-    /// The shooter.
+    /// The weapon.
     /// </summary>
-    public class Shooter
+    public class Weapon
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Shooter"/> class.
+        /// Initializes a new instance of the <see cref="Weapon"/> class.
         /// </summary>
-        public Shooter()
+        public Weapon()
         {
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
             this.Id = Guid.NewGuid();
+            this.LastUpdated = DateTime.Now;
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
         public virtual Guid Id { get; set; }
-
-        public virtual Competition Competition { get; set; }
-
-        public virtual string CardNumber { get; set; }
-        public virtual string Surname { get; set; }
-        public virtual string Givenname { get; set; }
-        public virtual string Email { get; set; }
-
-        public virtual Club Club { get; set; }
-        public virtual int Paid { get; set; }
-        public virtual ShootersClassEnum Class { get; set; }
-        public virtual bool HasArrived { get; set; }
-        public virtual bool SendResultsByEmail { get; set; }
+        public virtual string Manufacturer { get; set; }
+        public virtual string Model { get; set; }
+        public virtual string Caliber { get; set; }
+        public virtual WeaponClassEnum Class { get; set; }
         public virtual DateTime LastUpdated { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Shooter.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitorMap.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,43 +15,36 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The shooter.
+//   Creates the mapping between the competition class and the database.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace WinShooter.Database
 {
-    using System;
+    using FluentNHibernate.Mapping;
 
     /// <summary>
-    /// The shooter.
+    /// Creates the mapping between the competitor class and the database.
     /// </summary>
-    public class Shooter
+    public class CompetitorMap : ClassMap<Competitor>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Shooter"/> class.
+        /// Initializes a new instance of the <see cref="CompetitorMap"/> class.
         /// </summary>
-        public Shooter()
+        public CompetitorMap()
         {
-            // ReSharper disable DoNotCallOverridableMethodsInConstructor
-            this.Id = Guid.NewGuid();
-            // ReSharper restore DoNotCallOverridableMethodsInConstructor
+            this.Id(x => x.Id);
+
+            this.Map(x => x.ShooterClass).CustomType<ShootersClassEnum>();
+            this.Map(x => x.PatrolLane).Column("Lane");
+            this.Map(x => x.FinalShootingPlace);
+
+            this.References(x => x.Shooter).Column("ShooterId");
+            this.References(x => x.Weapon).Column("WeaponId");
+            this.References(x => x.Patrol).Column("PatrolId");
+            this.References(x => x.Competition).Column("CompetitionId");
+
+            this.Table("Competitors");
         }
-
-        public virtual Guid Id { get; set; }
-
-        public virtual Competition Competition { get; set; }
-
-        public virtual string CardNumber { get; set; }
-        public virtual string Surname { get; set; }
-        public virtual string Givenname { get; set; }
-        public virtual string Email { get; set; }
-
-        public virtual Club Club { get; set; }
-        public virtual int Paid { get; set; }
-        public virtual ShootersClassEnum Class { get; set; }
-        public virtual bool HasArrived { get; set; }
-        public virtual bool SendResultsByEmail { get; set; }
-        public virtual DateTime LastUpdated { get; set; }
     }
 }

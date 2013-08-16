@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ShootersFromDatabase.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="PatrolsFromDatabase.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -35,15 +35,11 @@ namespace WinShooter.Database.Tests
     /// Read and write shooters from database.
     /// </summary>
     [TestClass]
-    public class ShootersFromDatabase
+    public class PatrolsFromDatabase
     {
         private const string CompetitionName = "UnitTestCompetitionName";
 
-        private const string ClubName = "UnitTestClubName";
-
         private Competition testCompetition;
-
-        private Club testClub;
 
         /// <summary>
         /// Make sure the database is latest version.
@@ -78,23 +74,20 @@ namespace WinShooter.Database.Tests
                     }
                 }
 
-                this.testClub = (from club in databaseSession.Query<Club>()
-                                 where club.Name == ClubName
-                                 select club).FirstOrDefault();
+                // Clear out current patrols
+                var patrols = from patrol in databaseSession.Query<Patrol>()
+                              where patrol.Competition == this.testCompetition
+                              select patrol;
 
-                if (this.testClub == null)
+                if (patrols.Any())
                 {
-                    // No test club found
-                    this.testClub = new Club
-                    {
-                        ClubId = "1-123",
-                        Country = "SE",
-                        Name = ClubName
-                    };
-
                     using (var transaction = databaseSession.BeginTransaction())
                     {
-                        databaseSession.Save(this.testClub);
+                        foreach (var patrol in patrols)
+                        {
+                            databaseSession.Delete(patrol);
+                        }
+                        
                         transaction.Commit();
                     }
                 }
@@ -108,30 +101,22 @@ namespace WinShooter.Database.Tests
         [TestMethod]
         public void WriteAndRead()
         {
-            var tempName = Guid.NewGuid().ToString();
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
-                var shooters = from shooter in databaseSession.Query<Shooter>()
-                                   where shooter.Surname == tempName &&
-                                   shooter.Givenname == tempName
-                                   select shooter;
+                var patrols = from patrol in databaseSession.Query<Patrol>()
+                                   where patrol.Competition == this.testCompetition
+                                   select patrol;
 
-                Assert.IsNotNull(shooters);
-                Assert.AreEqual(0, shooters.Count());
+                Assert.IsNotNull(patrols);
+                Assert.AreEqual(0, patrols.Count());
 
-                var toAdd = new Shooter
+                var toAdd = new Patrol
                                 {
-                                    Surname = tempName,
-                                    Givenname = tempName,
                                     Competition = this.testCompetition,
-                                    CardNumber = "123",
-                                    Class = ShootersClassEnum.Klass1,
-                                    Club = this.testClub,
-                                    Email = string.Empty,
-                                    HasArrived = false,
-                                    LastUpdated = DateTime.Now, 
-                                    Paid = 0, 
-                                    SendResultsByEmail = false
+                                    PatrolId = 1,
+                                    StartTime = DateTime.Now,
+                                    StartTimeDisplay = DateTime.Now,
+                                    PatrolClass = PatrolClassEnum.A
                                 };
 
                 using (var transaction = databaseSession.BeginTransaction())
@@ -143,30 +128,28 @@ namespace WinShooter.Database.Tests
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
-                var shooters = from shooter in databaseSession.Query<Shooter>()
-                               where shooter.Surname == tempName &&
-                               shooter.Givenname == tempName
-                               select shooter;
+                var patrols = from patrol in databaseSession.Query<Patrol>()
+                              where patrol.Competition == this.testCompetition
+                              select patrol;
 
-                Assert.IsNotNull(shooters);
-                Assert.AreEqual(1, shooters.Count());
+                Assert.IsNotNull(patrols);
+                Assert.AreEqual(1, patrols.Count());
 
                 using (var transaction = databaseSession.BeginTransaction())
                 {
-                    databaseSession.Delete(shooters.ToArray()[0]);
+                    databaseSession.Delete(patrols.ToArray()[0]);
                     transaction.Commit();
                 }
             }
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
-                var shooters = from shooter in databaseSession.Query<Shooter>()
-                               where shooter.Surname == tempName &&
-                               shooter.Givenname == tempName
-                               select shooter;
+                var patrols = from patrol in databaseSession.Query<Patrol>()
+                              where patrol.Competition == this.testCompetition
+                              select patrol;
 
-                Assert.IsNotNull(shooters);
-                Assert.AreEqual(0, shooters.Count());
+                Assert.IsNotNull(patrols);
+                Assert.AreEqual(0, patrols.Count());
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Shooter.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="PatrolClassEnum.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The shooter.
+//   PatrolClass
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,34 +24,46 @@ namespace WinShooter.Database
     using System;
 
     /// <summary>
-    /// The shooter.
+    /// PatrolClass
     /// </summary>
-    public class Shooter
+    [Serializable]
+    public enum PatrolClassEnum
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Shooter"/> class.
+        /// 
         /// </summary>
-        public Shooter()
-        {
-            // ReSharper disable DoNotCallOverridableMethodsInConstructor
-            this.Id = Guid.NewGuid();
-            // ReSharper restore DoNotCallOverridableMethodsInConstructor
-        }
-
-        public virtual Guid Id { get; set; }
-
-        public virtual Competition Competition { get; set; }
-
-        public virtual string CardNumber { get; set; }
-        public virtual string Surname { get; set; }
-        public virtual string Givenname { get; set; }
-        public virtual string Email { get; set; }
-
-        public virtual Club Club { get; set; }
-        public virtual int Paid { get; set; }
-        public virtual ShootersClassEnum Class { get; set; }
-        public virtual bool HasArrived { get; set; }
-        public virtual bool SendResultsByEmail { get; set; }
-        public virtual DateTime LastUpdated { get; set; }
+        Okänd = 0,
+        /// <summary>
+        /// 
+        /// </summary>
+        A = 1,
+        /// <summary>
+        /// 
+        /// </summary>
+        B = 2,
+        /// <summary>
+        /// 
+        /// </summary>
+        C = 3,
+        /// <summary>
+        /// 
+        /// </summary>
+        R = 4,
+        /// <summary>
+        /// 
+        /// </summary>
+        M = 5,
+        /// <summary>
+        /// 
+        /// </summary>
+        AR = 11,
+        /// <summary>
+        /// 
+        /// </summary>
+        BC = 12,
+        /// <summary>
+        /// 
+        /// </summary>
+        ABCRM = 99
     }
 }
