@@ -215,7 +215,7 @@ namespace WinShooter.Database.Tests
 
                     using (var transaction = databaseSession.BeginTransaction())
                     {
-                        databaseSession.Save(this.testPatrol);
+                        databaseSession.Save(this.testShooter);
                         transaction.Commit();
                     }
                 }

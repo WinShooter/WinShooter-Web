@@ -41,7 +41,7 @@ namespace WinShooter.Database
             this.References(x => x.Competitor).Column("CompetitorId");
             this.References(x => x.Station).Column("StationId");
 
-            this.Table("Competitors");
+            this.Table("CompetitorResults");
         }
     }
 }
