@@ -28,6 +28,16 @@ namespace WinShooter.Database
     /// </summary>
     public class UserLoginInfo
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserLoginInfo"/> class.
+        /// </summary>
+        public UserLoginInfo()
+        {
+            // ReSharper disable DoNotCallOverridableMethodsInConstructor
+            this.Id = Guid.NewGuid();
+            // ReSharper restore DoNotCallOverridableMethodsInConstructor
+        }
+
         public virtual Guid Id { get; set; }
         public virtual User User { get; set; }
         public virtual string IdentityProvider { get; set; }
