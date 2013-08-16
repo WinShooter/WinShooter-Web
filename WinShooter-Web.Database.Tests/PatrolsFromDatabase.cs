@@ -73,6 +73,24 @@ namespace WinShooter.Database.Tests
                         transaction.Commit();
                     }
                 }
+
+                // Clear out current patrols
+                var patrols = from patrol in databaseSession.Query<Patrol>()
+                              where patrol.Competition == this.testCompetition
+                              select patrol;
+
+                if (patrols.Any())
+                {
+                    using (var transaction = databaseSession.BeginTransaction())
+                    {
+                        foreach (var patrol in patrols)
+                        {
+                            databaseSession.Delete(patrol);
+                        }
+                        
+                        transaction.Commit();
+                    }
+                }
             }
         }
 

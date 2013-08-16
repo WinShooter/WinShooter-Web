@@ -28,6 +28,16 @@ namespace WinShooter.Database
     /// </summary>
     public class Patrol
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Patrol"/> class.
+        /// </summary>
+        public Patrol()
+        {
+            // ReSharper disable DoNotCallOverridableMethodsInConstructor
+            this.Id = Guid.NewGuid();
+            // ReSharper restore DoNotCallOverridableMethodsInConstructor
+        }
+
         public virtual Guid Id { get; set; }
         public virtual int PatrolId { get; set; }
         public virtual DateTime StartTime { get; set; }
