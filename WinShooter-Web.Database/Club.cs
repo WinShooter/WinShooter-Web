@@ -31,6 +31,7 @@ namespace WinShooter.Database
         /// <summary>
         /// Initializes a new instance of the <see cref="Club"/> class.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "We need to create the GUID")]
         public Club()
         {
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
