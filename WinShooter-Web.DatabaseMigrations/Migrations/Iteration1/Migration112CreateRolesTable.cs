@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Migration111CreateUsersTable.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Migration112CreateRolesTable.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -67,7 +67,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("UserId").AsGuid().NotNullable()
                 .WithColumn("RoleId").AsGuid().NotNullable()
-                .WithColumn("CompetitionId").AsGuid().NotNullable();
+                .WithColumn("CompetitionId").AsGuid().Nullable();
 
             Create.ForeignKey(UserRolesInfoRolesForeignKeyName)
                 .FromTable(UserRolesInfoTableName).ForeignColumn("RoleId")

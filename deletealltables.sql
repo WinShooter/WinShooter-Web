@@ -1,0 +1,17 @@
+drop table CompetitorResults;
+drop table TeamToCompetitor;
+drop table Teams;
+drop table Competitors;
+drop table Shooters;
+drop table Clubs;
+drop table Patrols;
+drop table Weapons;
+drop table Stations;
+drop table RoleRightsInfo;
+drop table Rights;
+drop table UserRolesInfo;
+drop table Roles;
+drop table Competition;
+drop table UsersLoginInfo;
+drop table Users;
+drop table VersionInfo
