@@ -39,7 +39,7 @@ namespace WinShooter.Api.Api
         /// <returns>
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
-        [RequiredWinShooterCompetitionPermission("ReadCompetition")]
+        [RequiredWinShooterCompetitionPermission(WinShooterCompetitionPermission.ReadCompetition)]
         public CompetitionResponse Get(Competition request)
         {
             return new CompetitionResponse { Name = "Tävlingens namn" };
@@ -55,7 +55,7 @@ namespace WinShooter.Api.Api
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
         [Authenticate]
-        [RequiredWinShooterCompetitionPermission("UpdateCompetition")]
+        [RequiredWinShooterCompetitionPermission(WinShooterCompetitionPermission.UpdateCompetition)]
         public CompetitionResponse Put(Competition request)
         {
             return new CompetitionResponse { CompetitionId = request.CompetitionId, Name = request.Name };
