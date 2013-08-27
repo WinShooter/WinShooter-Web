@@ -192,7 +192,6 @@
     <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\RegisterExternalLoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\WinShooterMembershipProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-responsive.css" />
@@ -318,6 +317,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Providers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

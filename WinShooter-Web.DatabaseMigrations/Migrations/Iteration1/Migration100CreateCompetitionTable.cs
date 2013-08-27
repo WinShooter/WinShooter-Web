@@ -5,7 +5,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
     [Migration(100)]
     public class Migration100CreateCompetitionTable : Migration
     {
-        private const string CompetitionTableName = "Competition";
+        internal const string CompetitionTableName = "Competition";
 
         public override void Up()
         {

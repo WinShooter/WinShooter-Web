@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserLoginInfo.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Competition.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The representation of the database user login info.
+//   The representation of the database User Roles Info.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,25 +24,24 @@ namespace WinShooter.Database
     using System;
 
     /// <summary>
-    /// The representation of the database user login info.
+    /// The representation of the database competition.
     /// </summary>
-    public class UserLoginInfo
+    public class Competition
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserLoginInfo"/> class.
+        /// Initializes a new instance of the <see cref="Competition"/> class.
         /// </summary>
-        public UserLoginInfo()
+        public Competition()
         {
-            // ReSharper disable DoNotCallOverridableMethodsInConstructor
+            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
             this.Id = Guid.NewGuid();
-            // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
         public virtual Guid Id { get; set; }
-        public virtual User User { get; set; }
-        public virtual string IdentityProvider { get; set; }
-        public virtual string IdentityProviderId { get; set; }
-        public virtual string IdentityProviderUsername { get; set; }
-        public virtual DateTime LastLogin { get; set; }
+        public virtual string Name { get; set; }
+        public virtual DateTime StartDate { get; set; }
+        public virtual CompetitionType CompetitionType { get; set; }
+        public virtual bool UseNorwegianCount { get; set; }
+        public virtual bool IsPublic { get; set; }
     }
 }

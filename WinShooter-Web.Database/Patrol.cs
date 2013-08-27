@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserLoginInfo.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Patrol.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The representation of the database user login info.
+//   The patrol.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,14 +24,14 @@ namespace WinShooter.Database
     using System;
 
     /// <summary>
-    /// The representation of the database user login info.
+    /// The patrol.
     /// </summary>
-    public class UserLoginInfo
+    public class Patrol
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserLoginInfo"/> class.
+        /// Initializes a new instance of the <see cref="Patrol"/> class.
         /// </summary>
-        public UserLoginInfo()
+        public Patrol()
         {
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
             this.Id = Guid.NewGuid();
@@ -39,10 +39,10 @@ namespace WinShooter.Database
         }
 
         public virtual Guid Id { get; set; }
-        public virtual User User { get; set; }
-        public virtual string IdentityProvider { get; set; }
-        public virtual string IdentityProviderId { get; set; }
-        public virtual string IdentityProviderUsername { get; set; }
-        public virtual DateTime LastLogin { get; set; }
+        public virtual int PatrolId { get; set; }
+        public virtual DateTime StartTime { get; set; }
+        public virtual Competition Competition { get; set; }
+        public virtual PatrolClassEnum PatrolClass { get; set; }
+        public virtual DateTime StartTimeDisplay { get; set; }
     }
 }

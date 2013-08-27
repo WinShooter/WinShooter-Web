@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AB5B1093-247B-4916-A2B7-93D70621F984}</ProjectGuid>
+    <ProjectGuid>{4088DDB3-DCC4-47EA-B5A5-00E443402CFF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WinShooter_Web.DatabaseMigrations</RootNamespace>
-    <AssemblyName>WinShooter-Web.DatabaseMigrations</AssemblyName>
+    <RootNamespace>WinShooter.Database.Tests</RootNamespace>
+    <AssemblyName>WinShooter.Database.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -22,7 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,13 +32,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentMigrator">
-      <HintPath>..\packages\FluentMigrator.1.1.1.0\lib\40\FluentMigrator.dll</HintPath>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="FluentMigrator.Runner">
-      <HintPath>..\packages\FluentMigrator.Tools.1.1.1.0\tools\AnyCPU\40\FluentMigrator.Runner.dll</HintPath>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,32 +49,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ISqlDatabaseMigrator.cs" />
-    <Compile Include="Migrations\Iteration1\Migration114AddRoleRights.cs" />
-    <Compile Include="Migrations\Iteration1\Migration113CreateRightsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration112CreateRolesTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration111CreateUsersTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration100CreateCompetitionTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration110CreateForeignKeys.cs" />
-    <Compile Include="Migrations\Iteration1\Migration101CreateStationsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration102CreateWeaponsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration103CreateShootersTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration104CreateClubsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration105CreatePatrolsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration106CreateCompetitorsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration107CreateCompetitorResultsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration108CreateTeamsTable.cs" />
-    <Compile Include="Migrations\Iteration1\Migration109CreateTeamToCompetitorTable.cs" />
+    <Compile Include="ClubsFromDatabase.cs" />
+    <Compile Include="CompetitionsFromDatabase.cs" />
+    <Compile Include="CompetitorsFromDatabase.cs" />
+    <Compile Include="CompetitorResultsFromDatabase.cs" />
+    <Compile Include="StationsFromDatabase.cs" />
+    <Compile Include="PatrolsFromDatabase.cs" />
+    <Compile Include="WeaponsFromDatabase.cs" />
+    <Compile Include="ShootersFromDatabase.cs" />
+    <Compile Include="TestOpening.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlDatabaseMigrator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WinShooter-Web.DatabaseMigrations\WinShooter-Web.DatabaseMigrations.csproj">
+      <Project>{ab5b1093-247b-4916-a2b7-93d70621f984}</Project>
+      <Name>WinShooter-Web.DatabaseMigrations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinShooter-Web.Database\WinShooter-Web.Database.csproj">
+      <Project>{457dcbb2-7bfc-466f-96e7-72c22630d74a}</Project>
+      <Name>WinShooter-Web.Database</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\Iteration1\Migration114AddRoleRights.sql">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

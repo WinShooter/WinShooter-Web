@@ -28,7 +28,23 @@ namespace WinShooter.Database
     /// </summary>
     public class User
     {
-        public virtual int Id { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="User"/> class.
+        /// </summary>
+        public User()
+        {
+            // ReSharper disable DoNotCallOverridableMethodsInConstructor
+            this.Id = Guid.NewGuid();
+            this.CardNumber = string.Empty;
+            this.Surname = string.Empty;
+            this.Givenname = string.Empty;
+            this.Email = string.Empty;
+            this.LastLogin = DateTime.Now;
+            this.LastUpdated = DateTime.Now;
+            // ReSharper restore DoNotCallOverridableMethodsInConstructor
+        }
+
+        public virtual Guid Id { get; set; }
         public virtual string CardNumber { get; set; }
         public virtual string Surname { get; set; }
         public virtual string Givenname { get; set; }

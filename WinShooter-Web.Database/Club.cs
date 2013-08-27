@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserLoginInfo.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Club.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The representation of the database user login info.
+//   The club.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,25 +24,30 @@ namespace WinShooter.Database
     using System;
 
     /// <summary>
-    /// The representation of the database user login info.
+    /// The club.
     /// </summary>
-    public class UserLoginInfo
+    public class Club
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserLoginInfo"/> class.
+        /// Initializes a new instance of the <see cref="Club"/> class.
         /// </summary>
-        public UserLoginInfo()
+        public Club()
         {
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
             this.Id = Guid.NewGuid();
-            // ReSharper restore DoNotCallOverridableMethodsInConstructor
+            this.Email = string.Empty;
+            this.Plusgiro = string.Empty;
+            this.Bankgiro = string.Empty;
+            this.LastUpdated = DateTime.Now;
         }
 
         public virtual Guid Id { get; set; }
-        public virtual User User { get; set; }
-        public virtual string IdentityProvider { get; set; }
-        public virtual string IdentityProviderId { get; set; }
-        public virtual string IdentityProviderUsername { get; set; }
-        public virtual DateTime LastLogin { get; set; }
+        public virtual string ClubId { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Country { get; set; }
+        public virtual string Email { get; set; }
+        public virtual string Plusgiro { get; set; }
+        public virtual string Bankgiro { get; set; }
+        public virtual DateTime LastUpdated { get; set; }
     }
 }

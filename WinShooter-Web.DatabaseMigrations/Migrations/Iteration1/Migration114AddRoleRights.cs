@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserLoginInfo.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Migration111CreateUsersTable.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,34 +15,36 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The representation of the database user login info.
+//   Creates the users users table.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Database
+namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
 {
-    using System;
+    using FluentMigrator;
 
     /// <summary>
-    /// The representation of the database user login info.
+    /// Creates the users users table.
     /// </summary>
-    public class UserLoginInfo
+    [Migration(114)]
+    public class Migration114AddRoleRights : Migration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserLoginInfo"/> class.
+        /// Migrates the database up.
         /// </summary>
-        public UserLoginInfo()
+        public override void Up()
         {
-            // ReSharper disable DoNotCallOverridableMethodsInConstructor
-            this.Id = Guid.NewGuid();
-            // ReSharper restore DoNotCallOverridableMethodsInConstructor
+            Execute.EmbeddedScript("Migration114AddRoleRights.sql");
         }
 
-        public virtual Guid Id { get; set; }
-        public virtual User User { get; set; }
-        public virtual string IdentityProvider { get; set; }
-        public virtual string IdentityProviderId { get; set; }
-        public virtual string IdentityProviderUsername { get; set; }
-        public virtual DateTime LastLogin { get; set; }
+        /// <summary>
+        /// Migrates the database down.
+        /// </summary>
+        public override void Down()
+        {
+            Execute.Sql("DELETE FROM " + Migration112CreateRolesTable.RolesTableName);
+            Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RightsTableName);
+            Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RoleRightsInfoTableName);
+        }
     }
 }
