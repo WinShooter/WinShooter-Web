@@ -21,11 +21,13 @@
 
 namespace WinShooter.Api.Api
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using ServiceStack.ServiceInterface;
 
-    using WinShooter.Api.Authorization;
+    using WinShooter.Logic;
 
     /// <summary>
     /// The competitions service.
@@ -45,21 +47,22 @@ namespace WinShooter.Api.Api
         {
             var sess = this.GetSession();
 
+            Database.Competition[] competitions;
+
+            var logic = new CompetitionsLogic();
+
             if (sess.IsAuthenticated)
             {
-                return new List<CompetitionResponse>
-                           {
-                               new CompetitionResponse { Name = "Tävlingen1", CompetitionId = "1" },
-                               new CompetitionResponse { Name = "Tävlingen2", CompetitionId = "2" },
-                               new CompetitionResponse { Name = "Tävlingen3", CompetitionId = "3" },
-                               new CompetitionResponse { Name = "Tävlingen4", CompetitionId = "4" }
-                           };
+                competitions = logic.GetCompetitions(Guid.Parse(sess.UserAuthId));
+            }
+            else
+            {
+                competitions = logic.GetCompetitions(Guid.Empty);
             }
 
-            return new List<CompetitionResponse>
-                           {
-                               new CompetitionResponse { Name = "Tävlingen1", CompetitionId = "1" }
-                           };
+            return
+                (from dbcompetition in competitions 
+                 select new CompetitionResponse(dbcompetition)).ToList();
         }
     }
 }
