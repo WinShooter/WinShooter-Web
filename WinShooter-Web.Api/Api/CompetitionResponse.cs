@@ -29,13 +29,53 @@ namespace WinShooter.Api.Api
     public class CompetitionResponse
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="CompetitionResponse"/> class.
+        /// </summary>
+        /// <param name="dbcompetition">
+        /// The database competition.
+        /// </param>
+        public CompetitionResponse(Database.Competition dbcompetition)
+        {
+            this.CompetitionId = dbcompetition.Id.ToString();
+            this.CompetitionType = dbcompetition.CompetitionType.ToString();
+            this.Name = dbcompetition.Name;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompetitionResponse"/> class.
+        /// </summary>
+        public CompetitionResponse()
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets the competition id.
+        /// </summary>
+        public string CompetitionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competition type.
+        /// </summary>
+        public string CompetitionType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the competition is public.
+        /// </summary>
+        public bool IsPublic { get; set; }
+
+        /// <summary>
         /// Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Guid"/>.
+        /// Gets or sets the start date.
         /// </summary>
-        public string CompetitionId { get; set; }
+        public DateTime StartDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether use norwegian count.
+        /// </summary>
+        public bool UseNorwegianCount { get; set; }
     }
 }
