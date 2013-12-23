@@ -25,7 +25,6 @@ namespace WinShooter.Api.Authentication
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
 
     using NHibernate;
@@ -50,7 +49,7 @@ namespace WinShooter.Api.Authentication
         private readonly TimeSpan defaultSessionValidity = new TimeSpan(1, 0, 0, 0);
 
         /// <summary>
-        /// Gets the authenticated user.
+        /// Gets or sets the authenticated user.
         /// </summary>
         public User User { get; set; }
 
