@@ -63,6 +63,8 @@ namespace WinShooter.Api
         /// <param name="container">Container to register.</param>
         public override void Configure(Container container)
         {
+            this.SetConfig(new EndpointHostConfig { ServiceStackHandlerFactoryPath = "api" });
+
             // Access Web.Config AppSettings
             var appSettings = new AppSettings();
             container.Register(appSettings);
@@ -88,6 +90,7 @@ namespace WinShooter.Api
         /// </summary>
         private void ConfigureRoutes()
         {
+            Routes.AddFromAssembly(this.GetType().Assembly);
         }
 
         /// <summary>
