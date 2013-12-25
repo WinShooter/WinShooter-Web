@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Competition.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitionRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -31,7 +31,7 @@ namespace WinShooter.Api.Api
     /// Represents a competition from the client.
     /// </summary>
     [Route("/competition/{CompetitionId}")]
-    public class Competition
+    public class CompetitionRequest
     {
         /// <summary>
         /// Gets or sets the <see cref="Guid"/>.
@@ -63,16 +63,17 @@ namespace WinShooter.Api.Api
         /// Get a database competition.
         /// </summary>
         /// <returns>
-        /// The <see cref="Competition"/>.
+        /// The <see cref="CompetitionRequest"/>.
         /// </returns>
         public Database.Competition GetDatabaseCompetition()
         {
             var competitionType = (CompetitionType)Enum.Parse(typeof(CompetitionType), this.CompetitionType);
+            var competitionId = string.IsNullOrEmpty(this.CompetitionId) ? Guid.Empty : Guid.Parse(this.CompetitionId);
 
             var toReturn = new Database.Competition
                        {
                            CompetitionType = competitionType,
-                           Id = Guid.Parse(this.CompetitionId),
+                           Id = competitionId,
                            IsPublic = true,
                            Name = this.Name,
                            StartDate = this.StartDate,

@@ -92,7 +92,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\Competition.cs" />
+    <Compile Include="Api\CompetitionRequest.cs" />
     <Compile Include="Api\CompetitionResponse.cs" />
     <Compile Include="Api\CompetitionService.cs" />
     <Compile Include="Api\CompetitionsService.cs" />

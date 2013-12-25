@@ -44,7 +44,7 @@ namespace WinShooter.Api.Api
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
         [Route("/competitions")]
-        public CompetitionResponse Get(Competition request)
+        public CompetitionResponse Get(CompetitionRequest request)
         {
             var requestedCompetitionId = Guid.Parse(request.CompetitionId);
 
@@ -72,7 +72,7 @@ namespace WinShooter.Api.Api
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
         [Authenticate]
-        public CompetitionResponse Put(Competition request)
+        public CompetitionResponse Post(CompetitionRequest request)
         {
             var session = this.GetSession() as CustomUserSession;
             if (session == null)
@@ -82,7 +82,15 @@ namespace WinShooter.Api.Api
             }
 
             var logic = new CompetitionsLogic();
-            logic.AddOrUpdateCompetition(session.User.Id, request.GetDatabaseCompetition());
+            if (string.IsNullOrEmpty(request.CompetitionId))
+            {
+                request.CompetitionId = 
+                    logic.AddCompetition(session.User.Id, request.GetDatabaseCompetition()).ToString();
+            }
+            else
+            {
+                logic.UpdateCompetition(session.User.Id, request.GetDatabaseCompetition());
+            }
 
             // We have updated, read from database and return.
             return this.Get(request);
