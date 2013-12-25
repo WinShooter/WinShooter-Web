@@ -29,5 +29,9 @@ namespace WinShooter.Api.Api
     [Route("/competition/{CompetitionId}/rights")]
     public class CompetitionRights
     {
+        /// <summary>
+        /// Gets or sets the competition id which rights are supposed to be fetched for.
+        /// </summary>
+        public string CompetitionId { get; set; }
     }
 }

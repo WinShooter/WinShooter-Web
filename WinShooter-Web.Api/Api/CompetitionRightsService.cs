@@ -21,9 +21,13 @@
 
 namespace WinShooter.Api.Api
 {
+    using System;
+    using System.Linq;
+
     using ServiceStack.ServiceInterface;
 
     using WinShooter.Api.Authentication;
+    using WinShooter.Logic.Authorization;
 
     /// <summary>
     /// The competition service.
@@ -42,9 +46,14 @@ namespace WinShooter.Api.Api
         public CompetitionRightsResponse Get(CompetitionRights request)
         {
             var session = this.GetSession() as CustomUserSession;
+            var userId = session != null ? session.User.Id : Guid.Empty;
 
-            // TODO Implement
-            return new CompetitionRightsResponse { Rights = new[] { "CreateCompetition" } };
+            var rights = RightsHelper.GetRightsForCompetitionIdAndTheUser(userId, Guid.Parse(request.CompetitionId));
+
+            return new CompetitionRightsResponse
+                       {
+                           Rights = (from right in rights select right.ToString()).ToArray()
+                       };
         }
     }
 }
