@@ -64,13 +64,13 @@ namespace WinShooter.App_Start
                 new ScriptBundle(
                     "~/bundles/knockout",
                     "http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.3.0.js").Include(
-                    "~/Scripts/knockout-2.3.0.debug.js"));
+                    "~/Scripts/knockout-3.0.0.debug.js"));
 #else
             bundles.Add(
                 new ScriptBundle(
                     "~/bundles/knockout",
                     "http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.3.0.debug.js").Include(
-                    "~/Scripts/knockout-2.3.0.js"));
+                    "~/Scripts/knockout-3.0.0.js"));
 #endif
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
