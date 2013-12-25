@@ -21,9 +21,13 @@
 
 namespace WinShooter.Api.Api
 {
+    using System;
+
+    using ServiceStack.ServiceHost;
     using ServiceStack.ServiceInterface;
 
-    using WinShooter.Api.Authorization;
+    using WinShooter.Api.Authentication;
+    using WinShooter.Logic;
 
     /// <summary>
     /// The competition service.
@@ -39,10 +43,23 @@ namespace WinShooter.Api.Api
         /// <returns>
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
-        [RequiredWinShooterCompetitionPermission(WinShooterCompetitionPermission.ReadCompetition)]
+        [Route("/competitions")]
         public CompetitionResponse Get(Competition request)
         {
-            return new CompetitionResponse { Name = "Tävlingens namn" };
+            var requestedCompetitionId = Guid.Parse(request.CompetitionId);
+
+            var session = this.GetSession() as CustomUserSession;
+            var userId = session == null ? Guid.Empty : session.User.Id;
+
+            var logic = new CompetitionsLogic();
+            var dbcompetition = logic.GetCompetition(userId, requestedCompetitionId);
+
+            if (dbcompetition != null)
+            {
+                return new CompetitionResponse(dbcompetition);
+            }
+
+            throw new Exception(string.Format("Could not find competition with Guid {0}", request.CompetitionId));
         }
 
         /// <summary>
@@ -55,10 +72,20 @@ namespace WinShooter.Api.Api
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
         [Authenticate]
-        [RequiredWinShooterCompetitionPermission(WinShooterCompetitionPermission.UpdateCompetition)]
         public CompetitionResponse Put(Competition request)
         {
-            return new CompetitionResponse { CompetitionId = request.CompetitionId, Name = request.Name };
+            var session = this.GetSession() as CustomUserSession;
+            if (session == null)
+            {
+                // This really shouldn't happen since we have attributed for authenticate
+                throw new Exception("You need to authenticate");
+            }
+
+            var logic = new CompetitionsLogic();
+            logic.AddOrUpdateCompetition(session.User.Id, request.GetDatabaseCompetition());
+
+            // We have updated, read from database and return.
+            return this.Get(request);
         }
     }
 }

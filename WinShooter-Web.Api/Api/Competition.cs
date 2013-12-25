@@ -25,6 +25,8 @@ namespace WinShooter.Api.Api
 
     using ServiceStack.ServiceHost;
 
+    using WinShooter.Database;
+
     /// <summary>
     /// Represents a competition from the client.
     /// </summary>
@@ -37,8 +39,47 @@ namespace WinShooter.Api.Api
         public string CompetitionId { get; set; }
 
         /// <summary>
+        /// Gets or sets the type of competition. 
+        /// Matches to <see cref="CompetitionType"/> enumeration.
+        /// </summary>
+        public string CompetitionType { get; set; }
+
+        /// <summary>
         /// Gets or sets the <see cref="Guid"/>.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Norwegian count should be used.
+        /// </summary>
+        public bool UseNorwegianCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the start date.
+        /// </summary>
+        public DateTime StartDate { get; set; }
+
+        /// <summary>
+        /// Get a database competition.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="Competition"/>.
+        /// </returns>
+        public Database.Competition GetDatabaseCompetition()
+        {
+            var competitionType = (CompetitionType)Enum.Parse(typeof(CompetitionType), this.CompetitionType);
+
+            var toReturn = new Database.Competition
+                       {
+                           CompetitionType = competitionType,
+                           Id = Guid.Parse(this.CompetitionId),
+                           IsPublic = true,
+                           Name = this.Name,
+                           StartDate = this.StartDate,
+                           UseNorwegianCount = this.UseNorwegianCount
+                       };
+
+            return toReturn;
+        }
     }
 }

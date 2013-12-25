@@ -22,8 +22,13 @@
 namespace WinShooter.Logic
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using NHibernate.Linq;
 
     using WinShooter.Database;
+    using WinShooter.Logic.Authorization;
 
     /// <summary>
     /// The competitions.
@@ -31,17 +36,104 @@ namespace WinShooter.Logic
     public class CompetitionsLogic
     {
         /// <summary>
-        /// The get competitions.
+        /// Get all public competitions.
         /// </summary>
-        /// <param name="userGuid">
+        /// <returns>
+        /// The <see cref="Competition"/> array.
+        /// </returns>
+        public Competition[] GetPublicCompetitions()
+        {
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var competitions = from competition in databaseSession.Query<Competition>()
+                                   where competition.IsPublic
+                                   select competition;
+
+                return competitions.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Get all public competitions.
+        /// </summary>
+        /// <param name="userId">
         /// The user <see cref="Guid"/>.
         /// </param>
         /// <returns>
-        /// The <see cref="Database.Competition"/> array.
+        /// The <see cref="Competition"/> array.
         /// </returns>
-        public Competition[] GetCompetitions(Guid userGuid)
+        public Competition[] GetPrivateCompetitions(Guid userId)
         {
-            return new Competition[0];
+            if (userId.Equals(Guid.Empty))
+            {
+                // Quick bailout if anonymous
+                return new Competition[0];
+            }
+
+            var competitionIdsForUser = RightsHelper.GetCompetitionIdsTheUserHasRightsOn(userId, false);
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var competitions = from competition in databaseSession.Query<Competition>()
+                                   where !competition.IsPublic &&
+                                   competitionIdsForUser.Contains(competition.Id)
+                                   select competition;
+
+                return competitions.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Get all competitions for currently logged in user.
+        /// </summary>
+        /// <param name="userId">
+        /// The user <see cref="Guid"/>.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Competition"/> array.
+        /// </returns>
+        public Competition[] GetCompetitions(Guid userId)
+        {
+            var toReturn = new List<Competition>();
+            toReturn.AddRange(this.GetPublicCompetitions());
+            toReturn.AddRange(this.GetPrivateCompetitions(userId));
+
+            return toReturn.ToArray();
+        }
+
+        /// <summary>
+        /// Get a certain competition.
+        /// </summary>
+        /// <param name="userId">
+        /// The user <see cref="Guid"/>.
+        /// </param>
+        /// <param name="competitionId">
+        /// The competition <see cref="Guid"/>.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Competition"/>.
+        /// </returns>
+        public Competition GetCompetition(Guid userId, Guid competitionId)
+        {
+            var competitions = this.GetCompetitions(userId);
+
+            return
+                (from competition in competitions 
+                 where competition.Id.Equals(competitionId) 
+                 select competition)
+                    .FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Adds or updates a competition.
+        /// </summary>
+        /// <param name="userId">
+        /// The user trying to add or update a competition.
+        /// </param>
+        /// <param name="competition">
+        /// The competition to add or update.
+        /// </param>
+        public void AddOrUpdateCompetition(Guid userId, Competition competition)
+        {
             throw new NotImplementedException();
         }
     }

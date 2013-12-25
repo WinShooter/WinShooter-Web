@@ -5,41 +5,45 @@
 
 <h2>Välkommen till WinShooter!</h2>
 
-<p>Du kan nu</p>
-<ul>
-    <li>välja en befintlig tävling att titta på eller</li>
-    <li>skapa en ny tävling</li>
-</ul>
+<div class="row-fluid">
+    <div class="span2">
+        <p>Du kan nu</p>
+        <ul>
+            <li>välja en befintlig tävling att titta på eller</li>
+            <li>skapa en ny tävling</li>
+        </ul>
+    </div>
+</div>
 
-<div class="row">
+<div class="row-fluid">
     <div class="span2">Befintlig tävling:</div>
     <div class="span4"><select data-bind="options: competitions, optionsText: 'Name', value: selectedCompetition, optionsCaption: 'Välj...'"></select></div>
 </div>
-<div class="row">
+<div class="row-fluid">
     <div class="span2"></div>
     <div class="span4"><button type="submit" data-bind="click: selectCompetitionOnServer">Välj tävling</button></div>
 </div>
 
 <h3>Information om den valda tävlingen</h3>
-<div class="row">
+<div class="row-fluid">
     <div class="span1">Namn:</div>
     <div class="span5" data-bind="text: selectedCompetitionName"></div>
 </div>
-<div class="row">
+<div class="row-fluid">
     <div class="span1">GUID:</div>
     <div class="span5" data-bind="text: selectedCompetitionGuid"></div>
 </div>
 
 <h3>Skapa ny tävling</h3>
-<div class="row">
+<div class="row-fluid">
     <div class="span1">Namn:</div>
-    <div class="span5"><input data-bind="text: newCompetitionName"/></div>
+    <div class="span5"><input data-bind="text: newCompetitionName" /></div>
 </div>
-<div class="row">
+<div class="row-fluid">
     <div class="span1">Startar:</div>
-    <div class="span5"><input type="text" id="newCompetitionStartDate" data-bind="text: newCompetitionStartDate"/></div>
+    <div class="span5"><input type="text" id="newCompetitionStartDate" data-bind="text: newCompetitionStartDate" /></div>
 </div>
 
 @section scripts {
-    @Scripts.Render("~/Scripts/App/Home/index.js")
+        @Scripts.Render("~/Scripts/App/Home/index.js")
 }

@@ -59,11 +59,6 @@ namespace WinShooter.Api.Authentication
         public List<UserLoginInfo> UserLoginInfos { get; private set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="UserCompetitionRights"/>.
-        /// </summary>
-        internal UserCompetitionRights UserCompetitionRights { get; set; }
-
-        /// <summary>
         /// Called when the user authenticates.
         /// </summary>
         /// <param name="authService">

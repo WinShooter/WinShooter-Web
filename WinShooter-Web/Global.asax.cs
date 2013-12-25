@@ -24,7 +24,6 @@ namespace WinShooter
     using System;
     using System.Configuration;
     using System.Web;
-    using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
 
@@ -39,6 +38,11 @@ namespace WinShooter
     public class Global : HttpApplication
     {
         /// <summary>
+        /// The win shooter api host.
+        /// </summary>
+        private WinShooterApiHost WinShooterApiHost;
+
+        /// <summary>
         /// The application start, where everything is setup.
         /// </summary>
         /// <param name="sender">
@@ -50,7 +54,8 @@ namespace WinShooter
         protected void Application_Start(object sender, EventArgs e)
         {
             log4net.Config.XmlConfigurator.Configure();
-            new WinShooterApiHost().Init();
+            this.WinShooterApiHost = new WinShooterApiHost();
+            this.WinShooterApiHost.Init();
 
             //AreaRegistration.RegisterAllAreas();
 

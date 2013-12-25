@@ -47,18 +47,12 @@ namespace WinShooter.Api.Api
         {
             var sess = this.GetSession();
 
-            Database.Competition[] competitions;
-
             var logic = new CompetitionsLogic();
 
-            if (sess.IsAuthenticated)
-            {
-                competitions = logic.GetCompetitions(Guid.Parse(sess.UserAuthId));
-            }
-            else
-            {
-                competitions = logic.GetCompetitions(Guid.Empty);
-            }
+            var competitions = logic.GetCompetitions(
+                sess.IsAuthenticated 
+                    ? Guid.Parse(sess.UserAuthId) 
+                    : Guid.Empty);
 
             return
                 (from dbcompetition in competitions 

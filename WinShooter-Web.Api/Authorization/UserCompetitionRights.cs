@@ -60,6 +60,14 @@ namespace WinShooter.Api.Authorization
 
             using (var dbsession = NHibernateHelper.OpenSession())
             {
+                var userRoles = from userRolesInfo in dbsession.QueryOver<UserRolesInfo>()
+                                 where userRolesInfo.User.Id.Equals(user.Id) &&
+                                 userRolesInfo.Competition.Id == competitionId
+                                 select userRolesInfo.Role;
+
+
+
+
                 // TODO Implement fetching rights from database
             }
         }
@@ -84,6 +92,9 @@ namespace WinShooter.Api.Authorization
         /// </summary>
         internal List<string> Permissions { get; private set; }
 
+        /// <summary>
+        /// Gets the competition id.
+        /// </summary>
         internal Guid CompetitionId { get; private set; }
 
         /// <summary>

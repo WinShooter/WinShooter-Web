@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RightsFromDatabase.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="RolesFromDatabase.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Read and write rights from database.
+//   Read and write roles from database.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -32,10 +32,10 @@ namespace WinShooter.Database.Tests
     using WinShooter_Web.DatabaseMigrations;
 
     /// <summary>
-    /// Read and write rights from database.
+    /// Read and write roles from database.
     /// </summary>
     [TestClass]
-    public class RightsFromDatabase
+    public class RolesFromDatabase
     {
         private const string CompetitionName = "UnitTestCompetitionName";
 
@@ -85,54 +85,55 @@ namespace WinShooter.Database.Tests
         [TestMethod]
         public void WriteAndRead()
         {
-            var tempName = Guid.NewGuid().ToString();
-            using (var databaseSession = NHibernateHelper.OpenSession())
-            {
-                var rights = from right in databaseSession.Query<Right>()
-                                   where right.Name == tempName
-                                   select right;
+            throw new NotImplementedException();
+            //var tempName = Guid.NewGuid().ToString();
+            //using (var databaseSession = NHibernateHelper.OpenSession())
+            //{
+            //    var rights = from roleMap in databaseSession.Query<RoleMap>()
+            //                       where roleMap.. right.Equals( ). == tempName
+            //                       select right;
 
-                Assert.IsNotNull(rights);
-                Assert.AreEqual(0, rights.Count());
+            //    Assert.IsNotNull(rights);
+            //    Assert.AreEqual(0, rights.Count());
 
-                var toAdd = new Right
-                                {
-                                    Id = Guid.NewGuid().ToString(),
-                                    Name = tempName
-                                };
+            //    var toAdd = new Right
+            //                    {
+            //                        Id = Guid.NewGuid().ToString(),
+            //                        Name = tempName
+            //                    };
 
-                using (var transaction = databaseSession.BeginTransaction())
-                {
-                    databaseSession.Save(toAdd);
-                    transaction.Commit();
-                }
-            }
+            //    using (var transaction = databaseSession.BeginTransaction())
+            //    {
+            //        databaseSession.Save(toAdd);
+            //        transaction.Commit();
+            //    }
+            //}
 
-            using (var databaseSession = NHibernateHelper.OpenSession())
-            {
-                var rights = from right in databaseSession.Query<Right>()
-                             where right.Name == tempName
-                             select right;
+            //using (var databaseSession = NHibernateHelper.OpenSession())
+            //{
+            //    var rights = from right in databaseSession.Query<Right>()
+            //                 where right.Name == tempName
+            //                 select right;
 
-                Assert.IsNotNull(rights);
-                Assert.AreEqual(1, rights.Count());
+            //    Assert.IsNotNull(rights);
+            //    Assert.AreEqual(1, rights.Count());
 
-                using (var transaction = databaseSession.BeginTransaction())
-                {
-                    databaseSession.Delete(rights.ToArray()[0]);
-                    transaction.Commit();
-                }
-            }
+            //    using (var transaction = databaseSession.BeginTransaction())
+            //    {
+            //        databaseSession.Delete(rights.ToArray()[0]);
+            //        transaction.Commit();
+            //    }
+            //}
 
-            using (var databaseSession = NHibernateHelper.OpenSession())
-            {
-                var rights = from right in databaseSession.Query<Right>()
-                             where right.Name == tempName
-                             select right;
+            //using (var databaseSession = NHibernateHelper.OpenSession())
+            //{
+            //    var rights = from right in databaseSession.Query<Right>()
+            //                 where right.Name == tempName
+            //                 select right;
 
-                Assert.IsNotNull(rights);
-                Assert.AreEqual(0, rights.Count());
-            }
+            //    Assert.IsNotNull(rights);
+            //    Assert.AreEqual(0, rights.Count());
+            //}
         }
     }
 }
