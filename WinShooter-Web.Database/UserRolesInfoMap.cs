@@ -37,7 +37,7 @@ namespace WinShooter.Database
 
             this.References(x => x.Competition).Column("CompetitionId");
             this.References(x => x.Role).Column("RoleId");
-            this.References(x => x.User).Column("User");
+            this.References(x => x.User).Column("UserId");
 
             this.Table("UserRolesInfo");
         }
