@@ -21,15 +21,20 @@
 
 namespace WinShooter.Api
 {
-    using Funq;
+    using System;
+    using System.Collections.Generic;
 
-    //using ServiceStack.Authentication.OpenId;
+    using Funq;
+    using ServiceStack.Authentication.OpenId;
     using ServiceStack.CacheAccess;
     using ServiceStack.CacheAccess.Providers;
     using ServiceStack.Configuration;
     using ServiceStack.ServiceInterface;
     using ServiceStack.ServiceInterface.Auth;
     using ServiceStack.WebHost.Endpoints;
+
+    using WinShooter.Api.Api;
+    using WinShooter.Api.Authentication;
 
     /// <summary>
     /// The hello app host.
@@ -47,15 +52,27 @@ namespace WinShooter.Api
         }
 
         /// <summary>
+        /// Gets the app config.
+        /// </summary>
+        internal static AppConfig AppConfig { get; private set; }
+
+        /// <summary>
         /// Configure the given container with the 
         /// registrations provided by the service.
         /// </summary>
         /// <param name="container">Container to register.</param>
         public override void Configure(Container container)
         {
+            this.SetConfig(new EndpointHostConfig { ServiceStackHandlerFactoryPath = "api" });
+
             // Access Web.Config AppSettings
             var appSettings = new AppSettings();
             container.Register(appSettings);
+
+            AppConfig = new AppConfig(appSettings);
+
+            // Add all the Auth Providers to allow registration with
+            this.ConfigureAuth();
 
             // register REST-ful urls
             this.ConfigureRoutes();
@@ -66,9 +83,6 @@ namespace WinShooter.Api
             // Adds persistent user repository
             var userRep = new InMemoryAuthRepository();
             container.Register<IUserAuthRepository>(userRep);
-
-            // Add all the Auth Providers to allow registration with
-            this.ConfigureAuth();
         }
 
         /// <summary>
@@ -76,9 +90,7 @@ namespace WinShooter.Api
         /// </summary>
         private void ConfigureRoutes()
         {
-            this.Routes
-              .Add<Competitions>("/competitions")
-              .Add<Competition>("/competition/{Guid}");
+            Routes.AddFromAssembly(this.GetType().Assembly);
         }
 
         /// <summary>
@@ -86,6 +98,46 @@ namespace WinShooter.Api
         /// </summary>
         private void ConfigureAuth()
         {
+            // Access Web.Config AppSettings
+            var appSettings = new AppSettings();
+
+            var authProviders = new IAuthProvider[]
+                                    {
+                                        // Sign-in with Twitter
+                                        new TwitterAuthProvider(appSettings), 
+
+                                        // Sign-in with Facebook
+                                        new FacebookAuthProvider(appSettings),
+
+                                        // Register new OpenId providers you want to allow authentication with
+                                        new GoogleOpenIdOAuthProvider(appSettings),
+
+                                        // Sign-in with Goolge OpenId
+                                        new YahooOpenIdOAuthProvider(appSettings),
+
+                                        // Sign-in with Yahoo OpenId
+                                        new OpenIdOAuthProvider(appSettings),
+
+                                        // Sign-in with LinkedIn
+                                        new LinkedinAuthProvider(appSettings)
+                                    };
+            var serviceRoutes = new Dictionary<Type, string[]>
+                                    {
+                                        {
+                                            typeof(AuthService),
+                                            new[] { "/auth", "/auth/{provider}" }
+                                        },
+                                        {
+                                            typeof(AssignRolesService),
+                                            new[] { "/assignroles" }
+                                        },
+                                        {
+                                            typeof(UnAssignRolesService),
+                                            new[] { "/unassignroles" }
+                                        }
+                                    };
+
+            Plugins.Add(new AuthFeature(() => new CustomUserSession(), authProviders) { ServiceRoutes = serviceRoutes });
         }
     }
 }

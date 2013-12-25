@@ -37,8 +37,14 @@ namespace WinShooter.Database.Tests
     [TestClass]
     public class PatrolsFromDatabase
     {
+        /// <summary>
+        /// The competition name.
+        /// </summary>
         private const string CompetitionName = "UnitTestCompetitionName";
 
+        /// <summary>
+        /// The test competition.
+        /// </summary>
         private Competition testCompetition;
 
         /// <summary>

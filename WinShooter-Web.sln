@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web", "WinShooter-Web\WinShooter-Web.csproj", "{C4230171-0BC5-4779-8F19-18BCAE3BE683}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.Tests", "WinShooter-Web.Tests\WinShooter-Web.Tests.csproj", "{9A8CFC24-4EAC-454C-8063-82D4FF8C52FC}"
@@ -23,6 +25,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.Database", "WinShooter-Web.Database\WinShooter-Web.Database.csproj", "{457DCBB2-7BFC-466F-96E7-72C22630D74A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.Database.Tests", "WinShooter-Web.Database.Tests\WinShooter-Web.Database.Tests.csproj", "{4088DDB3-DCC4-47EA-B5A5-00E443402CFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.Logic", "WinShooter-Web.Logic\WinShooter-Web.Logic.csproj", "{42A3AA79-1702-4995-B85E-C267E7225E1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.Logic.Tests", "WinShooter-Web.Logic.Tests\WinShooter-Web.Logic.Tests.csproj", "{02F980C9-70CC-44BF-AED2-3712025E024A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +64,14 @@ Global
 		{4088DDB3-DCC4-47EA-B5A5-00E443402CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4088DDB3-DCC4-47EA-B5A5-00E443402CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4088DDB3-DCC4-47EA-B5A5-00E443402CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42A3AA79-1702-4995-B85E-C267E7225E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A3AA79-1702-4995-B85E-C267E7225E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A3AA79-1702-4995-B85E-C267E7225E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A3AA79-1702-4995-B85E-C267E7225E1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02F980C9-70CC-44BF-AED2-3712025E024A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02F980C9-70CC-44BF-AED2-3712025E024A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02F980C9-70CC-44BF-AED2-3712025E024A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02F980C9-70CC-44BF-AED2-3712025E024A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,5 +80,7 @@ Global
 		{AB5B1093-247B-4916-A2B7-93D70621F984} = {12BC8CC9-D149-4B1A-BA54-8DDC55D4F7FF}
 		{457DCBB2-7BFC-466F-96E7-72C22630D74A} = {12BC8CC9-D149-4B1A-BA54-8DDC55D4F7FF}
 		{4088DDB3-DCC4-47EA-B5A5-00E443402CFF} = {12BC8CC9-D149-4B1A-BA54-8DDC55D4F7FF}
+		{42A3AA79-1702-4995-B85E-C267E7225E1D} = {12BC8CC9-D149-4B1A-BA54-8DDC55D4F7FF}
+		{02F980C9-70CC-44BF-AED2-3712025E024A} = {12BC8CC9-D149-4B1A-BA54-8DDC55D4F7FF}
 	EndGlobalSection
 EndGlobal
