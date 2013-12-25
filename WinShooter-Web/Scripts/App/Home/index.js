@@ -33,8 +33,7 @@ var ViewModel = function (competitions) {
 
 // Add datepicker to the newCompetitionStartDate field
 $(function () {
-    //alert('test');
-    //$("#newCompetitionStartDate").datepicker();
+    $("#newCompetitionStartDate").datepicker({ dateFormat: 'yy-mm-dd' });
 });
 
 // Fetch competitions from api and bind with knockout.
