@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Authorization
+namespace WinShooter.Logic.Authorization
 {
     using System;
     using System.Collections.Generic;
@@ -41,7 +41,7 @@ namespace WinShooter.Api.Authorization
         internal UserCompetitionRights(Guid competitionId)
         {
             this.CompetitionId = competitionId;
-            this.Permissions = new List<string>();
+            this.Permissions = new List<WinShooterCompetitionPermissions>();
         }
 
         /// <summary>
@@ -56,20 +56,9 @@ namespace WinShooter.Api.Authorization
         internal UserCompetitionRights(Guid competitionId, User user)
         {
             this.CompetitionId = competitionId;
-            this.Permissions = new List<string>();
+            this.Permissions = new List<WinShooterCompetitionPermissions>();
 
-            using (var dbsession = NHibernateHelper.OpenSession())
-            {
-                var userRoles = from userRolesInfo in dbsession.QueryOver<UserRolesInfo>()
-                                 where userRolesInfo.User.Id.Equals(user.Id) &&
-                                 userRolesInfo.Competition.Id == competitionId
-                                 select userRolesInfo.Role;
-
-
-
-
-                // TODO Implement fetching rights from database
-            }
+            this.Permissions.AddRange(RightsHelper.GetRightsForCompetitionIdAndTheUser(user.Id, competitionId));
         }
 
         /// <summary>
@@ -81,7 +70,7 @@ namespace WinShooter.Api.Authorization
         /// <param name="permissions">
         /// The permissions.
         /// </param>
-        internal UserCompetitionRights(Guid competitionId, List<string> permissions)
+        internal UserCompetitionRights(Guid competitionId, List<WinShooterCompetitionPermissions> permissions)
         {
             this.CompetitionId = competitionId;
             this.Permissions = permissions;
@@ -90,7 +79,7 @@ namespace WinShooter.Api.Authorization
         /// <summary>
         /// Gets the permissions.
         /// </summary>
-        internal List<string> Permissions { get; private set; }
+        internal List<WinShooterCompetitionPermissions> Permissions { get; private set; }
 
         /// <summary>
         /// Gets the competition id.
@@ -106,13 +95,9 @@ namespace WinShooter.Api.Authorization
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        internal bool HasPermission(string requestedPermission)
+        internal bool HasPermission(WinShooterCompetitionPermissions requestedPermission)
         {
-            requestedPermission = requestedPermission.ToUpperInvariant();
-
-            return (from permision in this.Permissions
-                where permision.ToUpperInvariant() == requestedPermission
-                select permision.ToUpperInvariant()).Any();
+            return this.Permissions.Contains(requestedPermission);
         }
     }
 }

@@ -75,9 +75,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authorization\UserCompetitionRightsTests.cs" />
-    <Compile Include="Dummys\DummyHttpRequest.cs" />
-    <Compile Include="Dummys\DummyUserAuthRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

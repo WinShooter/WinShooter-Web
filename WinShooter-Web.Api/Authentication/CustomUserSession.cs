@@ -33,7 +33,6 @@ namespace WinShooter.Api.Authentication
     using ServiceStack.ServiceInterface;
     using ServiceStack.ServiceInterface.Auth;
 
-    using WinShooter.Api.Authorization;
     using WinShooter.Database;
 
     /// <summary>

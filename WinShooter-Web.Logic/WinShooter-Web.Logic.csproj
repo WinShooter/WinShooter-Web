@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authorization\RightsHelper.cs" />
+    <Compile Include="Authorization\UserCompetitionRights.cs" />
     <Compile Include="Authorization\WinShooterCompetitionPermissions.cs" />
     <Compile Include="CompetitionsLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
