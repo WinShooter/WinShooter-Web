@@ -21,12 +21,14 @@
 
 namespace WinShooter.Database
 {
+    using System;
+
     /// <summary>
     /// The representation of the database User Roles Info.
     /// </summary>
     public class UserRolesInfo
     {
-        public virtual int Id { get; set; }
+        public virtual Guid Id { get; set; }
         public virtual User User { get; set; }
         public virtual Role Role { get; set; }
         public virtual Competition Competition { get; set; }

@@ -42,6 +42,7 @@
       <HintPath>..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -55,6 +56,7 @@
     <Compile Include="Authorization\WinShooterCompetitionPermissions.cs" />
     <Compile Include="CompetitionsLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RolesLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WinShooter-Web.Database\WinShooter-Web.Database.csproj">
@@ -64,6 +66,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -43,7 +43,6 @@ namespace WinShooter.Api.Api
         /// <returns>
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
-        [Route("/competitions")]
         public CompetitionResponse Get(CompetitionRequest request)
         {
             var requestedCompetitionId = Guid.Parse(request.CompetitionId);
@@ -85,7 +84,7 @@ namespace WinShooter.Api.Api
             if (string.IsNullOrEmpty(request.CompetitionId))
             {
                 request.CompetitionId = 
-                    logic.AddCompetition(session.User.Id, request.GetDatabaseCompetition()).ToString();
+                    logic.AddCompetition(session.User, request.GetDatabaseCompetition()).ToString();
             }
             else
             {

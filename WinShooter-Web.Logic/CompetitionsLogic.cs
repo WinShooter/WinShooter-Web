@@ -124,7 +124,51 @@ namespace WinShooter.Logic
         }
 
         /// <summary>
-        /// Adds or updates a competition.
+        /// Adds a new competition.
+        /// </summary>
+        /// <param name="user">
+        /// The user trying to add or update a competition.
+        /// </param>
+        /// <param name="competition">
+        /// The competition to add or update.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Guid"/> of the new competition.
+        /// </returns>
+        public Competition AddCompetition(User user, Competition competition)
+        {
+            competition.Id = Guid.NewGuid();
+
+            var rolesLogic = new RolesLogic();
+            var role = rolesLogic.DefaultOwnerRole;
+            var usertRolesInfo = new UserRolesInfo
+                                     {
+                                         Competition = competition,
+                                         Id = Guid.NewGuid(),
+                                         Role = role,
+                                         User = user
+                                     };
+
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    // First add the new competition to database
+                    databaseSession.Save(competition);
+
+                    // Then add user as owner of competition
+                    databaseSession.Save(usertRolesInfo);
+
+                    // And commit transaction
+                    transaction.Commit();
+                }
+            }
+
+            return competition;
+        }
+
+        /// <summary>
+        /// Updates a competition.
         /// </summary>
         /// <param name="userId">
         /// The user trying to add or update a competition.
@@ -132,7 +176,7 @@ namespace WinShooter.Logic
         /// <param name="competition">
         /// The competition to add or update.
         /// </param>
-        public void AddOrUpdateCompetition(Guid userId, Competition competition)
+        public void UpdateCompetition(Guid userId, Competition competition)
         {
             throw new NotImplementedException();
         }

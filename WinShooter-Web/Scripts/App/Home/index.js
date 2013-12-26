@@ -42,3 +42,15 @@ $.getJSON(competitionsApi, function (data) {
     ko.applyBindings(new ViewModel(data));
 });
 
+function addCompetition() {
+    alert("tjosan!");
+    var data = {
+        CompetitionType: "Field",
+        Name: "Namn",
+        UseNorwegianCount: "False",
+        StartDate: "2013-01-01",
+    };
+    $.post("/api/competition", data, function(returnedData) {
+        alert("success!");
+    });
+}
