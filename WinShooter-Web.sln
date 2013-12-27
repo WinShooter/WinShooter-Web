@@ -11,13 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.Api", "WinSh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.Api.Tests", "WinShooter-Web.Api.Tests\WinShooter-Web.Api.Tests.csproj", "{748F05A0-7A2E-45A0-869B-AA39ECE7CC96}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F9EB0CC0-905F-4E00-B830-B1AD219A432D}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.DatabaseMigrations", "WinShooter-Web.DatabaseMigrations\WinShooter-Web.DatabaseMigrations.csproj", "{AB5B1093-247B-4916-A2B7-93D70621F984}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{12BC8CC9-D149-4B1A-BA54-8DDC55D4F7FF}"
