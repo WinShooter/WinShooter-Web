@@ -102,7 +102,7 @@
     <Compile Include="Api\CompetitionRightsService.cs" />
     <Compile Include="Api\RightsResponse.cs" />
     <Compile Include="Api\RightsService.cs" />
-    <Compile Include="Api\Rights.cs" />
+    <Compile Include="Api\RightsRequest.cs" />
     <Compile Include="AppConfig.cs" />
     <Compile Include="Authentication\CustomUserSession.cs" />
     <Compile Include="Authentication\LinkedinAuthProvider.cs" />

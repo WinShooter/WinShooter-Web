@@ -39,7 +39,7 @@ namespace WinShooter.Api.Api
         /// <returns>
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
-        public RightsResponse Get(Rights request)
+        public RightsResponse Get(RightsRequest request)
         {
             var session = this.GetSession() as CustomUserSession;
 
