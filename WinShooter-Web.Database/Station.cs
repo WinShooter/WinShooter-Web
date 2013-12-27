@@ -23,14 +23,51 @@ namespace WinShooter.Database
 {
     using System;
 
+    /// <summary>
+    /// The station.
+    /// </summary>
     public class Station
     {
+        public Station()
+        {
+            // ReSharper disable DoNotCallOverridableMethodsInConstructor
+            this.Id = Guid.NewGuid();
+            // ReSharper restore DoNotCallOverridableMethodsInConstructor
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Station"/> Id.
+        /// </summary>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Station"/> competition.
+        /// </summary>
         public virtual Competition Competition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Station"/> number of targets.
+        /// </summary>
         public virtual int NumberOfTargets { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Station"/> number of shots.
+        /// </summary>
         public virtual int NumberOfShots { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Station"/> points.
+        /// </summary>
         public virtual int Points { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="Station"/> is a station for distinguishing between shooters.
+        /// </summary>
         public virtual bool Distinguish { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Station"/> station number.
+        /// </summary>
         public virtual int StationNumber { get; set; }
     }
 }

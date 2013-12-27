@@ -38,9 +38,9 @@ namespace WinShooter
     public class Global : HttpApplication
     {
         /// <summary>
-        /// The win shooter api host.
+        /// The win shooter API host.
         /// </summary>
-        private WinShooterApiHost WinShooterApiHost;
+        private WinShooterApiHost winShooterApiHost;
 
         /// <summary>
         /// The application start, where everything is setup.
@@ -54,8 +54,8 @@ namespace WinShooter
         protected void Application_Start(object sender, EventArgs e)
         {
             log4net.Config.XmlConfigurator.Configure();
-            this.WinShooterApiHost = new WinShooterApiHost();
-            this.WinShooterApiHost.Init();
+            this.winShooterApiHost = new WinShooterApiHost();
+            this.winShooterApiHost.Init();
 
             //AreaRegistration.RegisterAllAreas();
 

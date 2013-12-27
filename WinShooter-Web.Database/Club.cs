@@ -42,13 +42,44 @@ namespace WinShooter.Database
             this.LastUpdated = DateTime.Now;
         }
 
+        /// <summary>
+        /// Gets or sets the club ID.
+        /// </summary>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the national club ID.
+        /// </summary>
         public virtual string ClubId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the club name.
+        /// </summary>
         public virtual string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the club country.
+        /// </summary>
         public virtual string Country { get; set; }
+
+        /// <summary>
+        /// Gets or sets the club email.
+        /// </summary>
         public virtual string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the club PLUSGIRO.
+        /// </summary>
         public virtual string Plusgiro { get; set; }
+
+        /// <summary>
+        /// Gets or sets the club BANKGIRO.
+        /// </summary>
         public virtual string Bankgiro { get; set; }
+
+        /// <summary>
+        /// Gets or sets the club last updated.
+        /// </summary>
         public virtual DateTime LastUpdated { get; set; }
     }
 }

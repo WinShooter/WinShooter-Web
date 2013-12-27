@@ -39,11 +39,34 @@ namespace WinShooter.Database
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="Patrol"/> ID.
+        /// </summary>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Patrol"/> number.
+        /// </summary>
         public virtual int PatrolId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Patrol"/> start time.
+        /// </summary>
         public virtual DateTime StartTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Patrol"/> competition.
+        /// </summary>
         public virtual Competition Competition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Patrol"/> class.
+        /// </summary>
         public virtual PatrolClassEnum PatrolClass { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Patrol"/> start time to display.
+        /// </summary>
         public virtual DateTime StartTimeDisplay { get; set; }
     }
 }

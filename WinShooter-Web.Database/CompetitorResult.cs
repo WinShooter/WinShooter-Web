@@ -39,10 +39,29 @@ namespace WinShooter.Database
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="CompetitorResult"/> ID.
+        /// </summary>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competitor.
+        /// </summary>
         public virtual Competitor Competitor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station.
+        /// </summary>
         public virtual Station Station { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="CompetitorResult"/> points.
+        /// </summary>
         public virtual int Points { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="CompetitorResult"/> target hits.
+        /// </summary>
         public virtual int TargetHits { get; set; }
     }
 }

@@ -30,71 +30,87 @@ namespace WinShooter.Database
     public enum WeaponClassEnum
     {
         /// <summary>
-        /// 
+        /// Unknown weapons.
         /// </summary>
         Unknown = 0,
+
         /// <summary>
-        /// 
+        /// The A1 class.
         /// </summary>
         A1 = 1,
+
         /// <summary>
-        /// 
+        /// The A2 class.
         /// </summary>
         A2 = 2,
+
         /// <summary>
-        /// 
+        /// The A3 class.
         /// </summary>
         A3 = 3,
+
         /// <summary>
-        /// 
+        /// The B class.
         /// </summary>
         B = 11,
+
         /// <summary>
-        /// 
+        /// The C class.
         /// </summary>
         C = 21,
+
         /// <summary>
-        /// 
+        /// The R class.
         /// </summary>
         R = 31,
+
         /// <summary>
-        /// 
+        /// The M class.
         /// </summary>
         M = 41,
+
         /// <summary>
-        /// 
+        /// The M1 class.
         /// </summary>
         M1 = 42,
+
         /// <summary>
-        /// 
+        /// The M2 class.
         /// </summary>
         M2 = 43,
+
         /// <summary>
-        /// 
+        /// The M3 class.
         /// </summary>
         M3 = 44,
+
         /// <summary>
-        /// 
+        /// The M4 class.
         /// </summary>
         M4 = 45,
+
         /// <summary>
-        /// 
+        /// The M5 class.
         /// </summary>
         M5 = 46,
+
         /// <summary>
-        /// 
+        /// The M6 class.
         /// </summary>
         M6 = 47,
+
         /// <summary>
-        /// 
+        /// The M7 class.
         /// </summary>
         M7 = 48,
+
         /// <summary>
-        /// 
+        /// The M8 class.
         /// </summary>
         M8 = 49,
+
         /// <summary>
-        /// 
+        /// The M9 class.
         /// </summary>
         M9 = 50
     }

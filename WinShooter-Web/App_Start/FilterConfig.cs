@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Defines the FilterConfig type.
+//   The configuration of MVC filters.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -23,8 +23,17 @@ namespace WinShooter.App_Start
 {
     using System.Web.Mvc;
 
+    /// <summary>
+    /// The configuration of MVC filters.
+    /// </summary>
     public class FilterConfig
     {
+        /// <summary>
+        /// Handles the registration of global filters.
+        /// </summary>
+        /// <param name="filters">
+        /// The <see cref="GlobalFilterCollection"/> that handles the configuration.
+        /// </param>
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());

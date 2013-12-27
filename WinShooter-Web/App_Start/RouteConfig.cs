@@ -26,8 +26,17 @@ namespace WinShooter
     using System.Web.Mvc;
     using System.Web.Routing;
 
+    /// <summary>
+    /// Class for configuring the routes.
+    /// </summary>
     public class RouteConfig
     {
+        /// <summary>
+        /// Registers the routes.
+        /// </summary>
+        /// <param name="routes">
+        /// The <see cref="RouteCollection"/> that is used for configuring the routes.
+        /// </param>
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");

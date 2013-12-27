@@ -24,45 +24,53 @@ namespace WinShooter.Database
     using System;
 
     /// <summary>
-    /// PatrolClass
+    /// Patrol Class
     /// </summary>
     [Serializable]
     public enum PatrolClassEnum
     {
         /// <summary>
-        /// 
+        /// The unknown patrol class.
         /// </summary>
         Okänd = 0,
+
         /// <summary>
-        /// 
+        /// The A patrol class.
         /// </summary>
         A = 1,
+
         /// <summary>
-        /// 
+        /// The B patrol class.
         /// </summary>
         B = 2,
+
         /// <summary>
-        /// 
+        /// The C patrol class.
         /// </summary>
         C = 3,
+
         /// <summary>
-        /// 
+        /// The R patrol class.
         /// </summary>
         R = 4,
+
         /// <summary>
-        /// 
+        /// The M patrol class.
         /// </summary>
         M = 5,
+
         /// <summary>
-        /// 
+        /// The AR patrol class.
         /// </summary>
         AR = 11,
+
         /// <summary>
-        /// 
+        /// The BC patrol class.
         /// </summary>
         BC = 12,
+
         /// <summary>
-        /// 
+        /// The ABCRM patrol class.
         /// </summary>
         ABCRM = 99
     }

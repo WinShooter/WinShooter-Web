@@ -39,13 +39,44 @@ namespace WinShooter.Database
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
+        /// <summary>
+        /// Gets or sets the competitor ID.
+        /// </summary>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competitor competition.
+        /// </summary>
         public virtual Competition Competition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competitor shooters.
+        /// </summary>
         public virtual Shooter Shooter { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competitor shooter class.
+        /// </summary>
         public virtual ShootersClassEnum ShooterClass { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competitor weapon.
+        /// </summary>
         public virtual Weapon Weapon { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competitor patrol.
+        /// </summary>
         public virtual Patrol Patrol { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competitor patrol lane.
+        /// </summary>
         public virtual int PatrolLane { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competitor shooting place in the final round.
+        /// </summary>
         public virtual int FinalShootingPlace { get; set; }
     }
 }

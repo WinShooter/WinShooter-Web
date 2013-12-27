@@ -38,11 +38,34 @@ namespace WinShooter.Database
             this.Id = Guid.NewGuid();
         }
 
+        /// <summary>
+        /// Gets or sets the competition ID.
+        /// </summary>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competition name.
+        /// </summary>
         public virtual string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competition start date.
+        /// </summary>
         public virtual DateTime StartDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competition type.
+        /// </summary>
         public virtual CompetitionType CompetitionType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the competition uses norwegian (points) calculation.
+        /// </summary>
         public virtual bool UseNorwegianCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the competition is public.
+        /// </summary>
         public virtual bool IsPublic { get; set; }
     }
 }
