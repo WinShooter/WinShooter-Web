@@ -30,7 +30,7 @@ namespace WinShooter.Api.Api
     /// <summary>
     /// Represents a competition from the client.
     /// </summary>
-    [Route("/competition/{CompetitionId}")]
+    [Route("/competition")]
     public class CompetitionRequest
     {
         /// <summary>
@@ -65,12 +65,12 @@ namespace WinShooter.Api.Api
         /// <returns>
         /// The <see cref="CompetitionRequest"/>.
         /// </returns>
-        public Database.Competition GetDatabaseCompetition()
+        public Competition GetDatabaseCompetition()
         {
             var competitionType = (CompetitionType)Enum.Parse(typeof(CompetitionType), this.CompetitionType);
             var competitionId = string.IsNullOrEmpty(this.CompetitionId) ? Guid.Empty : Guid.Parse(this.CompetitionId);
 
-            var toReturn = new Database.Competition
+            var toReturn = new Competition
                        {
                            CompetitionType = competitionType,
                            Id = competitionId,
