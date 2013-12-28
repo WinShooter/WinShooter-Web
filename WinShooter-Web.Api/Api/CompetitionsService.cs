@@ -43,7 +43,7 @@ namespace WinShooter.Api.Api
         /// <returns>
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
-        public List<CompetitionResponse> Get(Competitions request)
+        public List<CompetitionResponse> Get(CompetitionsRequest request)
         {
             var sess = this.GetSession();
 

@@ -47,7 +47,7 @@ namespace WinShooter.Api
         /// where to find your web services.
         /// </summary>
         public WinShooterApiHost()
-            : base("WinShooter Web Services", typeof(Competitions).Assembly)
+            : base("WinShooter Web Services", typeof(CompetitionsRequest).Assembly)
         {
         }
 
