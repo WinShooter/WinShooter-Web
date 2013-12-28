@@ -37,11 +37,50 @@ namespace WinShooter.Database.Tests
     [TestClass]
     public class RolesFromDatabase
     {
+        /// <summary>
+        /// The name of the unit test competition
+        /// </summary>
         private const string CompetitionName = "UnitTestCompetitionName";
 
+        /// <summary>
+        ///  The name of the unit test club.
+        /// </summary>
+        private const string ClubName = "UnitTestClubName";
+
+        /// <summary>
+        /// The name of the unit test user.
+        /// </summary>
+        private const string UserName = "UnitTestUser";
+
+        /// <summary>
+        /// The name of the unit test user.
+        /// </summary>
+        private const string UserCardNumber = "12345678";
+
+        /// <summary>
+        /// The name of the unit test role.
+        /// </summary>
+        private const string RoleName = "UnitTestRole";
+
+        /// <summary>
+        /// The competition used in unit tests.
+        /// </summary>
         private Competition testCompetition;
 
+        /// <summary>
+        /// The club used in unit tests.
+        /// </summary>
         private Club testClub;
+
+        /// <summary>
+        /// The user used in unit tests.
+        /// </summary>
+        private User testUser;
+
+        /// <summary>
+        /// The role used in unit tests.
+        /// </summary>
+        private Role testRole;
 
         /// <summary>
         /// Make sure the database is latest version.
@@ -54,6 +93,7 @@ namespace WinShooter.Database.Tests
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
+                // Check there is a test competition
                 this.testCompetition =
                     (from competition in databaseSession.Query<Competition>()
                      where competition.Name == CompetitionName
@@ -75,6 +115,97 @@ namespace WinShooter.Database.Tests
                         transaction.Commit();
                     }
                 }
+
+                // Check there is a test club
+                this.testClub =
+                    (from club in databaseSession.Query<Club>() 
+                     where club.Name == ClubName
+                     select club)
+                        .FirstOrDefault();
+
+                if (this.testClub == null)
+                {
+                    // No test club found
+                    this.testClub = new Club
+                                        {
+                                            Id = Guid.NewGuid(),
+                                            Name = ClubName,
+                                            Bankgiro = string.Empty,
+                                            ClubId = "123-123",
+                                            Country = "SE",
+                                            Email = string.Empty,
+                                            LastUpdated = DateTime.Now,
+                                            Plusgiro = string.Empty
+                                        };
+
+                    using (var transaction = databaseSession.BeginTransaction())
+                    {
+                        databaseSession.Save(this.testClub);
+                        transaction.Commit();
+                    }
+                }
+
+                // Check there is a test user
+                this.testUser =
+                    (from user in databaseSession.Query<User>()
+                     where user.Givenname == UserName && user.Surname == UserName && user.CardNumber == UserCardNumber
+                     select user).FirstOrDefault();
+
+                if (this.testUser == null)
+                {
+                    this.testUser = new User
+                                        {
+                                            CardNumber = UserCardNumber,
+                                            Surname = UserName,
+                                            Givenname = UserName,
+                                            ClubId = this.testClub.Id,
+                                            Email = string.Empty,
+                                            Id = Guid.NewGuid(),
+                                            LastLogin = DateTime.Now,
+                                            LastUpdated = DateTime.Now,
+                                        };
+
+                    using (var transaction = databaseSession.BeginTransaction())
+                    {
+                        databaseSession.Save(this.testUser);
+                        transaction.Commit();
+                    }
+                }
+
+                // Check there is a test role
+                this.testRole =
+                    (from role in databaseSession.Query<Role>() where role.RoleName == RoleName select role)
+                        .FirstOrDefault();
+
+                if (this.testRole == null)
+                {
+                    // There is no test role, create
+                    this.testRole = new Role { Id = Guid.NewGuid(), RoleName = RoleName };
+
+                    using (var transaction = databaseSession.BeginTransaction())
+                    {
+                        databaseSession.Save(this.testRole);
+                        transaction.Commit();
+                    }
+                }
+
+                // Make sure there are no existing roles
+                var userRolesInfos = from userRolesInfo in databaseSession.Query<UserRolesInfo>()
+                                     where userRolesInfo.User.Id.Equals(this.testUser.Id)
+                                     select userRolesInfo;
+
+                if (userRolesInfos.Any())
+                {
+                    using (var transaction = databaseSession.BeginTransaction())
+                    {
+                        foreach (var userRolesInfo in userRolesInfos)
+                        {
+                            databaseSession.Delete(userRolesInfo);
+                        }
+
+                        transaction.Commit();
+                    }
+                }
             }
         }
 
@@ -85,55 +216,56 @@ namespace WinShooter.Database.Tests
         [TestMethod]
         public void WriteAndRead()
         {
-            throw new NotImplementedException();
-            //var tempName = Guid.NewGuid().ToString();
-            //using (var databaseSession = NHibernateHelper.OpenSession())
-            //{
-            //    var rights = from roleMap in databaseSession.Query<RoleMap>()
-            //                       where roleMap.. right.Equals( ). == tempName
-            //                       select right;
+            var tempName = Guid.NewGuid().ToString();
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var userRolesInfos = from userRolesInfo in databaseSession.Query<UserRolesInfo>()
+                                   where userRolesInfo.User.Id.Equals(this.testUser.Id)
+                                   select userRolesInfo;
 
-            //    Assert.IsNotNull(rights);
-            //    Assert.AreEqual(0, rights.Count());
+                Assert.IsNotNull(userRolesInfos);
+                Assert.AreEqual(0, userRolesInfos.Count());
 
-            //    var toAdd = new Right
-            //                    {
-            //                        Id = Guid.NewGuid().ToString(),
-            //                        Name = tempName
-            //                    };
+                var toAdd = new UserRolesInfo
+                                {
+                                    Id = Guid.NewGuid(),
+                                    Competition = this.testCompetition,
+                                    Role = this.testRole,
+                                    User = this.testUser
+                                };
 
-            //    using (var transaction = databaseSession.BeginTransaction())
-            //    {
-            //        databaseSession.Save(toAdd);
-            //        transaction.Commit();
-            //    }
-            //}
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Save(toAdd);
+                    transaction.Commit();
+                }
+            }
 
-            //using (var databaseSession = NHibernateHelper.OpenSession())
-            //{
-            //    var rights = from right in databaseSession.Query<Right>()
-            //                 where right.Name == tempName
-            //                 select right;
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var userRolesInfos = from userRolesInfo in databaseSession.Query<UserRolesInfo>()
+                                     where userRolesInfo.User.Id.Equals(this.testUser.Id)
+                                     select userRolesInfo;
 
-            //    Assert.IsNotNull(rights);
-            //    Assert.AreEqual(1, rights.Count());
+                Assert.IsNotNull(userRolesInfos);
+                Assert.AreEqual(1, userRolesInfos.Count());
 
-            //    using (var transaction = databaseSession.BeginTransaction())
-            //    {
-            //        databaseSession.Delete(rights.ToArray()[0]);
-            //        transaction.Commit();
-            //    }
-            //}
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Delete(userRolesInfos.ToArray()[0]);
+                    transaction.Commit();
+                }
+            }
 
-            //using (var databaseSession = NHibernateHelper.OpenSession())
-            //{
-            //    var rights = from right in databaseSession.Query<Right>()
-            //                 where right.Name == tempName
-            //                 select right;
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var userRolesInfos = from userRolesInfo in databaseSession.Query<UserRolesInfo>()
+                                     where userRolesInfo.User.Id.Equals(this.testUser.Id)
+                                     select userRolesInfo;
 
-            //    Assert.IsNotNull(rights);
-            //    Assert.AreEqual(0, rights.Count());
-            //}
+                Assert.IsNotNull(userRolesInfos);
+                Assert.AreEqual(0, userRolesInfos.Count());
+            }
         }
     }
 }

@@ -21,12 +21,14 @@
 
 namespace WinShooter.Database
 {
+    using System;
+
     /// <summary>
     /// The representation of the database role.
     /// </summary>
     public class Role
     {
-        public virtual string Id { get; set; }
+        public virtual Guid Id { get; set; }
         public virtual string RoleName { get; set; }
     }
 }
