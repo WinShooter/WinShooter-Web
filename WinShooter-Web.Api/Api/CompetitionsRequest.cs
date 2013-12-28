@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Competitions.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitionsRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -27,7 +27,7 @@ namespace WinShooter.Api.Api
     /// Represents a competition from the client.
     /// </summary>
     [Route("/competitions")]
-    public class Competitions
+    public class CompetitionsRequest
     {
         /// <summary>
         /// Gets or sets a value indicating whether to include public competitions.
