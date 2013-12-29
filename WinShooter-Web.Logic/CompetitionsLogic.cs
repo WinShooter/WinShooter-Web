@@ -139,6 +139,8 @@ namespace WinShooter.Logic
         {
             competition.Id = Guid.NewGuid();
 
+            competition.VerifyDataContent();
+
             var rolesLogic = new RolesLogic();
             var role = rolesLogic.DefaultOwnerRole;
 

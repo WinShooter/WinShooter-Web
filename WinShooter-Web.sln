@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.Logic", "Win
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.Logic.Tests", "WinShooter-Web.Logic.Tests\WinShooter-Web.Logic.Tests.csproj", "{02F980C9-70CC-44BF-AED2-3712025E024A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.DataValidation", "WinShooter-Web.DataValidation\WinShooter-Web.DataValidation.csproj", "{D78ABBE2-0C40-4B90-B4C3-50A0BFE120B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinShooter-Web.DataValidation.Tests", "WinShooter-Web.DataValidation.Tests\WinShooter-Web.DataValidation.Tests.csproj", "{905C954A-69E3-40EB-8D8A-BFDA0515E41F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +69,14 @@ Global
 		{02F980C9-70CC-44BF-AED2-3712025E024A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02F980C9-70CC-44BF-AED2-3712025E024A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02F980C9-70CC-44BF-AED2-3712025E024A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D78ABBE2-0C40-4B90-B4C3-50A0BFE120B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D78ABBE2-0C40-4B90-B4C3-50A0BFE120B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D78ABBE2-0C40-4B90-B4C3-50A0BFE120B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D78ABBE2-0C40-4B90-B4C3-50A0BFE120B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{905C954A-69E3-40EB-8D8A-BFDA0515E41F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{905C954A-69E3-40EB-8D8A-BFDA0515E41F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{905C954A-69E3-40EB-8D8A-BFDA0515E41F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{905C954A-69E3-40EB-8D8A-BFDA0515E41F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,5 +87,7 @@ Global
 		{4088DDB3-DCC4-47EA-B5A5-00E443402CFF} = {12BC8CC9-D149-4B1A-BA54-8DDC55D4F7FF}
 		{42A3AA79-1702-4995-B85E-C267E7225E1D} = {12BC8CC9-D149-4B1A-BA54-8DDC55D4F7FF}
 		{02F980C9-70CC-44BF-AED2-3712025E024A} = {12BC8CC9-D149-4B1A-BA54-8DDC55D4F7FF}
+		{D78ABBE2-0C40-4B90-B4C3-50A0BFE120B0} = {12BC8CC9-D149-4B1A-BA54-8DDC55D4F7FF}
+		{905C954A-69E3-40EB-8D8A-BFDA0515E41F} = {12BC8CC9-D149-4B1A-BA54-8DDC55D4F7FF}
 	EndGlobalSection
 EndGlobal

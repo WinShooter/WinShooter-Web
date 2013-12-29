@@ -23,6 +23,8 @@ namespace WinShooter.Database
 {
     using System;
 
+    using WinShooter.Web.DataValidation;
+
     /// <summary>
     /// The representation of the database competition.
     /// </summary>
@@ -67,5 +69,14 @@ namespace WinShooter.Database
         /// Gets or sets a value indicating whether the competition is public.
         /// </summary>
         public virtual bool IsPublic { get; set; }
+
+        /// <summary>
+        /// Verifies the data content.
+        /// </summary>
+        public void VerifyDataContent()
+        {
+            this.Id.Require("Id").NotEmpty();
+            this.Name.Require("Name").NotNull().ShorterThan(255).LongerThan(0);
+        }
     }
 }

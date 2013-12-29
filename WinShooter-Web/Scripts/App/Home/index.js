@@ -29,6 +29,24 @@ var ViewModel = function (competitions) {
     
     // Attributes for creating a new competition
     this.newCompetitionName = ko.observable('');
+    this.newCompetitionStartDate = ko.observable('');
+
+    // Function for adding competition
+    this.addCompetition = function() {
+        alert("Started");
+        var competition = {
+            CompetitionType: "Field",
+            Name: this.newCompetitionName,
+            UseNorwegianCount: "False",
+            StartDate: "2013-01-01",
+        };
+
+        $.post("/api/competition", competition, function (returnedData) {
+            alert("success!");
+        }).fail(function () {
+            alert("fail!");
+        });
+    }
 };
 
 // Add datepicker to the newCompetitionStartDate field
@@ -41,18 +59,3 @@ var competitionsApi = "/api/competitions";
 $.getJSON(competitionsApi, function (data) {
     ko.applyBindings(new ViewModel(data), document.getElementById("body"));
 });
-
-function addCompetition() {
-    var competition = {
-        CompetitionType: "Field",
-        Name: this.newCompetitionName,
-        UseNorwegianCount: "False",
-        StartDate: "2013-01-01",
-    };
-
-    $.post("/api/competition", competition, function (returnedData) {
-        alert("success!");
-    }).fail(function() {
-        alert("fail!");
-    });
-}
