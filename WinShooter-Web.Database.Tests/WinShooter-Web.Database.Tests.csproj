@@ -59,6 +59,7 @@
     <Compile Include="CompetitorsFromDatabase.cs" />
     <Compile Include="CompetitorResultsFromDatabase.cs" />
     <Compile Include="RolesFromDatabase.cs" />
+    <Compile Include="UserRolesInfosFromDatabase.cs" />
     <Compile Include="RightsFromDatabase.cs" />
     <Compile Include="StationsFromDatabase.cs" />
     <Compile Include="PatrolsFromDatabase.cs" />
