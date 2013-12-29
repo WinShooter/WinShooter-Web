@@ -141,10 +141,16 @@ namespace WinShooter.Logic
 
             var rolesLogic = new RolesLogic();
             var role = rolesLogic.DefaultOwnerRole;
+
+            if (role == null)
+            {
+                // This should never happen
+                throw new NullReferenceException(string.Format("Default Owner Role \"{0}\" is not present.", rolesLogic.DefaultOwnerRoleName));
+            }
+
             var usertRolesInfo = new UserRolesInfo
                                      {
                                          Competition = competition,
-                                         Id = Guid.NewGuid(),
                                          Role = role,
                                          User = user
                                      };
