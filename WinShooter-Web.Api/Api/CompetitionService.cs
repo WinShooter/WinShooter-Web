@@ -23,7 +23,6 @@ namespace WinShooter.Api.Api
 {
     using System;
 
-    using ServiceStack.ServiceHost;
     using ServiceStack.ServiceInterface;
 
     using WinShooter.Api.Authentication;

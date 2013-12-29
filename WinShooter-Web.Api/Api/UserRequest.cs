@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserRolesInfo.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="RightsRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,29 +15,16 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The representation of the database User Roles Info.
+//   Defines the RightsRequest type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Database
+namespace WinShooter.Api.Api
 {
-    using System;
+    using ServiceStack.ServiceHost;
 
-    /// <summary>
-    /// The representation of the database User Roles Info.
-    /// </summary>
-    public class UserRolesInfo
+    [Route("/user")]
+    public class UserRequest
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "We need to create the GUID")]
-        public UserRolesInfo()
-        {
-            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
-            this.Id = Guid.NewGuid();
-        }
-
-        public virtual Guid Id { get; set; }
-        public virtual User User { get; set; }
-        public virtual Role Role { get; set; }
-        public virtual Competition Competition { get; set; }
     }
 }

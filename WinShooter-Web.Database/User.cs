@@ -53,5 +53,18 @@ namespace WinShooter.Database
         public virtual Guid ClubId { get; set; }
         public virtual DateTime LastUpdated { get; set; }
         public virtual DateTime LastLogin { get; set; }
+
+        public virtual string DisplayName
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(Givenname) && !string.IsNullOrEmpty(Surname))
+                {
+                    return Givenname + " " + Surname;
+                }
+
+                return Email;
+            }
+        }
     }
 }

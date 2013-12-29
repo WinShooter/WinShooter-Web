@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserRolesInfo.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitionService.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,29 +15,42 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The representation of the database User Roles Info.
+//   The competition service.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Database
+namespace WinShooter.Api.Api
 {
-    using System;
+    using ServiceStack.ServiceInterface;
+
+    using WinShooter.Api.Authentication;
 
     /// <summary>
-    /// The representation of the database User Roles Info.
+    /// The competition service.
     /// </summary>
-    public class UserRolesInfo
+    public class UserService : Service
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "We need to create the GUID")]
-        public UserRolesInfo()
+        /// <summary>
+        /// The any.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="CompetitionResponse"/>.
+        /// </returns>
+        public UserResponse Get(UserRequest request)
         {
-            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
-            this.Id = Guid.NewGuid();
-        }
+            var session = this.GetSession() as CustomUserSession;
 
-        public virtual Guid Id { get; set; }
-        public virtual User User { get; set; }
-        public virtual Role Role { get; set; }
-        public virtual Competition Competition { get; set; }
+            if (session != null && session.User != null)
+            {
+                return new UserResponse { 
+                    DisplayName = session.User.DisplayName,
+                    Email = session.User.Email };
+            }
+
+            return new UserResponse();
+        }
     }
 }

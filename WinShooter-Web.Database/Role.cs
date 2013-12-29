@@ -28,8 +28,10 @@ namespace WinShooter.Database
     /// </summary>
     public class Role
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "We need to create the GUID")]
         public Role()
         {
+            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
             this.Id = Guid.NewGuid();
         }
 

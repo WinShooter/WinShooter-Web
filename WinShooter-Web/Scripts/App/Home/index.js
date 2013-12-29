@@ -39,18 +39,20 @@ $(function () {
 // Fetch competitions from api and bind with knockout.
 var competitionsApi = "/api/competitions";
 $.getJSON(competitionsApi, function (data) {
-    ko.applyBindings(new ViewModel(data));
+    ko.applyBindings(new ViewModel(data), document.getElementById("body"));
 });
 
 function addCompetition() {
-    alert("tjosan!");
-    var data = {
+    var competition = {
         CompetitionType: "Field",
-        Name: "Namn",
+        Name: this.newCompetitionName,
         UseNorwegianCount: "False",
         StartDate: "2013-01-01",
     };
-    $.post("/api/competition", data, function(returnedData) {
+
+    $.post("/api/competition", competition, function (returnedData) {
         alert("success!");
+    }).fail(function() {
+        alert("fail!");
     });
 }

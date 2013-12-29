@@ -28,6 +28,7 @@ namespace WinShooter.Database
     /// </summary>
     public class Station
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "We need to create the GUID")]
         public Station()
         {
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
