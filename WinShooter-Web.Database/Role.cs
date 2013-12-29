@@ -28,6 +28,11 @@ namespace WinShooter.Database
     /// </summary>
     public class Role
     {
+        public Role()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
         public virtual Guid Id { get; set; }
         public virtual string RoleName { get; set; }
     }
