@@ -40,7 +40,14 @@ namespace WinShooter.Logic
         {
             get
             {
-                return ConfigurationManager.AppSettings["DefaultCompetitionOwnerRole"];
+                var name = ConfigurationManager.AppSettings["DefaultCompetitionOwnerRole"];
+
+                if (name == null)
+                {
+                    name = "CompetitionOwner";
+                }
+
+                return name;
             }
         }
 
