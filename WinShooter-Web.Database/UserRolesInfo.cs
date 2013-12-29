@@ -28,6 +28,12 @@ namespace WinShooter.Database
     /// </summary>
     public class UserRolesInfo
     {
+        public UserRolesInfo()
+        {
+            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
+            this.Id = Guid.NewGuid();
+        }
+
         public virtual Guid Id { get; set; }
         public virtual User User { get; set; }
         public virtual Role Role { get; set; }
