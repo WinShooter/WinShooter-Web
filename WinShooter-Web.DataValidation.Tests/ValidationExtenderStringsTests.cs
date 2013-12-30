@@ -1,6 +1,7 @@
 ﻿namespace WinShooter_Web.DataValidation.Tests
 {
     using System;
+    using System.CodeDom;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -49,6 +50,26 @@
         {
             var str = new String('a', 100);
             str.Require("str").LongerThan(99);
+        }
+
+        /// <summary>
+        /// Test the valid email address requirement positive.
+        /// </summary>
+        [TestMethod]
+        public void ValidEmailAddressValid()
+        {
+            "john@allberg.se".Require("Email").ValidEmailAddress();
+            "asdf_asdf@hotmail.com".Require("Email").ValidEmailAddress();
+        }
+
+        /// <summary>
+        /// Test the valid email address requirement negative.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ValidEmailAddressInvalid1()
+        {
+            "www.allberg.se".Require("Email").ValidEmailAddress();
         }
     }
 }

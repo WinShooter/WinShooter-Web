@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// The validation extender with the string validation.
@@ -73,6 +74,19 @@
             {
                 ThrowHelper.ThrowArgumentException(
                     string.Format("Parameter {0} must be longer than {1} chars", item.ArgName, minimumLength));
+            }
+
+            return item;
+        }
+
+        [DebuggerHidden]
+        public static Validation<string> ValidEmailAddress(this Validation<string> item)
+        {
+            var regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+
+            if (!regex.IsMatch(item.Value))
+            {
+                ThrowHelper.ThrowArgumentException(item.ArgName + " has to be a valid email address.");
             }
 
             return item;
