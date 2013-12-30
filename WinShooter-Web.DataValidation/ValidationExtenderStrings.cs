@@ -1,4 +1,25 @@
-﻿namespace WinShooter.Web.DataValidation
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ValidationExtenderStrings.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of the GNU General Public License
+//   as published by the Free Software Foundation; either version 2
+//   of the License, or (at your option) any later version.
+//   
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. See the
+//   GNU General Public License for more details.
+//   
+//   You should have received a copy of the GNU General Public License
+//   along with this program; if not, write to the Free Software
+//   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+// </copyright>
+// <summary>
+//   The validation extender with the string validation.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace WinShooter.Web.DataValidation
 {
     using System;
     using System.Diagnostics;
@@ -79,6 +100,14 @@
             return item;
         }
 
+        /// <summary>
+        /// Validators the email address.
+        /// </summary>
+        /// <param name="item">The item to validate</param>
+        /// <returns>The validated item</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the string isn't an email address.
+        /// </exception>
         [DebuggerHidden]
         public static Validation<string> ValidEmailAddress(this Validation<string> item)
         {

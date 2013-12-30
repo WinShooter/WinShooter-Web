@@ -7,8 +7,8 @@
     <ProjectGuid>{905C954A-69E3-40EB-8D8A-BFDA0515E41F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WinShooter_Web.DataValidation.Tests</RootNamespace>
-    <AssemblyName>WinShooter-Web.DataValidation.Tests</AssemblyName>
+    <RootNamespace>WinShooter.Web.DataValidation.Tests</RootNamespace>
+    <AssemblyName>WinShooter.Web.DataValidation.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
