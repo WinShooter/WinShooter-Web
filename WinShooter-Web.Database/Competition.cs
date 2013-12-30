@@ -73,7 +73,7 @@ namespace WinShooter.Database
         /// <summary>
         /// Verifies the data content.
         /// </summary>
-        public void VerifyDataContent()
+        public virtual void VerifyDataContent()
         {
             this.Id.Require("Id").NotEmpty();
             this.Name.Require("Name").NotNull().ShorterThan(255).LongerThan(0);

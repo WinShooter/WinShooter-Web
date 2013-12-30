@@ -51,6 +51,23 @@ namespace WinShooter.Database.Tests
         {
             var sqlDatabaseMigrator = new SqlDatabaseMigrator();
             sqlDatabaseMigrator.MigrateToLatest(ConfigurationManager.ConnectionStrings["WinShooterConnection"].ConnectionString);
+
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var roles = from role in databaseSession.Query<Role>()
+                            where role.RoleName == RoleName
+                            select role;
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    foreach (var role in roles)
+                    {
+                        databaseSession.Delete(role);
+                    }
+
+                    transaction.Commit();
+                }
+            }
         }
 
         /// <summary>
