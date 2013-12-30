@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationExtenderClassTests.cs" />
+    <Compile Include="ValidationExtenderGuidsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WinShooter-Web.DataValidation\WinShooter-Web.DataValidation.csproj">
