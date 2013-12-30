@@ -39,20 +39,64 @@ namespace WinShooter.Database
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
+        /// <summary>
+        /// Gets or sets the ID.
+        /// </summary>
         public virtual Guid Id { get; set; }
 
+        /// <summary>
+        /// Gets or sets the competition.
+        /// </summary>
         public virtual Competition Competition { get; set; }
 
+        /// <summary>
+        /// Gets or sets the card number.
+        /// </summary>
         public virtual string CardNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Surname.
+        /// </summary>
         public virtual string Surname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Given name.
+        /// </summary>
         public virtual string Givenname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Email.
+        /// </summary>
         public virtual string Email { get; set; }
 
+        /// <summary>
+        /// Gets or sets the club.
+        /// </summary>
         public virtual Club Club { get; set; }
+
+        /// <summary>
+        /// Gets or sets how much the shooter has paid.
+        /// </summary>
         public virtual int Paid { get; set; }
+
+        /// <summary>
+        /// Gets or sets the shooter class.
+        /// </summary>
         public virtual ShootersClassEnum Class { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the shooter has arrived.
+        /// </summary>
         public virtual bool HasArrived { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to send results by email.
+        /// </summary>
         public virtual bool SendResultsByEmail { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last updated.
+        /// </summary>
         public virtual DateTime LastUpdated { get; set; }
     }
 }

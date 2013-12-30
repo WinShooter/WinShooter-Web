@@ -41,6 +41,9 @@ namespace WinShooter.Api
             this.AdminUserNames = appSettings.Get("AdminUserNames", new List<string>());
         }
 
+        /// <summary>
+        /// Gets or sets the admin user names.
+        /// </summary>
         public List<string> AdminUserNames { get; set; }
     }
 }

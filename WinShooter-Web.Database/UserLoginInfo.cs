@@ -34,16 +34,38 @@ namespace WinShooter.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "We need to create the GUID")]
         public UserLoginInfo()
         {
-            // ReSharper disable DoNotCallOverridableMethodsInConstructor
+            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
             this.Id = Guid.NewGuid();
-            // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="Guid"/>.
+        /// </summary>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="User"/>.
+        /// </summary>
         public virtual User User { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity provider.
+        /// </summary>
         public virtual string IdentityProvider { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity provider id.
+        /// </summary>
         public virtual string IdentityProviderId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the provider user name.
+        /// </summary>
         public virtual string IdentityProviderUsername { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last login.
+        /// </summary>
         public virtual DateTime LastLogin { get; set; }
     }
 }

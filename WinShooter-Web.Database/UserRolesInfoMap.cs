@@ -29,7 +29,7 @@ namespace WinShooter.Database
     public class UserRolesInfoMap : ClassMap<UserRolesInfo>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserMap"/> class.
+        /// Initializes a new instance of the <see cref="UserRolesInfoMap"/> class.
         /// </summary>
         public UserRolesInfoMap()
         {

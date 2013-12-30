@@ -40,11 +40,34 @@ namespace WinShooter.Database
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
+        /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the manufacturer.
+        /// </summary>
         public virtual string Manufacturer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the model.
+        /// </summary>
         public virtual string Model { get; set; }
+
+        /// <summary>
+        /// Gets or sets the caliber.
+        /// </summary>
         public virtual string Caliber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the class.
+        /// </summary>
         public virtual WeaponClassEnum Class { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last updated.
+        /// </summary>
         public virtual DateTime LastUpdated { get; set; }
     }
 }

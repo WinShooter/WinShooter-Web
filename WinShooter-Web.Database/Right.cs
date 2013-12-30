@@ -21,12 +21,21 @@
 
 namespace WinShooter.Database
 {
+    using System;
+
     /// <summary>
     /// The representation of the database right.
     /// </summary>
     public class Right
     {
-        public virtual string Id { get; set; }
+        /// <summary>
+        /// Gets or sets the Id of the right.
+        /// </summary>
+        public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the right.
+        /// </summary>
         public virtual string Name { get; set; }
     }
 }

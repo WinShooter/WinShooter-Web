@@ -35,6 +35,9 @@ namespace WinShooter.Logic.Tests.Authorization
     [TestClass]
     public class UserCompetitionRightsTests
     {
+        /// <summary>
+        /// Test with correct rights.
+        /// </summary>
         [TestMethod]
         public void TestCorrectRights()
         {
@@ -45,6 +48,9 @@ namespace WinShooter.Logic.Tests.Authorization
             Assert.IsFalse(rights.HasPermission(WinShooterCompetitionPermissions.CreateUserCompetitionRole));
         }
 
+        /// <summary>
+        /// Test with incorrect rights.
+        /// </summary>
         [TestMethod]
         public void TestFetchingRightsFromDatabase()
         {

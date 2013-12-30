@@ -1,15 +1,45 @@
-﻿using FluentMigrator;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Migration106CreateCompetitorsTable.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of the GNU General Public License
+//   as published by the Free Software Foundation; either version 2
+//   of the License, or (at your option) any later version.
+//   
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. See the
+//   GNU General Public License for more details.
+//   
+//   You should have received a copy of the GNU General Public License
+//   along with this program; if not, write to the Free Software
+//   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+// </copyright>
+// <summary>
+//   Creates the competitors table.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
+    using FluentMigrator;
+
+    /// <summary>
+    /// Creates the competitors table.
+    /// </summary>
     [Migration(106)]
     public class Migration106CreateCompetitorsTable : Migration
     {
+        /// <summary>
+        /// The table name.
+        /// </summary>
         public const string CompetitorsTableName = "Competitors";
 
+        /// <summary>
+        /// Upgrades the database.
+        /// </summary>
         public override void Up()
         {
-            Create.Table(CompetitorsTableName)
+            this.Create.Table(CompetitorsTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("ShooterId").AsGuid()
                 .WithColumn("ShooterClass").AsInt32()
@@ -20,9 +50,12 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("CompetitionId").AsGuid();
         }
 
+        /// <summary>
+        /// Downgrades the database.
+        /// </summary>
         public override void Down()
         {
-            Delete.Table(CompetitorsTableName);
+            this.Delete.Table(CompetitorsTableName);
         }
     }
 }

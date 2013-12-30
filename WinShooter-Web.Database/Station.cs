@@ -28,6 +28,9 @@ namespace WinShooter.Database
     /// </summary>
     public class Station
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Station"/> class.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "We need to create the GUID")]
         public Station()
         {

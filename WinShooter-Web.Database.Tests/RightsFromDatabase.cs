@@ -29,7 +29,7 @@ namespace WinShooter.Database.Tests
 
     using NHibernate.Linq;
 
-    using WinShooter_Web.DatabaseMigrations;
+    using WinShooter.Web.DatabaseMigrations;
 
     /// <summary>
     /// Read and write rights from database.
@@ -37,11 +37,15 @@ namespace WinShooter.Database.Tests
     [TestClass]
     public class RightsFromDatabase
     {
+        /// <summary>
+        /// The competition name.
+        /// </summary>
         private const string CompetitionName = "UnitTestCompetitionName";
 
+        /// <summary>
+        /// The competition.
+        /// </summary>
         private Competition testCompetition;
-
-        private Club testClub;
 
         /// <summary>
         /// Make sure the database is latest version.
@@ -97,7 +101,7 @@ namespace WinShooter.Database.Tests
 
                 var toAdd = new Right
                                 {
-                                    Id = Guid.NewGuid().ToString(),
+                                    Id = Guid.NewGuid(),
                                     Name = tempName
                                 };
 

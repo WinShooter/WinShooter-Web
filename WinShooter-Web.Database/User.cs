@@ -45,25 +45,59 @@ namespace WinShooter.Database
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="Guid"/>.
+        /// </summary>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the card number.
+        /// </summary>
         public virtual string CardNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the surname.
+        /// </summary>
         public virtual string Surname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the given name.
+        /// </summary>
         public virtual string Givenname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
         public virtual string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the club Id.
+        /// </summary>
         public virtual Guid ClubId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last updated.
+        /// </summary>
         public virtual DateTime LastUpdated { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time of the last login.
+        /// </summary>
         public virtual DateTime LastLogin { get; set; }
 
+        /// <summary>
+        /// Gets the display name.
+        /// </summary>
         public virtual string DisplayName
         {
             get
             {
-                if (!string.IsNullOrEmpty(Givenname) && !string.IsNullOrEmpty(Surname))
+                if (!string.IsNullOrEmpty(this.Givenname) && !string.IsNullOrEmpty(this.Surname))
                 {
-                    return Givenname + " " + Surname;
+                    return this.Givenname + " " + this.Surname;
                 }
 
-                return Email;
+                return this.Email;
             }
         }
     }

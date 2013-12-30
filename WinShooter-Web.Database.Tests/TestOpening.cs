@@ -28,7 +28,7 @@ namespace WinShooter.Database.Tests
 
     using NHibernate.Linq;
 
-    using WinShooter_Web.DatabaseMigrations;
+    using WinShooter.Web.DatabaseMigrations;
 
     /// <summary>
     /// Test opening database connection.
@@ -36,6 +36,9 @@ namespace WinShooter.Database.Tests
     [TestClass]
     public class TestOpening
     {
+        /// <summary>
+        /// Setup the test.
+        /// </summary>
         [TestInitialize]
         public void Setup()
         {
@@ -43,6 +46,9 @@ namespace WinShooter.Database.Tests
             sqlDatabaseMigrator.MigrateToLatest(ConfigurationManager.ConnectionStrings["WinShooterConnection"].ConnectionString);
         }
 
+        /// <summary>
+        /// A small test.
+        /// </summary>
         [TestMethod]
         public void SmallOpeningTest()
         {

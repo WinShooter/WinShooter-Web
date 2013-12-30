@@ -28,6 +28,8 @@ namespace WinShooter.Database.Tests
 
     using NHibernate.Linq;
 
+    using WinShooter.Web.DatabaseMigrations;
+
     using WinShooter_Web.DatabaseMigrations;
 
     /// <summary>

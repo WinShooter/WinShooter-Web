@@ -27,7 +27,7 @@ namespace WinShooter.Api.Api
     public class CompetitionRightsResponse
     {
         /// <summary>
-        /// The rights.
+        /// Gets or sets the rights.
         /// </summary>
         public string[] Rights { get; set; }
     }

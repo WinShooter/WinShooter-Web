@@ -29,7 +29,7 @@ namespace WinShooter.Database.Tests
 
     using NHibernate.Linq;
 
-    using WinShooter_Web.DatabaseMigrations;
+    using WinShooter.Web.DatabaseMigrations;
 
     /// <summary>
     /// Read and write shooters from database.
@@ -37,8 +37,14 @@ namespace WinShooter.Database.Tests
     [TestClass]
     public class StationsFromDatabase
     {
+        /// <summary>
+        /// The competition name.
+        /// </summary>
         private const string CompetitionName = "UnitTestCompetitionName";
 
+        /// <summary>
+        /// The competition.
+        /// </summary>
         private Competition testCompetition;
 
         /// <summary>

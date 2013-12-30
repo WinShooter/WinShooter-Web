@@ -29,6 +29,7 @@ namespace WinShooter
 
     using WinShooter.Api;
     using WinShooter.App_Start;
+    using WinShooter.Web.DatabaseMigrations;
 
     using WinShooter_Web.DatabaseMigrations;
 
@@ -56,10 +57,6 @@ namespace WinShooter
             log4net.Config.XmlConfigurator.Configure();
             this.winShooterApiHost = new WinShooterApiHost();
             this.winShooterApiHost.Init();
-
-            //AreaRegistration.RegisterAllAreas();
-
-            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

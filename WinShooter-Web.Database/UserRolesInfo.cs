@@ -28,6 +28,9 @@ namespace WinShooter.Database
     /// </summary>
     public class UserRolesInfo
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserRolesInfo"/> class.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "We need to create the GUID")]
         public UserRolesInfo()
         {
@@ -35,9 +38,24 @@ namespace WinShooter.Database
             this.Id = Guid.NewGuid();
         }
 
+        /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user.
+        /// </summary>
         public virtual User User { get; set; }
+
+        /// <summary>
+        /// Gets or sets the role.
+        /// </summary>
         public virtual Role Role { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competition.
+        /// </summary>
         public virtual Competition Competition { get; set; }
     }
 }

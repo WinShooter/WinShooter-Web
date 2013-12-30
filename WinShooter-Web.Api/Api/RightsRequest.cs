@@ -23,6 +23,9 @@ namespace WinShooter.Api.Api
 {
     using ServiceStack.ServiceHost;
 
+    /// <summary>
+    /// The rights request.
+    /// </summary>
     [Route("/rights")]
     public class RightsRequest
     {

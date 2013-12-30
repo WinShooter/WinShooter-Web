@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserLoginInfoMap.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="RoleRightsInfoMap.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -29,7 +29,7 @@ namespace WinShooter.Database
     public class RoleRightsInfoMap : ClassMap<RoleRightsInfo>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserLoginInfoMap"/> class.
+        /// Initializes a new instance of the <see cref="RoleRightsInfoMap"/> class.
         /// </summary>
         public RoleRightsInfoMap()
         {

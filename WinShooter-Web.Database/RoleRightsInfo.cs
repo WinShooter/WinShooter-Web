@@ -21,13 +21,36 @@
 
 namespace WinShooter.Database
 {
+    using System;
+
     /// <summary>
     /// The representation of the database Role Rights Info.
     /// </summary>
     public class RoleRightsInfo
     {
-        public virtual int Id { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RoleRightsInfo"/> class.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "We need to create the GUID")]
+        public RoleRightsInfo()
+        {
+            // ReSharper disable once DoNotCallOverridableMethodsInConstructor
+            this.Id = Guid.NewGuid();
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Guid"/>.
+        /// </summary>
+        public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the role.
+        /// </summary>
         public virtual Role Role { get; set; }
+
+        /// <summary>
+        /// Gets or sets the right.
+        /// </summary>
         public virtual Right Right { get; set; }
     }
 }

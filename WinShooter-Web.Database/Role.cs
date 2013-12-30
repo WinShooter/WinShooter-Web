@@ -28,6 +28,9 @@ namespace WinShooter.Database
     /// </summary>
     public class Role
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Role"/> class. 
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "We need to create the GUID")]
         public Role()
         {
@@ -35,7 +38,14 @@ namespace WinShooter.Database
             this.Id = Guid.NewGuid();
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="Guid"/>.
+        /// </summary>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the role name.
+        /// </summary>
         public virtual string RoleName { get; set; }
     }
 }

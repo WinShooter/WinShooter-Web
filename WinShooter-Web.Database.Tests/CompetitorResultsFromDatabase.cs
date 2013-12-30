@@ -29,7 +29,7 @@ namespace WinShooter.Database.Tests
 
     using NHibernate.Linq;
 
-    using WinShooter_Web.DatabaseMigrations;
+    using WinShooter.Web.DatabaseMigrations;
 
     /// <summary>
     /// Read and write clubs from database.
@@ -37,28 +37,64 @@ namespace WinShooter.Database.Tests
     [TestClass]
     public class CompetitorResultsFromDatabase
     {
+        /// <summary>
+        /// The unit test competition name.
+        /// </summary>
         private const string CompetitionName = "UnitTestCompetitionName";
 
+        /// <summary>
+        /// The unit test club name.
+        /// </summary>
         private const string ClubName = "UnitTestClubName";
 
+        /// <summary>
+        /// The unit test shooter name.
+        /// </summary>
         private const string ShooterSurname = "UnitTestShooterName";
 
+        /// <summary>
+        /// The unit test shooter name.
+        /// </summary>
         private const string ShooterGivenname = "UnitTestShooterName";
 
+        /// <summary>
+        /// The unit test weapon manufacturer name.
+        /// </summary>
         private const string WeaponManufacturer = "UnitTestWeaponManufacturer";
 
+        /// <summary>
+        /// The unit test competition.
+        /// </summary>
         private Competition testCompetition;
 
+        /// <summary>
+        /// The unit test club.
+        /// </summary>
         private Club testClub;
 
+        /// <summary>
+        /// The unit test weapon.
+        /// </summary>
         private Weapon testWeapon;
 
+        /// <summary>
+        /// The unit test patrol.
+        /// </summary>
         private Patrol testPatrol;
 
+        /// <summary>
+        /// The unit test station.
+        /// </summary>
         private Station testStation;
 
+        /// <summary>
+        /// The unit test competitor.
+        /// </summary>
         private Competitor testCompetitor;
 
+        /// <summary>
+        /// The unit test shooter.
+        /// </summary>
         private Shooter testShooter;
 
         /// <summary>
