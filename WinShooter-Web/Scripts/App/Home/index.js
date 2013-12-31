@@ -37,7 +37,7 @@ var ViewModel = function (competitions) {
             CompetitionType: "Field",
             Name: this.newCompetitionName(),
             UseNorwegianCount: "False",
-            StartDate: "2013-01-01",
+            StartDate: this.newCompetitionStartDate(),
         };
 
         $.post("/api/competition", competition, function (returnedData) {
