@@ -26,7 +26,7 @@ namespace WinShooter.Database
     /// <summary>
     /// The representation of the database role.
     /// </summary>
-    public class Role
+    public class Role : IWinshooterDatabaseItem
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Role"/> class. 

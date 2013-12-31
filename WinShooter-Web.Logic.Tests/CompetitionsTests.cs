@@ -22,9 +22,11 @@
 namespace WinShooter.Logic.Tests
 {
     using System;
+    using System.Linq;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    using WinShooter.Database;
     using WinShooter.Logic;
 
     /// <summary>
@@ -39,10 +41,30 @@ namespace WinShooter.Logic.Tests
         [TestMethod]
         public void GetAnonymousCompetitions()
         {
-            var competitions = new CompetitionsLogic();
+            var repository = new RepositoryForTests<Competition>();
+            repository.TheContent.Add(new Competition
+            {
+                CompetitionType = CompetitionType.Field,
+                Id = Guid.NewGuid(),
+                IsPublic = true,
+                Name = "Public1",
+                StartDate = DateTime.Now,
+                UseNorwegianCount = false
+            });
+            repository.TheContent.Add(new Competition
+            {
+                CompetitionType = CompetitionType.Field,
+                Id = Guid.NewGuid(),
+                IsPublic = false,
+                Name = "Public1",
+                StartDate = DateTime.Now,
+                UseNorwegianCount = false
+            });
+
+            var competitions = new CompetitionsLogic(repository);
 
             var result = competitions.GetCompetitions(Guid.Empty);
-            throw new NotImplementedException();
+            Assert.AreEqual(1, result.Count());
         }
     }
 }

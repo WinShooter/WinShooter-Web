@@ -26,6 +26,7 @@ namespace WinShooter.Api.Api
     using ServiceStack.ServiceInterface;
 
     using WinShooter.Api.Authentication;
+    using WinShooter.Database;
     using WinShooter.Logic;
 
     /// <summary>
@@ -33,6 +34,35 @@ namespace WinShooter.Api.Api
     /// </summary>
     public class CompetitionService : Service
     {
+        /// <summary>
+        /// The database session.
+        /// </summary>
+        private readonly NHibernate.ISession databaseSession;
+
+        /// <summary>
+        /// The logic.
+        /// </summary>
+        private readonly CompetitionsLogic logic;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompetitionService"/> class.
+        /// </summary>
+        public CompetitionService()
+        {
+            this.databaseSession = NHibernateHelper.OpenSession();
+            this.logic = new CompetitionsLogic(this.databaseSession);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <filterpriority>2</filterpriority>
+        public override void Dispose()
+        {
+            this.databaseSession.Dispose();
+            base.Dispose();
+        }
+
         /// <summary>
         /// The any.
         /// </summary>
@@ -49,8 +79,7 @@ namespace WinShooter.Api.Api
             var session = this.GetSession() as CustomUserSession;
             var userId = session == null ? Guid.Empty : session.User.Id;
 
-            var logic = new CompetitionsLogic();
-            var dbcompetition = logic.GetCompetition(userId, requestedCompetitionId);
+            var dbcompetition = this.logic.GetCompetition(userId, requestedCompetitionId);
 
             if (dbcompetition != null)
             {
@@ -79,15 +108,14 @@ namespace WinShooter.Api.Api
                 throw new Exception("You need to authenticate");
             }
 
-            var logic = new CompetitionsLogic();
             if (string.IsNullOrEmpty(request.CompetitionId))
             {
                 request.CompetitionId = 
-                    logic.AddCompetition(session.User, request.GetDatabaseCompetition()).ToString();
+                    this.logic.AddCompetition(session.User, request.GetDatabaseCompetition()).ToString();
             }
             else
             {
-                logic.UpdateCompetition(session.User.Id, request.GetDatabaseCompetition());
+                this.logic.UpdateCompetition(session.User.Id, request.GetDatabaseCompetition());
             }
 
             // We have updated, read from database and return.

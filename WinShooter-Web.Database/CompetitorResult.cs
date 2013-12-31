@@ -26,7 +26,7 @@ namespace WinShooter.Database
     /// <summary>
     /// The competitor result.
     /// </summary>
-    public class CompetitorResult
+    public class CompetitorResult : IWinshooterDatabaseItem
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CompetitorResult"/> class.

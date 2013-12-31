@@ -26,7 +26,7 @@ namespace WinShooter.Database
     /// <summary>
     /// The shooter.
     /// </summary>
-    public class Shooter
+    public class Shooter : IWinshooterDatabaseItem
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Shooter"/> class.

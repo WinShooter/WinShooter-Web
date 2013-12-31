@@ -26,7 +26,7 @@ namespace WinShooter.Database
     /// <summary>
     /// The representation of the database user.
     /// </summary>
-    public class User
+    public class User : IWinshooterDatabaseItem
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.

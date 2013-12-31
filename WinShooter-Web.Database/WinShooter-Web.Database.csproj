@@ -61,6 +61,9 @@
     <Compile Include="CompetitorMap.cs" />
     <Compile Include="CompetitorResult.cs" />
     <Compile Include="CompetitorResultMap.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="IWinshooterDatabaseItem.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="StationMap.cs" />
     <Compile Include="PatrolMap.cs" />
     <Compile Include="Patrol.cs" />

@@ -26,7 +26,7 @@ namespace WinShooter.Database
     /// <summary>
     /// The representation of the database user login info.
     /// </summary>
-    public class UserLoginInfo
+    public class UserLoginInfo : IWinshooterDatabaseItem
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UserLoginInfo"/> class.

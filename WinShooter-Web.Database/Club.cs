@@ -26,7 +26,7 @@ namespace WinShooter.Database
     /// <summary>
     /// The club.
     /// </summary>
-    public class Club
+    public class Club : IWinshooterDatabaseItem
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Club"/> class.

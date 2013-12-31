@@ -31,10 +31,37 @@ namespace WinShooter.Logic
     using WinShooter.Logic.Authorization;
 
     /// <summary>
-    /// The competitions.
+    /// The competitions logic.
     /// </summary>
     public class CompetitionsLogic
     {
+        /// <summary>
+        /// The competition repository.
+        /// </summary>
+        private readonly IRepository<Competition> competitionRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompetitionsLogic"/> class.
+        /// </summary>
+        /// <param name="competitionRepository">
+        /// The competition repository.
+        /// </param>
+        public CompetitionsLogic(IRepository<Competition> competitionRepository)
+        {
+            this.competitionRepository = competitionRepository;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompetitionsLogic"/> class.
+        /// </summary>
+        /// <param name="session">
+        /// The session.
+        /// </param>
+        public CompetitionsLogic(NHibernate.ISession session)
+            : this(new Repository<Competition>(session))
+        {
+        }
+
         /// <summary>
         /// Get all public competitions.
         /// </summary>
@@ -43,14 +70,7 @@ namespace WinShooter.Logic
         /// </returns>
         public Competition[] GetPublicCompetitions()
         {
-            using (var databaseSession = NHibernateHelper.OpenSession())
-            {
-                var competitions = from competition in databaseSession.Query<Competition>()
-                                   where competition.IsPublic
-                                   select competition;
-
-                return competitions.ToArray();
-            }
+            return this.competitionRepository.FilterBy(x => x.IsPublic).ToArray();
         }
 
         /// <summary>
@@ -71,15 +91,12 @@ namespace WinShooter.Logic
             }
 
             var competitionIdsForUser = RightsHelper.GetCompetitionIdsTheUserHasRightsOn(userId, false);
-            using (var databaseSession = NHibernateHelper.OpenSession())
-            {
-                var competitions = from competition in databaseSession.Query<Competition>()
-                                   where !competition.IsPublic &&
-                                   competitionIdsForUser.Contains(competition.Id)
-                                   select competition;
 
-                return competitions.ToArray();
-            }
+            var competitions = from competition in this.competitionRepository.FilterBy(x => !x.IsPublic)
+                               where competitionIdsForUser.Contains(competition.Id)
+                               select competition;
+
+            return competitions.ToArray();
         }
 
         /// <summary>
@@ -117,8 +134,8 @@ namespace WinShooter.Logic
             var competitions = this.GetCompetitions(userId);
 
             return
-                (from competition in competitions 
-                 where competition.Id.Equals(competitionId) 
+                (from competition in competitions
+                 where competition.Id.Equals(competitionId)
                  select competition)
                     .FirstOrDefault();
         }

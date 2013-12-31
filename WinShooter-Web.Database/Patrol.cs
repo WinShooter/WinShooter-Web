@@ -26,7 +26,7 @@ namespace WinShooter.Database
     /// <summary>
     /// The patrol.
     /// </summary>
-    public class Patrol
+    public class Patrol : IWinshooterDatabaseItem
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Patrol"/> class.

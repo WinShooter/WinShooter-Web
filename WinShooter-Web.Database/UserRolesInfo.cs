@@ -26,7 +26,7 @@ namespace WinShooter.Database
     /// <summary>
     /// The representation of the database User Roles Info.
     /// </summary>
-    public class UserRolesInfo
+    public class UserRolesInfo : IWinshooterDatabaseItem
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UserRolesInfo"/> class.
