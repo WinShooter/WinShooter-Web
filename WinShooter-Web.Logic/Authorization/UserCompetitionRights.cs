@@ -33,13 +33,22 @@ namespace WinShooter.Logic.Authorization
     internal class UserCompetitionRights
     {
         /// <summary>
+        /// The rights helper.
+        /// </summary>
+        private readonly IRightsHelper rightsHelper;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UserCompetitionRights"/> class.
         /// </summary>
         /// <param name="competitionId">
         /// The competition id.
         /// </param>
-        internal UserCompetitionRights(Guid competitionId)
+        /// <param name="rightsHelper">
+        /// The <see cref="IRightsHelper"/>.
+        /// </param>
+        internal UserCompetitionRights(Guid competitionId, IRightsHelper rightsHelper)
         {
+            this.rightsHelper = rightsHelper;
             this.CompetitionId = competitionId;
             this.Permissions = new List<WinShooterCompetitionPermissions>();
         }
@@ -58,7 +67,7 @@ namespace WinShooter.Logic.Authorization
             this.CompetitionId = competitionId;
             this.Permissions = new List<WinShooterCompetitionPermissions>();
 
-            this.Permissions.AddRange(RightsHelper.GetRightsForCompetitionIdAndTheUser(user.Id, competitionId));
+            this.Permissions.AddRange(this.rightsHelper.GetRightsForCompetitionIdAndTheUser(user.Id, competitionId));
         }
 
         /// <summary>

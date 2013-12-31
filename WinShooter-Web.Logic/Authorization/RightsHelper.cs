@@ -24,15 +24,38 @@ namespace WinShooter.Logic.Authorization
     using System;
     using System.Linq;
 
-    using NHibernate.Linq;
-
     using WinShooter.Database;
 
     /// <summary>
     /// A helper class to help the logic classes handle rights in a coherent way.
     /// </summary>
-    public static class RightsHelper
+    public class RightsHelper : IRightsHelper
     {
+        /// <summary>
+        /// The <see cref="UserRolesInfo"/> repository.
+        /// </summary>
+        private readonly IRepository<UserRolesInfo> userRolesInfoRepository;
+
+        /// <summary>
+        /// The <see cref="RoleRightsInfo"/> repository.
+        /// </summary>
+        private readonly IRepository<RoleRightsInfo> roleRightsInfoRepository;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="RightsHelper"/> class.
+        /// </summary>
+        /// <param name="userRolesInfoRepository">
+        ///     The <see cref="UserRolesInfo"/> repository.
+        /// </param>
+        /// <param name="roleRightsInfoRepository">
+        ///     The <see cref="RoleRightsInfo"/> repository.
+        /// </param>
+        public RightsHelper(IRepository<UserRolesInfo> userRolesInfoRepository, IRepository<RoleRightsInfo> roleRightsInfoRepository)
+        {
+            this.userRolesInfoRepository = userRolesInfoRepository;
+            this.roleRightsInfoRepository = roleRightsInfoRepository;
+        }
+
         /// <summary>
         /// Get competition ids the user has rights on.
         /// </summary>
@@ -45,17 +68,15 @@ namespace WinShooter.Logic.Authorization
         /// <returns>
         /// The <see cref="Guid"/> array.
         /// </returns>
-        public static Guid[] GetCompetitionIdsTheUserHasRightsOn(Guid userId, bool includePublic)
+        public Guid[] GetCompetitionIdsTheUserHasRightsOn(Guid userId, bool includePublic)
         {
-            using (var dbsession = NHibernateHelper.OpenSession())
-            {
-                var competitionIds = from userRolesInfo in dbsession.Query<UserRolesInfo>()
-                                     where userRolesInfo.User.Id.Equals(userId) &&
-                                     (userRolesInfo.Competition.IsPublic && includePublic)
-                                     select userRolesInfo.Competition.Id;
+            var competitionIds =
+                from userRolesInfo in
+                    this.userRolesInfoRepository.FilterBy(
+                        x => x.User.Id.Equals(userId) && x.Competition.IsPublic == includePublic)
+                select userRolesInfo.Competition.Id;
 
-                return competitionIds.ToArray();
-            }
+            return competitionIds.ToArray();
         }
 
         /// <summary>
@@ -70,26 +91,24 @@ namespace WinShooter.Logic.Authorization
         /// <returns>
         /// The <see cref="WinShooterCompetitionPermissions"/> array.
         /// </returns>
-        public static WinShooterCompetitionPermissions[] GetRightsForCompetitionIdAndTheUser(Guid userId, Guid competitionId)
+        public WinShooterCompetitionPermissions[] GetRightsForCompetitionIdAndTheUser(Guid userId, Guid competitionId)
         {
-            using (var dbsession = NHibernateHelper.OpenSession())
-            {
-                var userRoleIds = from userRolesInfo in dbsession.Query<UserRolesInfo>()
-                                  where userRolesInfo.User.Id.Equals(userId) &&
-                                  userRolesInfo.Competition.Id.Equals(competitionId)
-                                  select userRolesInfo.Role.Id;
+            var userRoleIds =
+                from userRolesInfo in
+                     this.userRolesInfoRepository.FilterBy(
+                         x => x.User.Id.Equals(userId) && x.Competition.Id.Equals(competitionId))
+                 select userRolesInfo.Role.Id;
 
-                var rightStrings = from roleRightsInfo in dbsession.Query<RoleRightsInfo>()
-                                   where userRoleIds.Contains(roleRightsInfo.Role.Id)
-                                   select roleRightsInfo.Right.Name;
-
-                var rights = from rightString in rightStrings
-                             select
-                                 (WinShooterCompetitionPermissions)
-                                 Enum.Parse(typeof(WinShooterCompetitionPermissions), rightString);
-
-                return rights.ToArray();
-            }
+            var rightStrings =
+                from roleRightsInfo in this.roleRightsInfoRepository.FilterBy(x => userRoleIds.Contains(x.Role.Id))
+                select roleRightsInfo.Right.Name;
+            
+            var rights = from rightString in rightStrings
+                         select
+                         (WinShooterCompetitionPermissions)
+                         Enum.Parse(typeof(WinShooterCompetitionPermissions), rightString);
+            
+            return rights.ToArray();
         }
 
         /// <summary>
@@ -104,16 +123,15 @@ namespace WinShooter.Logic.Authorization
         /// <returns>
         /// The <see cref="WinShooterCompetitionPermissions"/> array.
         /// </returns>
-        public static string[] GetRolesForCompetitionIdAndTheUser(Guid userId, Guid competitionId)
+        public string[] GetRolesForCompetitionIdAndTheUser(Guid userId, Guid competitionId)
         {
-            using (var dbsession = NHibernateHelper.OpenSession())
-            {
-                var userRoles = from userRolesInfo in dbsession.Query<UserRolesInfo>()
-                                  where userRolesInfo.User.Id.Equals(userId) &&
-                                  userRolesInfo.Competition.Id.Equals(competitionId)
-                                  select userRolesInfo.Role.RoleName;
-                return userRoles.ToArray();
-            }
+            var userRoles =
+                from userRolesInfo in
+                    this.userRolesInfoRepository.FilterBy(
+                        x => x.User.Id.Equals(userId) && x.Competition.Id.Equals(competitionId))
+                select userRolesInfo.Role.RoleName;
+
+            return userRoles.ToArray();
         }
     }
 }

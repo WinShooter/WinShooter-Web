@@ -41,14 +41,23 @@ namespace WinShooter.Logic
         private readonly IRepository<Competition> competitionRepository;
 
         /// <summary>
+        /// The rights helper.
+        /// </summary>
+        private readonly IRightsHelper rightsHelper;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CompetitionsLogic"/> class.
         /// </summary>
         /// <param name="competitionRepository">
         /// The competition repository.
         /// </param>
-        public CompetitionsLogic(IRepository<Competition> competitionRepository)
+        /// <param name="rightsHelper">
+        ///     The rights helper implementation.
+        /// </param>
+        public CompetitionsLogic(IRepository<Competition> competitionRepository, IRightsHelper rightsHelper)
         {
             this.competitionRepository = competitionRepository;
+            this.rightsHelper = rightsHelper;
         }
 
         /// <summary>
@@ -58,7 +67,7 @@ namespace WinShooter.Logic
         /// The session.
         /// </param>
         public CompetitionsLogic(NHibernate.ISession session)
-            : this(new Repository<Competition>(session))
+            : this(new Repository<Competition>(session), new RightsHelper(new Repository<UserRolesInfo>(session), new Repository<RoleRightsInfo>(session)))
         {
         }
 
@@ -90,7 +99,7 @@ namespace WinShooter.Logic
                 return new Competition[0];
             }
 
-            var competitionIdsForUser = RightsHelper.GetCompetitionIdsTheUserHasRightsOn(userId, false);
+            var competitionIdsForUser = this.rightsHelper.GetCompetitionIdsTheUserHasRightsOn(userId, false);
 
             var competitions = from competition in this.competitionRepository.FilterBy(x => !x.IsPublic)
                                where competitionIdsForUser.Contains(competition.Id)

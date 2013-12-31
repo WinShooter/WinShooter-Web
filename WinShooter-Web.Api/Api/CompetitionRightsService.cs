@@ -27,6 +27,7 @@ namespace WinShooter.Api.Api
     using ServiceStack.ServiceInterface;
 
     using WinShooter.Api.Authentication;
+    using WinShooter.Database;
     using WinShooter.Logic.Authorization;
 
     /// <summary>
@@ -34,6 +35,21 @@ namespace WinShooter.Api.Api
     /// </summary>
     public class CompetitionRightsService : Service
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompetitionRightsService"/> class.
+        /// </summary>
+        public CompetitionRightsService()
+        {
+            var databaseSession = NHibernateHelper.OpenSession();
+
+            this.RightsHelper = new RightsHelper(new Repository<UserRolesInfo>(databaseSession), new Repository<RoleRightsInfo>(databaseSession));
+        }
+
+        /// <summary>
+        /// The rights helper.
+        /// </summary>
+        public IRightsHelper RightsHelper { get; set; }
+
         /// <summary>
         /// The any.
         /// </summary>

@@ -43,7 +43,7 @@ namespace WinShooter.Api.Api
         /// <summary>
         /// The logic.
         /// </summary>
-        private CompetitionsLogic logic;
+        private readonly CompetitionsLogic logic;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompetitionsService"/> class.
@@ -58,10 +58,26 @@ namespace WinShooter.Api.Api
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         /// <filterpriority>2</filterpriority>
-        public override void Dispose()
+        public sealed override void Dispose()
         {
-            this.databaseSession.Dispose();
-            base.Dispose();
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// The dispose.
+        /// </summary>
+        /// <param name="disposing">
+        /// The disposing.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.databaseSession.Dispose();
+
+                base.Dispose();
+            }
         }
 
         /// <summary>

@@ -26,8 +26,11 @@ namespace WinShooter.Logic.Tests
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    using Moq;
+
     using WinShooter.Database;
     using WinShooter.Logic;
+    using WinShooter.Logic.Authorization;
 
     /// <summary>
     /// Tests the <see cref="CompetitionsLogic"/> class.
@@ -56,15 +59,55 @@ namespace WinShooter.Logic.Tests
                 CompetitionType = CompetitionType.Field,
                 Id = Guid.NewGuid(),
                 IsPublic = false,
-                Name = "Public1",
+                Name = "Private1",
                 StartDate = DateTime.Now,
                 UseNorwegianCount = false
             });
 
-            var competitions = new CompetitionsLogic(repository);
+            var rightsHelperMock = new Mock<IRightsHelper>();
+
+            var competitions = new CompetitionsLogic(repository, rightsHelperMock.Object);
 
             var result = competitions.GetCompetitions(Guid.Empty);
             Assert.AreEqual(1, result.Count());
+        }
+
+        /// <summary>
+        /// Get competitions for a user.
+        /// </summary>
+        [TestMethod]
+        public void GetPrivateCompetitions()
+        {
+            var userGuid = Guid.NewGuid();
+
+            var repository = new RepositoryForTests<Competition>();
+            repository.TheContent.Add(new Competition
+            {
+                CompetitionType = CompetitionType.Field,
+                Id = Guid.NewGuid(),
+                IsPublic = true,
+                Name = "Public1",
+                StartDate = DateTime.Now,
+                UseNorwegianCount = false
+            });
+            repository.TheContent.Add(new Competition
+            {
+                CompetitionType = CompetitionType.Field,
+                Id = Guid.Parse("{bd4cc387-4e7a-42ae-807a-7a750f3680ea}"),
+                IsPublic = false,
+                Name = "Private1",
+                StartDate = DateTime.Now,
+                UseNorwegianCount = false
+            });
+
+            var rightsHelperMock = new Mock<IRightsHelper>();
+            rightsHelperMock.Setup(x => x.GetCompetitionIdsTheUserHasRightsOn(userGuid, false))
+                .Returns(new[] { Guid.Parse("{bd4cc387-4e7a-42ae-807a-7a750f3680ea}") });
+
+            var competitions = new CompetitionsLogic(repository, rightsHelperMock.Object);
+
+            var result = competitions.GetCompetitions(userGuid);
+            Assert.AreEqual(2, result.Count());
         }
     }
 }
