@@ -41,6 +41,11 @@ namespace WinShooter.Logic
         private readonly IRepository<Competition> competitionRepository;
 
         /// <summary>
+        /// The user roles info repository.
+        /// </summary>
+        private readonly IRepository<UserRolesInfo> userRolesInfoRepository;
+
+        /// <summary>
         /// The rights helper.
         /// </summary>
         private readonly IRightsHelper rightsHelper;
@@ -51,12 +56,16 @@ namespace WinShooter.Logic
         /// <param name="competitionRepository">
         /// The competition repository.
         /// </param>
-        /// <param name="rightsHelper">
-        ///     The rights helper implementation.
+        /// <param name="userRolesInfoRepository">
+        /// The <see cref="UserRolesInfo"/> repository.
         /// </param>
-        public CompetitionsLogic(IRepository<Competition> competitionRepository, IRightsHelper rightsHelper)
+        /// <param name="rightsHelper">
+        /// The rights helper implementation.
+        /// </param>
+        public CompetitionsLogic(IRepository<Competition> competitionRepository, IRepository<UserRolesInfo> userRolesInfoRepository, IRightsHelper rightsHelper)
         {
             this.competitionRepository = competitionRepository;
+            this.userRolesInfoRepository = userRolesInfoRepository;
             this.rightsHelper = rightsHelper;
         }
 
@@ -67,7 +76,9 @@ namespace WinShooter.Logic
         /// The session.
         /// </param>
         public CompetitionsLogic(NHibernate.ISession session)
-            : this(new Repository<Competition>(session), new RightsHelper(new Repository<UserRolesInfo>(session), new Repository<RoleRightsInfo>(session)))
+            : this(new Repository<Competition>(session), 
+            new Repository<UserRolesInfo>(session), 
+            new RightsHelper(new Repository<UserRolesInfo>(session), new Repository<RoleRightsInfo>(session)))
         {
         }
 
@@ -176,26 +187,23 @@ namespace WinShooter.Logic
                 throw new NullReferenceException(string.Format("Default Owner Role \"{0}\" is not present.", rolesLogic.DefaultOwnerRoleName));
             }
 
-            var usertRolesInfo = new UserRolesInfo
+            var userRolesInfo = new UserRolesInfo
                                      {
                                          Competition = competition,
                                          Role = role,
                                          User = user
                                      };
 
-            using (var databaseSession = NHibernateHelper.OpenSession())
+            using (var transaction = this.competitionRepository.StartTransaction())
             {
-                using (var transaction = databaseSession.BeginTransaction())
-                {
-                    // First add the new competition to database
-                    databaseSession.Save(competition);
+                // First add the new competition to database
+                this.competitionRepository.Add(competition);
 
-                    // Then add user as owner of competition
-                    databaseSession.Save(usertRolesInfo);
+                // Then add the user as admin
+                this.userRolesInfoRepository.Add(userRolesInfo);
 
-                    // And commit transaction
-                    transaction.Commit();
-                }
+                // Commit transaction
+                transaction.Commit();
             }
 
             return competition;

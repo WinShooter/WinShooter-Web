@@ -22,6 +22,7 @@
 namespace WinShooter.Database
 {
     using System;
+    using System.Data;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -51,6 +52,31 @@ namespace WinShooter.Database
         public Repository(ISession session)
         {
             this.session = session;
+        }
+
+        /// <summary>
+        /// Starts a transaction with the session.
+        /// </summary>
+        /// <param name="isolationLevel">
+        /// The isolation Level.
+        /// </param>
+        /// <returns>
+        /// The transaction.
+        /// </returns>
+        public ITransaction StartTransaction(IsolationLevel isolationLevel)
+        {
+            return this.session.BeginTransaction(isolationLevel);
+        }
+
+        /// <summary>
+        /// Starts a transaction with the session.
+        /// </summary>
+        /// <returns>
+        /// The transaction.
+        /// </returns>
+        public ITransaction StartTransaction()
+        {
+            return this.session.BeginTransaction();
         }
 
         /// <summary>

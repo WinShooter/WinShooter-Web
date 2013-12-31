@@ -46,7 +46,7 @@ namespace WinShooter.Api.Api
         }
 
         /// <summary>
-        /// The rights helper.
+        /// Gets or sets the rights helper.
         /// </summary>
         public IRightsHelper RightsHelper { get; set; }
 
@@ -64,7 +64,7 @@ namespace WinShooter.Api.Api
             var session = this.GetSession() as CustomUserSession;
             var userId = session != null ? session.User.Id : Guid.Empty;
 
-            var rights = RightsHelper.GetRightsForCompetitionIdAndTheUser(userId, Guid.Parse(request.CompetitionId));
+            var rights = this.RightsHelper.GetRightsForCompetitionIdAndTheUser(userId, Guid.Parse(request.CompetitionId));
 
             return new CompetitionRightsResponse
                        {

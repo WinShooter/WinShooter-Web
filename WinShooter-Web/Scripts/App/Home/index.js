@@ -33,10 +33,9 @@ var ViewModel = function (competitions) {
 
     // Function for adding competition
     this.addCompetition = function() {
-        alert("Started");
         var competition = {
             CompetitionType: "Field",
-            Name: this.newCompetitionName,
+            Name: this.newCompetitionName(),
             UseNorwegianCount: "False",
             StartDate: "2013-01-01",
         };

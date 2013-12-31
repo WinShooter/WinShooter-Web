@@ -22,8 +22,11 @@
 namespace WinShooter.Database
 {
     using System;
+    using System.Data;
     using System.Linq;
     using System.Linq.Expressions;
+
+    using NHibernate;
 
     /// <summary>
     /// The interface of the database repository.
@@ -34,6 +37,25 @@ namespace WinShooter.Database
     public interface IRepository<T>
         where T : IWinshooterDatabaseItem
     {
+        /// <summary>
+        /// Starts a transaction with the session.
+        /// </summary>
+        /// <param name="isolationLevel">
+        /// The isolation Level.
+        /// </param>
+        /// <returns>
+        /// The transaction.
+        /// </returns>
+        ITransaction StartTransaction(IsolationLevel isolationLevel);
+
+        /// <summary>
+        /// Starts a transaction with the session.
+        /// </summary>
+        /// <returns>
+        /// The transaction.
+        /// </returns>
+        ITransaction StartTransaction();
+
         /// <summary>
         ///     Adds a new entity to the database.
         /// </summary>

@@ -64,22 +64,6 @@ namespace WinShooter.Api.Api
         }
 
         /// <summary>
-        /// The dispose.
-        /// </summary>
-        /// <param name="disposing">
-        /// The disposing.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                this.databaseSession.Dispose();
-
-                base.Dispose();
-            }
-        }
-
-        /// <summary>
         /// The any.
         /// </summary>
         /// <param name="request">
@@ -126,8 +110,7 @@ namespace WinShooter.Api.Api
 
             if (string.IsNullOrEmpty(request.CompetitionId))
             {
-                request.CompetitionId = 
-                    this.logic.AddCompetition(session.User, request.GetDatabaseCompetition()).ToString();
+                request.CompetitionId = this.logic.AddCompetition(session.User, request.GetDatabaseCompetition()).Id.ToString();
             }
             else
             {
@@ -136,6 +119,22 @@ namespace WinShooter.Api.Api
 
             // We have updated, read from database and return.
             return this.Get(request);
+        }
+
+        /// <summary>
+        /// The dispose.
+        /// </summary>
+        /// <param name="disposing">
+        /// The disposing.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.databaseSession.Dispose();
+
+                base.Dispose();
+            }
         }
     }
 }
