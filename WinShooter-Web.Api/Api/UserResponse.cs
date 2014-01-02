@@ -27,6 +27,11 @@ namespace WinShooter.Api.Api
     public class UserResponse
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the user is logged in.
+        /// </summary>
+        public bool IsLoggedIn { get; set; }
+
+        /// <summary>
         /// Gets or sets the user display name.
         /// </summary>
         public string DisplayName { get; set; }

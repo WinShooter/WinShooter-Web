@@ -47,12 +47,13 @@ namespace WinShooter.Api.Api
             {
                 return new UserResponse 
                 { 
+                    IsLoggedIn = true,
                     DisplayName = session.User.DisplayName,
                     Email = session.User.Email 
                 };
             }
 
-            return new UserResponse();
+            return new UserResponse() { IsLoggedIn = false };
         }
     }
 }
