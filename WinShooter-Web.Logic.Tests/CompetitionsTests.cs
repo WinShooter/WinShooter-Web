@@ -66,7 +66,9 @@ namespace WinShooter.Logic.Tests
 
             var rightsHelperMock = new Mock<IRightsHelper>();
 
-            var competitions = new CompetitionsLogic(repository, rightsHelperMock.Object);
+            var userRolesInfoMock = new Mock<IRepository<UserRolesInfo>>();
+
+            var competitions = new CompetitionsLogic(repository, userRolesInfoMock.Object, rightsHelperMock.Object);
 
             var result = competitions.GetCompetitions(Guid.Empty);
             Assert.AreEqual(1, result.Count());
@@ -104,7 +106,9 @@ namespace WinShooter.Logic.Tests
             rightsHelperMock.Setup(x => x.GetCompetitionIdsTheUserHasRightsOn(userGuid, false))
                 .Returns(new[] { Guid.Parse("{bd4cc387-4e7a-42ae-807a-7a750f3680ea}") });
 
-            var competitions = new CompetitionsLogic(repository, rightsHelperMock.Object);
+            var userRolesInfoMock = new Mock<IRepository<UserRolesInfo>>();
+
+            var competitions = new CompetitionsLogic(repository, userRolesInfoMock.Object, rightsHelperMock.Object);
 
             var result = competitions.GetCompetitions(userGuid);
             Assert.AreEqual(2, result.Count());

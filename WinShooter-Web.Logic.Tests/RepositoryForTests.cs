@@ -23,8 +23,11 @@ namespace WinShooter.Logic.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using System.Linq.Expressions;
+
+    using NHibernate;
 
     using WinShooter.Database;
 
@@ -48,6 +51,31 @@ namespace WinShooter.Logic.Tests
         /// Gets or sets the content that will be queried.
         /// </summary>
         public List<T> TheContent { get; set; }
+
+        /// <summary>
+        /// Starts a transaction with the session.
+        /// </summary>
+        /// <param name="isolationLevel">
+        /// The isolation Level.
+        /// </param>
+        /// <returns>
+        /// The transaction.
+        /// </returns>
+        public ITransaction StartTransaction(IsolationLevel isolationLevel)
+        {
+            return new TransactionForTests();
+        }
+
+        /// <summary>
+        /// Starts a transaction with the session.
+        /// </summary>
+        /// <returns>
+        /// The transaction.
+        /// </returns>
+        public ITransaction StartTransaction()
+        {
+            return new TransactionForTests();
+        }
 
         /// <summary>
         ///     Adds a new entity to the database.
