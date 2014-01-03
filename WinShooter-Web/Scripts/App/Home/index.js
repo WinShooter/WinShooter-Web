@@ -1,5 +1,7 @@
 ﻿// Here's my data model
 var ViewModel = function (competitions) {
+    this.loginViewModel = new LoginViewModel();
+
     // Attributes for showing existing competition
     this.competitions = ko.observableArray(competitions);
     this.selectedCompetition = ko.observable('');
@@ -24,7 +26,7 @@ var ViewModel = function (competitions) {
         if (this.selectedCompetition() !== undefined) {
             newLocation = newLocation + this.selectedCompetition().Guid;
         }
-        window.location.href = newLocation;
+        window.location.href = newLocation; 
     };
     
     // Attributes for creating a new competition
@@ -40,12 +42,12 @@ var ViewModel = function (competitions) {
             StartDate: this.newCompetitionStartDate(),
         };
 
-        $.post("/api/competition", competition, function (returnedData) {
+        $.post("/api/competition", competition, function(returnedData) {
             alert("success!");
-        }).fail(function () {
+        }).fail(function() {
             alert("fail!");
         });
-    }
+    };
 };
 
 // Add datepicker to the newCompetitionStartDate field
@@ -56,5 +58,5 @@ $(function () {
 // Fetch competitions from api and bind with knockout.
 var competitionsApi = "/api/competitions";
 $.getJSON(competitionsApi, function (data) {
-    ko.applyBindings(new ViewModel(data), document.getElementById("body"));
+    ko.applyBindings(new ViewModel(data));
 });

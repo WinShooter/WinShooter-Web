@@ -1,28 +1,28 @@
-﻿// Here's my data model
-var LoginViewModel = function (loginData) {
+﻿// Here's my viewModel
+var LoginViewModel = function () {
+    var self = this;
+
     // Attributes
-    this.userName = ko.observable(loginData.DisplayName);
+    self.displayName = ko.observable('');
+    self.isLoggedIn = ko.observable(false);
 
     // calculated attributes
     this.shouldShowLoginLink = ko.computed(function () {
-        if (this.userName()) {
+        if (self.isLoggedIn()) {
             return false;
         }
         return true;
     }, this);
 
-    this.shouldShowLogoutLink = ko.computed(function () {
-        if (this.userName()) {
-            return true;
-        }
-        return false;
-    }, this);
-};
+    // Fetch competitions from api and bind with knockout.
+    var userApi = "/api/user";
+    $.getJSON(userApi, function (data) {
+        self.isLoggedIn(data.IsLoggedIn);
 
-// Fetch competitions from api and bind with knockout.
-var userApi = "/api/user";
-$.getJSON(userApi, function (data) {
-    ko.applyBindings(new LoginViewModel(data), document.getElementById("loginInfo"));
-}).fail(function() {
-    alert("Failed to retrieve user info");
-});
+        if (data.IsLoggedIn) {
+            self.displayName(data.DisplayName);
+        }
+    }).fail(function () {
+        alert("Failed to retrieve user info");
+    });
+};

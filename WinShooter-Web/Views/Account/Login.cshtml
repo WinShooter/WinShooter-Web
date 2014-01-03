@@ -31,4 +31,15 @@
 
 @section scripts {
     @Scripts.Render("~/Scripts/App/Account/Login.js")
+
+    <script language="javascript">
+            // Here's my data model
+            var ViewModel = function() {
+                this.loginViewModel = new LoginViewModel();
+            };
+
+            this.viewModel = new ViewModel();
+
+            ko.applyBindings(this.viewModel);
+    </script>
 }

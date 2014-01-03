@@ -42,17 +42,19 @@
     <div class="span5" data-bind="text: selectedCompetitionGuid"></div>
 </div>
 
-<h3>Skapa ny tävling</h3>
-<div class="row-fluid">
-    <div class="span1">Namn:</div>
-    <div class="span5"><input data-bind="value: newCompetitionName" /></div>
-</div>
-<div class="row-fluid">
-    <div class="span1">Startar:</div>
-    <div class="span5"><input type="text" id="newCompetitionStartDate" data-bind="value: newCompetitionStartDate" /></div>
-</div>
-<div class="row-fluid">
-    <div class="span5"><input type="button" id="newCompetitionAddNow" value="Lägg till" data-bind="click: addCompetition" /></div>
+<div data-bind="visible: loginViewModel.isLoggedIn">
+    <h3>Skapa ny tävling</h3>
+    <div class="row-fluid">
+        <div class="span1">Namn:</div>
+        <div class="span5"><input data-bind="value: newCompetitionName" /></div>
+    </div>
+    <div class="row-fluid">
+        <div class="span1">Startar:</div>
+        <div class="span5"><input type="text" id="newCompetitionStartDate" data-bind="value: newCompetitionStartDate" /></div>
+    </div>
+    <div class="row-fluid">
+        <div class="span5"><input type="button" id="newCompetitionAddNow" value="Lägg till" data-bind="click: addCompetition" /></div>
+    </div>
 </div>
 
 @section scripts {
