@@ -25,10 +25,10 @@
                         <li>@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
                     }
                     <li>
-                        <div data-bind="visible: loginViewModel.isLoggedIn">Inloggad som </div>
-                        <div data-bind="text: loginViewModel.displayName"></div>
-                        @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { { "data-bind", "visible: loginViewModel.shouldShowLoginLink" } })
-                        <a data-bind="visible: loginViewModel.isLoggedIn" href="/api/auth/logout">Logga ut</a>
+                        <div style="display: none" data-bind="visible: loginViewModel.isLoggedIn">Inloggad som </div>
+                        <div style="display: none" data-bind="text: loginViewModel.displayName"></div>
+                        @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { {"style", "display: none"}, { "data-bind", "visible: loginViewModel.shouldShowLoginLink" } })
+                        <a style="display: none" data-bind="visible: loginViewModel.isLoggedIn" href="/api/auth/logout">Logga ut</a>
                     </li>
                 </ul>
             </div>
