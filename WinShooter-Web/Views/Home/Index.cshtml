@@ -35,26 +35,26 @@
 <h3>Information om den valda tävlingen</h3>
 <div class="row-fluid">
     <div class="span1">Namn:</div>
-    <div class="span5" data-bind="text: selectedCompetitionName"></div>
-</div>
-<div class="row-fluid">
-    <div class="span1">GUID:</div>
-    <div class="span5" data-bind="text: selectedCompetitionGuid"></div>
+    <div class="span5">
+        <input data-bind="value: selectedCompetitionName, disable:selectedCompetitionUserCannotEditCompetition" />
+    </div>
 </div>
 <div class="row-fluid">
     <div class="span1">Datum:</div>
-    <div class="span5" data-bind="text: selectedCompetitionStartDate"></div>
+    <div class="span5">
+        <input data-bind="value: selectedCompetitionStartDate, disable:selectedCompetitionUserCannotEditCompetition">
+    </div>
 </div>
 <div class="row-fluid">
     <div class="span1">Publik tävling:</div>
     <div class="span5">
-        <input type="checkbox" data-bind="checked: selectedCompetitionIsPublic" />
+        <input type="checkbox" data-bind="checked: selectedCompetitionIsPublic, disable:selectedCompetitionUserCannotEditCompetition" />
     </div>
 </div>
 <div class="row-fluid">
     <div class="span1">Poängfältskytte:</div>
     <div class="span5">
-        <input type="checkbox" data-bind="checked: selectedCompetitionUseNorwegianCount" />
+        <input type="checkbox" data-bind="checked: selectedCompetitionUseNorwegianCount, disable:selectedCompetitionUserCannotEditCompetition" />
     </div>
 </div>
 

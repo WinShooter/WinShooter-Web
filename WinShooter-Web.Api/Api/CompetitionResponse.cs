@@ -42,6 +42,8 @@ namespace WinShooter.Api.Api
             this.StartDate = dbcompetition.StartDate.ToString("yyyy-MM-dd hh:mm");
             this.IsPublic = dbcompetition.IsPublic;
             this.UseNorwegianCount = dbcompetition.UseNorwegianCount;
+
+            this.UserCanEditCompetition = false;
         }
 
         /// <summary>
@@ -80,5 +82,10 @@ namespace WinShooter.Api.Api
         /// Gets or sets a value indicating whether use norwegian count.
         /// </summary>
         public bool UseNorwegianCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the user can edit this competition.
+        /// </summary>
+        public bool UserCanEditCompetition { get; set; }
     }
 }

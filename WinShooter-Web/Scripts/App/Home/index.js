@@ -42,6 +42,23 @@ var ViewModel = function (competitions) {
         return this.selectedCompetition().UseNorwegianCount;
     }, this);
 
+    this.selectedCompetitionUserCanEditCompetition = ko.computed(function () {
+        if (this.selectedCompetition() === undefined) {
+            return false;
+        }
+        return this.selectedCompetition().UserCanEditCompetition;
+    }, this);
+
+    this.selectedCompetitionUserCannotEditCompetition = ko.computed(function () {
+        if (this.selectedCompetition() === undefined) {
+            return true;
+        }
+        if (this.selectedCompetition().UserCanEditCompetition) {
+            return false;
+        }
+        return true;
+    }, this);
+
     // Selects the current competition
     this.selectCompetitionOnServer = function () {
         var newLocation = "/home/index/";
