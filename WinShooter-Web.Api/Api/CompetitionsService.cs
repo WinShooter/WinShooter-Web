@@ -65,22 +65,6 @@ namespace WinShooter.Api.Api
         }
 
         /// <summary>
-        /// The dispose.
-        /// </summary>
-        /// <param name="disposing">
-        /// The disposing.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                this.databaseSession.Dispose();
-
-                base.Dispose();
-            }
-        }
-
-        /// <summary>
         /// The any.
         /// </summary>
         /// <param name="request">
@@ -101,6 +85,22 @@ namespace WinShooter.Api.Api
             return
                 (from dbcompetition in competitions 
                  select new CompetitionResponse(dbcompetition)).ToList();
+        }
+
+        /// <summary>
+        /// The dispose.
+        /// </summary>
+        /// <param name="disposing">
+        /// The disposing.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.databaseSession.Dispose();
+
+                base.Dispose();
+            }
         }
     }
 }
