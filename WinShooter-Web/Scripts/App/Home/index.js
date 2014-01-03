@@ -50,13 +50,14 @@ var ViewModel = function (competitions) {
     };
 };
 
-// Add datepicker to the newCompetitionStartDate field
+// Add binding and such when document is loaded.
 $(function () {
+    // Add datepicker to the newCompetitionStartDate field
     $("#newCompetitionStartDate").datepicker({ dateFormat: 'yy-mm-dd' });
-});
 
-// Fetch competitions from api and bind with knockout.
-var competitionsApi = "/api/competitions";
-$.getJSON(competitionsApi, function (data) {
-    ko.applyBindings(new ViewModel(data));
+    // Fetch competitions from api and bind with knockout.
+    var competitionsApi = "/api/competitions";
+    $.getJSON(competitionsApi, function(data) {
+        ko.applyBindings(new ViewModel(data));
+    });
 });

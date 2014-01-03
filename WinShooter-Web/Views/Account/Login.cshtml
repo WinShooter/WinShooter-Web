@@ -3,9 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Välkommen att logga in</h2>
-
-<h2>Logga in</h2>
+<h2>Välj en inloggningsmetod nedan och logga in</h2>
 
 <div id="google-signin">
     <form action="@Url.Content("~/api/auth/googleopenid")" method="POST">
@@ -33,13 +31,16 @@
     @Scripts.Render("~/Scripts/App/Account/Login.js")
 
     <script language="javascript">
+        // Add binding and such when document is loaded.
+        $(function() {
             // Here's my data model
-            var ViewModel = function() {
+            var viewModel = function() {
                 this.loginViewModel = new LoginViewModel();
             };
 
-            this.viewModel = new ViewModel();
+            this.viewModel = new viewModel();
 
             ko.applyBindings(this.viewModel);
+        });
     </script>
 }
