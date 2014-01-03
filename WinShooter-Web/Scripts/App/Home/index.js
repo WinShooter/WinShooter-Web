@@ -13,11 +13,33 @@ var ViewModel = function (competitions) {
         }
         return this.selectedCompetition().Name;
     }, this);
+
     this.selectedCompetitionGuid = ko.computed(function () {
         if (this.selectedCompetition() === undefined) {
             return '';
         }
-        return this.selectedCompetition().Guid;
+        return this.selectedCompetition().CompetitionId;
+    }, this);
+
+    this.selectedCompetitionStartDate = ko.computed(function () {
+        if (this.selectedCompetition() === undefined) {
+            return '';
+        }
+        return this.selectedCompetition().StartDate;
+    }, this);
+    
+    this.selectedCompetitionIsPublic = ko.computed(function () {
+        if (this.selectedCompetition() === undefined) {
+            return '';
+        }
+        return this.selectedCompetition().IsPublic;
+    }, this);
+
+    this.selectedCompetitionUseNorwegianCount = ko.computed(function () {
+        if (this.selectedCompetition() === undefined) {
+            return '';
+        }
+        return this.selectedCompetition().UseNorwegianCount;
     }, this);
 
     // Selects the current competition

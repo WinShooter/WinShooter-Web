@@ -41,6 +41,22 @@
     <div class="span1">GUID:</div>
     <div class="span5" data-bind="text: selectedCompetitionGuid"></div>
 </div>
+<div class="row-fluid">
+    <div class="span1">Datum:</div>
+    <div class="span5" data-bind="text: selectedCompetitionStartDate"></div>
+</div>
+<div class="row-fluid">
+    <div class="span1">Publik tävling:</div>
+    <div class="span5">
+        <input type="checkbox" data-bind="checked: selectedCompetitionIsPublic" />
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span1">Poängfältskytte:</div>
+    <div class="span5">
+        <input type="checkbox" data-bind="checked: selectedCompetitionUseNorwegianCount" />
+    </div>
+</div>
 
 <div style="display: none" data-bind="visible: loginViewModel.isLoggedIn">
     <h3>Skapa ny tävling</h3>

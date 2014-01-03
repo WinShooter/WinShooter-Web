@@ -39,6 +39,9 @@ namespace WinShooter.Api.Api
             this.CompetitionId = dbcompetition.Id.ToString();
             this.CompetitionType = dbcompetition.CompetitionType.ToString();
             this.Name = dbcompetition.Name;
+            this.StartDate = dbcompetition.StartDate.ToString("yyyy-MM-dd hh:mm");
+            this.IsPublic = dbcompetition.IsPublic;
+            this.UseNorwegianCount = dbcompetition.UseNorwegianCount;
         }
 
         /// <summary>
@@ -71,7 +74,7 @@ namespace WinShooter.Api.Api
         /// <summary>
         /// Gets or sets the start date.
         /// </summary>
-        public DateTime StartDate { get; set; }
+        public string StartDate { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether use norwegian count.
