@@ -22,12 +22,14 @@
 namespace WinShooter.Api.Api
 {
     using System;
+    using System.Linq;
 
     using ServiceStack.ServiceInterface;
 
     using WinShooter.Api.Authentication;
     using WinShooter.Database;
     using WinShooter.Logic;
+    using WinShooter.Logic.Authorization;
 
     /// <summary>
     /// The competition service.
@@ -45,11 +47,17 @@ namespace WinShooter.Api.Api
         private readonly CompetitionsLogic logic;
 
         /// <summary>
+        /// The rights helper.
+        /// </summary>
+        private readonly IRightsHelper rightsHelper;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CompetitionService"/> class.
         /// </summary>
         public CompetitionService()
         {
             this.databaseSession = NHibernateHelper.OpenSession();
+            this.rightsHelper = new RightsHelper(new Repository<UserRolesInfo>(this.databaseSession), new Repository<RoleRightsInfo>(this.databaseSession));
             this.logic = new CompetitionsLogic(this.databaseSession);
         }
 
@@ -83,7 +91,24 @@ namespace WinShooter.Api.Api
 
             if (dbcompetition != null)
             {
-                return new CompetitionResponse(dbcompetition);
+                return new CompetitionResponse(dbcompetition)
+                           {
+                               UserCanUpdateCompetition =
+                                   this.rightsHelper
+                                   .GetRightsForCompetitionIdAndTheUser(
+                                       userId,
+                                       dbcompetition.Id)
+                                   .Contains(
+                                       WinShooterCompetitionPermissions
+                                   .UpdateCompetition),
+                               UserCanDeleteCompetition = this.rightsHelper
+                               .GetRightsForCompetitionIdAndTheUser(
+                                   userId,
+                                   dbcompetition.Id)
+                               .Contains(
+                                   WinShooterCompetitionPermissions
+                               .DeleteCompetition),
+                           };
             }
 
             throw new Exception(string.Format("Could not find competition with Guid {0}", request.CompetitionId));

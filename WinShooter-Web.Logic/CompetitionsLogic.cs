@@ -76,7 +76,8 @@ namespace WinShooter.Logic
         /// The session.
         /// </param>
         public CompetitionsLogic(NHibernate.ISession session)
-            : this(new Repository<Competition>(session), 
+            : this(
+            new Repository<Competition>(session), 
             new Repository<UserRolesInfo>(session), 
             new RightsHelper(new Repository<UserRolesInfo>(session), new Repository<RoleRightsInfo>(session)))
         {

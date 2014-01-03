@@ -27,8 +27,10 @@ namespace WinShooter.Api.Api
 
     using ServiceStack.ServiceInterface;
 
+    using WinShooter.Api.Authentication;
     using WinShooter.Database;
     using WinShooter.Logic;
+    using WinShooter.Logic.Authorization;
 
     /// <summary>
     /// The competitions service.
@@ -46,11 +48,17 @@ namespace WinShooter.Api.Api
         private readonly CompetitionsLogic logic;
 
         /// <summary>
+        /// The rights helper.
+        /// </summary>
+        private readonly IRightsHelper rightsHelper;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CompetitionsService"/> class.
         /// </summary>
         public CompetitionsService()
         {
             this.databaseSession = NHibernateHelper.OpenSession();
+            this.rightsHelper = new RightsHelper(new Repository<UserRolesInfo>(this.databaseSession), new Repository<RoleRightsInfo>(this.databaseSession));
             this.logic = new CompetitionsLogic(this.databaseSession);
         }
 
@@ -75,16 +83,31 @@ namespace WinShooter.Api.Api
         /// </returns>
         public List<CompetitionResponse> Get(CompetitionsRequest request)
         {
-            var sess = this.GetSession();
+            var authSession = this.GetSession() as CustomUserSession;
 
-            var competitions = this.logic.GetCompetitions(
-                sess.IsAuthenticated 
-                    ? Guid.Parse(sess.UserAuthId) 
-                    : Guid.Empty);
+            var userId = authSession == null || authSession.User == null ? Guid.Empty : authSession.User.Id;
 
-            return
-                (from dbcompetition in competitions 
+            var competitions = this.logic.GetCompetitions(userId);
+
+            var responses = (from dbcompetition in competitions 
                  select new CompetitionResponse(dbcompetition)).ToList();
+
+            if (userId.Equals(Guid.Empty))
+            {
+                // Anonymous user
+                return responses;
+            }
+
+            foreach (var competitionResponse in responses)
+            {
+                var userRights = this.rightsHelper.GetRightsForCompetitionIdAndTheUser(
+                    userId,
+                    Guid.Parse(competitionResponse.CompetitionId));
+                competitionResponse.UserCanDeleteCompetition = userRights.Contains(WinShooterCompetitionPermissions.DeleteCompetition);
+                competitionResponse.UserCanUpdateCompetition = userRights.Contains(WinShooterCompetitionPermissions.UpdateCompetition);
+            }
+
+            return responses;
         }
 
         /// <summary>

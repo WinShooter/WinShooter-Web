@@ -43,7 +43,8 @@ namespace WinShooter.Api.Api
             this.IsPublic = dbcompetition.IsPublic;
             this.UseNorwegianCount = dbcompetition.UseNorwegianCount;
 
-            this.UserCanEditCompetition = false;
+            this.UserCanUpdateCompetition = false;
+            this.UserCanDeleteCompetition = false;
         }
 
         /// <summary>
@@ -86,6 +87,11 @@ namespace WinShooter.Api.Api
         /// <summary>
         /// Gets or sets a value indicating whether the user can edit this competition.
         /// </summary>
-        public bool UserCanEditCompetition { get; set; }
+        public bool UserCanUpdateCompetition { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the user can delete this competition.
+        /// </summary>
+        public bool UserCanDeleteCompetition { get; set; }
     }
 }
