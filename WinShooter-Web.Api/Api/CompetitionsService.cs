@@ -48,17 +48,11 @@ namespace WinShooter.Api.Api
         private readonly CompetitionsLogic logic;
 
         /// <summary>
-        /// The rights helper.
-        /// </summary>
-        private readonly IRightsHelper rightsHelper;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CompetitionsService"/> class.
         /// </summary>
         public CompetitionsService()
         {
             this.databaseSession = NHibernateHelper.OpenSession();
-            this.rightsHelper = new RightsHelper(new Repository<UserRolesInfo>(this.databaseSession), new Repository<RoleRightsInfo>(this.databaseSession));
             this.logic = new CompetitionsLogic(this.databaseSession);
         }
 
@@ -86,8 +80,9 @@ namespace WinShooter.Api.Api
             var authSession = this.GetSession() as CustomUserSession;
 
             var userId = authSession == null || authSession.User == null ? Guid.Empty : authSession.User.Id;
+            this.logic.CurrentUser = authSession == null ? null : authSession.User;
 
-            var competitions = this.logic.GetCompetitions(userId);
+            var competitions = this.logic.GetCompetitions();
 
             var responses = (from dbcompetition in competitions 
                  select new CompetitionResponse(dbcompetition)).ToList();
@@ -100,8 +95,7 @@ namespace WinShooter.Api.Api
 
             foreach (var competitionResponse in responses)
             {
-                var userRights = this.rightsHelper.GetRightsForCompetitionIdAndTheUser(
-                    userId,
+                var userRights = this.logic.RightsHelper.GetRightsForCompetitionIdAndTheUser(
                     Guid.Parse(competitionResponse.CompetitionId));
                 competitionResponse.UserCanDeleteCompetition = userRights.Contains(WinShooterCompetitionPermissions.DeleteCompetition);
                 competitionResponse.UserCanUpdateCompetition = userRights.Contains(WinShooterCompetitionPermissions.UpdateCompetition);

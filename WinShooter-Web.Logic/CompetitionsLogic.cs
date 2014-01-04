@@ -25,8 +25,6 @@ namespace WinShooter.Logic
     using System.Collections.Generic;
     using System.Linq;
 
-    using NHibernate.Linq;
-
     using WinShooter.Database;
     using WinShooter.Logic.Authorization;
 
@@ -46,9 +44,9 @@ namespace WinShooter.Logic
         private readonly IRepository<UserRolesInfo> userRolesInfoRepository;
 
         /// <summary>
-        /// The rights helper.
+        /// The current user.
         /// </summary>
-        private readonly IRightsHelper rightsHelper;
+        private User currentUser;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompetitionsLogic"/> class.
@@ -66,7 +64,7 @@ namespace WinShooter.Logic
         {
             this.competitionRepository = competitionRepository;
             this.userRolesInfoRepository = userRolesInfoRepository;
-            this.rightsHelper = rightsHelper;
+            this.RightsHelper = rightsHelper;
         }
 
         /// <summary>
@@ -84,6 +82,28 @@ namespace WinShooter.Logic
         }
 
         /// <summary>
+        /// Gets or sets the current user.
+        /// </summary>
+        public User CurrentUser
+        {
+            get
+            {
+                return this.currentUser;
+            }
+
+            set
+            {
+                this.RightsHelper.CurrentUser = value;
+                this.currentUser = value;
+            }
+        } 
+        
+        /// <summary>
+        /// Gets the rights helper.
+        /// </summary>
+        public IRightsHelper RightsHelper { get; private set; }
+
+        /// <summary>
         /// Get all public competitions.
         /// </summary>
         /// <returns>
@@ -97,21 +117,18 @@ namespace WinShooter.Logic
         /// <summary>
         /// Get all public competitions.
         /// </summary>
-        /// <param name="userId">
-        /// The user <see cref="Guid"/>.
-        /// </param>
         /// <returns>
         /// The <see cref="Competition"/> array.
         /// </returns>
-        public Competition[] GetPrivateCompetitions(Guid userId)
+        public Competition[] GetPrivateCompetitions()
         {
-            if (userId.Equals(Guid.Empty))
+            if (this.CurrentUser == null || this.CurrentUser.Id.Equals(Guid.Empty))
             {
                 // Quick bailout if anonymous
                 return new Competition[0];
             }
 
-            var competitionIdsForUser = this.rightsHelper.GetCompetitionIdsTheUserHasRightsOn(userId, false);
+            var competitionIdsForUser = this.RightsHelper.GetCompetitionIdsTheUserHasRightsOn(false);
 
             var competitions = from competition in this.competitionRepository.FilterBy(x => !x.IsPublic)
                                where competitionIdsForUser.Contains(competition.Id)
@@ -123,17 +140,14 @@ namespace WinShooter.Logic
         /// <summary>
         /// Get all competitions for currently logged in user.
         /// </summary>
-        /// <param name="userId">
-        /// The user <see cref="Guid"/>.
-        /// </param>
         /// <returns>
         /// The <see cref="Competition"/> array.
         /// </returns>
-        public Competition[] GetCompetitions(Guid userId)
+        public Competition[] GetCompetitions()
         {
             var toReturn = new List<Competition>();
             toReturn.AddRange(this.GetPublicCompetitions());
-            toReturn.AddRange(this.GetPrivateCompetitions(userId));
+            toReturn.AddRange(this.GetPrivateCompetitions());
 
             return toReturn.ToArray();
         }
@@ -141,18 +155,15 @@ namespace WinShooter.Logic
         /// <summary>
         /// Get a certain competition.
         /// </summary>
-        /// <param name="userId">
-        /// The user <see cref="Guid"/>.
-        /// </param>
         /// <param name="competitionId">
         /// The competition <see cref="Guid"/>.
         /// </param>
         /// <returns>
         /// The <see cref="Competition"/>.
         /// </returns>
-        public Competition GetCompetition(Guid userId, Guid competitionId)
+        public Competition GetCompetition(Guid competitionId)
         {
-            var competitions = this.GetCompetitions(userId);
+            var competitions = this.GetCompetitions();
 
             return
                 (from competition in competitions
@@ -221,6 +232,24 @@ namespace WinShooter.Logic
         /// </param>
         public void UpdateCompetition(Guid userId, Competition competition)
         {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The delete competition.
+        /// </summary>
+        /// <param name="competitionId">
+        /// The competition.
+        /// </param>
+        public void DeleteCompetition(Guid competitionId)
+        {
+            if (
+                !this.RightsHelper.GetRightsForCompetitionIdAndTheUser(competitionId)
+                     .Contains(WinShooterCompetitionPermissions.DeleteCompetition))
+            {
+                throw new Exception("You don't have rights to delete this competition");
+            }
+
             throw new NotImplementedException();
         }
     }

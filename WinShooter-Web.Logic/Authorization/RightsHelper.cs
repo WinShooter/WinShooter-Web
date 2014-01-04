@@ -42,6 +42,11 @@ namespace WinShooter.Logic.Authorization
         private readonly IRepository<RoleRightsInfo> roleRightsInfoRepository;
 
         /// <summary>
+        /// Gets or sets the current user.
+        /// </summary>
+        public User CurrentUser { get; set; }
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="RightsHelper"/> class.
         /// </summary>
         /// <param name="userRolesInfoRepository">
@@ -59,21 +64,18 @@ namespace WinShooter.Logic.Authorization
         /// <summary>
         /// Get competition ids the user has rights on.
         /// </summary>
-        /// <param name="userId">
-        /// The user id.
-        /// </param>
         /// <param name="includePublic">
         /// If all public competitions should be included.
         /// </param>
         /// <returns>
         /// The <see cref="Guid"/> array.
         /// </returns>
-        public Guid[] GetCompetitionIdsTheUserHasRightsOn(Guid userId, bool includePublic)
+        public Guid[] GetCompetitionIdsTheUserHasRightsOn(bool includePublic)
         {
             var competitionIds =
                 from userRolesInfo in
                     this.userRolesInfoRepository.FilterBy(
-                        x => x.User.Id.Equals(userId) && x.Competition.IsPublic == includePublic)
+                        x => x.User.Id.Equals(this.CurrentUser.Id) && x.Competition.IsPublic == includePublic)
                 select userRolesInfo.Competition.Id;
 
             return competitionIds.ToArray();
@@ -91,13 +93,13 @@ namespace WinShooter.Logic.Authorization
         /// <returns>
         /// The <see cref="WinShooterCompetitionPermissions"/> array.
         /// </returns>
-        public WinShooterCompetitionPermissions[] GetRightsForCompetitionIdAndTheUser(Guid userId, Guid competitionId)
+        public WinShooterCompetitionPermissions[] GetRightsForCompetitionIdAndTheUser(Guid competitionId)
         {
             // TODO If userId is Guid.Empty, handle this differently.
             var userRoleIds =
                 from userRolesInfo in
                      this.userRolesInfoRepository.FilterBy(
-                         x => x.User.Id.Equals(userId) && x.Competition.Id.Equals(competitionId))
+                         x => x.User.Id.Equals(this.CurrentUser.Id) && x.Competition.Id.Equals(competitionId))
                  select userRolesInfo.Role.Id;
 
             var rightStrings =
@@ -115,21 +117,18 @@ namespace WinShooter.Logic.Authorization
         /// <summary>
         /// Get competition ids the user has rights on.
         /// </summary>
-        /// <param name="userId">
-        /// The user id.
-        /// </param>
         /// <param name="competitionId">
         /// The competition Id.
         /// </param>
         /// <returns>
         /// The <see cref="WinShooterCompetitionPermissions"/> array.
         /// </returns>
-        public string[] GetRolesForCompetitionIdAndTheUser(Guid userId, Guid competitionId)
+        public string[] GetRolesForCompetitionIdAndTheUser(Guid competitionId)
         {
             var userRoles =
                 from userRolesInfo in
                     this.userRolesInfoRepository.FilterBy(
-                        x => x.User.Id.Equals(userId) && x.Competition.Id.Equals(competitionId))
+                        x => x.User.Id.Equals(this.CurrentUser.Id) && x.Competition.Id.Equals(competitionId))
                 select userRolesInfo.Role.RoleName;
 
             return userRoles.ToArray();

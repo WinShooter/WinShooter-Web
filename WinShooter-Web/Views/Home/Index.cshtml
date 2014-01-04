@@ -54,7 +54,14 @@
 <div class="row-fluid">
     <div class="span1">Poängfältskytte:</div>
     <div class="span5">
-        <input type="checkbox" data-bind="checked: selectedCompetitionUseNorwegianCount, disable:selectedCompetitionUserCannotEditCompetition" />
+        <input type="checkbox" data-bind="checked: selectedCompetitionUseNorwegianCount, disable:selectedCompetitionUserCannotUpdateCompetition" />
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span1">&nbsp;</div>
+    <div class="span5">
+        <input type="button" value="Uppdatera" data-bind="visible:selectedCompetitionUserCanUpdateCompetition, click: updateCompetition" style="display: none" />
+        <input type="button" value="Radera" data-bind="visible:selectedCompetitionUserCanDeleteCompetition, click: deleteCompetition" style="display: none" />
     </div>
 </div>
 

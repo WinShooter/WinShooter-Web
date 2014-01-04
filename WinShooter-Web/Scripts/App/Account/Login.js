@@ -1,5 +1,5 @@
-﻿var userApi = "/api/user";
-$.getJSON(userApi, function (data) {
+﻿var userApiUrl = "/api/user";
+$.getJSON(userApiUrl, function (data) {
     if (data.DisplayName) {
         window.location = "/";
     }

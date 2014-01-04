@@ -1,4 +1,8 @@
-﻿// Here's my data model
+﻿// The different JSON urls
+var competitionsApiUrl = "/api/competitions";
+var competitionApiUrl = "/api/competition";
+
+// Here's my data model
 var ViewModel = function (competitions) {
     this.loginViewModel = new LoginViewModel();
 
@@ -59,6 +63,13 @@ var ViewModel = function (competitions) {
         return true;
     }, this);
 
+    this.selectedCompetitionUserCanDeleteCompetition = ko.computed(function () {
+        if (this.selectedCompetition() === undefined) {
+            return false;
+        }
+        return this.selectedCompetition().UserCanDeleteCompetition;
+    }, this);
+
     // Selects the current competition
     this.selectCompetitionOnServer = function () {
         var newLocation = "/home/index/";
@@ -71,6 +82,47 @@ var ViewModel = function (competitions) {
     // Attributes for creating a new competition
     this.newCompetitionName = ko.observable('');
     this.newCompetitionStartDate = ko.observable('');
+
+    // Function for deleting competition
+    this.deleteCompetition = function () {
+        if (this.selectedCompetition() === undefined) {
+            // What? Should never happen.
+            alert("Du måste välja en tävling att radera.");
+            return;
+        }
+
+        if (confirm("Vill du verkligen radera tävlingen?") === false) {
+            return;
+        }
+
+        var data = JSON.stringify(this.selectedCompetition());
+
+        var deleteRequest = {
+            url: competitionApiUrl + "/" + this.selectedCompetition().CompetitionId,
+            type: "delete",
+            dataType: "json",
+            success: function() {
+                alert("Success!");
+            }
+        };
+
+        $.ajax(deleteRequest).fail(function(data) {
+            alert("Misslyckades med att radera tävlingen:\r\n" + data.responseJSON.ResponseStatus.Message);
+        }).success(function() {
+            alert("Tävlingen raderades. (TODO: Här ska vi också uppdatera listan med tävlingar)");
+        });
+    };
+
+    // Function for updating competition
+    this.updateCompetition = function () {
+        if (this.selectedCompetition() === undefined) {
+            // What? Should never happen.
+            alert("Du måste välja en tävling att uppdatera.");
+            return;
+        }
+
+        alert("NotImplementedYet");
+    };
 
     // Function for adding competition
     this.addCompetition = function() {
@@ -95,8 +147,7 @@ $(function () {
     $("#newCompetitionStartDate").datepicker({ dateFormat: 'yy-mm-dd' });
 
     // Fetch competitions from api and bind with knockout.
-    var competitionsApi = "/api/competitions";
-    $.getJSON(competitionsApi, function(data) {
+    $.getJSON(competitionsApiUrl, function(data) {
         ko.applyBindings(new ViewModel(data));
     });
 });

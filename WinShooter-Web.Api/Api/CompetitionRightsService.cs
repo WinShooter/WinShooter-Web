@@ -62,9 +62,10 @@ namespace WinShooter.Api.Api
         public CompetitionRightsResponse Get(CompetitionRights request)
         {
             var session = this.GetSession() as CustomUserSession;
-            var userId = session != null ? session.User.Id : Guid.Empty;
 
-            var rights = this.RightsHelper.GetRightsForCompetitionIdAndTheUser(userId, Guid.Parse(request.CompetitionId));
+            this.RightsHelper.CurrentUser = session == null ? null : session.User;
+
+            var rights = this.RightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(request.CompetitionId));
 
             return new CompetitionRightsResponse
                        {

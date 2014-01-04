@@ -47,17 +47,11 @@ namespace WinShooter.Api.Api
         private readonly CompetitionsLogic logic;
 
         /// <summary>
-        /// The rights helper.
-        /// </summary>
-        private readonly IRightsHelper rightsHelper;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CompetitionService"/> class.
         /// </summary>
         public CompetitionService()
         {
             this.databaseSession = NHibernateHelper.OpenSession();
-            this.rightsHelper = new RightsHelper(new Repository<UserRolesInfo>(this.databaseSession), new Repository<RoleRightsInfo>(this.databaseSession));
             this.logic = new CompetitionsLogic(this.databaseSession);
         }
 
@@ -85,29 +79,25 @@ namespace WinShooter.Api.Api
             var requestedCompetitionId = Guid.Parse(request.CompetitionId);
 
             var session = this.GetSession() as CustomUserSession;
-            var userId = session == null ? Guid.Empty : session.User.Id;
 
-            var dbcompetition = this.logic.GetCompetition(userId, requestedCompetitionId);
+
+            this.logic.CurrentUser = session == null || session.User == null ? null : session.User;
+
+            var dbcompetition = this.logic.GetCompetition(requestedCompetitionId);
 
             if (dbcompetition != null)
             {
+                var userRights = this.logic.RightsHelper.GetRightsForCompetitionIdAndTheUser(dbcompetition.Id);
                 return new CompetitionResponse(dbcompetition)
                            {
                                UserCanUpdateCompetition =
-                                   this.rightsHelper
-                                   .GetRightsForCompetitionIdAndTheUser(
-                                       userId,
-                                       dbcompetition.Id)
-                                   .Contains(
-                                       WinShooterCompetitionPermissions
-                                   .UpdateCompetition),
-                               UserCanDeleteCompetition = this.rightsHelper
-                               .GetRightsForCompetitionIdAndTheUser(
-                                   userId,
-                                   dbcompetition.Id)
-                               .Contains(
-                                   WinShooterCompetitionPermissions
-                               .DeleteCompetition),
+                                    userRights.Contains(
+                                        WinShooterCompetitionPermissions
+                                        .UpdateCompetition),
+                               UserCanDeleteCompetition = 
+                                    userRights.Contains(
+                                        WinShooterCompetitionPermissions
+                                        .DeleteCompetition),
                            };
             }
 
@@ -144,6 +134,32 @@ namespace WinShooter.Api.Api
 
             // We have updated, read from database and return.
             return this.Get(request);
+        }
+
+        /// <summary>
+        /// The put.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        [Authenticate]
+        public void Delete(CompetitionDeleteRequest request)
+        {
+            var session = this.GetSession() as CustomUserSession;
+            if (session == null || session.User == null)
+            {
+                // This really shouldn't happen since we have attributed for authenticate
+                throw new Exception("You need to authenticate");
+            }
+
+            if (string.IsNullOrEmpty(request.CompetitionId))
+            {
+                throw new Exception("You didn't supply a competition ID");
+            }
+
+            this.logic.CurrentUser = session.User;
+
+            this.logic.DeleteCompetition(Guid.Parse(request.CompetitionId));
         }
 
         /// <summary>

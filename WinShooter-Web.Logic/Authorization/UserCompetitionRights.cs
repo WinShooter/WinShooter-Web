@@ -67,7 +67,8 @@ namespace WinShooter.Logic.Authorization
             this.CompetitionId = competitionId;
             this.Permissions = new List<WinShooterCompetitionPermissions>();
 
-            this.Permissions.AddRange(this.rightsHelper.GetRightsForCompetitionIdAndTheUser(user.Id, competitionId));
+            this.rightsHelper.CurrentUser = user;
+            this.Permissions.AddRange(this.rightsHelper.GetRightsForCompetitionIdAndTheUser(competitionId));
         }
 
         /// <summary>
