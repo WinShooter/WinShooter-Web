@@ -42,11 +42,6 @@ namespace WinShooter.Logic.Authorization
         private readonly IRepository<RoleRightsInfo> roleRightsInfoRepository;
 
         /// <summary>
-        /// Gets or sets the current user.
-        /// </summary>
-        public User CurrentUser { get; set; }
-
-        /// <summary>
         ///     Initializes a new instance of the <see cref="RightsHelper"/> class.
         /// </summary>
         /// <param name="userRolesInfoRepository">
@@ -60,6 +55,11 @@ namespace WinShooter.Logic.Authorization
             this.userRolesInfoRepository = userRolesInfoRepository;
             this.roleRightsInfoRepository = roleRightsInfoRepository;
         }
+
+        /// <summary>
+        /// Gets or sets the current user.
+        /// </summary>
+        public User CurrentUser { get; set; }
 
         /// <summary>
         /// Get competition ids the user has rights on.
@@ -82,11 +82,8 @@ namespace WinShooter.Logic.Authorization
         }
 
         /// <summary>
-        /// Get competition ids the user has rights on.
+        /// Get rights for the user has rights on.
         /// </summary>
-        /// <param name="userId">
-        /// The user id.
-        /// </param>
         /// <param name="competitionId">
         /// The competition Id.
         /// </param>
