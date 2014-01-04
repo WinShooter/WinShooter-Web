@@ -42,14 +42,14 @@
         <input class="form-control" id="selectedCompetitionStartDate" data-bind="value: selectedCompetitionStartDate, disable:selectedCompetitionUserCannotUpdateCompetition">
     </div>
     <div class="checkbox">
-        <label>
-            <input type="checkbox" data-bind="checked: selectedCompetitionIsPublic, disable:selectedCompetitionUserCannotUpdateCompetition" />
+        <label class="checkbox" for="selectedCompetitionIsPublic">
+            <input type="checkbox" id="selectedCompetitionIsPublic" data-bind="checked: selectedCompetitionIsPublic, disable:selectedCompetitionUserCannotUpdateCompetition" data-toggle="checkbox" />
             Publik tävling
         </label>
     </div>
     <div class="checkbox">
-        <label>
-            <input type="checkbox" data-bind="checked: selectedCompetitionUseNorwegianCount, disable:selectedCompetitionUserCannotUpdateCompetition" />
+        <label class="checkbox" for="selectedCompetitionUseNorwegianCount">
+            <input type="checkbox" id="selectedCompetitionUseNorwegianCount" data-bind="checked: selectedCompetitionUseNorwegianCount, disable:selectedCompetitionUserCannotUpdateCompetition" data-toggle="checkbox" />
             Poängfältskytte
         </label>
     </div>

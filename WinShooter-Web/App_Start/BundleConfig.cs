@@ -81,11 +81,14 @@ namespace WinShooter.App_Start
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.js"));
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/Flat-ui/flatui-checkbox.js",
+                "~/Scripts/Flat-ui/flatui-radio.js"));
 
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
                 "~/Content/bootstrap.css",
-                "~/Content/bootstrap-responsive.css"));
+                "~/Content/bootstrap-responsive.css",
+                "~/Content/flat-ui/flat-ui.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
