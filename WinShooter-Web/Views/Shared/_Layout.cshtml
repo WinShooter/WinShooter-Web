@@ -4,40 +4,46 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>WinShooter @ViewBag.CompetitionName</title>
-    @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/css")    
     @Scripts.Render("~/bundles/modernizr")
 </head>
     <body>
         <div id="competitionid">@ViewBag.CompetitionId</div>
-        <div class="navbar">
-            <div class="navbar-inner">
-                <a class="brand" href="~/">WinShooter @ViewBag.CompetitionName</a>
-                <ul class="nav">
-                    @if (!string.IsNullOrEmpty(ViewBag.CompetitionName))
-                    {
-                        <li class="active">@Html.ActionLink("Tävlingsinfo", "Competition", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                        <li>@Html.ActionLink("Klubbar", "Clubs", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                        <li>@Html.ActionLink("Vapen", "Weapons", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                        <li>@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                        <li>@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                        <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                        <li>@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                    }
-                    <li>
-                        <div style="display: none" data-bind="visible: loginViewModel.isLoggedIn">Inloggad som </div>
-                        <div style="display: none" data-bind="text: loginViewModel.displayName"></div>
-                        @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { {"style", "display: none"}, { "data-bind", "visible: loginViewModel.shouldShowLoginLink" } })
-                        <a style="display: none" data-bind="visible: loginViewModel.isLoggedIn" href="/api/auth/logout">Logga ut</a>
-                    </li>
-                </ul>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="~/">WinShooter @ViewBag.CompetitionName</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        @if (!string.IsNullOrEmpty(ViewBag.CompetitionName))
+                        {
+                            <li class="active">@Html.ActionLink("Tävlingsinfo", "Competition", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                            <li>@Html.ActionLink("Klubbar", "Clubs", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                            <li>@Html.ActionLink("Vapen", "Weapons", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                            <li>@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                            <li>@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                            <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                            <li>@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                        }
+                        <li>
+                            <div style="display: none" data-bind="visible: loginViewModel.isLoggedIn">Inloggad som </div>
+                            <div style="display: none" data-bind="text: loginViewModel.displayName"></div>
+                            @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { {"style", "display: none"}, { "data-bind", "visible: loginViewModel.shouldShowLoginLink" } })
+                            <a style="display: none" data-bind="visible: loginViewModel.isLoggedIn" href="/api/auth/logout">Logga ut</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div id="body">
-            @*<div data-bind="text: loginViewModel.isLoggedIn"></div>
-            <div data-bind="text: loginViewModel.shouldShowLoginLink"></div>*@
-            @RenderBody()
+        <div class="container">
+            <div class="winshooter-template">
+                @*<div data-bind="text: loginViewModel.isLoggedIn"></div>
+                <div data-bind="text: loginViewModel.shouldShowLoginLink"></div>*@
+                @RenderBody()
+            </div>
         </div>
         
         @Scripts.Render("~/bundles/jquery")
