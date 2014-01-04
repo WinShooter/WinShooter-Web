@@ -224,14 +224,18 @@ namespace WinShooter.Logic
         /// <summary>
         /// Updates a competition.
         /// </summary>
-        /// <param name="userId">
-        /// The user trying to add or update a competition.
-        /// </param>
         /// <param name="competition">
         /// The competition to add or update.
         /// </param>
-        public void UpdateCompetition(Guid userId, Competition competition)
+        public void UpdateCompetition(Competition competition)
         {
+            if (
+                !this.RightsHelper.GetRightsForCompetitionIdAndTheUser(competition.Id)
+                .Contains(WinShooterCompetitionPermissions.UpdateCompetition))
+            {
+                throw new Exception("You don't have rights to update this competition");
+            }
+
             throw new NotImplementedException();
         }
 

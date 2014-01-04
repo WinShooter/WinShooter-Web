@@ -80,7 +80,6 @@ namespace WinShooter.Api.Api
 
             var session = this.GetSession() as CustomUserSession;
 
-
             this.logic.CurrentUser = session == null || session.User == null ? null : session.User;
 
             var dbcompetition = this.logic.GetCompetition(requestedCompetitionId);
@@ -123,13 +122,15 @@ namespace WinShooter.Api.Api
                 throw new Exception("You need to authenticate");
             }
 
+            this.logic.CurrentUser = session.User;
+
             if (string.IsNullOrEmpty(request.CompetitionId))
             {
                 request.CompetitionId = this.logic.AddCompetition(session.User, request.GetDatabaseCompetition()).Id.ToString();
             }
             else
             {
-                this.logic.UpdateCompetition(session.User.Id, request.GetDatabaseCompetition());
+                this.logic.UpdateCompetition(request.GetDatabaseCompetition());
             }
 
             // We have updated, read from database and return.
