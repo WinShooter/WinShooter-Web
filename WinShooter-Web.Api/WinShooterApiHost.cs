@@ -28,6 +28,7 @@ namespace WinShooter.Api
     using ServiceStack.Authentication.OpenId;
     using ServiceStack.CacheAccess;
     using ServiceStack.CacheAccess.Providers;
+    using ServiceStack.Common.Web;
     using ServiceStack.Configuration;
     using ServiceStack.ServiceInterface;
     using ServiceStack.ServiceInterface.Auth;
@@ -77,6 +78,9 @@ namespace WinShooter.Api
             // register REST-ful urls
             this.ConfigureRoutes();
 
+            // register Response Filters
+            this.ConfigureResponseFilters();
+
             // Adds caching
             container.Register<ICacheClient>(new MemoryCacheClient());
 
@@ -91,6 +95,21 @@ namespace WinShooter.Api
         private void ConfigureRoutes()
         {
             Routes.AddFromAssembly(this.GetType().Assembly);
+        }
+
+        /// <summary>
+        /// The configure response filters.
+        /// </summary>
+        private void ConfigureResponseFilters()
+        {
+            // Add a response filter to add a 'Cache-Control' header so browsers won't cache
+            this.ResponseFilters.Add((req, res, dto) =>
+            {
+                if (req.ResponseContentType == ContentType.Json)
+                {
+                    res.AddHeader(HttpHeaders.CacheControl, "no-cache");
+                }
+            });
         }
 
         /// <summary>
