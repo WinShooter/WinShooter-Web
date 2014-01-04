@@ -23,62 +23,56 @@
     </div>
 </div>
 
-<div class="row-fluid">
-    <div class="span2">Befintlig tävling:</div>
-    <div class="span4"><select data-bind="options: competitions, optionsText: 'Name', value: selectedCompetition, optionsCaption: 'Välj...'"></select></div>
-</div>
-<div class="row-fluid">
-    <div class="span2"></div>
-    <div class="span4"><button type="submit" data-bind="click: selectCompetitionOnServer">Välj tävling</button></div>
-</div>
+<form role="form">
+    <div class="form-group">
+        <label for="competitionid">Befintlig tävling:</label>
+        <select class="form-control" id="competitionid" data-bind="options: competitions, optionsText: 'Name', value: selectedCompetition, optionsCaption: 'Välj...'"></select>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" data-bind="click: selectCompetitionOnServer">Välj tävling</button>
+    </div>
 
-<h3>Information om den valda tävlingen</h3>
-<div class="row-fluid">
-    <div class="span1">Namn:</div>
-    <div class="span5">
-        <input data-bind="value: selectedCompetitionName, disable:selectedCompetitionUserCannotUpdateCompetition" />
+    <h3>Information om den valda tävlingen</h3>
+    <div class="form-group">
+        <label for="selectedCompetitionName">Namn:</label>
+        <input class="form-control" id="selectedCompetitionName" data-bind="value: selectedCompetitionName, disable:selectedCompetitionUserCannotUpdateCompetition" />
     </div>
-</div>
-<div class="row-fluid">
-    <div class="span1">Datum:</div>
-    <div class="span5">
-        <input data-bind="value: selectedCompetitionStartDate, disable:selectedCompetitionUserCannotUpdateCompetition">
+    <div class="form-group">
+        <label for="selectedCompetitionStartDate">Datum:</label>
+        <input class="form-control" id="selectedCompetitionStartDate" data-bind="value: selectedCompetitionStartDate, disable:selectedCompetitionUserCannotUpdateCompetition">
     </div>
-</div>
-<div class="row-fluid">
-    <div class="span1">Publik tävling:</div>
-    <div class="span5">
-        <input type="checkbox" data-bind="checked: selectedCompetitionIsPublic, disable:selectedCompetitionUserCannotUpdateCompetition" />
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" data-bind="checked: selectedCompetitionIsPublic, disable:selectedCompetitionUserCannotUpdateCompetition" />
+            Publik tävling
+        </label>
     </div>
-</div>
-<div class="row-fluid">
-    <div class="span1">Poängfältskytte:</div>
-    <div class="span5">
-        <input type="checkbox" data-bind="checked: selectedCompetitionUseNorwegianCount, disable:selectedCompetitionUserCannotUpdateCompetition" />
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" data-bind="checked: selectedCompetitionUseNorwegianCount, disable:selectedCompetitionUserCannotUpdateCompetition" />
+            Poängfältskytte
+        </label>
     </div>
-</div>
-<div class="row-fluid">
-    <div class="span1">&nbsp;</div>
-    <div class="span5">
-        <input type="button" value="Uppdatera" data-bind="visible:selectedCompetitionUserCanUpdateCompetition, click: updateCompetition" style="display: none" />
-        <input type="button" value="Radera" data-bind="visible:selectedCompetitionUserCanDeleteCompetition, click: deleteCompetition" style="display: none" />
+    <div class="form-group">
+        <input type="button" class="btn btn-primary" value="Uppdatera" data-bind="visible:selectedCompetitionUserCanUpdateCompetition, click: updateCompetition" />
+        <input type="button" class="btn btn-danger" value="Radera" data-bind="visible:selectedCompetitionUserCanDeleteCompetition, click: deleteCompetition" />
     </div>
-</div>
 
-<div style="display: none" data-bind="visible: loginViewModel.isLoggedIn">
-    <h3>Skapa ny tävling</h3>
-    <div class="row-fluid">
-        <div class="span1">Namn:</div>
-        <div class="span5"><input data-bind="value: newCompetitionName" /></div>
+    <div style="display: none" data-bind="visible: loginViewModel.isLoggedIn">
+        <h3>Skapa ny tävling</h3>
+        <div class="form-group">
+            <label for="newCompetitionName">Namn:</label>
+            <input class="form-control" id="newCompetitionName" data-bind="value: newCompetitionName" />
+        </div>
+        <div class="form-group">
+            <label for="newCompetitionStartDate">Startar:</label>
+            <input class="form-control" type="text" id="newCompetitionStartDate" data-bind="value: newCompetitionStartDate" />
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="button" id="newCompetitionAddNow" value="Lägg till" data-bind="click: addCompetition" />
+        </div>
     </div>
-    <div class="row-fluid">
-        <div class="span1">Startar:</div>
-        <div class="span5"><input type="text" id="newCompetitionStartDate" data-bind="value: newCompetitionStartDate" /></div>
-    </div>
-    <div class="row-fluid">
-        <div class="span5"><input type="button" id="newCompetitionAddNow" value="Lägg till" data-bind="click: addCompetition" /></div>
-    </div>
-</div>
+</form>
 
 @section scripts {
         @Scripts.Render("~/Scripts/App/Home/index.js")
