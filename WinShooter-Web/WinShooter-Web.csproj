@@ -148,6 +148,7 @@
     <Content Include="Content\images\sign-in-with-linkedin.png" />
     <Content Include="Content\images\sign-in-with-twitter-l.png" />
     <Content Include="Content\images\sign-in-with-yahoo.png" />
+    <Content Include="Content\site.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
