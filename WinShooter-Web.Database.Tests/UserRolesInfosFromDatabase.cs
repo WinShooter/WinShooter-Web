@@ -297,6 +297,10 @@ namespace WinShooter.Database.Tests
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
+                var competition = (from dbcompetition in databaseSession.Query<Competition>()
+                                   where dbcompetition.Id.Equals(this.testCompetition.Id)
+                                   select dbcompetition).First();
+
                 var userRolesInfos = (from userRolesInfo in databaseSession.Query<UserRolesInfo>()
                                      where userRolesInfo.User.Id.Equals(this.testUser.Id)
                                      select userRolesInfo).ToArray();
@@ -306,7 +310,7 @@ namespace WinShooter.Database.Tests
 
                 using (var transaction = databaseSession.BeginTransaction())
                 {
-                    databaseSession.Delete(this.testCompetition);
+                    databaseSession.Delete(competition);
                     transaction.Commit();
                 }
 

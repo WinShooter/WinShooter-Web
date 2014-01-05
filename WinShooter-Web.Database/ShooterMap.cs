@@ -49,6 +49,8 @@ namespace WinShooter.Database
             References(x => x.Competition).Column("CompetitionId");
             References(x => x.Club).Column("ClubId");
 
+            HasMany(x => x.Competitors).KeyColumn("ShooterId").Cascade.AllDeleteOrphan();
+
             this.Table("Shooters");
         }
     }

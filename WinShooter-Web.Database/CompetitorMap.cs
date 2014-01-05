@@ -44,6 +44,8 @@ namespace WinShooter.Database
             this.References(x => x.Patrol).Column("PatrolId");
             this.References(x => x.Competition).Column("CompetitionId");
 
+            HasMany(x => x.CompetitorResults).KeyColumn("CompetitorId").Cascade.AllDeleteOrphan();
+
             this.Table("Competitors");
         }
     }

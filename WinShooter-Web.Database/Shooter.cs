@@ -22,6 +22,8 @@
 namespace WinShooter.Database
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The shooter.
@@ -98,5 +100,10 @@ namespace WinShooter.Database
         /// Gets or sets the last updated.
         /// </summary>
         public virtual DateTime LastUpdated { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competitors.
+        /// </summary>
+        public virtual IList<Competitor> Competitors { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         {
             this.Create.Table(CompetitorsTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
-                .WithColumn("ShooterId").AsGuid()
+                .WithColumn("ShooterId").AsGuid().Nullable()
                 .WithColumn("ShooterClass").AsInt32()
                 .WithColumn("WeaponId").AsGuid()
                 .WithColumn("PatrolId").AsGuid()

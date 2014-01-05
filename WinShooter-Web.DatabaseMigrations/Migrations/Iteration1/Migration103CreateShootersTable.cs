@@ -41,7 +41,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         {
             Create.Table(ShootersTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
-                .WithColumn("CompetitionId").AsGuid().Indexed()
+                .WithColumn("CompetitionId").AsGuid().Nullable()
                 .WithColumn("CardNumber").AsString()
                 .WithColumn("Surname").AsString()
                 .WithColumn("Givenname").AsString()

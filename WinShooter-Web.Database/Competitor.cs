@@ -22,6 +22,8 @@
 namespace WinShooter.Database
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The competitor.
@@ -78,5 +80,10 @@ namespace WinShooter.Database
         /// Gets or sets the competitor shooting place in the final round.
         /// </summary>
         public virtual int FinalShootingPlace { get; set; }
+
+        /// <summary>
+        /// Gets or sets the competitor results.
+        /// </summary>
+        public virtual IList<CompetitorResult> CompetitorResults { get; set; }
     }
 }

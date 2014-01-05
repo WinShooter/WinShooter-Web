@@ -41,6 +41,11 @@ namespace WinShooter.Database
             this.Map(x => x.UseNorwegianCount);
             this.Map(x => x.IsPublic);
 
+            HasMany(x => x.Shooters).KeyColumn("CompetitionId").Cascade.AllDeleteOrphan();
+            HasMany(x => x.Patrols).KeyColumn("CompetitionId").Cascade.AllDeleteOrphan();
+            HasMany(x => x.Stations).KeyColumn("CompetitionId").Cascade.AllDeleteOrphan();
+            HasMany(x => x.UserRoleInfos).KeyColumn("CompetitionId").Cascade.AllDeleteOrphan();
+
             this.Table("Competition");
         }
     }

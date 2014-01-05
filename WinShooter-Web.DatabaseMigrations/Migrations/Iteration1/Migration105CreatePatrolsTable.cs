@@ -43,7 +43,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("PatrolId").AsInt32()
                 .WithColumn("StartTime").AsDateTime()
-                .WithColumn("CompetitionId").AsGuid()
+                .WithColumn("CompetitionId").AsGuid().Nullable()
                 .WithColumn("PatrolClass").AsInt32()
                 .WithColumn("StartTimeDisplay").AsDateTime();
         }

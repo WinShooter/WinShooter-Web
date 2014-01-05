@@ -44,7 +44,7 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("Name").AsString()
                 .WithColumn("ClubId").AsGuid()
                 .WithColumn("Weaponclass").AsInt32()
-                .WithColumn("CompetitionId").AsGuid();
+                .WithColumn("CompetitionId").AsGuid().Nullable();
         }
 
         /// <summary>

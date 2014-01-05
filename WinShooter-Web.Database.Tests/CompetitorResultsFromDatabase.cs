@@ -40,27 +40,27 @@ namespace WinShooter.Database.Tests
         /// <summary>
         /// The unit test competition name.
         /// </summary>
-        private const string CompetitionName = "UnitTestCompetitionName";
+        private const string CompetitionName = "UnitTest_CompetitorResultsFromDatabase";
 
         /// <summary>
         /// The unit test club name.
         /// </summary>
-        private const string ClubName = "UnitTestClubName";
+        private const string ClubName = "UnitTest_CompetitorResultsFromDatabase";
 
         /// <summary>
         /// The unit test shooter name.
         /// </summary>
-        private const string ShooterSurname = "UnitTestShooterName";
+        private const string ShooterSurname = "UnitTest_CompetitorResultsFromDatabase";
 
         /// <summary>
         /// The unit test shooter name.
         /// </summary>
-        private const string ShooterGivenname = "UnitTestShooterName";
+        private const string ShooterGivenname = "UnitTest_CompetitorResultsFromDatabase";
 
         /// <summary>
         /// The unit test weapon manufacturer name.
         /// </summary>
-        private const string WeaponManufacturer = "UnitTestWeaponManufacturer";
+        private const string WeaponManufacturer = "UnitTest_CompetitorResultsFromDatabase";
 
         /// <summary>
         /// The unit test competition.
@@ -383,6 +383,14 @@ namespace WinShooter.Database.Tests
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
+                var competition = (from dbcompetition in databaseSession.Query<Competition>()
+                                   where dbcompetition.Name == CompetitionName
+                                   select dbcompetition).First();
+
+                Assert.AreEqual(1, competition.Shooters.Count);
+                Assert.AreEqual(1, competition.Shooters[0].Competitors.Count);
+                Assert.AreEqual(1, competition.Shooters[0].Competitors[0].CompetitorResults.Count);
+
                 var competitorResults = (from competitorResult in databaseSession.Query<CompetitorResult>()
                                         where competitorResult.Competitor == this.testCompetitor
                                         select competitorResult).ToArray();
@@ -392,7 +400,7 @@ namespace WinShooter.Database.Tests
 
                 using (var transaction = databaseSession.BeginTransaction())
                 {
-                    databaseSession.Delete(this.testCompetition);
+                    databaseSession.Delete(competition);
                     transaction.Commit();
                 }
 

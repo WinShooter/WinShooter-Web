@@ -22,6 +22,7 @@
 namespace WinShooter.Database
 {
     using System;
+    using System.Collections.Generic;
 
     using WinShooter.Web.DataValidation;
 
@@ -69,6 +70,26 @@ namespace WinShooter.Database
         /// Gets or sets a value indicating whether the competition is public.
         /// </summary>
         public virtual bool IsPublic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the shooters.
+        /// </summary>
+        public virtual IList<Shooter> Shooters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the patrols.
+        /// </summary>
+        public virtual IList<Patrol> Patrols { get; set; }
+
+        /// <summary>
+        /// Gets or sets the patrols.
+        /// </summary>
+        public virtual IList<Station> Stations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the patrols.
+        /// </summary>
+        public virtual IList<UserRolesInfo> UserRoleInfos { get; set; }
 
         /// <summary>
         /// Verifies the data content.
