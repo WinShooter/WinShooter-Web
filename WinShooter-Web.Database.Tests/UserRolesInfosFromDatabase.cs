@@ -218,22 +218,21 @@ namespace WinShooter.Database.Tests
         [TestMethod]
         public void WriteAndRead()
         {
-            var tempName = Guid.NewGuid().ToString();
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
                 var userRolesInfos = from userRolesInfo in databaseSession.Query<UserRolesInfo>()
-                                   where userRolesInfo.User.Id.Equals(this.testUser.Id)
-                                   select userRolesInfo;
+                                     where userRolesInfo.User.Id.Equals(this.testUser.Id)
+                                     select userRolesInfo;
 
                 Assert.IsNotNull(userRolesInfos);
                 Assert.AreEqual(0, userRolesInfos.Count());
 
                 var toAdd = new UserRolesInfo
-                                {
-                                    Competition = this.testCompetition,
-                                    Role = this.testRole,
-                                    User = this.testUser
-                                };
+                {
+                    Competition = this.testCompetition,
+                    Role = this.testRole,
+                    User = this.testUser
+                };
 
                 using (var transaction = databaseSession.BeginTransaction())
                 {
@@ -266,6 +265,53 @@ namespace WinShooter.Database.Tests
 
                 Assert.IsNotNull(userRolesInfos);
                 Assert.AreEqual(0, userRolesInfos.Count());
+            }
+        }
+
+        /// <summary>
+        /// Fetch all user roles, add one, fetch all and check it has been added.
+        /// Remove user role, fetch all and check it has been added
+        /// </summary>
+        [TestMethod]
+        public void DeleteCompetitionAndCascade()
+        {
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var userRolesInfos = from userRolesInfo in databaseSession.Query<UserRolesInfo>()
+                                     where userRolesInfo.User.Id.Equals(this.testUser.Id)
+                                     select userRolesInfo;
+
+                Assert.IsNotNull(userRolesInfos);
+                Assert.AreEqual(0, userRolesInfos.Count());
+
+                var toAdd = new UserRolesInfo
+                {
+                    Competition = this.testCompetition,
+                    Role = this.testRole,
+                    User = this.testUser
+                };
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Save(toAdd);
+                    transaction.Commit();
+                }
+            }
+
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var userRolesInfos = from userRolesInfo in databaseSession.Query<UserRolesInfo>()
+                                     where userRolesInfo.User.Id.Equals(this.testUser.Id)
+                                     select userRolesInfo;
+
+                Assert.IsNotNull(userRolesInfos);
+                Assert.AreEqual(1, userRolesInfos.Count());
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Delete(this.testCompetition);
+                    transaction.Commit();
+                }
             }
         }
     }
