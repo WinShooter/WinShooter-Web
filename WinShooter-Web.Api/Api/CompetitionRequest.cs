@@ -22,6 +22,7 @@
 namespace WinShooter.Api.Api
 {
     using System;
+    using System.Text;
 
     using ServiceStack.ServiceHost;
 
@@ -43,6 +44,11 @@ namespace WinShooter.Api.Api
         /// Matches to <see cref="CompetitionType"/> enumeration.
         /// </summary>
         public string CompetitionType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the competition is public.
+        /// </summary>
+        public bool IsPublic { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="Guid"/>.
@@ -74,13 +80,36 @@ namespace WinShooter.Api.Api
                        {
                            CompetitionType = competitionType,
                            Id = competitionId,
-                           IsPublic = true,
+                           IsPublic = this.IsPublic,
                            Name = this.Name,
                            StartDate = this.StartDate,
                            UseNorwegianCount = this.UseNorwegianCount
                        };
 
             return toReturn;
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        /// A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            var toReturn = new StringBuilder();
+
+            toReturn.AppendFormat(
+                "CompetitionId: {0}, CompetitionType: {1}, IsPublic: {2}, Name: {3}, StartDate: {4}, UseNorwegianCount: {5}",
+                this.CompetitionId,
+                this.CompetitionType,
+                this.IsPublic,
+                this.Name,
+                this.StartDate,
+                this.UseNorwegianCount);
+
+            return toReturn.ToString();
         }
     }
 }

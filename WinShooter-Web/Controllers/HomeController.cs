@@ -29,26 +29,26 @@ namespace WinShooter.Controllers
     public class HomeController : Controller
     {
         /// <summary>
-        /// GET: /Home/Index/{id}
+        /// GET: /Home/Index
         /// </summary>
-        /// <param name="id">
-        /// The id.
-        /// </param>
         /// <returns>
         /// The <see cref="ActionResult"/>.
         /// </returns>
-        public ActionResult Index(string id)
+        public ActionResult Index()
         {
-            if (id == null)
-            {
-                return this.View();
-            }
+            this.ViewBag.CompetitionGuid = string.Empty;
+            return this.View();
+        }
 
-            // TODO Get competition from database
-            // TODO Check user rights on database
-            this.ViewBag.CompetitionName = "Höstsaluten";
-            this.ViewBag.CompetitionGuid = id;
-
+        /// <summary>
+        /// Create a new competition.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult NewCompetition()
+        {
+            this.ViewBag.CompetitionGuid = string.Empty;
             return this.View();
         }
 
@@ -68,10 +68,7 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            // TODO Get competition from database
-            // TODO Check user rights on database
-            this.ViewBag.CompetitionName = "Höstsaluten";
-            this.ViewBag.CompetitionGuid = id;
+            this.ViewBag.CompetitionId = id;
             return this.View();
         }
 
@@ -91,9 +88,6 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            // TODO Get competition from database
-            // TODO Check user rights on database
-            this.ViewBag.CompetitionName = "Höstsaluten";
             this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
@@ -114,9 +108,6 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            // TODO Get competition from database
-            // TODO Check user rights on database
-            this.ViewBag.CompetitionName = "Höstsaluten";
             this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
@@ -137,9 +128,6 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            // TODO Get competition from database
-            // TODO Check user rights on database
-            this.ViewBag.CompetitionName = "Höstsaluten";
             this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
@@ -160,9 +148,6 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            // TODO Get competition from database
-            // TODO Check user rights on database
-            this.ViewBag.CompetitionName = "Höstsaluten";
             this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
@@ -183,9 +168,6 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            // TODO Get competition from database
-            // TODO Check user rights on database
-            this.ViewBag.CompetitionName = "Höstsaluten";
             this.ViewBag.CompetitionGuid = id;
             return this.View();
         }
@@ -206,9 +188,6 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            // TODO Get competition from database
-            // TODO Check user rights on database
-            this.ViewBag.CompetitionName = "Höstsaluten";
             this.ViewBag.CompetitionGuid = id;
             return this.View();
         }

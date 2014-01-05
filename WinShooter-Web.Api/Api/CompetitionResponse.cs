@@ -21,7 +21,7 @@
 
 namespace WinShooter.Api.Api
 {
-    using System;
+    using System.Text;
 
     /// <summary>
     /// Represents the competition response.
@@ -93,5 +93,30 @@ namespace WinShooter.Api.Api
         /// Gets or sets a value indicating whether the user can delete this competition.
         /// </summary>
         public bool UserCanDeleteCompetition { get; set; }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        /// A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            var toReturn = new StringBuilder();
+
+            toReturn.AppendFormat(
+                "CompetitionId: {0}, CompetitionType: {1}, IsPublic: {2}, Name: {3}, StartDate: {4}, UseNorwegianCount: {5}, UserCanUpdateCompetition: {6}, UserCanDeleteCompetition: {7}", 
+                this.CompetitionId, 
+                this.CompetitionType, 
+                this.IsPublic,
+                this.Name,
+                this.StartDate,
+                this.UseNorwegianCount,
+                this.UserCanUpdateCompetition,
+                this.UserCanDeleteCompetition);
+
+            return toReturn.ToString();
+        }
     }
 }

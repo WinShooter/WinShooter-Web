@@ -18,7 +18,7 @@
         <p>Du kan nu</p>
         <ul>
             <li>välja en befintlig tävling att titta på eller</li>
-            <li>skapa en ny tävling (kräver inloggning)</li>
+            <li>@Html.ActionLink("skapa en ny tävling (kräver inloggning)", "NewCompetition", "Home")</li>
         </ul>
     </div>
 </div>
@@ -56,21 +56,6 @@
     <div class="form-group">
         <input type="button" class="btn btn-primary" value="Uppdatera" data-bind="visible:selectedCompetitionUserCanUpdateCompetition, click: updateCompetition" />
         <input type="button" class="btn btn-danger" value="Radera" data-bind="visible:selectedCompetitionUserCanDeleteCompetition, click: deleteCompetition" />
-    </div>
-
-    <div style="display: none" data-bind="visible: loginViewModel.isLoggedIn">
-        <h3>Skapa ny tävling</h3>
-        <div class="form-group">
-            <label for="newCompetitionName">Namn:</label>
-            <input class="form-control" id="newCompetitionName" data-bind="value: newCompetitionName" />
-        </div>
-        <div class="form-group">
-            <label for="newCompetitionStartDate">Startar:</label>
-            <input class="form-control" type="text" id="newCompetitionStartDate" data-bind="value: newCompetitionStartDate" />
-        </div>
-        <div class="form-group">
-            <input class="btn btn-primary" type="button" id="newCompetitionAddNow" value="Lägg till" data-bind="click: addCompetition" />
-        </div>
     </div>
 </form>
 
