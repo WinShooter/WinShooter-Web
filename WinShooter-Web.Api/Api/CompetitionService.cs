@@ -24,6 +24,8 @@ namespace WinShooter.Api.Api
     using System;
     using System.Linq;
 
+    using log4net;
+
     using ServiceStack.ServiceInterface;
 
     using WinShooter.Api.Authentication;
@@ -47,10 +49,16 @@ namespace WinShooter.Api.Api
         private readonly CompetitionsLogic logic;
 
         /// <summary>
+        /// The log.
+        /// </summary>
+        private readonly ILog log;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CompetitionService"/> class.
         /// </summary>
         public CompetitionService()
         {
+            this.log = LogManager.GetLogger(this.GetType());
             this.databaseSession = NHibernateHelper.OpenSession();
             this.logic = new CompetitionsLogic(this.databaseSession);
         }
@@ -76,18 +84,27 @@ namespace WinShooter.Api.Api
         /// </returns>
         public CompetitionResponse Get(CompetitionRequest request)
         {
+            this.log.Debug("Got GET request: " + request);
             var requestedCompetitionId = Guid.Parse(request.CompetitionId);
 
             var session = this.GetSession() as CustomUserSession;
 
             this.logic.CurrentUser = session == null || session.User == null ? null : session.User;
+            if (this.logic.CurrentUser == null)
+            {
+                this.log.Debug("User is anonymous.");
+            }
+            else
+            {
+                this.log.Debug("User is " + this.logic.CurrentUser);
+            }
 
             var dbcompetition = this.logic.GetCompetition(requestedCompetitionId);
 
             if (dbcompetition != null)
             {
                 var userRights = this.logic.RightsHelper.GetRightsForCompetitionIdAndTheUser(dbcompetition.Id);
-                return new CompetitionResponse(dbcompetition)
+                var toReturn = new CompetitionResponse(dbcompetition)
                            {
                                UserCanUpdateCompetition =
                                     userRights.Contains(
@@ -98,8 +115,11 @@ namespace WinShooter.Api.Api
                                         WinShooterCompetitionPermissions
                                         .DeleteCompetition),
                            };
+                this.log.Debug("Returned competition: " + toReturn);
+                return toReturn;
             }
 
+            this.log.Warn("Could not find competition accordng to search criteria.");
             throw new Exception(string.Format("Could not find competition with Guid {0}", request.CompetitionId));
         }
 
@@ -115,21 +135,28 @@ namespace WinShooter.Api.Api
         [Authenticate]
         public CompetitionResponse Post(CompetitionRequest request)
         {
+            this.log.Debug("Got POST request: " + request);
             var session = this.GetSession() as CustomUserSession;
             if (session == null)
             {
                 // This really shouldn't happen since we have attributed for authenticate
+                this.log.Error("Session is null in POST request.");
                 throw new Exception("You need to authenticate");
             }
 
             this.logic.CurrentUser = session.User;
+            this.log.Debug("User is " + this.logic.CurrentUser);
 
             if (string.IsNullOrEmpty(request.CompetitionId))
             {
+                this.log.Debug("Adding a competition.");
                 request.CompetitionId = this.logic.AddCompetition(session.User, request.GetDatabaseCompetition()).Id.ToString();
+
+                this.log.DebugFormat("New competition ID is {0}.", request.CompetitionId);
             }
             else
             {
+                this.log.Debug("Updating a competition.");
                 this.logic.UpdateCompetition(request.GetDatabaseCompetition());
             }
 
@@ -146,10 +173,12 @@ namespace WinShooter.Api.Api
         [Authenticate]
         public void Delete(CompetitionDeleteRequest request)
         {
+            this.log.Debug("Got DELETE request: " + request);
             var session = this.GetSession() as CustomUserSession;
             if (session == null || session.User == null)
             {
                 // This really shouldn't happen since we have attributed for authenticate
+                this.log.Error("Session is null in DELETE request.");
                 throw new Exception("You need to authenticate");
             }
 
@@ -159,6 +188,7 @@ namespace WinShooter.Api.Api
             }
 
             this.logic.CurrentUser = session.User;
+            this.log.Debug("User is " + this.logic.CurrentUser);
 
             this.logic.DeleteCompetition(Guid.Parse(request.CompetitionId));
         }
