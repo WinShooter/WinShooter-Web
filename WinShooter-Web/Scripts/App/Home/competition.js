@@ -18,13 +18,9 @@ var ViewModel = function (competition) {
     this.userCanUpdateCompetition = ko.observable(competition.UserCanUpdateCompetition);
     this.userCanDeleteCompetition = ko.observable(competition.UserCanDeleteCompetition);
 
-    // Attributes for creating a new competition
-    this.newCompetitionName = ko.observable('');
-    this.newCompetitionStartDate = ko.observable('');
-
     // Function for deleting competition
     this.deleteCompetition = function () {
-        if (this.selectedCompetition() === undefined) {
+        if (this.competition() === undefined) {
             // What? Should never happen.
             alert("Du måste välja en tävling att radera.");
             return;
@@ -35,7 +31,7 @@ var ViewModel = function (competition) {
         }
 
         var deleteRequest = {
-            url: competitionApiUrl + "/" + this.selectedCompetition().CompetitionId,
+            url: competitionApiUrl + "/" + this.competition().CompetitionId,
             type: "delete",
             dataType: "json",
             success: function () {
@@ -46,13 +42,14 @@ var ViewModel = function (competition) {
         $.ajax(deleteRequest).fail(function (data) {
             alert("Misslyckades med att radera tävlingen:\r\n" + data.responseJSON.ResponseStatus.Message);
         }).success(function () {
-            alert("Tävlingen raderades. (TODO: Här ska vi också uppdatera listan med tävlingar)");
+            alert("Tävlingen raderades.");
+            window.location.href = "/";
         });
     };
 
     // Function for updating competition
     this.updateCompetition = function () {
-        if (this.selectedCompetition() === undefined) {
+        if (this.competition() === undefined) {
             // What? Should never happen.
             alert("Du måste välja en tävling att uppdatera.");
             return;
@@ -60,31 +57,4 @@ var ViewModel = function (competition) {
 
         alert("NotImplementedYet");
     };
-
-    // Function for adding competition
-    this.addCompetition = function () {
-        var competition = {
-            CompetitionType: "Field",
-            Name: this.newCompetitionName(),
-            UseNorwegianCount: "False",
-            StartDate: this.newCompetitionStartDate(),
-        };
-
-        $.post("/api/competition", competition, function (returnedData) {
-            alert("success!");
-        }).fail(function () {
-            alert("fail!");
-        });
-    };
 };
-
-// Add binding and such when document is loaded.
-$(function () {
-    // Add datepicker to the newCompetitionStartDate field
-    $("#newCompetitionStartDate").datepicker({ dateFormat: 'yy-mm-dd' });
-
-    // Fetch competitions from api and bind with knockout.
-    $.getJSON(competitionsApiUrl, function (data) {
-        ko.applyBindings(new ViewModel(data));
-    });
-});

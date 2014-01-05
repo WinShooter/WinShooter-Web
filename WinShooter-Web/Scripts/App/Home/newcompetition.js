@@ -21,8 +21,6 @@ var ViewModel = function () {
         };
 
         $.post(competitionApiUrl, competition, function(returnedData) {
-                alert("success!");
-                alert(returnedData.CompetitionId);
                 var newLocation = "/home/competition/" + returnedData.CompetitionId;
                 window.location.href = newLocation;
         }, "json").fail(function (data) {
