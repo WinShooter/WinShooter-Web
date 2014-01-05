@@ -60,6 +60,11 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         private const string ForeignKeyPatrolsCompetitorsName = "FK_Patrols_Competitors";
 
         /// <summary>
+        /// The name of the foreign key for connecting table Shooters to table Competitions.
+        /// </summary>
+        private const string ForeignKeyShootersCompetitionName = "FK_Competition_Shooters";
+
+        /// <summary>
         /// The name of the foreign key for connecting table Patrols to table Competitors.
         /// </summary>
         private const string ForeignKeyShootersCompetitorsName = "FK_Shooters_Competitors";
@@ -117,6 +122,10 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
             Create.ForeignKey(ForeignKeyPatrolsCompetitorsName)
                 .FromTable("Competitors").ForeignColumn("PatrolId")
                 .ToTable("Patrols").PrimaryColumn("Id");
+
+            Create.ForeignKey(ForeignKeyShootersCompetitionName)
+                .FromTable("Shooters").ForeignColumn("CompetitionId")
+                .ToTable("Competition").PrimaryColumn("Id");
 
             Create.ForeignKey(ForeignKeyShootersCompetitorsName)
                 .FromTable("Competitors").ForeignColumn("ShooterId")
