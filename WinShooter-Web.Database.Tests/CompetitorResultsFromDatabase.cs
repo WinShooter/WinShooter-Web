@@ -309,17 +309,17 @@ namespace WinShooter.Database.Tests
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
                 var competitorResults = from competitorResult in databaseSession.Query<CompetitorResult>()
-                                  where competitorResult.Competitor == this.testCompetitor
-                                  select competitorResult;
+                                        where competitorResult.Competitor == this.testCompetitor
+                                        select competitorResult;
 
                 Assert.IsNotNull(competitorResults);
                 Assert.AreEqual(0, competitorResults.Count());
 
                 var toAdd = new CompetitorResult
-                                {
-                                    Competitor = this.testCompetitor,
-                                    Station = this.testStation
-                                };
+                {
+                    Competitor = this.testCompetitor,
+                    Station = this.testStation
+                };
                 using (var transaction = databaseSession.BeginTransaction())
                 {
                     databaseSession.Save(toAdd);
@@ -351,6 +351,58 @@ namespace WinShooter.Database.Tests
 
                 Assert.IsNotNull(competitorResults);
                 Assert.AreEqual(0, competitorResults.Count());
+            }
+        }
+
+        /// <summary>
+        /// Tests deleting competition which should cascade.
+        /// </summary>
+        [TestMethod]
+        public void DeleteCompetitionAndCascade()
+        {
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var competitorResults = (from competitorResult in databaseSession.Query<CompetitorResult>()
+                                        where competitorResult.Competitor == this.testCompetitor
+                                        select competitorResult).ToArray();
+
+                Assert.IsNotNull(competitorResults);
+                Assert.AreEqual(0, competitorResults.Count());
+
+                var toAdd = new CompetitorResult
+                {
+                    Competitor = this.testCompetitor,
+                    Station = this.testStation
+                };
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Save(toAdd);
+                    transaction.Commit();
+                }
+            }
+
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var competitorResults = (from competitorResult in databaseSession.Query<CompetitorResult>()
+                                        where competitorResult.Competitor == this.testCompetitor
+                                        select competitorResult).ToArray();
+
+                Assert.IsNotNull(competitorResults);
+                Assert.AreEqual(1, competitorResults.Count());
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Delete(this.testCompetition);
+                    transaction.Commit();
+                }
+
+                competitorResults = (from competitorResult in databaseSession.Query<CompetitorResult>()
+                                         where competitorResult.Competitor == this.testCompetitor
+                                         select competitorResult).ToArray();
+
+                Assert.IsNotNull(competitorResults);
+                Assert.AreEqual(0, competitorResults.Count());
+
             }
         }
     }

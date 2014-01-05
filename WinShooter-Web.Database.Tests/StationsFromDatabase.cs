@@ -40,7 +40,7 @@ namespace WinShooter.Database.Tests
         /// <summary>
         /// The competition name.
         /// </summary>
-        private const string CompetitionName = "UnitTestCompetitionName";
+        private const string CompetitionName = "UnitTest_StationsFromDatabase";
 
         /// <summary>
         /// The competition.
@@ -153,6 +153,62 @@ namespace WinShooter.Database.Tests
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
                 var stations = from station in databaseSession.Query<Station>()
+                               where station.Competition == this.testCompetition
+                               select station;
+
+                Assert.IsNotNull(stations);
+                Assert.AreEqual(0, stations.Count());
+            }
+        }
+
+        /// <summary>
+        /// Tests deleting competition which should cascade.
+        /// </summary>
+        [TestMethod]
+        public void DeleteCompetitionAndCascade()
+        {
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var stations = from station in databaseSession.Query<Station>()
+                               where station.Competition == this.testCompetition
+                               select station;
+
+                Assert.IsNotNull(stations);
+                Assert.AreEqual(0, stations.Count());
+
+                var toAdd = new Station
+                {
+                    StationNumber = 1,
+                    Competition = this.testCompetition,
+                    NumberOfTargets = 5,
+                    NumberOfShots = 6,
+                    Distinguish = false,
+                    Points = 10
+                };
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Save(toAdd);
+                    transaction.Commit();
+                }
+            }
+
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var stations = from station in databaseSession.Query<Station>()
+                               where station.Competition == this.testCompetition
+                               select station;
+
+                Assert.IsNotNull(stations);
+                Assert.AreEqual(1, stations.Count());
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Delete(this.testCompetition);
+                    transaction.Commit();
+                }
+
+                stations = from station in databaseSession.Query<Station>()
                                where station.Competition == this.testCompetition
                                select station;
 

@@ -40,7 +40,7 @@ namespace WinShooter.Database.Tests
         /// <summary>
         /// The competition name.
         /// </summary>
-        private const string CompetitionName = "UnitTestCompetitionName";
+        private const string CompetitionName = "UnitTest_RightsFromDatabase";
 
         /// <summary>
         /// The competition.
@@ -131,6 +131,59 @@ namespace WinShooter.Database.Tests
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
                 var rights = from right in databaseSession.Query<Right>()
+                             where right.Name == tempName
+                             select right;
+
+                Assert.IsNotNull(rights);
+                Assert.AreEqual(0, rights.Count());
+            }
+        }
+
+        /// <summary>
+        /// Tests deleting competition which should cascade.
+        /// </summary>
+        [TestMethod]
+        public void DeleteCompetitionAndCascade()
+        {
+            var tempName = Guid.NewGuid().ToString();
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var rights = from right in databaseSession.Query<Right>()
+                             where right.Name == tempName
+                             select right;
+
+                Assert.IsNotNull(rights);
+                Assert.AreEqual(0, rights.Count());
+
+                var toAdd = new Right
+                {
+                    Id = Guid.NewGuid(),
+                    Name = tempName
+                };
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Save(toAdd);
+                    transaction.Commit();
+                }
+            }
+
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var rights = from right in databaseSession.Query<Right>()
+                             where right.Name == tempName
+                             select right;
+
+                Assert.IsNotNull(rights);
+                Assert.AreEqual(1, rights.Count());
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Delete(this.testCompetition);
+                    transaction.Commit();
+                }
+
+                rights = from right in databaseSession.Query<Right>()
                              where right.Name == tempName
                              select right;
 

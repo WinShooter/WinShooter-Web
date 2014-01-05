@@ -40,12 +40,12 @@ namespace WinShooter.Database.Tests
         /// <summary>
         /// The competition name.
         /// </summary>
-        private const string CompetitionName = "UnitTestCompetitionName";
+        private const string CompetitionName = "UnitTest_ShootersFromDatabase";
 
         /// <summary>
         /// The club name.
         /// </summary>
-        private const string ClubName = "UnitTestClubName";
+        private const string ClubName = "UnitTest_ShootersFromDatabase";
 
         /// <summary>
         /// The competition.
@@ -173,6 +173,71 @@ namespace WinShooter.Database.Tests
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
                 var shooters = from shooter in databaseSession.Query<Shooter>()
+                               where shooter.Surname == tempName &&
+                               shooter.Givenname == tempName
+                               select shooter;
+
+                Assert.IsNotNull(shooters);
+                Assert.AreEqual(0, shooters.Count());
+            }
+        }
+
+        /// <summary>
+        /// Tests deleting competition which should cascade.
+        /// </summary>
+        [TestMethod]
+        public void DeleteCompetitionAndCascade()
+        {
+            var tempName = Guid.NewGuid().ToString();
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var shooters = from shooter in databaseSession.Query<Shooter>()
+                               where shooter.Surname == tempName &&
+                               shooter.Givenname == tempName
+                               select shooter;
+
+                Assert.IsNotNull(shooters);
+                Assert.AreEqual(0, shooters.Count());
+
+                var toAdd = new Shooter
+                {
+                    Surname = tempName,
+                    Givenname = tempName,
+                    Competition = this.testCompetition,
+                    CardNumber = "123",
+                    Class = ShootersClassEnum.Klass1,
+                    Club = this.testClub,
+                    Email = string.Empty,
+                    HasArrived = false,
+                    LastUpdated = DateTime.Now,
+                    Paid = 0,
+                    SendResultsByEmail = false
+                };
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Save(toAdd);
+                    transaction.Commit();
+                }
+            }
+
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var shooters = from shooter in databaseSession.Query<Shooter>()
+                               where shooter.Surname == tempName &&
+                               shooter.Givenname == tempName
+                               select shooter;
+
+                Assert.IsNotNull(shooters);
+                Assert.AreEqual(1, shooters.Count());
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Delete(this.testCompetition);
+                    transaction.Commit();
+                }
+
+                shooters = from shooter in databaseSession.Query<Shooter>()
                                where shooter.Surname == tempName &&
                                shooter.Givenname == tempName
                                select shooter;

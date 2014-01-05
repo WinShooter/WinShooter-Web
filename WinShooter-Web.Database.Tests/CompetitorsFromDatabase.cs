@@ -181,5 +181,56 @@ namespace WinShooter.Database.Tests
                 Assert.AreEqual(0, weapons.Count());
             }
         }
+
+        /// <summary>
+        /// Tests deleting competition which should cascade.
+        /// </summary>
+        [TestMethod]
+        public void DeleteCompetitionAndCascade()
+        {
+            var tempName = Guid.NewGuid().ToString();
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var competitors = from competitor in databaseSession.Query<Competitor>()
+                                  where competitor.Competition == this.testCompetition
+                                  select competitor;
+
+                Assert.IsNotNull(competitors);
+                Assert.AreEqual(0, competitors.Count());
+
+                var clubToAdd = new Weapon { Manufacturer = tempName, Caliber = "Caliber", Class = WeaponClassEnum.A1, Model = "Model" };
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Save(clubToAdd);
+                    transaction.Commit();
+                }
+            }
+
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var weapons = from weapon in databaseSession.Query<Weapon>()
+                              where weapon.Manufacturer == tempName
+                              select weapon;
+
+                Assert.IsNotNull(weapons);
+                Assert.AreEqual(1, weapons.Count());
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Delete(weapons.ToArray()[0]);
+                    transaction.Commit();
+                }
+            }
+
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var weapons = from weapon in databaseSession.Query<Weapon>()
+                              where weapon.Manufacturer == tempName
+                              select weapon;
+
+                Assert.IsNotNull(weapons);
+                Assert.AreEqual(0, weapons.Count());
+            }
+        }
     }
 }

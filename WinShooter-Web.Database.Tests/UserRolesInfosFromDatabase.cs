@@ -31,8 +31,6 @@ namespace WinShooter.Database.Tests
 
     using WinShooter.Web.DatabaseMigrations;
 
-    using WinShooter_Web.DatabaseMigrations;
-
     /// <summary>
     /// Read and write roles from database.
     /// </summary>
@@ -42,17 +40,17 @@ namespace WinShooter.Database.Tests
         /// <summary>
         /// The name of the unit test competition
         /// </summary>
-        private const string CompetitionName = "UnitTestCompetitionName";
+        private const string CompetitionName = "UnitTest_UserRolesInfosFromDatabase";
 
         /// <summary>
         ///  The name of the unit test club.
         /// </summary>
-        private const string ClubName = "UnitTestClubName";
+        private const string ClubName = "UnitTest_UserRolesInfosFromDatabase";
 
         /// <summary>
         /// The name of the unit test user.
         /// </summary>
-        private const string UserName = "UnitTestUser";
+        private const string UserName = "UnitTest_UserRolesInfosFromDatabase";
 
         /// <summary>
         /// The name of the unit test user.
@@ -62,7 +60,7 @@ namespace WinShooter.Database.Tests
         /// <summary>
         /// The name of the unit test role.
         /// </summary>
-        private const string RoleName = "UnitTestRole";
+        private const string RoleName = "UnitTest_UserRolesInfosFromDatabase";
 
         /// <summary>
         /// The competition used in unit tests.
@@ -269,17 +267,16 @@ namespace WinShooter.Database.Tests
         }
 
         /// <summary>
-        /// Fetch all user roles, add one, fetch all and check it has been added.
-        /// Remove user role, fetch all and check it has been added
+        /// Tests deleting competition which should cascade.
         /// </summary>
         [TestMethod]
         public void DeleteCompetitionAndCascade()
         {
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
-                var userRolesInfos = from userRolesInfo in databaseSession.Query<UserRolesInfo>()
+                var userRolesInfos = (from userRolesInfo in databaseSession.Query<UserRolesInfo>()
                                      where userRolesInfo.User.Id.Equals(this.testUser.Id)
-                                     select userRolesInfo;
+                                     select userRolesInfo).ToArray();
 
                 Assert.IsNotNull(userRolesInfos);
                 Assert.AreEqual(0, userRolesInfos.Count());
@@ -300,9 +297,9 @@ namespace WinShooter.Database.Tests
 
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
-                var userRolesInfos = from userRolesInfo in databaseSession.Query<UserRolesInfo>()
+                var userRolesInfos = (from userRolesInfo in databaseSession.Query<UserRolesInfo>()
                                      where userRolesInfo.User.Id.Equals(this.testUser.Id)
-                                     select userRolesInfo;
+                                     select userRolesInfo).ToArray();
 
                 Assert.IsNotNull(userRolesInfos);
                 Assert.AreEqual(1, userRolesInfos.Count());
@@ -313,9 +310,9 @@ namespace WinShooter.Database.Tests
                     transaction.Commit();
                 }
 
-                userRolesInfos = from userRolesInfo in databaseSession.Query<UserRolesInfo>()
+                userRolesInfos = (from userRolesInfo in databaseSession.Query<UserRolesInfo>()
                                      where userRolesInfo.User.Id.Equals(this.testUser.Id)
-                                     select userRolesInfo;
+                                     select userRolesInfo).ToArray();
 
                 Assert.IsNotNull(userRolesInfos);
                 Assert.AreEqual(0, userRolesInfos.Count());

@@ -30,8 +30,6 @@ namespace WinShooter.Database.Tests
 
     using WinShooter.Web.DatabaseMigrations;
 
-    using WinShooter_Web.DatabaseMigrations;
-
     /// <summary>
     /// Read and write roles from database.
     /// </summary>

@@ -31,8 +31,6 @@ namespace WinShooter.Database.Tests
 
     using WinShooter.Web.DatabaseMigrations;
 
-    using WinShooter_Web.DatabaseMigrations;
-
     /// <summary>
     /// Read and write shooters from database.
     /// </summary>
@@ -42,7 +40,7 @@ namespace WinShooter.Database.Tests
         /// <summary>
         /// The competition name.
         /// </summary>
-        private const string CompetitionName = "UnitTestCompetitionName";
+        private const string CompetitionName = "UnitTest_PatrolsFromDatabase";
 
         /// <summary>
         /// The test competition.
@@ -112,20 +110,20 @@ namespace WinShooter.Database.Tests
             using (var databaseSession = NHibernateHelper.OpenSession())
             {
                 var patrols = from patrol in databaseSession.Query<Patrol>()
-                                   where patrol.Competition == this.testCompetition
-                                   select patrol;
+                              where patrol.Competition == this.testCompetition
+                              select patrol;
 
                 Assert.IsNotNull(patrols);
                 Assert.AreEqual(0, patrols.Count());
 
                 var toAdd = new Patrol
-                                {
-                                    Competition = this.testCompetition,
-                                    PatrolId = 1,
-                                    StartTime = DateTime.Now,
-                                    StartTimeDisplay = DateTime.Now,
-                                    PatrolClass = PatrolClassEnum.A
-                                };
+                {
+                    Competition = this.testCompetition,
+                    PatrolId = 1,
+                    StartTime = DateTime.Now,
+                    StartTimeDisplay = DateTime.Now,
+                    PatrolClass = PatrolClassEnum.A
+                };
 
                 using (var transaction = databaseSession.BeginTransaction())
                 {
@@ -155,6 +153,61 @@ namespace WinShooter.Database.Tests
                 var patrols = from patrol in databaseSession.Query<Patrol>()
                               where patrol.Competition == this.testCompetition
                               select patrol;
+
+                Assert.IsNotNull(patrols);
+                Assert.AreEqual(0, patrols.Count());
+            }
+        }
+
+        /// <summary>
+        /// Tests deleting competition which should cascade.
+        /// </summary>
+        [TestMethod]
+        public void DeleteCompetitionAndCascade()
+        {
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var patrols = (from patrol in databaseSession.Query<Patrol>()
+                              where patrol.Competition == this.testCompetition
+                              select patrol).ToArray();
+
+                Assert.IsNotNull(patrols);
+                Assert.AreEqual(0, patrols.Count());
+
+                var toAdd = new Patrol
+                {
+                    Competition = this.testCompetition,
+                    PatrolId = 1,
+                    StartTime = DateTime.Now,
+                    StartTimeDisplay = DateTime.Now,
+                    PatrolClass = PatrolClassEnum.A
+                };
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Save(toAdd);
+                    transaction.Commit();
+                }
+            }
+
+            using (var databaseSession = NHibernateHelper.OpenSession())
+            {
+                var patrols = (from patrol in databaseSession.Query<Patrol>()
+                              where patrol.Competition == this.testCompetition
+                              select patrol).ToArray();
+
+                Assert.IsNotNull(patrols);
+                Assert.AreEqual(1, patrols.Count());
+
+                using (var transaction = databaseSession.BeginTransaction())
+                {
+                    databaseSession.Delete(this.testCompetition);
+                    transaction.Commit();
+                }
+
+                patrols = (from patrol in databaseSession.Query<Patrol>()
+                               where patrol.Competition == this.testCompetition
+                               select patrol).ToArray();
 
                 Assert.IsNotNull(patrols);
                 Assert.AreEqual(0, patrols.Count());
