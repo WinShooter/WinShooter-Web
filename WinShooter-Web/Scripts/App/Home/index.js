@@ -72,11 +72,11 @@ var ViewModel = function (competitions) {
 
     // Selects the current competition
     this.selectCompetitionOnServer = function () {
-        var newLocation = "/home/index/";
+        var newLocation = "/home/competition/";
         if (this.selectedCompetition() !== undefined) {
-            newLocation = newLocation + this.selectedCompetition().Guid;
+            newLocation = newLocation + this.selectedCompetition().CompetitionId;
+            window.location.href = newLocation;
         }
-        window.location.href = newLocation; 
     };
     
     // Attributes for creating a new competition
