@@ -252,7 +252,7 @@ namespace WinShooter.Database.Tests
 
                 using (var transaction = databaseSession.BeginTransaction())
                 {
-                    databaseSession.Delete(userRolesInfos.ToArray()[0]);
+                    databaseSession.Delete(userRolesInfos.First());
                     transaction.Commit();
                 }
             }
@@ -312,6 +312,13 @@ namespace WinShooter.Database.Tests
                     databaseSession.Delete(this.testCompetition);
                     transaction.Commit();
                 }
+
+                userRolesInfos = from userRolesInfo in databaseSession.Query<UserRolesInfo>()
+                                     where userRolesInfo.User.Id.Equals(this.testUser.Id)
+                                     select userRolesInfo;
+
+                Assert.IsNotNull(userRolesInfos);
+                Assert.AreEqual(0, userRolesInfos.Count());
             }
         }
     }
