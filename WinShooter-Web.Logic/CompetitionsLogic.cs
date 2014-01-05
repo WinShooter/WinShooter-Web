@@ -254,7 +254,18 @@ namespace WinShooter.Logic
                 throw new Exception("You don't have rights to delete this competition");
             }
 
-            throw new NotImplementedException();
+            var competition = this.competitionRepository.FilterBy(x => x.Id.Equals(competitionId));
+
+            if (competition == null)
+            {
+                throw new Exception(string.Format("There is no exception with id {0}.", competitionId));
+            }
+
+            using (var transaction = this.competitionRepository.StartTransaction())
+            {
+                this.competitionRepository.Delete(competition);
+                transaction.Commit();
+            }
         }
     }
 }
