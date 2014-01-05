@@ -254,7 +254,7 @@ namespace WinShooter.Logic
                 throw new Exception("You don't have rights to delete this competition");
             }
 
-            var competition = this.competitionRepository.FilterBy(x => x.Id.Equals(competitionId));
+            var competition = this.competitionRepository.FilterBy(x => x.Id.Equals(competitionId)).FirstOrDefault();
 
             if (competition == null)
             {
@@ -263,8 +263,10 @@ namespace WinShooter.Logic
 
             using (var transaction = this.competitionRepository.StartTransaction())
             {
-                this.competitionRepository.Delete(competition);
-                transaction.Commit();
+                if (this.competitionRepository.Delete(competition))
+                {
+                    transaction.Commit();
+                }
             }
         }
     }
