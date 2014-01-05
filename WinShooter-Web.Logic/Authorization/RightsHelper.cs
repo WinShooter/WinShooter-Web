@@ -92,7 +92,12 @@ namespace WinShooter.Logic.Authorization
         /// </returns>
         public WinShooterCompetitionPermissions[] GetRightsForCompetitionIdAndTheUser(Guid competitionId)
         {
-            // TODO If userId is Guid.Empty, handle this differently.
+            if (this.CurrentUser == null)
+            {
+                // Anonymous user
+                return new WinShooterCompetitionPermissions[0];
+            }
+
             var userRoleIds =
                 from userRolesInfo in
                      this.userRolesInfoRepository.FilterBy(
