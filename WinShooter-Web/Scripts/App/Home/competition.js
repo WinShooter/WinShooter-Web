@@ -33,14 +33,15 @@ var ViewModel = function (competition) {
         var deleteRequest = {
             url: competitionApiUrl + "/" + this.competition().CompetitionId,
             type: "delete",
-            dataType: "json",
-            success: function () {
-                alert("Success!");
-            }
+            dataType: "json"
         };
 
         $.ajax(deleteRequest).fail(function (data) {
-            alert("Misslyckades med att radera tävlingen:\r\n" + data.responseJSON.ResponseStatus.Message);
+            if (data !== undefined && data.responseJSON !== undefined && data.responseJSON.ResponseStatus !== undefined && data.responseJSON.ResponseStatus.Message !== undefined) {
+                alert("Misslyckades med att radera tävlingen:\r\n" + data.responseJSON.ResponseStatus.Message);
+            } else {
+                alert("Misslyckades med att radera tävlingen!");
+            }
         }).success(function () {
             alert("Tävlingen raderades.");
             window.location.href = "/";
@@ -58,3 +59,14 @@ var ViewModel = function (competition) {
         alert("NotImplementedYet");
     };
 };
+
+// Add binding and such when document is loaded.
+$(function () {
+    // Add datepicker to the newCompetitionStartDate field
+    $("#newCompetitionStartDate").datepicker({ dateFormat: 'yy-mm-dd' });
+
+    // Fetch competitions from api and bind with knockout.
+    $.getJSON(competitionApiUrl + "/" + window.competitionId, function (data) {
+        ko.applyBindings(new ViewModel(data));
+    });
+});

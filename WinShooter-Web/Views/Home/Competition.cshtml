@@ -35,16 +35,4 @@
 
 @section scripts {
     @Scripts.Render("~/Scripts/App/Home/competition.js")
-<script>
-// Add binding and such when document is loaded.
-$(function () {
-    // Add datepicker to the newCompetitionStartDate field
-    $("#newCompetitionStartDate").datepicker({ dateFormat: 'yy-mm-dd' });
-
-    // Fetch competitions from api and bind with knockout.
-    $.getJSON(competitionApiUrl + "/@ViewBag.CompetitionId", function (data) {
-        ko.applyBindings(new ViewModel(data));
-    });
-});
-</script>
 }

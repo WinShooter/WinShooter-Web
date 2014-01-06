@@ -170,8 +170,11 @@ namespace WinShooter.Api.Api
         /// <param name="request">
         /// The request.
         /// </param>
+        /// <returns>
+        /// The <see cref="CompetitionResponse"/>.
+        /// </returns>
         [Authenticate]
-        public void Delete(CompetitionDeleteRequest request)
+        public CompetitionResponse Delete(CompetitionDeleteRequest request)
         {
             this.log.Debug("Got DELETE request: " + request);
             var session = this.GetSession() as CustomUserSession;
@@ -191,6 +194,9 @@ namespace WinShooter.Api.Api
             this.log.Debug("User is " + this.logic.CurrentUser);
 
             this.logic.DeleteCompetition(Guid.Parse(request.CompetitionId));
+
+            // This is needed to get IE to be happy.
+            return new CompetitionResponse();
         }
 
         /// <summary>
