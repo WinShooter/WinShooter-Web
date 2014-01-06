@@ -36,7 +36,7 @@ namespace WinShooter.Controllers
         /// </returns>
         public ActionResult Index()
         {
-            this.ViewBag.CompetitionGuid = string.Empty;
+            this.ViewBag.CompetitionId = string.Empty;
             return this.View();
         }
 
@@ -48,7 +48,7 @@ namespace WinShooter.Controllers
         /// </returns>
         public ActionResult NewCompetition()
         {
-            this.ViewBag.CompetitionGuid = string.Empty;
+            this.ViewBag.CompetitionId = string.Empty;
             return this.View();
         }
 
@@ -88,7 +88,7 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            this.ViewBag.CompetitionGuid = id;
+            this.ViewBag.CompetitionId = id;
             return this.View();
         }
 
@@ -108,7 +108,7 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            this.ViewBag.CompetitionGuid = id;
+            this.ViewBag.CompetitionId = id;
             return this.View();
         }
 
@@ -128,7 +128,7 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            this.ViewBag.CompetitionGuid = id;
+            this.ViewBag.CompetitionId = id;
             return this.View();
         }
 
@@ -148,7 +148,7 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            this.ViewBag.CompetitionGuid = id;
+            this.ViewBag.CompetitionId = id;
             return this.View();
         }
 
@@ -168,7 +168,7 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            this.ViewBag.CompetitionGuid = id;
+            this.ViewBag.CompetitionId = id;
             return this.View();
         }
 
@@ -188,7 +188,27 @@ namespace WinShooter.Controllers
                 return this.RedirectToActionPermanent("Index");
             }
 
-            this.ViewBag.CompetitionGuid = id;
+            this.ViewBag.CompetitionId = id;
+            return this.View();
+        }
+
+        /// <summary>
+        /// The results.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult ManageCompetitionRights(string id)
+        {
+            if (id == null)
+            {
+                return this.RedirectToActionPermanent("Index");
+            }
+
+            this.ViewBag.CompetitionId = id;
             return this.View();
         }
     }
