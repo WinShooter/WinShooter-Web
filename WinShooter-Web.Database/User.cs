@@ -22,6 +22,7 @@
 namespace WinShooter.Database
 {
     using System;
+    using System.Text;
 
     /// <summary>
     /// The representation of the database user.
@@ -40,8 +41,6 @@ namespace WinShooter.Database
             this.Surname = string.Empty;
             this.Givenname = string.Empty;
             this.Email = string.Empty;
-            this.LastLogin = DateTime.Now;
-            this.LastUpdated = DateTime.Now;
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
@@ -99,6 +98,49 @@ namespace WinShooter.Database
 
                 return this.Email;
             }
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        /// A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            var toReturn = new StringBuilder();
+
+            toReturn.AppendFormat("User [ Id={0}, ", this.Id);
+            if (this.Givenname != null)
+            {
+                toReturn.AppendFormat("Givenname=\"{0}\", ", this.Givenname);
+            }
+
+            if (this.Surname != null)
+            {
+                toReturn.AppendFormat("Surname=\"{0}\", ", this.Surname);
+            }
+
+            if (this.CardNumber != null)
+            {
+                toReturn.AppendFormat("CardNumber=\"{0}\", ", this.CardNumber);
+            }
+
+            if (this.Email != null)
+            {
+                toReturn.AppendFormat("Email=\"{0}\", ", this.Email);
+            }
+
+            if (!this.ClubId.Equals(Guid.Empty))
+            {
+                toReturn.AppendFormat("ClubId={0}, ", this.ClubId);
+            }
+
+            toReturn.AppendFormat("LastLogin={0}, ", this.LastLogin);
+            toReturn.AppendFormat("LastUpdated={0} ]", this.LastUpdated);
+
+            return toReturn.ToString();
         }
     }
 }

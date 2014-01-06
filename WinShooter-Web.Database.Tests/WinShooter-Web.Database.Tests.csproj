@@ -63,6 +63,7 @@
     <Compile Include="RightsFromDatabase.cs" />
     <Compile Include="StationsFromDatabase.cs" />
     <Compile Include="PatrolsFromDatabase.cs" />
+    <Compile Include="UserTests.cs" />
     <Compile Include="WeaponsFromDatabase.cs" />
     <Compile Include="ShootersFromDatabase.cs" />
     <Compile Include="TestOpening.cs" />
