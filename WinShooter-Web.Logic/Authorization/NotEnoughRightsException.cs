@@ -26,6 +26,7 @@ namespace WinShooter.Logic.Authorization
     /// <summary>
     /// The not enough rights exception.
     /// </summary>
+    [Serializable]
     public class NotEnoughRightsException : Exception
     {
         /// <summary>
