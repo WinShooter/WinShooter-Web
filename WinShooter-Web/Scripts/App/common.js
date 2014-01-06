@@ -2,6 +2,7 @@
 var competitionsApiUrl = "/api/competitions";
 var competitionApiUrl = "/api/competition";
 var userApiUrl = "/api/user";
+var currentUserApiUrl = "/api/currentuser";
 
 // Here's the viewModel for the header
 var LoginViewModel = function () {
@@ -10,24 +11,35 @@ var LoginViewModel = function () {
     // Attributes
     self.displayName = ko.observable('');
     self.isLoggedIn = ko.observable(false);
+    self.rights = ko.observableArray();
 
     // calculated attributes
     this.shouldShowLoginLink = ko.computed(function () {
-        if (self.isLoggedIn()) {
+        return !self.isLoggedIn();
+    }, this);
+
+    this.shouldShowEditRightsLink = ko.computed(function () {
+        if (!self.isLoggedIn()) {
             return false;
         }
-        return true;
+
+        return $.inArray("ReadUserCompetitionRole", self.rights());
     }, this);
 
     // Fetch competitions from api and bind with knockout.
-    $.getJSON(userApiUrl, function (data) {
+    var jsonUrl = currentUserApiUrl;
+    if (window.competitionId !== undefined) {
+        jsonUrl += "/" + window.competitionId;
+    }
+    $.getJSON(jsonUrl, function (data) {
         self.isLoggedIn(data.IsLoggedIn);
 
         if (data.IsLoggedIn) {
             self.displayName(data.DisplayName);
+            self.rights(data.CompetitionRights);
         }
-    }).fail(function () {
-        alert("Failed to retrieve user info");
+    }).fail(function (data) {
+        alert("Failed to retrieve user info:" + data);
     });
 };
 

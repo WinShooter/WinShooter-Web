@@ -7,6 +7,12 @@
     @Styles.Render("~/Content/bootstrap")
     @Styles.Render("~/Content/css")    
     @Scripts.Render("~/bundles/modernizr")
+@if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
+{
+    <script>
+        window.competitionId = '@ViewBag.CompetitionId';
+    </script>
+}
 </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -18,13 +24,14 @@
                     <ul class="nav navbar-nav">
                         @if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
                         {
-                            <li class="active">@Html.ActionLink("Tävlingsinfo", "Competition", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                            <li>@Html.ActionLink("Klubbar", "Clubs", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                            <li>@Html.ActionLink("Vapen", "Weapons", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                            <li>@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                            <li>@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                            <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
-                            <li>@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionGuid }, null)</li>
+                            <li class="active">@Html.ActionLink("Tävlingsinfo", "Competition", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li>@Html.ActionLink("Klubbar", "Clubs", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li>@Html.ActionLink("Vapen", "Weapons", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li>@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li>@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li>@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li>@Html.ActionLink("Rättigheter", "ManageCompetitionRights", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditRightsLink" } })</li>
                         }
                         <li>
                             @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { {"style", "display: none"}, { "data-bind", "visible: loginViewModel.shouldShowLoginLink" } })

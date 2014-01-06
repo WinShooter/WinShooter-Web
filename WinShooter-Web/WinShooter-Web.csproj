@@ -303,6 +303,7 @@
     <Content Include="Scripts\App\Account\Login.js" />
     <Content Include="Scripts\App\common.js" />
     <Content Include="Scripts\App\Home\competition.js" />
+    <Content Include="Scripts\App\Home\manageCompetitionRights.js" />
     <Content Include="Scripts\App\Home\newcompetition.js" />
     <Content Include="Scripts\Flat-ui\flatui-checkbox.js" />
     <Content Include="Scripts\Flat-ui\flatui-radio.js" />
@@ -347,6 +348,7 @@
     <Content Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\NewCompetition.cshtml" />
+    <Content Include="Views\Home\ManageCompetitionRights.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
