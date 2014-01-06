@@ -25,6 +25,8 @@ namespace WinShooter.Logic
     using System.Collections.Generic;
     using System.Linq;
 
+    using log4net;
+
     using WinShooter.Database;
     using WinShooter.Logic.Authorization;
 
@@ -33,6 +35,11 @@ namespace WinShooter.Logic
     /// </summary>
     public class CompetitionsLogic
     {
+        /// <summary>
+        /// The log.
+        /// </summary>
+        private readonly ILog log;
+
         /// <summary>
         /// The competition repository.
         /// </summary>
@@ -60,7 +67,7 @@ namespace WinShooter.Logic
         /// <param name="rightsHelper">
         /// The rights helper implementation.
         /// </param>
-        public CompetitionsLogic(IRepository<Competition> competitionRepository, IRepository<UserRolesInfo> userRolesInfoRepository, IRightsHelper rightsHelper)
+        public CompetitionsLogic(IRepository<Competition> competitionRepository, IRepository<UserRolesInfo> userRolesInfoRepository, IRightsHelper rightsHelper) : this()
         {
             this.competitionRepository = competitionRepository;
             this.userRolesInfoRepository = userRolesInfoRepository;
@@ -79,6 +86,14 @@ namespace WinShooter.Logic
             new Repository<UserRolesInfo>(session), 
             new RightsHelper(new Repository<UserRolesInfo>(session), new Repository<RoleRightsInfo>(session)))
         {
+        }
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="CompetitionsLogic"/> class from being created.
+        /// </summary>
+        private CompetitionsLogic()
+        {
+            this.log = LogManager.GetLogger(this.GetType());
         }
 
         /// <summary>
@@ -233,7 +248,11 @@ namespace WinShooter.Logic
                 !this.RightsHelper.GetRightsForCompetitionIdAndTheUser(competition.Id)
                 .Contains(WinShooterCompetitionPermissions.UpdateCompetition))
             {
-                throw new Exception("You don't have rights to update this competition");
+                this.log.ErrorFormat(
+                    "User {0} does not have enough rights to update competition {1}",
+                    this.currentUser,
+                    competition);
+                throw new NotEnoughRightsException("You don't have rights to update this competition");
             }
 
             throw new NotImplementedException();
@@ -251,7 +270,11 @@ namespace WinShooter.Logic
                 !this.RightsHelper.GetRightsForCompetitionIdAndTheUser(competitionId)
                      .Contains(WinShooterCompetitionPermissions.DeleteCompetition))
             {
-                throw new Exception("You don't have rights to delete this competition");
+                this.log.ErrorFormat(
+                    "User {0} does not have enough rights to delete competition {1}",
+                    this.currentUser,
+                    competitionId);
+                throw new NotEnoughRightsException("You don't have rights to delete competition " + competitionId);
             }
 
             var competition = this.competitionRepository.FilterBy(x => x.Id.Equals(competitionId)).FirstOrDefault();
