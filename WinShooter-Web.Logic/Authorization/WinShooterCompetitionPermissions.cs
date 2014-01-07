@@ -232,6 +232,31 @@ namespace WinShooter.Logic.Authorization
         GetCompetitionResults,
 
         /// <summary>
+        /// The right to create users
+        /// </summary>
+        CreateUser,
+
+        /// <summary>
+        /// The right to read users
+        /// </summary>
+        ReadUser,
+
+        /// <summary>
+        /// The right to read public users.
+        /// </summary>
+        ReadPublicUser,
+
+        /// <summary>
+        /// The right to update users.
+        /// </summary>
+        UpdateUser,
+
+        /// <summary>
+        /// The right to delete users.
+        /// </summary>
+        DeleteUser,
+
+        /// <summary>
         /// The right to create user roles for a competition.
         /// </summary>
         CreateUserCompetitionRole,
