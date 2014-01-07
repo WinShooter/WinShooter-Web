@@ -37,6 +37,8 @@ namespace WinShooter.Database
 
             this.Map(x => x.RoleName);
 
+            HasMany(x => x.RoleRightsInfos).KeyColumn("RoleId").Cascade.AllDeleteOrphan();
+
             this.Table("Roles");
         }
     }

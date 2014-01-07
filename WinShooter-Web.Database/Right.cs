@@ -37,5 +37,10 @@ namespace WinShooter.Database
         /// Gets or sets the name of the right.
         /// </summary>
         public virtual string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="RoleRightsInfo"/>s.
+        /// </summary>
+        public virtual RoleRightsInfo[] RoleRightsInfos { get; set; }
     }
 }
