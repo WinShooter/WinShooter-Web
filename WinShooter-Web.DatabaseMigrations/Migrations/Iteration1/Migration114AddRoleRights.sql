@@ -29,10 +29,10 @@ insert into Rights (Id, Name) values ('40793FC8-93FA-4656-888B-9D8E5E7EBCA4', 'R
 insert into Rights (Id, Name) values ('ADA93D79-5204-4DE6-9567-457C4B212E23', 'UpdateShooter')
 insert into Rights (Id, Name) values ('AC50DDB0-9FDD-4D44-BAB0-FD4436354A13', 'DeleteShooter')
 
-insert into Rights (Id, Name) values ('79f52384-a1f0-4502-9cee-b277f6e426f2', 'CreateCompetitor')
-insert into Rights (Id, Name) values ('bf0d2977-6ad9-461b-8314-806716113367', 'ReadCompetitor')
+insert into Rights (Id, Name) values ('611ACD16-EDF8-4D53-9A6B-6CDC585652EF', 'CreateCompetitor')
+insert into Rights (Id, Name) values ('8D80BA8C-F82D-403A-8B46-6828D23A1D05', 'ReadCompetitor')
 insert into Rights (Id, Name) values ('DDCA152F-4268-4775-B9CE-D94204F06279', 'UpdateCompetitor')
-insert into Rights (Id, Name) values ('d838dca6-6cb8-41e9-94bc-d9ee2ce3c86e', 'DeleteCompetitor')
+insert into Rights (Id, Name) values ('1B131F14-F72B-4A8E-B196-13214D3E7AB6', 'DeleteCompetitor')
 
 insert into Rights (Id, Name) values ('FAA15DDA-8B82-4C3D-8316-0D15F5B13984', 'CreateTeam')
 insert into Rights (Id, Name) values ('8758CF85-3CD2-4AA8-9040-E269E8B51C2E', 'ReadTeam')
@@ -44,12 +44,18 @@ insert into Rights (Id, Name) values ('52DC479D-BFF6-42F1-A47E-52CD62B4379C', 'R
 insert into Rights (Id, Name) values ('785581A8-DEC0-4CFD-B3FE-7AF63628A05A', 'UpdateTeamToCompetitor')
 insert into Rights (Id, Name) values ('71FD0255-6992-4ACF-BCBE-488BAD56EC7E', 'DeleteTeamToCompetitor')
 
-insert into Rights (Id, Name) values ('6ef37d38-c55a-4bf4-9d01-c757533a8340', 'CreateCompetitorResult')
-insert into Rights (Id, Name) values ('98e5a194-5124-4198-b5be-1976460286be', 'ReadCompetitorResult')
-insert into Rights (Id, Name) values ('ab34ab67-f48d-44c1-b7de-81ce60c98c40', 'UpdateCompetitorResult')
-insert into Rights (Id, Name) values ('f67b15e9-2fd3-4d99-8015-3fa92c0f65a5', 'DeleteCompetitorResult')
+insert into Rights (Id, Name) values ('715F17F2-8F02-4E27-A419-22B834013D21', 'CreateCompetitorResult')
+insert into Rights (Id, Name) values ('AAF9BDA7-1981-4AFE-9A7A-FADFB1270EBF', 'ReadCompetitorResult')
+insert into Rights (Id, Name) values ('C80EB7AE-8B37-4A50-802B-ACB1D4A8AD02', 'UpdateCompetitorResult')
+insert into Rights (Id, Name) values ('F88123A3-5E85-4D53-9799-D450DBB915E4', 'DeleteCompetitorResult')
 
-insert into Rights (Id, Name) values ('9c57c1b8-b281-4f8c-a747-4cf1ed5badb4', 'GetCompetitionResults')
+insert into Rights (Id, Name) values ('5DC16997-0B2C-4556-9792-E6ABBC21E36C', 'GetCompetitionResults')
+
+insert into Rights (Id, Name) values ('9A8766EB-0264-47DD-85B2-80865789FD75', 'CreateUser')
+insert into Rights (Id, Name) values ('9452A28F-6CEB-479E-962C-61765E9B5D16', 'ReadUser')
+insert into Rights (Id, Name) values ('4BB1C1C0-11D1-4FCA-8C1E-04831605CA10', 'ReadPublicUser')
+insert into Rights (Id, Name) values ('4F69B10B-4901-4F87-A349-4A61379A5C6E', 'UpdateUser')
+insert into Rights (Id, Name) values ('3E9D8761-0E32-4C0E-A756-B569DEC5631B', 'DeleteUser')
 
 insert into Rights (Id, Name) values ('D872C5E1-FDF6-4746-A1D4-28C62367896F', 'CreateUserCompetitionRole')
 insert into Rights (Id, Name) values ('420A58ED-A14A-4AFD-B3E1-61D1DF9EA874', 'ReadUserCompetitionRole')
@@ -62,20 +68,16 @@ insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='UpdateCompetition'))
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='DeleteCompetition'))
 
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='CreateClub'))
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='ReadClub'))
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='UpdateClub'))
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='DeleteClub'))
 
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='CreatePatrol'))
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='ReadPatrol'))
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='UpdatePatrol'))
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='DeletePatrol'))
 
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='CreateWeapon'))
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='ReadWeapon'))
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='UpdateWeapon'))
-insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='DeleteWeapon'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='ReadPublicUser'))
 
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='CreateStation'))
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionOwner'), (select Id from Rights where Name='ReadStation'))
@@ -200,7 +202,7 @@ insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where
 
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionShooterManager'), (select Id from Rights where Name='GetCompetitionResults'))
 
-/* Role Owner */
+/* Role station owner */
 insert into Roles (Id, RoleName) values ('D03870A9-C138-4788-A200-BDA757E17905', 'CompetitionStationManager')
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionStationManager'), (select Id from Rights where Name='ReadCompetition'))
 
@@ -210,3 +212,62 @@ insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionStationManager'), (select Id from Rights where Name='DeleteStation'))
 
 insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='CompetitionShooterManager'), (select Id from Rights where Name='GetCompetitionResults'))
+
+/* System Admin */
+insert into Roles (Id, RoleName) values ('3892D8B9-46CD-4CF1-BF59-C3E3C14DEEC4', 'SystemAdmin')
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadCompetition'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='UpdateCompetition'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='DeleteCompetition'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='CreateClub'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadClub'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='UpdateClub'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='DeleteClub'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='CreatePatrol'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadPatrol'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='UpdatePatrol'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='DeletePatrol'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='CreateWeapon'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadWeapon'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='UpdateWeapon'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='DeleteWeapon'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='CreateUser'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadPublicUser'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadPublicUser'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='UpdateUser'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='DeleteUser'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='CreateStation'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadStation'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='UpdateStation'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='DeleteStation'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='CreateShooter'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadShooter'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='UpdateShooter'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='DeleteShooter'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='CreateTeam'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadTeam'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='UpdateTeam'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='DeleteTeam'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='CreateTeamToCompetitor'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadTeamToCompetitor'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='UpdateTeamToCompetitor'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='DeleteTeamToCompetitor'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='CreateCompetitorResult'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadCompetitorResult'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='UpdateCompetitorResult'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='DeleteCompetitorResult'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='GetCompetitionResults'))
+
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='CreateUserCompetitionRole'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='ReadUserCompetitionRole'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='UpdateUserCompetitionRole'))
+insert into RoleRightsInfo (RoleId, RightId) values ((select Id from Roles where RoleName='SystemAdmin'), (select Id from Rights where Name='DeleteUserCompetitionRole'))
