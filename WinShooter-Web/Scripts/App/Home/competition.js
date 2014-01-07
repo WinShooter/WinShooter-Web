@@ -4,19 +4,33 @@ var competitionApiUrl = "/api/competition";
 
 // Here's my data model
 var ViewModel = function (competition) {
-    this.loginViewModel = new LoginViewModel();
+    var self = this;
+    self.loginViewModel = new LoginViewModel();
 
     // Attributes for showing existing competition
-    this.competition = ko.observable(competition);
-    this.currentCompetition = ko.observable('');
+    self.competition = ko.observable(competition);
+    self.currentCompetition = ko.observable('');
 
-    // For showing existing competitions data
-    this.competitionName = ko.observable(competition.Name);
-    this.competitionStartDate = ko.observable(competition.StartDate);
-    this.competitionIsPublic = ko.observable(competition.IsPublic);
-    this.competitionUseNorwegianCount = ko.observable(competition.UseNorwegianCount);
-    this.userCanUpdateCompetition = ko.observable(competition.UserCanUpdateCompetition);
-    this.userCanDeleteCompetition = ko.observable(competition.UserCanDeleteCompetition);
+    self.competitionName = ko.observable(competition.Name);
+    self.competitionStartDate = ko.observable(competition.StartDate);
+    self.competitionIsPublic = ko.observable(competition.IsPublic);
+    self.competitionUseNorwegianCount = ko.observable(competition.UseNorwegianCount);
+
+    this.userCanUpdateCompetition = ko.computed(function () {
+        if (!self.loginViewModel.isLoggedIn()) {
+            return false;
+        }
+
+        return -1 !== $.inArray("UpdateCompetition", self.loginViewModel.rights());
+    }, this);
+
+    this.userCanDeleteCompetition = ko.computed(function () {
+        if (!self.loginViewModel.isLoggedIn()) {
+            return false;
+        }
+
+        return -1 !== $.inArray("DeleteCompetition", self.loginViewModel.rights());
+    }, this);
 
     // Function for deleting competition
     this.deleteCompetition = function () {
@@ -56,7 +70,27 @@ var ViewModel = function (competition) {
             return;
         }
 
-        alert("NotImplementedYet");
+        self.competition().Name = self.competitionName();
+        self.competition().StartDate = self.competitionStartDate();
+        self.competition().UseNorwegianCount = self.competitionUseNorwegianCount();
+
+        var updateRequest = {
+            url: competitionApiUrl + "/" + this.competition().CompetitionId,
+            data: self.competition(),
+            type: "post",
+            dataType: "json"
+        };
+
+        $.ajax(updateRequest).fail(function (data) {
+            if (data !== undefined && data.responseJSON !== undefined && data.responseJSON.ResponseStatus !== undefined && data.responseJSON.ResponseStatus.Message !== undefined) {
+                alert("Misslyckades med att uppdatera tävlingen:\r\n" + data.responseJSON.ResponseStatus.Message);
+            } else {
+                alert("Misslyckades med att uppdatera tävlingen!");
+            }
+        }).success(function () {
+            alert("Tävlingen uppdaterades.");
+            window.location.href = "/";
+        });
     };
 };
 

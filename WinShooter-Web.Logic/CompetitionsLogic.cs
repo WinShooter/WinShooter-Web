@@ -255,7 +255,26 @@ namespace WinShooter.Logic
                 throw new NotEnoughRightsException("You don't have rights to update this competition");
             }
 
-            throw new NotImplementedException();
+            competition.VerifyDataContent();
+
+            var currentCompetition = this.competitionRepository.FilterBy(x => x.Id.Equals(competition.Id)).FirstOrDefault();
+
+            if (currentCompetition == null)
+            {
+                throw new Exception("There is no such competition to update.");
+            }
+
+            this.log.DebugFormat("Updating competition {0} with new values {1}", currentCompetition, competition);
+            currentCompetition.UpdateFromOther(competition);
+
+            using (var transaction = this.competitionRepository.StartTransaction())
+            {
+                if (this.competitionRepository.Update(currentCompetition))
+                {
+                    this.log.Debug("Committing transaction.");
+                    transaction.Commit();
+                }
+            }
         }
 
         /// <summary>

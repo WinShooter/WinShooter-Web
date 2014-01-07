@@ -99,5 +99,20 @@ namespace WinShooter.Database
             this.Id.Require("Id").NotEmpty();
             this.Name.Require("Name").NotNull().ShorterThan(255).LongerThan(0);
         }
+
+        /// <summary>
+        /// Updates information from other competition.
+        /// </summary>
+        /// <param name="other">
+        /// The other.
+        /// </param>
+        public virtual void UpdateFromOther(Competition other)
+        {
+            this.Name = other.Name;
+            this.StartDate = other.StartDate;
+            this.CompetitionType = other.CompetitionType;
+            this.UseNorwegianCount = other.UseNorwegianCount;
+            this.IsPublic = other.IsPublic;
+        }
     }
 }
