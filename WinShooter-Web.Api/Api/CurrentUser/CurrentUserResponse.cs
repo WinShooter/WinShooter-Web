@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RightsService.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CurrentUserResponse.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,36 +15,35 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The competition service.
+//   The user response.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api
+namespace WinShooter.Api.Api.CurrentUser
 {
-    using ServiceStack.ServiceInterface;
-
-    using WinShooter.Api.Authentication;
-
     /// <summary>
-    /// The competition service.
+    /// The user response.
     /// </summary>
-    public class RightsService : Service
+    public class CurrentUserResponse
     {
         /// <summary>
-        /// The any.
+        /// Gets or sets a value indicating whether the user is logged in.
         /// </summary>
-        /// <param name="request">
-        /// The request.
-        /// </param>
-        /// <returns>
-        /// The <see cref="CompetitionResponse"/>.
-        /// </returns>
-        public RightsResponse Get(RightsRequest request)
-        {
-            var session = this.GetSession() as CustomUserSession;
+        public bool IsLoggedIn { get; set; }
 
-            // TODO Implement
-            return new RightsResponse { Rights = new[] { "CreateCompetition" } };
-        }
+        /// <summary>
+        /// Gets or sets the user display name.
+        /// </summary>
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user email.
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user email.
+        /// </summary>
+        public string[] CompetitionRights { get; set; }
     }
 }

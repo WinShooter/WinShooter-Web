@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CompetitionsRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitionDeleteRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -19,19 +19,19 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api
+namespace WinShooter.Api.Api.Competition
 {
     using ServiceStack.ServiceHost;
 
     /// <summary>
     /// Represents a competition from the client.
     /// </summary>
-    [Route("/competitions")]
-    public class CompetitionsRequest
+    [Route("/competition/{CompetitionId}", Verbs = "DELETE")]
+    public class CompetitionDeleteRequest
     {
         /// <summary>
-        /// Gets or sets a value indicating whether to include public competitions.
+        /// Gets or sets the competition ID to delete.
         /// </summary>
-        public bool IncludePublic { get; set; }
+        public string CompetitionId { get; set; }
     }
 }

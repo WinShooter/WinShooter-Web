@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CompetitionsService.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CurrentUserService.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,45 +15,38 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The competitions service.
+//   The competition service.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api
+namespace WinShooter.Api.Api.CurrentUser
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     using ServiceStack.ServiceInterface;
 
     using WinShooter.Api.Authentication;
     using WinShooter.Database;
-    using WinShooter.Logic;
     using WinShooter.Logic.Authorization;
 
     /// <summary>
-    /// The competitions service.
+    /// The competition service.
     /// </summary>
-    public class CompetitionsService : Service
+    public class CurrentUserService : Service
     {
+
         /// <summary>
         /// The database session.
         /// </summary>
         private readonly NHibernate.ISession databaseSession;
 
-        /// <summary>
-        /// The logic.
-        /// </summary>
-        private readonly CompetitionsLogic logic;
+        private readonly IRightsHelper rightsHelper;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CompetitionsService"/> class.
-        /// </summary>
-        public CompetitionsService()
+        public CurrentUserService()
         {
             this.databaseSession = NHibernateHelper.OpenSession();
-            this.logic = new CompetitionsLogic(this.databaseSession);
+            this.rightsHelper = new RightsHelper(new Repository<UserRolesInfo>(this.databaseSession), new Repository<RoleRightsInfo>(this.databaseSession));
         }
 
         /// <summary>
@@ -73,35 +66,34 @@ namespace WinShooter.Api.Api
         /// The request.
         /// </param>
         /// <returns>
-        /// The <see cref="CompetitionResponse"/>.
+        /// The <see cref="CurrentUserResponse"/>.
         /// </returns>
-        public List<CompetitionResponse> Get(CompetitionsRequest request)
+        public CurrentUserResponse Get(CurrentUserRequest request)
         {
-            var authSession = this.GetSession() as CustomUserSession;
+            var session = this.GetSession() as CustomUserSession;
 
-            var userId = authSession == null || authSession.User == null ? Guid.Empty : authSession.User.Id;
-            this.logic.CurrentUser = authSession == null ? null : authSession.User;
-
-            var competitions = this.logic.GetCompetitions();
-
-            var responses = (from dbcompetition in competitions 
-                 select new CompetitionResponse(dbcompetition)).ToList();
-
-            if (userId.Equals(Guid.Empty))
+            if (session == null || session.User == null)
             {
-                // Anonymous user
-                return responses;
+                return new CurrentUserResponse { IsLoggedIn = false };
             }
 
-            foreach (var competitionResponse in responses)
+            this.rightsHelper.CurrentUser = session.User;
+            var competitionRights = new string[0];
+            if (!string.IsNullOrEmpty(request.CompetitionId))
             {
-                var userRights = this.logic.RightsHelper.GetRightsForCompetitionIdAndTheUser(
-                    Guid.Parse(competitionResponse.CompetitionId));
-                competitionResponse.UserCanDeleteCompetition = userRights.Contains(WinShooterCompetitionPermissions.DeleteCompetition);
-                competitionResponse.UserCanUpdateCompetition = userRights.Contains(WinShooterCompetitionPermissions.UpdateCompetition);
+                competitionRights =
+                    (from right in
+                         this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(request.CompetitionId))
+                     select right.ToString()).ToArray();
             }
 
-            return responses;
+            return new CurrentUserResponse 
+                       { 
+                           IsLoggedIn = true,
+                           DisplayName = session.User.DisplayName,
+                           Email = session.User.Email,
+                           CompetitionRights = competitionRights
+                       };
         }
 
         /// <summary>

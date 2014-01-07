@@ -35,6 +35,7 @@ namespace WinShooter.Api
     using ServiceStack.WebHost.Endpoints;
 
     using WinShooter.Api.Api;
+    using WinShooter.Api.Api.Competition;
     using WinShooter.Api.Authentication;
 
     /// <summary>

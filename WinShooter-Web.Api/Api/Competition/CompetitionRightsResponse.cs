@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CurrentUserResponse.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitionRightsResponse.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,35 +15,20 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The user response.
+//   The competition rights response.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api
+namespace WinShooter.Api.Api.Competition
 {
     /// <summary>
-    /// The user response.
+    /// The competition rights response.
     /// </summary>
-    public class CurrentUserResponse
+    public class CompetitionRightsResponse
     {
         /// <summary>
-        /// Gets or sets a value indicating whether the user is logged in.
+        /// Gets or sets the rights.
         /// </summary>
-        public bool IsLoggedIn { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user display name.
-        /// </summary>
-        public string DisplayName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user email.
-        /// </summary>
-        public string Email { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user email.
-        /// </summary>
-        public string[] CompetitionRights { get; set; }
+        public string[] Rights { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CurrentUserRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="UserRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -19,20 +19,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api
+namespace WinShooter.Api.Api.User
 {
     using ServiceStack.ServiceHost;
 
     /// <summary>
     /// The user request.
     /// </summary>
-    [Route("/currentuser")]
-    [Route("/currentuser/{CompetitionId}")]
-    public class CurrentUserRequest
+    [Route("/user")]
+    public class UserRequest
     {
-        /// <summary>
-        /// Gets or sets the competitionID the user wants rights to be included for.
-        /// </summary>
-        public string CompetitionId { get; set; }
     }
 }

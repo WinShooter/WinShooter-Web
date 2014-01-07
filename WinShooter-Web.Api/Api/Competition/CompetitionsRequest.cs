@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RightsResponse.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitionsRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,20 +15,23 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The rights response.
+//   Represents a competition from the client.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api
+namespace WinShooter.Api.Api.Competition
 {
+    using ServiceStack.ServiceHost;
+
     /// <summary>
-    /// The rights response.
+    /// Represents a competition from the client.
     /// </summary>
-    public class RightsResponse
+    [Route("/competitions")]
+    public class CompetitionsRequest
     {
         /// <summary>
-        /// Gets or sets the rights.
+        /// Gets or sets a value indicating whether to include public competitions.
         /// </summary>
-        public string[] Rights { get; set; }
+        public bool IncludePublic { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RightsRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="UserResponse.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,19 +15,30 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Defines the RightsRequest type.
+//   The user response.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api
+namespace WinShooter.Api.Api.User
 {
-    using ServiceStack.ServiceHost;
-
     /// <summary>
-    /// The rights request.
+    /// The user response.
     /// </summary>
-    [Route("/rights")]
-    public class RightsRequest
+    public class UserResponse
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the user is logged in.
+        /// </summary>
+        public bool IsLoggedIn { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user display name.
+        /// </summary>
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user email.
+        /// </summary>
+        public string Email { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserResponse.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CurrentUserRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,30 +15,24 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The user response.
+//   Defines the RightsRequest type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api
+namespace WinShooter.Api.Api.CurrentUser
 {
+    using ServiceStack.ServiceHost;
+
     /// <summary>
-    /// The user response.
+    /// The user request.
     /// </summary>
-    public class UserResponse
+    [Route("/currentuser")]
+    [Route("/currentuser/{CompetitionId}")]
+    public class CurrentUserRequest
     {
         /// <summary>
-        /// Gets or sets a value indicating whether the user is logged in.
+        /// Gets or sets the competitionID the user wants rights to be included for.
         /// </summary>
-        public bool IsLoggedIn { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user display name.
-        /// </summary>
-        public string DisplayName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user email.
-        /// </summary>
-        public string Email { get; set; }
+        public string CompetitionId { get; set; }
     }
 }

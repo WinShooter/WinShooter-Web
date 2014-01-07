@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserService.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitionRightsService.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,21 +15,41 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The competition service.
+//   The competition rights service.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api
+namespace WinShooter.Api.Api.Competition
 {
+    using System;
+    using System.Linq;
+
     using ServiceStack.ServiceInterface;
 
     using WinShooter.Api.Authentication;
+    using WinShooter.Database;
+    using WinShooter.Logic.Authorization;
 
     /// <summary>
     /// The competition service.
     /// </summary>
-    public class UserService : Service
+    public class CompetitionRightsService : Service
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompetitionRightsService"/> class.
+        /// </summary>
+        public CompetitionRightsService()
+        {
+            var databaseSession = NHibernateHelper.OpenSession();
+
+            this.RightsHelper = new RightsHelper(new Repository<UserRolesInfo>(databaseSession), new Repository<RoleRightsInfo>(databaseSession));
+        }
+
+        /// <summary>
+        /// Gets or sets the rights helper.
+        /// </summary>
+        public IRightsHelper RightsHelper { get; set; }
+
         /// <summary>
         /// The any.
         /// </summary>
@@ -39,21 +59,18 @@ namespace WinShooter.Api.Api
         /// <returns>
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
-        public UserResponse Get(UserRequest request)
+        public CompetitionRightsResponse Get(CompetitionRights request)
         {
             var session = this.GetSession() as CustomUserSession;
 
-            if (session != null && session.User != null)
-            {
-                return new UserResponse 
-                { 
-                    IsLoggedIn = true,
-                    DisplayName = session.User.DisplayName,
-                    Email = session.User.Email 
-                };
-            }
+            this.RightsHelper.CurrentUser = session == null ? null : session.User;
 
-            return new UserResponse() { IsLoggedIn = false };
+            var rights = this.RightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(request.CompetitionId));
+
+            return new CompetitionRightsResponse
+                       {
+                           Rights = (from right in rights select right.ToString()).ToArray()
+                       };
         }
     }
 }
