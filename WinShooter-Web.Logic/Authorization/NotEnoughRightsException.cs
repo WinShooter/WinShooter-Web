@@ -22,6 +22,7 @@
 namespace WinShooter.Logic.Authorization
 {
     using System;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// The not enough rights exception.
@@ -32,11 +33,47 @@ namespace WinShooter.Logic.Authorization
         /// <summary>
         /// Initializes a new instance of the <see cref="NotEnoughRightsException"/> class.
         /// </summary>
+        public NotEnoughRightsException()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotEnoughRightsException"/> class.
+        /// </summary>
         /// <param name="message">
         /// The message.
         /// </param>
         public NotEnoughRightsException(string message)
             : base(message)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotEnoughRightsException"/> class.
+        /// </summary>
+        /// <param name="message">
+        /// The message.
+        /// </param>
+        /// <param name="inner">
+        /// The inner.
+        /// </param>
+        public NotEnoughRightsException(string message, Exception inner) 
+            : base(message, inner)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotEnoughRightsException"/> class.
+        /// This constructor is needed for serialization.
+        /// </summary>
+        /// <param name="info">
+        /// The info.
+        /// </param>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        protected NotEnoughRightsException(SerializationInfo info, StreamingContext context) 
+            : base(info, context)
         {
         }
     }
