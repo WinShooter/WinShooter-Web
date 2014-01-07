@@ -103,20 +103,8 @@ namespace WinShooter.Api.Api.Competition
 
             if (dbcompetition != null)
             {
-                var userRights = this.logic.RightsHelper.GetRightsForCompetitionIdAndTheUser(dbcompetition.Id);
-                var toReturn = new CompetitionResponse(dbcompetition)
-                           {
-                               UserCanUpdateCompetition =
-                                    userRights.Contains(
-                                        WinShooterCompetitionPermissions
-                                        .UpdateCompetition),
-                               UserCanDeleteCompetition = 
-                                    userRights.Contains(
-                                        WinShooterCompetitionPermissions
-                                        .DeleteCompetition),
-                           };
-                this.log.Debug("Returned competition: " + toReturn);
-                return toReturn;
+                this.log.Debug("Returned competition: " + dbcompetition);
+                return new CompetitionResponse(dbcompetition);
             }
 
             this.log.Warn("Could not find competition accordng to search criteria.");
