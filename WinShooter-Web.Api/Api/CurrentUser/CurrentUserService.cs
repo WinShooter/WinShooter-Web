@@ -22,6 +22,7 @@
 namespace WinShooter.Api.Api.CurrentUser
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using ServiceStack.ServiceInterface;
@@ -35,14 +36,19 @@ namespace WinShooter.Api.Api.CurrentUser
     /// </summary>
     public class CurrentUserService : Service
     {
-
         /// <summary>
         /// The database session.
         /// </summary>
         private readonly NHibernate.ISession databaseSession;
 
+        /// <summary>
+        /// The rights helper.
+        /// </summary>
         private readonly IRightsHelper rightsHelper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CurrentUserService"/> class.
+        /// </summary>
         public CurrentUserService()
         {
             this.databaseSession = NHibernateHelper.OpenSession();
@@ -78,21 +84,25 @@ namespace WinShooter.Api.Api.CurrentUser
             }
 
             this.rightsHelper.CurrentUser = session.User;
-            var competitionRights = new string[0];
+            var rights = new List<string>();
             if (!string.IsNullOrEmpty(request.CompetitionId))
             {
-                competitionRights =
+                rights.AddRange(
                     (from right in
                          this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(request.CompetitionId))
-                     select right.ToString()).ToArray();
+                     select right.ToString()).ToArray());
             }
+
+            rights.AddRange(
+                from right in this.rightsHelper.GetSystemRightsForTheUser()
+                    select right.ToString());
 
             return new CurrentUserResponse 
                        { 
                            IsLoggedIn = true,
                            DisplayName = session.User.DisplayName,
                            Email = session.User.Email,
-                           CompetitionRights = competitionRights
+                           CompetitionRights = rights.ToArray()
                        };
         }
 

@@ -23,7 +23,23 @@ var LoginViewModel = function () {
             return false;
         }
 
-        return $.inArray("ReadUserCompetitionRole", self.rights());
+        return -1 !== $.inArray("ReadUserCompetitionRole", self.rights());
+    }, this);
+
+    this.shouldShowEditClubsLink = ko.computed(function () {
+        if (!self.isLoggedIn()) {
+            return false;
+        }
+
+        return -1 !== $.inArray("UpdateClub", self.rights());
+    }, this);
+
+    this.shouldShowEditWeaponsLink = ko.computed(function () {
+        if (!self.isLoggedIn()) {
+            return false;
+        }
+
+        return -1 !== $.inArray("UpdateWeapon", self.rights());
     }, this);
 
     // Fetch competitions from api and bind with knockout.

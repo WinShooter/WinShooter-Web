@@ -47,7 +47,7 @@ namespace WinShooter.Logic.Authorization
         Guid[] GetCompetitionIdsTheUserHasRightsOn(bool includePublic);
 
         /// <summary>
-        /// Get competition ids the user has rights on.
+        /// Get competition rights the user has.
         /// </summary>
         /// <param name="competitionId">
         /// The competition Id.
@@ -67,5 +67,19 @@ namespace WinShooter.Logic.Authorization
         /// The <see cref="WinShooterCompetitionPermissions"/> array.
         /// </returns>
         string[] GetRolesForCompetitionIdAndTheUser(Guid competitionId);
+
+        /// <summary>
+        /// Get the system rights the user has.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="WinShooterCompetitionPermissions"/> array.
+        /// </returns>
+        WinShooterCompetitionPermissions[] GetSystemRightsForTheUser();
+
+        /// <summary>
+        /// Get the system roles for the user.
+        /// </summary>
+        /// <returns>The system role name array</returns>
+        string[] GetSystemRolesForTheUser();
     }
 }

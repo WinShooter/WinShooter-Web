@@ -135,5 +135,43 @@ namespace WinShooter.Logic.Authorization
 
             return userRoles.ToArray();
         }
+
+        /// <summary>
+        /// Get the system rights the user has.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="WinShooterCompetitionPermissions"/> array.
+        /// </returns>
+        public WinShooterCompetitionPermissions[] GetSystemRightsForTheUser()
+        {
+            var listOfuserRights =
+                (from userRolesInfo in
+                     this.userRolesInfoRepository.FilterBy(
+                         x => x.User.Id.Equals(this.CurrentUser.Id) && x.Role.RoleName.StartsWith("System"))
+                 select (from roleRightsInfo in userRolesInfo.Role.RoleRightsInfos select roleRightsInfo.Right)).ToArray();
+
+            // Flatten array of arrays
+            var userRights = listOfuserRights.SelectMany(rights => rights).ToArray();
+
+            return (from userRight in userRights
+                    select
+                        (WinShooterCompetitionPermissions)
+                        Enum.Parse(typeof(WinShooterCompetitionPermissions), userRight.Name)).ToArray();
+        }
+
+        /// <summary>
+        /// Get the system roles for the user.
+        /// </summary>
+        /// <returns>The system role name array</returns>
+        public string[] GetSystemRolesForTheUser()
+        {
+            var userRoles =
+                (from userRolesInfo in
+                     this.userRolesInfoRepository.FilterBy(
+                         x => x.User.Id.Equals(this.CurrentUser.Id) && x.Role.RoleName.StartsWith("System"))
+                 select userRolesInfo.Role.RoleName).ToArray();
+
+            return userRoles;
+        }
     }
 }

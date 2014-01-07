@@ -24,9 +24,9 @@
                     <ul class="nav navbar-nav">
                         @if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
                         {
-                            <li class="active">@Html.ActionLink("Tävlingsinfo", "Competition", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li>@Html.ActionLink("Klubbar", "Clubs", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li>@Html.ActionLink("Vapen", "Weapons", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li class="active">@Html.ActionLink("Tävling", "Competition", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li>@Html.ActionLink("Klubbar", "Clubs", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditClubsLink()" } })</li>
+                            <li>@Html.ActionLink("Vapen", "Weapons", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditWeaponsLink()" } })</li>
                             <li>@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionId }, null)</li>
                             <li>@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionId }, null)</li>
                             <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new { id = ViewBag.CompetitionId }, null)</li>
@@ -34,7 +34,7 @@
                             <li>@Html.ActionLink("Rättigheter", "ManageCompetitionRights", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditRightsLink" } })</li>
                         }
                         <li>
-                            @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { {"style", "display: none"}, { "data-bind", "visible: loginViewModel.shouldShowLoginLink" } })
+                            @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { {"style", "display: none"}, { "data-bind", "visible: loginViewModel.shouldShowLoginLink()" } })
                             <a style="display: none" data-bind="visible: loginViewModel.isLoggedIn" href="/api/auth/logout">Logga ut</a>
                         </li>
                     </ul>
