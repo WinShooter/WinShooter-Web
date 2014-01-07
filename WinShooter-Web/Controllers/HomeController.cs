@@ -133,6 +133,26 @@ namespace WinShooter.Controllers
         }
 
         /// <summary>
+        /// The stations.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Patrols(string id)
+        {
+            if (id == null)
+            {
+                return this.RedirectToActionPermanent("Index");
+            }
+
+            this.ViewBag.CompetitionId = id;
+            return this.View();
+        }
+
+        /// <summary>
         /// The competitors.
         /// </summary>
         /// <param name="id">

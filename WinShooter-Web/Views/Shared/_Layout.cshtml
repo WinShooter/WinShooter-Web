@@ -28,6 +28,7 @@
                             <li>@Html.ActionLink("Klubbar", "Clubs", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditClubsLink()" } })</li>
                             <li>@Html.ActionLink("Vapen", "Weapons", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditWeaponsLink()" } })</li>
                             <li>@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li>@Html.ActionLink("Patruller", "Patrols", "Home", new { id = ViewBag.CompetitionId }, null)</li>
                             <li>@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionId }, null)</li>
                             <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new { id = ViewBag.CompetitionId }, null)</li>
                             <li>@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionId }, null)</li>

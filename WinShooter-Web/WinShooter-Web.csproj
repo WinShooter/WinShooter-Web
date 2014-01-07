@@ -349,6 +349,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\NewCompetition.cshtml" />
     <Content Include="Views\Home\ManageCompetitionRights.cshtml" />
+    <Content Include="Views\Home\Patrols.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
