@@ -42,9 +42,6 @@ namespace WinShooter.Api.Api.Competition
             this.StartDate = dbcompetition.StartDate.ToString("yyyy-MM-dd hh:mm");
             this.IsPublic = dbcompetition.IsPublic;
             this.UseNorwegianCount = dbcompetition.UseNorwegianCount;
-
-            this.UserCanUpdateCompetition = false;
-            this.UserCanDeleteCompetition = false;
         }
 
         /// <summary>
@@ -85,16 +82,6 @@ namespace WinShooter.Api.Api.Competition
         public bool UseNorwegianCount { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user can edit this competition.
-        /// </summary>
-        public bool UserCanUpdateCompetition { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the user can delete this competition.
-        /// </summary>
-        public bool UserCanDeleteCompetition { get; set; }
-
-        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>
@@ -112,9 +99,7 @@ namespace WinShooter.Api.Api.Competition
                 this.IsPublic,
                 this.Name,
                 this.StartDate,
-                this.UseNorwegianCount,
-                this.UserCanUpdateCompetition,
-                this.UserCanDeleteCompetition);
+                this.UseNorwegianCount);
 
             return toReturn.ToString();
         }

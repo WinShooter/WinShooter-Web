@@ -30,7 +30,6 @@ namespace WinShooter.Api.Api.Competition
     using WinShooter.Api.Authentication;
     using WinShooter.Database;
     using WinShooter.Logic;
-    using WinShooter.Logic.Authorization;
 
     /// <summary>
     /// The competitions service.
@@ -79,27 +78,12 @@ namespace WinShooter.Api.Api.Competition
         {
             var authSession = this.GetSession() as CustomUserSession;
 
-            var userId = authSession == null || authSession.User == null ? Guid.Empty : authSession.User.Id;
             this.logic.CurrentUser = authSession == null ? null : authSession.User;
 
             var competitions = this.logic.GetCompetitions();
 
             var responses = (from dbcompetition in competitions 
                  select new CompetitionResponse(dbcompetition)).ToList();
-
-            if (userId.Equals(Guid.Empty))
-            {
-                // Anonymous user
-                return responses;
-            }
-
-            foreach (var competitionResponse in responses)
-            {
-                var userRights = this.logic.RightsHelper.GetRightsForCompetitionIdAndTheUser(
-                    Guid.Parse(competitionResponse.CompetitionId));
-                competitionResponse.UserCanDeleteCompetition = userRights.Contains(WinShooterCompetitionPermissions.DeleteCompetition);
-                competitionResponse.UserCanUpdateCompetition = userRights.Contains(WinShooterCompetitionPermissions.UpdateCompetition);
-            }
 
             return responses;
         }
@@ -112,12 +96,14 @@ namespace WinShooter.Api.Api.Competition
         /// </param>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!disposing)
             {
-                this.databaseSession.Dispose();
-
-                base.Dispose();
+                return;
             }
+
+            this.databaseSession.Dispose();
+
+            base.Dispose();
         }
     }
 }
