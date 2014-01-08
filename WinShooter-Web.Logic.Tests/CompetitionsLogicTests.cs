@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CompetitionsTests.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="CompetitionsLogicTests.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -36,7 +36,7 @@ namespace WinShooter.Logic.Tests
     /// Tests the <see cref="CompetitionsLogic"/> class.
     /// </summary>
     [TestClass]
-    public class CompetitionsTests
+    public class CompetitionsLogicTests
     {
         /// <summary>
         /// Get competitions for an anonymous user.
@@ -80,8 +80,6 @@ namespace WinShooter.Logic.Tests
         [TestMethod]
         public void GetPrivateCompetitions()
         {
-            var userGuid = Guid.NewGuid();
-
             var repository = new RepositoryForTests<Competition>();
             repository.TheContent.Add(new Competition
             {
@@ -108,7 +106,45 @@ namespace WinShooter.Logic.Tests
 
             var userRolesInfoMock = new Mock<IRepository<UserRolesInfo>>();
 
-            var competitions = new CompetitionsLogic(repository, userRolesInfoMock.Object, rightsHelperMock.Object);
+            var competitions = new CompetitionsLogic(repository, userRolesInfoMock.Object, rightsHelperMock.Object) { CurrentUser = new User() };
+
+            var result = competitions.GetCompetitions();
+            Assert.AreEqual(2, result.Count());
+        }
+
+        /// <summary>
+        /// Get competitions for a user.
+        /// </summary>
+        [TestMethod]
+        public void GetPrivateAndPublicCompetitions()
+        {
+            var repository = new RepositoryForTests<Competition>();
+            repository.TheContent.Add(new Competition
+            {
+                CompetitionType = CompetitionType.Field,
+                Id = Guid.NewGuid(),
+                IsPublic = true,
+                Name = "Public1",
+                StartDate = DateTime.Now,
+                UseNorwegianCount = false
+            });
+            repository.TheContent.Add(new Competition
+            {
+                CompetitionType = CompetitionType.Field,
+                Id = Guid.Parse("{bd4cc387-4e7a-42ae-807a-7a750f3680ea}"),
+                IsPublic = true,
+                Name = "Private1",
+                StartDate = DateTime.Now,
+                UseNorwegianCount = false
+            });
+
+            var rightsHelperMock = new Mock<IRightsHelper>();
+            rightsHelperMock.Setup(x => x.GetCompetitionIdsTheUserHasRightsOn(false))
+                .Returns(new[] { Guid.Parse("{bd4cc387-4e7a-42ae-807a-7a750f3680ea}") });
+
+            var userRolesInfoMock = new Mock<IRepository<UserRolesInfo>>();
+
+            var competitions = new CompetitionsLogic(repository, userRolesInfoMock.Object, rightsHelperMock.Object) { CurrentUser = new User() };
 
             var result = competitions.GetCompetitions();
             Assert.AreEqual(2, result.Count());

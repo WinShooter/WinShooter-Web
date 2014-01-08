@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authorization\UserCompetitionRightsTests.cs" />
-    <Compile Include="CompetitionsTests.cs" />
+    <Compile Include="CompetitionsLogicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryForTests.cs" />
     <Compile Include="TransactionForTests.cs" />
