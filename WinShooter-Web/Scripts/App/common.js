@@ -18,6 +18,14 @@ var LoginViewModel = function () {
         return !self.isLoggedIn();
     }, this);
 
+    this.shouldShowAddResultsLink = ko.computed(function() {
+        if (!self.isLoggedIn()) {
+            return false;
+        }
+
+        return -1 !== $.inArray("ReadCompetitorResult", self.rights());
+    });
+
     this.shouldShowEditRightsLink = ko.computed(function () {
         if (!self.isLoggedIn()) {
             return false;
