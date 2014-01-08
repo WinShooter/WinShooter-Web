@@ -51,7 +51,7 @@ var ViewModel = function (competition) {
         };
 
         $.ajax(deleteRequest).fail(function (data) {
-            if (data !== undefined && data.responseJSON !== undefined && data.responseJSON.ResponseStatus !== undefined && data.responseJSON.ResponseStatus.Message !== undefined) {
+            if (data !== null && data !== undefined && data.responseJSON !== undefined && data.responseJSON.ResponseStatus !== undefined && data.responseJSON.ResponseStatus.Message !== undefined) {
                 alert("Misslyckades med att radera tävlingen:\r\n" + data.responseJSON.ResponseStatus.Message);
             } else {
                 alert("Misslyckades med att radera tävlingen!");
@@ -82,14 +82,13 @@ var ViewModel = function (competition) {
         };
 
         $.ajax(updateRequest).fail(function (data) {
-            if (data !== undefined && data.responseJSON !== undefined && data.responseJSON.ResponseStatus !== undefined && data.responseJSON.ResponseStatus.Message !== undefined) {
+            if (data !== null && data !== undefined && data.responseJSON !== undefined && data.responseJSON.ResponseStatus !== undefined && data.responseJSON.ResponseStatus.Message !== undefined) {
                 alert("Misslyckades med att uppdatera tävlingen:\r\n" + data.responseJSON.ResponseStatus.Message);
             } else {
                 alert("Misslyckades med att uppdatera tävlingen!");
             }
         }).success(function () {
             alert("Tävlingen uppdaterades.");
-            window.location.href = "/";
         });
     };
 };

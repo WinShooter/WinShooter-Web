@@ -22,7 +22,6 @@
 namespace WinShooter.Api.Api.Competition
 {
     using System;
-    using System.Linq;
 
     using log4net;
 
@@ -31,7 +30,6 @@ namespace WinShooter.Api.Api.Competition
     using WinShooter.Api.Authentication;
     using WinShooter.Database;
     using WinShooter.Logic;
-    using WinShooter.Logic.Authorization;
 
     /// <summary>
     /// The competition service.

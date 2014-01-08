@@ -35,27 +35,23 @@
     <h3>Information om den valda tävlingen</h3>
     <div class="form-group">
         <label for="selectedCompetitionName">Namn:</label>
-        <input class="form-control" id="selectedCompetitionName" data-bind="value: selectedCompetitionName, disable:selectedCompetitionUserCannotUpdateCompetition" />
+        <input class="form-control" id="selectedCompetitionName" data-bind="value: selectedCompetitionName" />
     </div>
     <div class="form-group">
         <label for="selectedCompetitionStartDate">Datum:</label>
-        <input class="form-control" id="selectedCompetitionStartDate" data-bind="value: selectedCompetitionStartDate, disable:selectedCompetitionUserCannotUpdateCompetition">
+        <input class="form-control" id="selectedCompetitionStartDate" data-bind="value: selectedCompetitionStartDate">
     </div>
     <div class="checkbox">
         <label class="checkbox" for="selectedCompetitionIsPublic">
-            <input type="checkbox" id="selectedCompetitionIsPublic" data-bind="checked: selectedCompetitionIsPublic, disable:selectedCompetitionUserCannotUpdateCompetition" data-toggle="checkbox" />
+            <input type="checkbox" id="selectedCompetitionIsPublic" data-bind="checked: selectedCompetitionIsPublic" data-toggle="checkbox" />
             Publik tävling
         </label>
     </div>
     <div class="checkbox">
         <label class="checkbox" for="selectedCompetitionUseNorwegianCount">
-            <input type="checkbox" id="selectedCompetitionUseNorwegianCount" data-bind="checked: selectedCompetitionUseNorwegianCount, disable:selectedCompetitionUserCannotUpdateCompetition" data-toggle="checkbox" />
+            <input type="checkbox" id="selectedCompetitionUseNorwegianCount" data-bind="checked: selectedCompetitionUseNorwegianCount" data-toggle="checkbox" />
             Poängfältskytte
         </label>
-    </div>
-    <div class="form-group">
-        <input type="button" class="btn btn-primary" value="Uppdatera" data-bind="visible:selectedCompetitionUserCanUpdateCompetition, click: updateCompetition" />
-        <input type="button" class="btn btn-danger" value="Radera" data-bind="visible:selectedCompetitionUserCanDeleteCompetition, click: deleteCompetition" />
     </div>
 </form>
 
