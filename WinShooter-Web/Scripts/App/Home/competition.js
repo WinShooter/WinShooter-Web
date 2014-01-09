@@ -1,4 +1,5 @@
-﻿// The different JSON urls
+﻿/// <reference path="/Scripts/Flat-ui/flatui-checkbox.js" />
+// The different JSON urls
 var competitionsApiUrl = "/api/competitions";
 var competitionApiUrl = "/api/competition";
 
@@ -13,10 +14,20 @@ var ViewModel = function (competition) {
 
     self.competitionName = ko.observable(competition.Name);
     self.competitionStartDate = ko.observable(competition.StartDate);
-    self.competitionIsPublic = ko.observable(competition.IsPublic);
-    self.competitionUseNorwegianCount = ko.observable(competition.UseNorwegianCount);
 
-    this.userCanUpdateCompetition = ko.computed(function () {
+    // Cannot use normal knockout bindings because bootstrap competes with knockout
+    if (competition.IsPublic) {
+        console.log('IsPublic:' + competition.IsPublic);
+        $('#selectedCompetitionIsPublic').checkbox('check');
+    }
+
+    // Cannot use normal knockout bindings because bootstrap competes with knockout
+    if (competition.UseNorwegianCount) {
+        console.log('UseNorwegianCount:' + competition.UseNorwegianCount);
+        $('#selectedCompetitionUseNorwegianCount').checkbox('check');
+    }
+
+    self.userCanUpdateCompetition = ko.computed(function () {
         if (!self.loginViewModel.isLoggedIn()) {
             return false;
         }
@@ -24,7 +35,7 @@ var ViewModel = function (competition) {
         return -1 !== $.inArray("UpdateCompetition", self.loginViewModel.rights());
     }, this);
 
-    this.userCanDeleteCompetition = ko.computed(function () {
+    self.userCanDeleteCompetition = ko.computed(function () {
         if (!self.loginViewModel.isLoggedIn()) {
             return false;
         }
@@ -33,8 +44,8 @@ var ViewModel = function (competition) {
     }, this);
 
     // Function for deleting competition
-    this.deleteCompetition = function () {
-        if (this.competition() === undefined) {
+    self.deleteCompetition = function () {
+        if (self.competition() === undefined) {
             // What? Should never happen.
             alert("Du måste välja en tävling att radera.");
             return;
@@ -45,7 +56,7 @@ var ViewModel = function (competition) {
         }
 
         var deleteRequest = {
-            url: competitionApiUrl + "/" + this.competition().CompetitionId,
+            url: competitionApiUrl + "/" + self.competition().CompetitionId,
             type: "delete",
             dataType: "json"
         };
@@ -63,20 +74,24 @@ var ViewModel = function (competition) {
     };
 
     // Function for updating competition
-    this.updateCompetition = function () {
-        if (this.competition() === undefined) {
+    self.updateCompetition = function () {
+        if (self.competition() === undefined) {
             // What? Should never happen.
             alert("Du måste välja en tävling att uppdatera.");
             return;
         }
 
-        self.competition().Name = self.competitionName();
-        self.competition().StartDate = self.competitionStartDate();
-        self.competition().UseNorwegianCount = self.competitionUseNorwegianCount();
+        var updateCompetition = self.competition();
+
+        updateCompetition.Name = self.competitionName();
+        updateCompetition.CompetitionType = "Field";
+        updateCompetition.StartDate = self.competitionStartDate();
+        updateCompetition.UseNorwegianCount = $('#selectedCompetitionUseNorwegianCount').prop('checked', true);
+        updateCompetition.IsPublic = $('#selectedCompetitionIsPublic').prop('checked', true);
 
         var updateRequest = {
-            url: competitionApiUrl + "/" + this.competition().CompetitionId,
-            data: self.competition(),
+            url: competitionApiUrl + "/" + updateCompetition.CompetitionId,
+            data: updateCompetition,
             type: "post",
             dataType: "json"
         };
