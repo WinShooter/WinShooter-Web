@@ -58,7 +58,7 @@
         <!-- fallback for CDN -->
         <script>
             // Fallback to loading jQuery from a local path if the CDN is unavailable
-            (window.jQuery === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-1.9.1.js")"><\/script>'));
+            (window.jQuery === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-2.0.3.js")"><\/script>'));
         </script>
         <script>
             // Fallback to loading jQuery.ui from a local path if the CDN is unavailable
@@ -66,7 +66,7 @@
         </script>
         <script>
             // Fallback to loading knockout from a local path if the CDN is unavailable
-            (window.ko === undefined && document.write('<script src="@Url.Content("~/Scripts/knockout-2.2.0.js")"><\/script>'));
+            (window.ko === undefined && document.write('<script src="@Url.Content("~/Scripts/knockout-3.0.0.js")"><\/script>'));
         </script>
 
         @RenderSection("scripts", required: false)
