@@ -86,8 +86,8 @@ var ViewModel = function (competition) {
         updateCompetition.Name = self.competitionName();
         updateCompetition.CompetitionType = "Field";
         updateCompetition.StartDate = self.competitionStartDate();
-        updateCompetition.UseNorwegianCount = $('#selectedCompetitionUseNorwegianCount').prop('checked', true);
-        updateCompetition.IsPublic = $('#selectedCompetitionIsPublic').prop('checked', true);
+        updateCompetition.UseNorwegianCount = $('label').find("[for='selectedCompetitionUseNorwegianCount']").hasClass("checked");
+        updateCompetition.IsPublic = $('label').find("[for='selectedCompetitionIsPublic']").hasClass("checked");
 
         var updateRequest = {
             url: competitionApiUrl + "/" + updateCompetition.CompetitionId,
