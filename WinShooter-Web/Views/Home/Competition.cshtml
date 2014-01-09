@@ -16,15 +16,16 @@
         <input class="form-control" id="selectedCompetitionStartDate" data-bind="value: competitionStartDate, visible:userCanUpdateCompetition()">
         <p data-bind="text: competitionStartDate, visible:!userCanUpdateCompetition()"></p>
     </div>
-    <div class="checkbox">
+
+    <div class="form-group">
         <label class="checkbox" for="selectedCompetitionIsPublic">
-            <input type="checkbox" id="selectedCompetitionIsPublic" data-bind="checked: competitionIsPublic, disable:!userCanUpdateCompetition()" data-toggle="checkbox" />
+            <input type="checkbox" value="" id="selectedCompetitionIsPublic" data-toggle="checkbox" />
             Publik tävling
         </label>
     </div>
-    <div class="checkbox">
+    <div class="form-group">
         <label class="checkbox" for="selectedCompetitionUseNorwegianCount">
-            <input type="checkbox" id="selectedCompetitionUseNorwegianCount" data-bind="checked: competitionUseNorwegianCount, disable:!userCanUpdateCompetition()" data-toggle="checkbox" />
+            <input type="checkbox" id="selectedCompetitionUseNorwegianCount" data-toggle="checkbox" />
             Poängfältskytte
         </label>
     </div>
