@@ -4,116 +4,63 @@ var competitionApiUrl = "/api/competition";
 
 // Here's my data model
 var ViewModel = function (competitions) {
-    this.loginViewModel = new LoginViewModel();
+    var self = this;
+
+    self.loginViewModel = new LoginViewModel();
 
     // Attributes for showing existing competition
-    this.competitions = ko.observableArray(competitions);
-    this.selectedCompetition = ko.observable('');
+    self.competitions = ko.observableArray(competitions);
+    self.selectedCompetition = ko.observable('');
     
     // For showing existing competitions data
-    this.selectedCompetitionName = ko.computed(function () {
-        if (this.selectedCompetition() === undefined) {
+    self.selectedCompetitionName = ko.computed(function () {
+        if (self.selectedCompetition() === undefined) {
             return '';
         }
-        return this.selectedCompetition().Name;
-    }, this);
+        return self.selectedCompetition().Name;
+    }, self);
 
-    this.selectedCompetitionGuid = ko.computed(function () {
-        if (this.selectedCompetition() === undefined) {
+    self.selectedCompetitionGuid = ko.computed(function () {
+        if (self.selectedCompetition() === undefined) {
             return '';
         }
-        return this.selectedCompetition().CompetitionId;
-    }, this);
+        return self.selectedCompetition().CompetitionId;
+    }, self);
 
-    this.selectedCompetitionStartDate = ko.computed(function () {
-        if (this.selectedCompetition() === undefined) {
+    self.selectedCompetitionStartDate = ko.computed(function () {
+        if (self.selectedCompetition() === undefined) {
             return '';
         }
-        return this.selectedCompetition().StartDate;
-    }, this);
-    
-    this.selectedCompetitionIsPublic = ko.computed(function () {
-        if (this.selectedCompetition() === undefined) {
-            return '';
-        }
-        return this.selectedCompetition().IsPublic;
-    }, this);
+        return self.selectedCompetition().StartDate;
+    }, self);
 
-    this.selectedCompetitionUseNorwegianCount = ko.computed(function () {
-        if (this.selectedCompetition() === undefined) {
-            return '';
+    self.selectedCompetition.subscribe(function (newCompetition) {
+        if (newCompetition === undefined) {
+            $('#selectedCompetitionUseNorwegianCount').checkbox('');
+            $('#selectedCompetitionIsPublic').checkbox('');
+            return;
         }
-        return this.selectedCompetition().UseNorwegianCount;
-    }, this);
+
+        if (newCompetition.UseNorwegianCount) {
+            $('#selectedCompetitionUseNorwegianCount').checkbox('check');
+        } else {
+            $('#selectedCompetitionUseNorwegianCount').checkbox('');
+        }
+
+        if (newCompetition.IsPublic) {
+            $('#selectedCompetitionIsPublic').checkbox('check');
+        } else {
+            $('#selectedCompetitionIsPublic').checkbox('');
+        }
+    });
 
     // Selects the current competition
-    this.selectCompetitionOnServer = function () {
+    self.selectCompetitionOnServer = function () {
         var newLocation = "/home/competition/";
-        if (this.selectedCompetition() !== undefined) {
-            newLocation = newLocation + this.selectedCompetition().CompetitionId;
+        if (self.selectedCompetition() !== undefined) {
+            newLocation = newLocation + self.selectedCompetition().CompetitionId;
             window.location.href = newLocation;
         }
-    };
-    
-    // Attributes for creating a new competition
-    this.newCompetitionName = ko.observable('');
-    this.newCompetitionStartDate = ko.observable('');
-
-    // Function for deleting competition
-    this.deleteCompetition = function () {
-        if (this.selectedCompetition() === undefined) {
-            // What? Should never happen.
-            alert("Du måste välja en tävling att radera.");
-            return;
-        }
-
-        if (confirm("Vill du verkligen radera tävlingen?") === false) {
-            return;
-        }
-
-        var data = JSON.stringify(this.selectedCompetition());
-
-        var deleteRequest = {
-            url: competitionApiUrl + "/" + this.selectedCompetition().CompetitionId,
-            type: "delete",
-            dataType: "json",
-            success: function() {
-                alert("Success!");
-            }
-        };
-
-        $.ajax(deleteRequest).fail(function(data) {
-            alert("Misslyckades med att radera tävlingen:\r\n" + data.responseJSON.ResponseStatus.Message);
-        }).success(function() {
-            alert("Tävlingen raderades. (TODO: Här ska vi också uppdatera listan med tävlingar)");
-        });
-    };
-
-    // Function for updating competition
-    this.updateCompetition = function () {
-        if (this.selectedCompetition() === undefined) {
-            // What? Should never happen.
-            alert("Du måste välja en tävling att uppdatera.");
-            return;
-        }
-
-        alert("NotImplementedYet");
-    };
-
-    // Function for adding competition
-    this.addCompetition = function() {
-        var competition = {
-            CompetitionType: "Field",
-            Name: this.newCompetitionName(),
-            UseNorwegianCount: "False",
-            StartDate: this.newCompetitionStartDate(),
-        };
-
-        $.post("/api/competition", competition, function(returnedData) {
-            alert("success!");
-        }).fail(function() {
-            alert("fail!");
-        });
     };
 };
 

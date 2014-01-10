@@ -1,4 +1,8 @@
-﻿// The different JSON urls
+﻿/// <reference path="/Scripts/Flat-ui/flatui-checkbox.js" />
+/// <reference path="/Scripts/App/common.js" />
+/// <reference path="/Scripts/bootstrap.js" />
+/// <reference path="/Scripts/knockout-3.0.0.js" />
+// The different JSON urls
 var competitionsApiUrl = "/api/competitions";
 var competitionApiUrl = "/api/competition";
 
@@ -16,7 +20,8 @@ var ViewModel = function () {
         var competition = {
             CompetitionType: "Field",
             Name: this.newCompetitionName(),
-            UseNorwegianCount: "False",
+            UseNorwegianCount: $('label[for="newCompetitionUseNorwegianCount"]').hasClass("checked"),
+            IsPublic : $('label[for="newCompetitionIsPublic"]').hasClass("checked"),
             StartDate: this.newCompetitionStartDate() + " " + this.newCompetitionStartTime(),
         };
 

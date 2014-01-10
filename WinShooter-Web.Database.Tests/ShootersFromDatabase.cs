@@ -121,8 +121,6 @@ namespace WinShooter.Database.Tests
                     }
                 }
 
-
-
                 using (var transaction = databaseSession.BeginTransaction())
                 {
                     foreach (var shooter in (from dbShooter in databaseSession.Query<Shooter>()

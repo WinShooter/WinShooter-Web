@@ -22,6 +22,21 @@
         <label for="newCompetitionStartTime">Startar tid:</label>
         <input class="form-control" type="text" id="newCompetitionStartTime" data-bind="value: newCompetitionStartTime" />
     </div>
+
+
+    <div class="form-group">
+        <label class="checkbox" for="newCompetitionIsPublic">
+            <input type="checkbox" value="" id="newCompetitionIsPublic" data-toggle="checkbox" />
+            Publik tävling
+        </label>
+    </div>
+    <div class="form-group">
+        <label class="checkbox" for="newCompetitionUseNorwegianCount">
+            <input type="checkbox" id="newCompetitionUseNorwegianCount" data-toggle="checkbox" />
+            Poängfältskytte
+        </label>
+    </div>
+
     <div class="form-group">
         <input class="btn btn-primary" type="button" id="newCompetitionAddNow" value="Lägg till" data-bind="click: addCompetition" />
     </div>
