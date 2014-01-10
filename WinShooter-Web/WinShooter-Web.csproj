@@ -305,6 +305,7 @@
     <Content Include="Scripts\App\Home\competition.js" />
     <Content Include="Scripts\App\Home\manageCompetitionRights.js" />
     <Content Include="Scripts\App\Home\newcompetition.js" />
+    <Content Include="Scripts\App\Home\stations.js" />
     <Content Include="Scripts\Flat-ui\flatui-checkbox.js" />
     <Content Include="Scripts\Flat-ui\flatui-radio.js" />
     <Content Include="Scripts\App\Home\index.js" />

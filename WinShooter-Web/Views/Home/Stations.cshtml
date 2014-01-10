@@ -1,8 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Stations";
+    ViewBag.Title = "Stationer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Stations</h1>
+<h1>Stationer</h1>
 
 <p>Här kommer man att kunna administrera stationerna.</p>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/App/Home/stations.js")
+}

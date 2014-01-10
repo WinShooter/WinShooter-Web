@@ -63,6 +63,7 @@
     <Compile Include="CompetitionsLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RolesLogic.cs" />
+    <Compile Include="StationsLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WinShooter-Web.Database\WinShooter-Web.Database.csproj">
