@@ -410,7 +410,6 @@ namespace WinShooter.Database.Tests
 
                 Assert.IsNotNull(competitorResults);
                 Assert.AreEqual(0, competitorResults.Count());
-
             }
         }
     }
