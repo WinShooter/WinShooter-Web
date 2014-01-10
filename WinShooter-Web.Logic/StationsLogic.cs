@@ -47,6 +47,11 @@ namespace WinShooter.Logic
         private readonly IRepository<Station> stationRepository;
 
         /// <summary>
+        /// The competition repository.
+        /// </summary>
+        private readonly IRepository<Competition> competitionRepository;
+
+        /// <summary>
         /// The current user.
         /// </summary>
         private User currentUser;
@@ -55,15 +60,19 @@ namespace WinShooter.Logic
         /// Initializes a new instance of the <see cref="StationsLogic"/> class.
         /// </summary>
         /// <param name="stationRepository">
-        /// The station Repository.
+        /// The station repository.
+        /// </param>
+        /// <param name="competitionRepository">
+        /// The competition repository.
         /// </param>
         /// <param name="rightsHelper">
         /// The rights Helper.
         /// </param>
-        public StationsLogic(IRepository<Station> stationRepository, IRightsHelper rightsHelper)
+        public StationsLogic(IRepository<Station> stationRepository, IRepository<Competition> competitionRepository, IRightsHelper rightsHelper)
             : this()
         {
             this.stationRepository = stationRepository;
+            this.competitionRepository = competitionRepository;
             this.RightsHelper = rightsHelper;
         }
 
@@ -77,6 +86,7 @@ namespace WinShooter.Logic
             : this()
         {
             this.stationRepository = new Repository<Station>(session);
+            this.competitionRepository = new Repository<Competition>(session);
             this.RightsHelper = new RightsHelper(
                 new Repository<UserRolesInfo>(session),
                 new Repository<RoleRightsInfo>(session));
@@ -123,7 +133,14 @@ namespace WinShooter.Logic
         /// </returns>
         public Station[] GetStations(Guid competitionId)
         {
-            if (
+            var competition = this.competitionRepository.FilterBy(x => x.Id.Equals(competitionId)).FirstOrDefault();
+
+            if (competition == null)
+            {
+                throw new Exception("There are no competition with ID " + competitionId);
+            }
+
+            if (!competition.IsPublic && 
                 !this.RightsHelper.GetRightsForCompetitionIdAndTheUser(competitionId)
                 .Contains(WinShooterCompetitionPermissions.ReadStation))
             {

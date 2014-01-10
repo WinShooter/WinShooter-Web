@@ -22,6 +22,7 @@
 namespace WinShooter.Logic.Authorization
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using WinShooter.Database;
@@ -40,6 +41,27 @@ namespace WinShooter.Logic.Authorization
         /// The <see cref="RoleRightsInfo"/> repository.
         /// </summary>
         private readonly IRepository<RoleRightsInfo> roleRightsInfoRepository;
+
+        /// <summary>
+        /// The public competition rights.
+        /// </summary>
+        private readonly WinShooterCompetitionPermissions[] publicCompetitionRights =
+            {
+                WinShooterCompetitionPermissions
+                    .ReadClub,
+                WinShooterCompetitionPermissions
+                    .ReadCompetition,
+                WinShooterCompetitionPermissions
+                    .ReadCompetitorResult,
+                WinShooterCompetitionPermissions
+                    .ReadPatrol,
+                WinShooterCompetitionPermissions
+                    .ReadPublicUser,
+                WinShooterCompetitionPermissions
+                    .ReadStation,
+                WinShooterCompetitionPermissions
+                    .ReadWeapon
+            };
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="RightsHelper"/> class.
@@ -95,7 +117,7 @@ namespace WinShooter.Logic.Authorization
             if (this.CurrentUser == null)
             {
                 // Anonymous user
-                return new WinShooterCompetitionPermissions[0];
+                return this.publicCompetitionRights;
             }
 
             var userRoleIds =
@@ -112,8 +134,8 @@ namespace WinShooter.Logic.Authorization
                          select
                          (WinShooterCompetitionPermissions)
                          Enum.Parse(typeof(WinShooterCompetitionPermissions), rightString);
-            
-            return rights.ToArray();
+
+            return this.AddRightsWithNoDuplicate(rights, this.publicCompetitionRights);
         }
 
         /// <summary>
@@ -172,6 +194,28 @@ namespace WinShooter.Logic.Authorization
                  select userRolesInfo.Role.RoleName).ToArray();
 
             return userRoles;
+        }
+
+        /// <summary>
+        /// Add two arrays of rights to one, leaving out the duplicates.
+        /// </summary>
+        /// <param name="rights1">
+        /// The rights 1.
+        /// </param>
+        /// <param name="rights2">
+        /// The rights 2.
+        /// </param>
+        /// <returns>
+        /// The <see cref="WinShooterCompetitionPermissions"/>s.
+        /// </returns>
+        public WinShooterCompetitionPermissions[] AddRightsWithNoDuplicate(
+            IEnumerable<WinShooterCompetitionPermissions> rights1,
+            IEnumerable<WinShooterCompetitionPermissions> rights2)
+        {
+            var rightsList = new List<WinShooterCompetitionPermissions>(rights1);
+            rightsList.AddRange((from right in rights2 where !rightsList.Contains(right) select right).ToArray());
+
+            return rightsList.ToArray();
         }
     }
 }

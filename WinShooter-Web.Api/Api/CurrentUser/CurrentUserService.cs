@@ -22,7 +22,6 @@
 namespace WinShooter.Api.Api.CurrentUser
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     using ServiceStack.ServiceInterface;
@@ -84,25 +83,20 @@ namespace WinShooter.Api.Api.CurrentUser
             }
 
             this.rightsHelper.CurrentUser = session.User;
-            var rights = new List<string>();
+            var rights = new WinShooterCompetitionPermissions[0];
             if (!string.IsNullOrEmpty(request.CompetitionId))
             {
-                rights.AddRange(
-                    (from right in
-                         this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(request.CompetitionId))
-                     select right.ToString()).ToArray());
+                rights = this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(request.CompetitionId));
             }
 
-            rights.AddRange(
-                from right in this.rightsHelper.GetSystemRightsForTheUser()
-                    select right.ToString());
+            rights = this.rightsHelper.AddRightsWithNoDuplicate(rights, this.rightsHelper.GetSystemRightsForTheUser());
 
             return new CurrentUserResponse 
                        { 
                            IsLoggedIn = true,
                            DisplayName = session.User.DisplayName,
                            Email = session.User.Email,
-                           CompetitionRights = rights.ToArray()
+                           CompetitionRights = (from right in rights select right.ToString()).ToArray()
                        };
         }
 

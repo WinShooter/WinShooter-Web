@@ -22,6 +22,7 @@
 namespace WinShooter.Logic.Authorization
 {
     using System;
+    using System.Collections.Generic;
 
     using WinShooter.Database;
 
@@ -81,5 +82,21 @@ namespace WinShooter.Logic.Authorization
         /// </summary>
         /// <returns>The system role name array</returns>
         string[] GetSystemRolesForTheUser();
+
+        /// <summary>
+        /// Add two arrays of rights to one, leaving out the duplicates.
+        /// </summary>
+        /// <param name="rights1">
+        /// The rights 1.
+        /// </param>
+        /// <param name="rights2">
+        /// The rights 2.
+        /// </param>
+        /// <returns>
+        /// The <see cref="WinShooterCompetitionPermissions[]"/>.
+        /// </returns>
+        WinShooterCompetitionPermissions[] AddRightsWithNoDuplicate(
+            IEnumerable<WinShooterCompetitionPermissions> rights1,
+            IEnumerable<WinShooterCompetitionPermissions> rights2);
     }
 }
