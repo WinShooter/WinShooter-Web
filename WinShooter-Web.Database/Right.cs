@@ -22,6 +22,7 @@
 namespace WinShooter.Database
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The representation of the database right.
@@ -41,6 +42,6 @@ namespace WinShooter.Database
         /// <summary>
         /// Gets or sets the <see cref="RoleRightsInfo"/>s.
         /// </summary>
-        public virtual RoleRightsInfo[] RoleRightsInfos { get; set; }
+        public virtual IList<RoleRightsInfo> RoleRightsInfos { get; set; }
     }
 }
