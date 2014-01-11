@@ -124,7 +124,7 @@ namespace WinShooter.Database.Tests
                                     NumberOfTargets = 5,
                                     NumberOfShots = 6,
                                     Distinguish = false,
-                                    Points = 10
+                                    Points = true
                                 };
 
                 using (var transaction = databaseSession.BeginTransaction())
@@ -183,7 +183,7 @@ namespace WinShooter.Database.Tests
                     NumberOfTargets = 5,
                     NumberOfShots = 6,
                     Distinguish = false,
-                    Points = 10
+                    Points = true
                 };
 
                 using (var transaction = databaseSession.BeginTransaction())

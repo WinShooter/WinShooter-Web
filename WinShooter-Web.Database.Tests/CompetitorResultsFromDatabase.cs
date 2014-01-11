@@ -167,7 +167,7 @@ namespace WinShooter.Database.Tests
                         Distinguish = false,
                         NumberOfShots = 6,
                         NumberOfTargets = 6,
-                        Points = 10,
+                        Points = true,
                         StationNumber = 1
                     };
 

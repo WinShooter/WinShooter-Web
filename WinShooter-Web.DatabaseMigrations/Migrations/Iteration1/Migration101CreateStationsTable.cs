@@ -44,7 +44,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("CompetitionId").AsGuid().Nullable()
                 .WithColumn("NumberOfTargets").AsInt32()
                 .WithColumn("NumberOfShots").AsInt32()
-                .WithColumn("Points").AsInt32()
+                .WithColumn("Points").AsBoolean()
                 .WithColumn("Distinguish").AsBoolean()
                 .WithColumn("StationNumber").AsInt32();
         }

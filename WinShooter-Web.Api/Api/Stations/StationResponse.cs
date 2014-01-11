@@ -80,7 +80,7 @@ namespace WinShooter.Api.Api.Stations
         /// <summary>
         /// Gets or sets the points.
         /// </summary>
-        public int Points { get; set; }
+        public bool Points { get; set; }
 
         /// <summary>
         /// Gets or sets the station number.

@@ -60,9 +60,9 @@ namespace WinShooter.Database
         public virtual int NumberOfShots { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Station"/> points.
+        /// Gets or sets a value indicating whether the <see cref="Station"/> has points.
         /// </summary>
-        public virtual int Points { get; set; }
+        public virtual bool Points { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="Station"/> is a station for distinguishing between shooters.

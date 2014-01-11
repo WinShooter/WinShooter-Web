@@ -4,3 +4,17 @@
 .winshooter-template {
   padding: 40px 15px;
 }
+
+fieldset.station-border {
+    width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+    margin-bottom:0;
+}
+
+legend.station-border {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+
+}
