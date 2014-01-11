@@ -5,7 +5,13 @@
 
 <h1>Stationer</h1>
 
-<p>Här kommer man att kunna administrera stationerna.</p>
+<div class="col-md-3">
+    <button class="btn btn-block btn-lg btn-primary" data-bind="click: addNewStation">Lägg till station</button>
+</div>
+
+<div id="stationsContainer">
+    
+</div>
 
 @section scripts {
     @Scripts.Render("~/Scripts/App/Home/stations.js")

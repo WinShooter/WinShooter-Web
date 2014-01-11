@@ -107,9 +107,9 @@
     <Compile Include="Api\Competition\CompetitionRightsService.cs" />
     <Compile Include="Api\CurrentUser\CurrentUserRequest.cs" />
     <Compile Include="Api\CurrentUser\CurrentUserResponse.cs" />
-    <Compile Include="Api\Station\StationResponse.cs" />
-    <Compile Include="Api\Station\StationsService.cs" />
-    <Compile Include="Api\Station\StationsRequest.cs" />
+    <Compile Include="Api\Stations\StationResponse.cs" />
+    <Compile Include="Api\Stations\StationsService.cs" />
+    <Compile Include="Api\Stations\StationRequest.cs" />
     <Compile Include="Api\User\UserResponse.cs" />
     <Compile Include="Api\User\UserRequest.cs" />
     <Compile Include="Api\CurrentUser\CurrentUserService.cs" />

@@ -155,5 +155,117 @@ namespace WinShooter.Logic
                 (from station in this.stationRepository.FilterBy(x => x.Competition.Id.Equals(competitionId))
                  select station).ToArray();
         }
+
+        /// <summary>
+        /// The update competition.
+        /// </summary>
+        /// <param name="competitionId">
+        /// The competition Id.
+        /// </param>
+        /// <param name="station">
+        /// The station.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Station"/>.
+        /// </returns>
+        public Station AddStation(Guid competitionId, Station station)
+        {
+            var competition = this.competitionRepository.FilterBy(x => x.Id.Equals(competitionId)).FirstOrDefault();
+
+            if (competition == null)
+            {
+                throw new Exception("There are no competition with ID " + competitionId);
+            }
+
+            if (!this.RightsHelper.GetRightsForCompetitionIdAndTheUser(competitionId)
+                .Contains(WinShooterCompetitionPermissions.CreateStation))
+            {
+                this.log.ErrorFormat(
+                    "User {0} does not have enough rights to read stations for competition {1}",
+                    this.currentUser,
+                    competitionId);
+                throw new NotEnoughRightsException("You don't have rights to read stations for this competition");
+            }
+
+            var stationCount = this.stationRepository.FilterBy(x => x.Competition.Id.Equals(competitionId)).Count();
+
+            station.Competition = competition;
+            station.StationNumber = stationCount + 1;
+
+            using (var transaction = this.stationRepository.StartTransaction())
+            {
+                if (this.stationRepository.Add(station))
+                {
+                    transaction.Commit();
+                }
+            }
+
+            return station;
+        }
+
+        /// <summary>
+        /// The update competition.
+        /// </summary>
+        /// <param name="competitionId">
+        /// The competition Id.
+        /// </param>
+        /// <param name="station">
+        /// The station.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Station"/>.
+        /// </returns>
+        public Station UpdateStation(Guid competitionId, Station station)
+        {
+            var competition = this.competitionRepository.FilterBy(x => x.Id.Equals(competitionId)).FirstOrDefault();
+
+            if (competition == null)
+            {
+                throw new Exception("There are no competition with ID " + competitionId);
+            }
+
+            if (!this.RightsHelper.GetRightsForCompetitionIdAndTheUser(competitionId)
+                .Contains(WinShooterCompetitionPermissions.UpdateStation))
+            {
+                this.log.ErrorFormat(
+                    "User {0} does not have enough rights to read stations for competition {1}",
+                    this.currentUser,
+                    competitionId);
+                throw new NotEnoughRightsException("You don't have rights to read stations for this competition");
+            }
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The update competition.
+        /// </summary>
+        /// <param name="competitionId">
+        /// The competition Id.
+        /// </param>
+        /// <param name="station">
+        /// The station.
+        /// </param>
+        public void DeleteStation(Guid competitionId, Station station)
+        {
+            var competition = this.competitionRepository.FilterBy(x => x.Id.Equals(competitionId)).FirstOrDefault();
+
+            if (competition == null)
+            {
+                throw new Exception("There are no competition with ID " + competitionId);
+            }
+
+            if (!this.RightsHelper.GetRightsForCompetitionIdAndTheUser(competitionId)
+                .Contains(WinShooterCompetitionPermissions.DeleteStation))
+            {
+                this.log.ErrorFormat(
+                    "User {0} does not have enough rights to read stations for competition {1}",
+                    this.currentUser,
+                    competitionId);
+                throw new NotEnoughRightsException("You don't have rights to read stations for this competition");
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }

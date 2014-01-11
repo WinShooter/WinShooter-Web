@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api.Station
+namespace WinShooter.Api.Api.Stations
 {
     using System.Text;
 
@@ -37,7 +37,7 @@ namespace WinShooter.Api.Api.Station
         public StationResponse(Database.Station dbstation)
         {
             this.Id = dbstation.Id.ToString();
-            this.CompetitionId = dbstation.Id.ToString();
+            this.CompetitionId = dbstation.Competition.Id.ToString();
             this.Distinguish = dbstation.Distinguish;
             this.NumberOfShots = dbstation.NumberOfShots;
             this.NumberOfTargets = dbstation.NumberOfTargets;

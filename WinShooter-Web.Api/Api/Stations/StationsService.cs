@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api.Station
+namespace WinShooter.Api.Api.Stations
 {
     using System;
     using System.Collections.Generic;
@@ -83,7 +83,7 @@ namespace WinShooter.Api.Api.Station
         /// <returns>
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
-        public List<StationResponse> Get(StationsRequest request)
+        public List<StationResponse> Get(StationRequest request)
         {
             try
             {
@@ -92,9 +92,7 @@ namespace WinShooter.Api.Api.Station
 
                 this.logic.CurrentUser = authSession == null ? null : authSession.User;
 
-                var competitionId = Guid.Parse(request.CompetitionId);
-
-                var stations = this.logic.GetStations(competitionId);
+                var stations = this.logic.GetStations(request.CompetitionId);
 
                 var responses = (from dbstation in stations
                                  select new StationResponse(dbstation)).ToList();
@@ -106,6 +104,45 @@ namespace WinShooter.Api.Api.Station
                 this.log.ErrorFormat("Exception while retrieving stations from request ({0}): {1}", request, exception);
                 throw;
             }
+        } 
+        
+        /// <summary>
+        /// The put.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="CompetitionResponse"/>.
+        /// </returns>
+        [Authenticate]
+        public StationResponse Post(StationRequest request)
+        {
+            this.log.Debug("Got POST request: " + request);
+            var session = this.GetSession() as CustomUserSession;
+            if (session == null)
+            {
+                // This really shouldn't happen since we have attributed for authenticate
+                this.log.Error("Session is null in POST request.");
+                throw new Exception("You need to authenticate");
+            }
+
+            this.logic.CurrentUser = session.User;
+            this.log.Debug("User is " + this.logic.CurrentUser);
+
+            if (string.IsNullOrEmpty(request.StationId))
+            {
+                this.log.Debug("Adding a station.");
+
+                return new StationResponse(
+                    this.logic.AddStation(request.CompetitionId, request.GetDatabaseStation()));
+            }
+
+            this.log.Debug("Updating a station.");
+            return new StationResponse(
+                this.logic.UpdateStation(
+                request.CompetitionId,
+                request.GetDatabaseStation()));
         }
 
         /// <summary>
