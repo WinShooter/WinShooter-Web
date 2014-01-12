@@ -112,7 +112,7 @@ var ViewModel = function (stations) {
         var station = this;
         console.log("Station: " + JSON.stringify(station));
 
-        if (confirm("Vill du verkligen radera tävlingen?") === false) {
+        if (confirm("Vill du verkligen radera stationen?") === false) {
             return false;
         }
 
