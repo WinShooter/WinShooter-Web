@@ -288,6 +288,19 @@ namespace WinShooter.Logic
                     transaction.Commit();
                 }
             }
+
+            this.RenumberStations(databaseStation.Competition);
+        }
+
+        /// <summary>
+        /// Renumbers the stations in a competition.
+        /// </summary>
+        /// <param name="competition">
+        /// The competition.
+        /// </param>
+        private void RenumberStations(Competition competition)
+        {
+            // TODO: Implement
         }
     }
 }

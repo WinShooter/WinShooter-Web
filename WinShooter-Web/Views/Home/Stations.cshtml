@@ -12,8 +12,44 @@
 </div>
 
 <div class="row">
-    <div class="col-md-3" id="stationsContainer">
+    <div data-bind="foreach: stations">
+        <div class="col-md-3">
+            <fieldset class="station-border">
+                <legend class="station-border" data-bind="text: 'Station ' + StationNumber"></legend>
 
+                <div class="form-group">
+                    <label>Antal figurer:</label>
+                    <input class="form-control" data-bind="value: NumberOfTargets, visible:$parent.userCanUpdateStation()">
+                    <p data-bind="text: NumberOfTargets, visible:!$parent.userCanUpdateStation()"></p>
+                </div>
+
+                <div class="form-group">
+                    <label >Antal skott:</label>
+                    <input class="form-control" data-bind="value: NumberOfShots, visible:$parent.userCanUpdateStation()">
+                    <p data-bind="text: NumberOfShots, visible:!$parent.userCanUpdateStation()"></p>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox">
+                        <input type="checkbox" data-toggle="checkbox" />
+                        Poängstation
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox" >
+                        <input type="checkbox" data-toggle="checkbox" />
+                        Särskiljning
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <input type="button" class="btn btn-primary" value="Uppdatera" data-bind="visible:$parent.userCanUpdateStation, click: $parent.updateStation" />
+                    <input type="button" class="btn btn-danger" value="Ta bort" data-bind="visible:$parent.userCanDeleteStation, click: $parent.deleteStation" />
+                </div>
+                
+            </fieldset>
+        </div>
     </div>
 </div>
 
