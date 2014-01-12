@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Diagnostics
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -7,7 +8,59 @@
     @Styles.Render("~/Content/bootstrap")
     @Styles.Render("~/Content/css")    
     @Scripts.Render("~/bundles/modernizr")
-@if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
+    
+    @{
+        var htmlLinkClubsClass = string.Empty;
+        var htmlLinkCompetitionClass = string.Empty;
+        var htmlLinkCompetitorsClass = string.Empty;
+        var htmlLinkEnterResultsClass = string.Empty;
+        var htmlLinkManageCompetitionRightsClass = string.Empty;
+        var htmlLinkPatrolsClass = string.Empty;
+        var htmlLinkResultsClass = string.Empty;
+        var htmlLinkStationsClass = string.Empty;
+        var htmlLinkWeaponsClass = string.Empty;
+        if (ViewContext.Controller.GetType().Name == "HomeController")
+        {
+            switch (ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString().ToUpper())
+            {
+                case "INDEX":
+                    // Don't to anything
+                    break;
+                case "CLUBS":
+                    htmlLinkClubsClass = "active";
+                    break;
+                case "COMPETITION":
+                    htmlLinkCompetitionClass = "active";
+                    break;
+                case "COMPETITORS":
+                    htmlLinkCompetitorsClass = "active";
+                    break;
+                case "ENTERRESULTS":
+                    htmlLinkEnterResultsClass = "active";
+                    break;
+                case "MANAGECOMPETITIONRIGHTS":
+                    htmlLinkManageCompetitionRightsClass = "active";
+                    break;
+                case "PATROLS":
+                    htmlLinkPatrolsClass = "active";
+                    break;
+                case "RESULTS":
+                    htmlLinkResultsClass = "active";
+                    break;
+                case "STATIONS":
+                    htmlLinkStationsClass = "active";
+                    break;
+                case "WEAPONS":
+                    htmlLinkWeaponsClass = "active";
+                    break;
+                default:
+                    Debug.WriteLine("Unhandled action: " + ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString().ToUpper());
+                    break;
+            }
+        }
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
 {
     <script>
         window.competitionId = '@ViewBag.CompetitionId';
@@ -24,15 +77,15 @@
                     <ul class="nav navbar-nav">
                         @if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
                         {
-                            <li class="active">@Html.ActionLink("Tävling", "Competition", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li>@Html.ActionLink("Klubbar", "Clubs", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditClubsLink()" } })</li>
-                            <li>@Html.ActionLink("Vapen", "Weapons", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditWeaponsLink()" } })</li>
-                            <li>@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li>@Html.ActionLink("Patruller", "Patrols", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li>@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li>@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowAddResultsLink" } })</li>
-                            <li>@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li>@Html.ActionLink("Rättigheter", "ManageCompetitionRights", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditRightsLink" } })</li>
+                            <li class="@htmlLinkCompetitionClass">@Html.ActionLink("Tävling", "Competition", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li class="@htmlLinkClubsClass">@Html.ActionLink("Klubbar", "Clubs", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditClubsLink()" } })</li>
+                            <li class="@htmlLinkWeaponsClass">@Html.ActionLink("Vapen", "Weapons", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditWeaponsLink()" } })</li>
+                            <li class="@htmlLinkStationsClass">@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li class="@htmlLinkPatrolsClass">@Html.ActionLink("Patruller", "Patrols", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li class="@htmlLinkCompetitorsClass">@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li class="@htmlLinkEnterResultsClass">@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowAddResultsLink" } })</li>
+                            <li class="@htmlLinkResultsClass">@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                            <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Rättigheter", "ManageCompetitionRights", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditRightsLink" } })</li>
                         }
                         <li>
                             @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { {"style", "display: none"}, { "data-bind", "visible: loginViewModel.shouldShowLoginLink()" } })
