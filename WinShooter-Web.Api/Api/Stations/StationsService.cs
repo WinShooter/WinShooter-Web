@@ -95,9 +95,9 @@ namespace WinShooter.Api.Api.Stations
                 var stations = this.logic.GetStations(request.CompetitionId);
 
                 var responses = (from dbstation in stations
-                                 select new StationResponse(dbstation)).ToList();
+                                 select new StationResponse(dbstation)).ToList().OrderBy(x => x.StationNumber);
 
-                return responses;
+                return responses.ToList();
             }
             catch (Exception exception)
             {
