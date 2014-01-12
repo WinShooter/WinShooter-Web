@@ -20,13 +20,11 @@ var ViewModel = function (competition) {
 
     // Cannot use normal knockout bindings because bootstrap competes with knockout
     if (competition.IsPublic) {
-        console.log('IsPublic:' + competition.IsPublic);
         $('#selectedCompetitionIsPublic').checkbox('check');
     }
 
     // Cannot use normal knockout bindings because bootstrap competes with knockout
     if (competition.UseNorwegianCount) {
-        console.log('UseNorwegianCount:' + competition.UseNorwegianCount);
         $('#selectedCompetitionUseNorwegianCount').checkbox('check');
     }
 

@@ -3,6 +3,8 @@ var competitionsApiUrl = "/api/competitions";
 var competitionApiUrl = "/api/competition";
 var userApiUrl = "/api/user";
 var currentUserApiUrl = "/api/currentuser";
+var stationsApiUrl = "/api/stations";
+var stationApiUrl = "/api/station";
 
 // Here's the viewModel for the header
 var LoginViewModel = function () {

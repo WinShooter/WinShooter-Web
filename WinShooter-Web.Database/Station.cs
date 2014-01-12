@@ -73,5 +73,20 @@ namespace WinShooter.Database
         /// Gets or sets the <see cref="Station"/> station number.
         /// </summary>
         public virtual int StationNumber { get; set; }
+
+        /// <summary>
+        /// Update these values from other station.
+        /// </summary>
+        /// <param name="other">
+        /// The other.
+        /// </param>
+        public virtual void UpdateFromOther(Station other)
+        {
+            this.NumberOfShots = other.NumberOfShots;
+            this.NumberOfTargets = other.NumberOfTargets;
+            this.Points = other.Points;
+            this.Distinguish = other.Distinguish;
+            this.StationNumber = other.StationNumber;
+        }
     }
 }

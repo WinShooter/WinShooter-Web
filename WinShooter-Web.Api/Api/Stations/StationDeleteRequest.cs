@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StationRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="StationDeleteRequest.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -29,39 +29,13 @@ namespace WinShooter.Api.Api.Stations
     /// <summary>
     /// Represents a competition from the client.
     /// </summary>
-    [Route("/stations")]
-    [Route("/stations/{StationId}")]
-    public class StationRequest
+    [Route("/station/{StationId}", Verbs = "Delete")]
+    public class StationDeleteRequest
     {
         /// <summary>
         /// Gets or sets the <see cref="Guid"/>.
         /// </summary>
         public Guid CompetitionId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether distinguish.
-        /// </summary>
-        public bool Distinguish { get; set; }
-
-        /// <summary>
-        /// Gets or sets the number of shots.
-        /// </summary>
-        public int NumberOfShots { get; set; }
-
-        /// <summary>
-        /// Gets or sets the number of targets.
-        /// </summary>
-        public int NumberOfTargets { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the station has points.
-        /// </summary>
-        public bool Points { get; set; }
-
-        /// <summary>
-        /// Gets or sets the station number.
-        /// </summary>
-        public int StationNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the station id.
@@ -81,42 +55,11 @@ namespace WinShooter.Api.Api.Stations
 
             toReturn.AppendFormat(
                 "StationsRequest [StationId: {0}, " +
-                "CompetitionId: {1}, " +
-                "StationNumber: {2}, " +
-                "Distinguish: {3}, " +
-                "NumberOfShots: {4}, " +
-                "NumberOfTargets{5}, " +
-                "Points: {6}, ]",
+                "CompetitionId: {1} ]",
                 this.StationId,
-                this.CompetitionId,
-                this.StationNumber,
-                this.Distinguish,
-                this.NumberOfShots,
-                this.NumberOfTargets,
-                this.Points);
+                this.CompetitionId);
 
             return toReturn.ToString();
-        }
-
-        /// <summary>
-        /// Get a database station.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="Database.Station"/>.
-        /// </returns>
-        public Database.Station GetDatabaseStation()
-        {
-            var newStation = new Database.Station
-            {
-                Distinguish = this.Distinguish,
-                Id = this.StationId == null ? Guid.Empty : Guid.Parse(this.StationId),
-                NumberOfShots = this.NumberOfShots,
-                NumberOfTargets = this.NumberOfTargets,
-                Points = this.Points,
-                StationNumber = this.StationNumber
-            };
-
-            return newStation;
         }
     }
 }

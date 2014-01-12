@@ -234,7 +234,25 @@ namespace WinShooter.Logic
                 throw new NotEnoughRightsException("You don't have rights to read stations for this competition");
             }
 
-            throw new NotImplementedException();
+            var databaseStation =
+                this.stationRepository.FilterBy(x => x.Competition.Id.Equals(competitionId) && x.Id.Equals(station.Id)).FirstOrDefault();
+
+            if (databaseStation == null)
+            {
+                throw new Exception(string.Format("There is no station for competition {0} with Id {1}", competitionId, station.Id));
+            }
+
+            databaseStation.UpdateFromOther(station);
+
+            using (var transaction = this.stationRepository.StartTransaction())
+            {
+                if (this.stationRepository.Update(databaseStation))
+                {
+                    transaction.Commit();
+                }
+            }
+
+            return databaseStation;
         }
 
         /// <summary>

@@ -2,18 +2,18 @@
 /// <reference path="/Scripts/App/common.js" />
 /// <reference path="/Scripts/bootstrap.js" />
 /// <reference path="/Scripts/knockout-3.0.0.js" />
-// The different JSON urls
-var stationsApiUrl = "/api/stations";
 
 // Here's my data model
 var ViewModel = function (stations) {
     var self = this;
     self.loginViewModel = new LoginViewModel();
 
-    alert(JSON.stringify(stations));
+    console.log(JSON.stringify(stations));
 
+    console.log("setting stations");
     self.stations = ko.observableArray(stations);
 
+    console.log("setting userCanUpdateStation");
     self.userCanUpdateStation = ko.computed(function () {
         if (!self.loginViewModel.isLoggedIn()) {
             return false;
@@ -22,6 +22,7 @@ var ViewModel = function (stations) {
         return -1 !== $.inArray("UpdateStation", self.loginViewModel.rights());
     }, this);
 
+    console.log("setting userCanDeleteStation");
     self.userCanDeleteStation = ko.computed(function () {
         if (!self.loginViewModel.isLoggedIn()) {
             return false;
@@ -30,24 +31,37 @@ var ViewModel = function (stations) {
         return -1 !== $.inArray("DeleteStation", self.loginViewModel.rights());
     }, this);
 
-    self.stationNumberOfTargets = function (input) {
+    self.getStationWithStationNumber = function(stationNumber) {
         for (var i = 0; i < self.stations().length; i++) {
-            if (self.stations()[i].StationNumber === input) {
-                return self.stations()[i].NumberOfTargets;
+            if (self.stations()[i].StationNumber === stationNumber) {
+                return self.stations()[i];
             }
         }
-        return 'NumberOfTargets failed';
     };
 
-    self.stationNumberOfShots = function (input) {
-        for (var i = 0; i < self.stations().length; i++) {
-            if (self.stations()[i].StationNumber === input) {
-                return self.stations()[i].NumberOfShots;
-            }
+    console.log("setting stationNumberOfTargets");
+    self.stationNumberOfTargets = function (stationNumber) {
+        var station = self.getStationWithStationNumber(stationNumber);
+
+        if (station === undefined || station === null) {
+            return "failed";
         }
-        return 'NumberOfTargets failed';
+
+        return station.NumberOfTargets;
     };
 
+    console.log("setting stationNumberOfShots");
+    self.stationNumberOfShots = function (stationNumber) {
+        var station = self.getStationWithStationNumber(stationNumber);
+
+        if (station === undefined || station === null) {
+            return "failed";
+        }
+
+        return station.NumberOfShots;
+    };
+
+    console.log("setting addNewStation");
     self.addNewStation = function () {
         if (self.stations == undefined) {
             // What? Should never happen
@@ -72,6 +86,7 @@ var ViewModel = function (stations) {
         return false;
     };
 
+    console.log("setting updateStationsFromServer");
     self.updateStationsFromServer = function() {
         $.getJSON(stationsApiUrl + "?CompetitionId=" + window.competitionId, function(data) {
             self.stations(data);
@@ -81,10 +96,11 @@ var ViewModel = function (stations) {
         });
     };
 
+    console.log("setting updateStationView");
     self.updateStationView = function () {
         if (self.stations == undefined) {
             // What? Should never happen
-            return;
+            return false;
         }
 
         // Remove all earlier stations
@@ -112,10 +128,73 @@ var ViewModel = function (stations) {
             textToInsert[i++] = '<p data-bind="text: stationNumberOfShots(' + station.StationNumber + '), visible:!userCanUpdateStation()"></p>';
             textToInsert[i++] = '</div>';
 
+            textToInsert[i++] = '<div class="form-group">';
+            textToInsert[i++] = '<label class="checkbox" for="station' + station.StationNumber + 'IsPoints">';
+            textToInsert[i++] = '<input type="checkbox" id="station' + station.StationNumber + 'IsPoints" data-toggle="checkbox" />';
+            textToInsert[i++] = 'Poängstation';
+            textToInsert[i++] = '</label>';
+            textToInsert[i++] = '</div>';
+
+            textToInsert[i++] = '<div class="form-group">';
+            textToInsert[i++] = '<label class="checkbox" for="station' + station.StationNumber + 'IsDistinguish">';
+            textToInsert[i++] = '<input type="checkbox" id="station' + station.StationNumber + 'IsDistinguish" data-toggle="checkbox" />';
+            textToInsert[i++] = 'Särskiljning';
+            textToInsert[i++] = '</label>';
+            textToInsert[i++] = '</div>';
+
+            textToInsert[i++] = '<div class="form-group">';
+            textToInsert[i++] = '<input type="button" class="btn btn-primary" value="Uppdatera" data-bind="visible:userCanUpdateStation, click: function() { updateStation(' + station.StationNumber + ') }" />';
+            textToInsert[i++] = '<input type="button" class="btn btn-danger" value="Ta bort" data-bind="visible:userCanDeleteStation, click: function() { deleteStation(' + station.StationNumber + ')}" />';
+            textToInsert[i++] = '</div>';
+
             textToInsert[i++] = '</fieldset>';
             textToInsert[i++] = '</div>';
         });
         $('#stationsContainer').append(textToInsert.join(''));
+
+        return false;
+    };
+
+    console.log("setting updateStation");
+    self.updateStation = function (stationNumber) {
+        console.log("Update station with number " + stationNumber);
+        var station = self.getStationWithStationNumber(stationNumber);
+        console.log("Station: " + JSON.stringify(station));
+
+        station.NumberOfTargets = $("#station" + stationNumber + "NumberOfTargets").val();
+        station.NumberOfTargets = $("#station" + stationNumber + "NumberOfShots").val();
+        station.Points = $("label[for='#station" + stationNumber + "IsPoints']").hasClass("checked");
+        station.Distinguish = $("label[for='#station" + stationNumber + "IsDistinguish']").hasClass("checked");
+
+        console.log("Station after retrieving values from DOM: " + JSON.stringify(station));
+
+        var updateRequest = {
+            url: stationsApiUrl + "/" + station.Id,
+            data: station,
+            type: "post",
+            dataType: "json"
+        };
+
+        $.ajax(updateRequest).fail(function (data) {
+            if (data !== null && data !== undefined && data.responseJSON !== undefined && data.responseJSON.ResponseStatus !== undefined && data.responseJSON.ResponseStatus.Message !== undefined) {
+                alert("Misslyckades med att uppdatera stationen:\r\n" + data.responseJSON.ResponseStatus.Message);
+            } else {
+                alert("Misslyckades med att uppdatera stationen!");
+            }
+        }).success(function () {
+            alert("Stationen uppdaterades.");
+        });
+
+        return false;
+    };
+
+    console.log("setting deleteStation");
+    self.deleteStation = function (stationNumber) {
+        alert("TODO: delete station " + stationNumber);
+        var station = self.getStationWithStationNumber(stationNumber);
+        console.log("Station: " + JSON.stringify(station));
+
+        return false;
     };
 
     self.updateStationView();

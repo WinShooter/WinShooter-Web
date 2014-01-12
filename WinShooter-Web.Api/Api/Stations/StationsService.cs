@@ -146,6 +146,23 @@ namespace WinShooter.Api.Api.Stations
         }
 
         /// <summary>
+        /// The delete.
+        /// </summary>
+        /// <param name="deleteRequest">
+        /// The delete request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="StationResponse"/>.
+        /// </returns>
+        [Authenticate]
+        public StationResponse Delete(StationDeleteRequest deleteRequest)
+        {
+            this.log.Debug("Got DELETE request: " + deleteRequest);
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// The dispose.
         /// </summary>
         /// <param name="disposing">
