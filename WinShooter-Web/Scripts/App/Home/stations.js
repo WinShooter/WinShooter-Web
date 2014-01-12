@@ -190,10 +190,34 @@ var ViewModel = function (stations) {
 
     console.log("setting deleteStation");
     self.deleteStation = function (stationNumber) {
-        alert("TODO: delete station " + stationNumber);
         var station = self.getStationWithStationNumber(stationNumber);
+        if (station === undefined || station === null) {
+            // What? Should never happen.
+            alert("Du måste välja en station att radera.");
+            return false;
+        }
         console.log("Station: " + JSON.stringify(station));
 
+        if (confirm("Vill du verkligen radera tävlingen?") === false) {
+            return false;
+        }
+
+        var deleteRequest = {
+            url: stationsApiUrl + "/" + station.Id,
+            type: "delete",
+            dataType: "json"
+        };
+
+        $.ajax(deleteRequest).fail(function (data) {
+            if (data !== null && data !== undefined && data.responseJSON !== undefined && data.responseJSON.ResponseStatus !== undefined && data.responseJSON.ResponseStatus.Message !== undefined) {
+                alert("Misslyckades med att radera stationen:\r\n" + data.responseJSON.ResponseStatus.Message);
+            } else {
+                alert("Misslyckades med att radera stationen!");
+            }
+        }).success(function () {
+            alert("Stationen raderades.");
+            self.updateStationsFromServer();
+        });
         return false;
     };
 

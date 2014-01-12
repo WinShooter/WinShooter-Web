@@ -158,8 +158,26 @@ namespace WinShooter.Api.Api.Stations
         public StationResponse Delete(StationDeleteRequest deleteRequest)
         {
             this.log.Debug("Got DELETE request: " + deleteRequest);
+            var session = this.GetSession() as CustomUserSession;
+            if (session == null)
+            {
+                // This really shouldn't happen since we have attributed for authenticate
+                this.log.Error("Session is null in POST request.");
+                throw new Exception("You need to authenticate");
+            }
 
-            throw new NotImplementedException();
+            this.logic.CurrentUser = session.User;
+            this.log.Debug("User is " + this.logic.CurrentUser);
+
+            if (deleteRequest.StationId.Equals(Guid.Empty))
+            {
+                throw new Exception("There has to be a station id");
+            }
+
+            this.logic.DeleteStation(deleteRequest.StationId);
+
+            // This is needed to get IE to be happy.
+            return new StationResponse();
         }
 
         /// <summary>

@@ -49,11 +49,11 @@ var ViewModel = function (competition) {
         if (self.competition() === undefined) {
             // What? Should never happen.
             alert("Du måste välja en tävling att radera.");
-            return;
+            return false;
         }
 
         if (confirm("Vill du verkligen radera tävlingen?") === false) {
-            return;
+            return false;
         }
 
         var deleteRequest = {
@@ -72,6 +72,7 @@ var ViewModel = function (competition) {
             alert("Tävlingen raderades.");
             window.location.href = "/";
         });
+        return false;
     };
 
     // Function for updating competition

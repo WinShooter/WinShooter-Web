@@ -231,7 +231,7 @@ namespace WinShooter.Logic
                     "User {0} does not have enough rights to read stations for competition {1}",
                     this.currentUser,
                     competitionId);
-                throw new NotEnoughRightsException("You don't have rights to read stations for this competition");
+                throw new NotEnoughRightsException("You don't have rights to update stations for this competition");
             }
 
             var databaseStation =
@@ -258,32 +258,36 @@ namespace WinShooter.Logic
         /// <summary>
         /// The update competition.
         /// </summary>
-        /// <param name="competitionId">
-        /// The competition Id.
+        /// <param name="stationId">
+        /// The station ID.
         /// </param>
-        /// <param name="station">
-        /// The station.
-        /// </param>
-        public void DeleteStation(Guid competitionId, Station station)
+        public void DeleteStation(Guid stationId)
         {
-            var competition = this.competitionRepository.FilterBy(x => x.Id.Equals(competitionId)).FirstOrDefault();
+            var databaseStation =
+                this.stationRepository.FilterBy(x => x.Id.Equals(stationId)).FirstOrDefault();
 
-            if (competition == null)
+            if (databaseStation == null)
             {
-                throw new Exception("There are no competition with ID " + competitionId);
+                throw new Exception("There are no station with ID " + stationId);
             }
 
-            if (!this.RightsHelper.GetRightsForCompetitionIdAndTheUser(competitionId)
+            if (!this.RightsHelper.GetRightsForCompetitionIdAndTheUser(databaseStation.Competition.Id)
                 .Contains(WinShooterCompetitionPermissions.DeleteStation))
             {
                 this.log.ErrorFormat(
                     "User {0} does not have enough rights to read stations for competition {1}",
                     this.currentUser,
-                    competitionId);
-                throw new NotEnoughRightsException("You don't have rights to read stations for this competition");
+                    databaseStation.Competition.Id);
+                throw new NotEnoughRightsException("You don't have rights to delete stations for this competition");
             }
 
-            throw new NotImplementedException();
+            using (var transaction = this.stationRepository.StartTransaction())
+            {
+                if (this.stationRepository.Delete(databaseStation))
+                {
+                    transaction.Commit();
+                }
+            }
         }
     }
 }

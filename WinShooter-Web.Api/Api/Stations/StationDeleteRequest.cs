@@ -29,18 +29,13 @@ namespace WinShooter.Api.Api.Stations
     /// <summary>
     /// Represents a competition from the client.
     /// </summary>
-    [Route("/station/{StationId}", Verbs = "Delete")]
+    [Route("/stations/{StationId}", Verbs = "Delete")]
     public class StationDeleteRequest
     {
         /// <summary>
-        /// Gets or sets the <see cref="Guid"/>.
-        /// </summary>
-        public Guid CompetitionId { get; set; }
-
-        /// <summary>
         /// Gets or sets the station id.
         /// </summary>
-        public string StationId { get; set; }
+        public Guid StationId { get; set; }
 
         /// <summary>
         /// Returns a string that represents the current object.
@@ -54,10 +49,8 @@ namespace WinShooter.Api.Api.Stations
             var toReturn = new StringBuilder();
 
             toReturn.AppendFormat(
-                "StationsRequest [StationId: {0}, " +
-                "CompetitionId: {1} ]",
-                this.StationId,
-                this.CompetitionId);
+                "StationDeleteRequest [StationId: {0} ]",
+                this.StationId);
 
             return toReturn.ToString();
         }
