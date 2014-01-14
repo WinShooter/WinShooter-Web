@@ -78,7 +78,7 @@ namespace WinShooter.Api.Api.Stations
         public int NumberOfTargets { get; set; }
 
         /// <summary>
-        /// Gets or sets the points.
+        /// Gets or sets a value indicating whether the station contains points.
         /// </summary>
         public bool Points { get; set; }
 
