@@ -7,8 +7,7 @@ var stationsApiUrl = "/api/stations";
 var stationApiUrl = "/api/station";
 
 // Here's the viewModel for the header
-var LoginViewModel = function () {
-    var self = this;
+function LoginCtrl($scope){
 
     // Attributes
     self.displayName = ko.observable('');

@@ -26,20 +26,20 @@
 <form role="form">
     <div class="form-group">
         <label for="competitionid">Befintlig tävling:</label>
-        <select class="form-control" id="competitionid" data-bind="options: competitions, optionsText: 'Name', value: selectedCompetition, optionsCaption: 'Välj...'"></select>
+        <select class="form-control" id="competitionid" data-ng-options="c.Name for c in competitions" data-ng-model="selectedCompetition"></select>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary" data-bind="click: selectCompetitionOnServer">Välj tävling</button>
+        <button type="submit" class="btn btn-primary" ng-click="selectCompetitionOnServer()">Välj tävling</button>
     </div>
 
     <h3>Information om den valda tävlingen</h3>
     <div class="form-group">
         <label for="selectedCompetitionName">Namn:</label>
-        <input class="form-control" id="selectedCompetitionName" data-bind="value: selectedCompetitionName" />
+        <div id="selectedCompetitionName">{{selectedCompetitionName()}}</div>
     </div>
     <div class="form-group">
         <label for="selectedCompetitionStartDate">Datum:</label>
-        <input class="form-control" id="selectedCompetitionStartDate" data-bind="value: selectedCompetitionStartDate">
+        <div id="selectedCompetitionStartDate">{{selectedCompetitionStartDate()}}</div>
     </div>
     <div class="checkbox">
         <label class="checkbox" for="selectedCompetitionIsPublic">

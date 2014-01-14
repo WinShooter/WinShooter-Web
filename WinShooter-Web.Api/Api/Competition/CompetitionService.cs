@@ -82,27 +82,35 @@ namespace WinShooter.Api.Api.Competition
         /// </returns>
         public CompetitionResponse Get(CompetitionRequest request)
         {
-            this.log.Debug("Got GET request: " + request);
-            var requestedCompetitionId = Guid.Parse(request.CompetitionId);
-
-            var session = this.GetSession() as CustomUserSession;
-
-            this.logic.CurrentUser = session == null || session.User == null ? null : session.User;
-            if (this.logic.CurrentUser == null)
+            try
             {
-                this.log.Debug("User is anonymous.");
+                this.log.Debug("Got GET request: " + request);
+                var requestedCompetitionId = Guid.Parse(request.CompetitionId);
+
+                var session = this.GetSession() as CustomUserSession;
+
+                this.logic.CurrentUser = session == null || session.User == null ? null : session.User;
+                if (this.logic.CurrentUser == null)
+                {
+                    this.log.Debug("User is anonymous.");
+                }
+                else
+                {
+                    this.log.Debug("User is " + this.logic.CurrentUser);
+                }
+
+                var dbcompetition = this.logic.GetCompetition(requestedCompetitionId);
+
+                if (dbcompetition != null)
+                {
+                    this.log.Debug("Returned competition: " + dbcompetition);
+                    return new CompetitionResponse(dbcompetition);
+                }
             }
-            else
+            catch (Exception exception)
             {
-                this.log.Debug("User is " + this.logic.CurrentUser);
-            }
-
-            var dbcompetition = this.logic.GetCompetition(requestedCompetitionId);
-
-            if (dbcompetition != null)
-            {
-                this.log.Debug("Returned competition: " + dbcompetition);
-                return new CompetitionResponse(dbcompetition);
+                this.log.Warn(exception);
+                throw;
             }
 
             this.log.Warn("Could not find competition accordng to search criteria.");

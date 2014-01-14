@@ -71,6 +71,18 @@ namespace WinShooter.App_Start
                 "~/Scripts/Flat-ui/flatui-checkbox.js",
                 "~/Scripts/Flat-ui/flatui-radio.js"));
 
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/angularjs",
+                    "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js")
+                    .Include("~/Scripts/angular.js"));
+
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/angularjs-resource",
+                    "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-resource.min.js").Include(
+                        "~/Scripts/angular.resource.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/bootstrap-responsive.css",
