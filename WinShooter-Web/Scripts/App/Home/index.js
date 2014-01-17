@@ -2,21 +2,15 @@
 var competitionsApiUrl = "/api/competitions";
 var competitionApiUrl = "/api/competition";
 
-var winshooterModule = angular.module('winshooter', []);
+var winshooterModule = angular.module('winshooter', ['ngResource']);
 
-winshooterModule.factory('competitionsFactory', function() {
-    var factory = {};
-    var competitions = [
-        { Name: "Välj tävling", StartDate: "", CompetitionId: "" },
-        { Name: "Tävlingen", StartDate: "2014-01-17 15:17", CompetitionId: "123" }
-    ];
-
-    factory.getCompetitions = function() {
-        return competitions;
-    };
-
-    return factory;
-});
+winshooterModule.factory('competitionsFactory', [
+    '$resource', function($resource) {
+        return $resource(competitionsApiUrl, {}, {
+            query: { method: 'GET', isArray: true }
+        });
+    }
+]);
 
 winshooterModule.controller('BodyController', function ($scope, competitionsFactory) {
     //self.loginViewModel = new LoginViewModel();
@@ -27,8 +21,9 @@ winshooterModule.controller('BodyController', function ($scope, competitionsFact
     init();
 
     function init() {
-        $scope.competitions = competitionsFactory.getCompetitions();
-        $scope.selectedCompetition = $scope.competitions[0];
+        $scope.competitions = competitionsFactory.query(function() {
+            $scope.selectedCompetition = $scope.competitions[0];
+        });
     }
 
     $scope.selectedCompetitionName = function() {
