@@ -1,6 +1,6 @@
 ﻿@using System.Diagnostics
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="winshooter">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -97,7 +97,7 @@
     </div>
 
     <div class="container">
-        <div class="winshooter-template" ng-controller="BodyCtrl">
+        <div class="winshooter-template" ng-controller="BodyController">
             @RenderBody()
         </div>
     </div>
@@ -107,8 +107,6 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/angularjs")
     @Scripts.Render("~/bundles/angularjs-resource")
-    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
-    <script src="https://cdn.firebase.com/libs/angularfire/0.5.0/angularfire.min.js"></script>
     @Scripts.Render("~/Scripts/App/common.js")
 
     <!-- fallback for CDN -->

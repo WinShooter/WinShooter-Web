@@ -2,13 +2,34 @@
 var competitionsApiUrl = "/api/competitions";
 var competitionApiUrl = "/api/competition";
 
-// Here's my data model
-function BodyCtrl($scope) {
+var winshooterModule = angular.module('winshooter', []);
+
+winshooterModule.factory('competitionsFactory', function() {
+    var factory = {};
+    var competitions = [
+        { Name: "Välj tävling", StartDate: "", CompetitionId: "" },
+        { Name: "Tävlingen", StartDate: "2014-01-17 15:17", CompetitionId: "123" }
+    ];
+
+    factory.getCompetitions = function() {
+        return competitions;
+    };
+
+    return factory;
+});
+
+winshooterModule.controller('BodyController', function ($scope, competitionsFactory) {
     //self.loginViewModel = new LoginViewModel();
 
     // Attributes for showing existing competition
-    $scope.competitions = [{Name: "Name1", StartDate: "2014-01-14", CompetitionId: "1234"}];
-    $scope.selectedCompetition = $scope.competitions[0];
+    $scope.competitions = [];
+
+    init();
+
+    function init() {
+        $scope.competitions = competitionsFactory.getCompetitions();
+        $scope.selectedCompetition = $scope.competitions[0];
+    }
 
     $scope.selectedCompetitionName = function() {
         return $scope.selectedCompetition.Name;
@@ -73,7 +94,7 @@ function BodyCtrl($scope) {
     //$.getJSON(competitionsApiUrl, function (data) {
     //    //ko.applyBindings(new ViewModel(data));
     //});
-};
+});
 
 // Add binding and such when document is loaded.
 $(function () {
