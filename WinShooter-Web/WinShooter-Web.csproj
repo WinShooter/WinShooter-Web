@@ -55,6 +55,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="NewRelic.Api.Agent">
+      <HintPath>..\packages\NewRelic.Azure.WebSites.2.20.25.0\lib\NewRelic.Api.Agent.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -298,7 +301,14 @@
     <Content Include="Content\fonts\lato\lato-regular-webfont.eot" />
     <Content Include="Content\fonts\lato\lato-regular-webfont.ttf" />
     <Content Include="Content\fonts\lato\lato-regular-webfont.woff" />
+    <Content Include="newrelic\extensions\CoreInstrumentation.xml" />
+    <Content Include="newrelic\NewRelic.Agent.Core.dll" />
+    <Content Include="newrelic\newrelic.config" />
+    <Content Include="newrelic\extensions\extension.xsd">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="newrelic\NewRelic.Profiler.dll" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\App\Account\Login.js" />
     <Content Include="Scripts\App\common.js" />
