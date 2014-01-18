@@ -45,11 +45,11 @@
 
 <div style="display: none" data-bind="visible: !loginViewModel.isLoggedIn()">
     <h1>Skapa ny tävling</h1>
+    <p>
+        <small> för att kunna skapa en ny tävling måste du vara inloggad.</small>
+    </p>
     <div>
-        För att kunna skapa en ny tävling måste du vara inloggad.
-    </div>
-    <div>
-        @Html.ActionLink("Logga in", "Login", "Account")
+        @Html.ActionLink("Logga in", "Login", "Account", new object { }, new { @class = "btn btn-primary" })
     </div>
 </div>
 
