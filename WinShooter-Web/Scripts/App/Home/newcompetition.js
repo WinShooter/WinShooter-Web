@@ -2,6 +2,7 @@
 /// <reference path="/Scripts/App/common.js" />
 /// <reference path="/Scripts/bootstrap.js" />
 /// <reference path="/Scripts/knockout-3.0.0.js" />
+/// <reference path="~/Scripts/bootstrap-datepicker.js" />
 // The different JSON urls
 var competitionsApiUrl = "/api/competitions";
 var competitionApiUrl = "/api/competition";
@@ -36,8 +37,13 @@ var ViewModel = function () {
 
 // Add binding and such when document is loaded.
 $(function () {
-    // Add datepicker to the newCompetitionStartDate field
-    $("#newCompetitionStartDate").datepicker({ dateFormat: 'yy-mm-dd' });
+    var newCompetitionStartDatePicker =  $("#newCompetitionStartDate").datepicker({
+            format: "yyyy-mm-dd",
+            weekStart: 1,
+            language: "sv"
+        }).on('changeDate', function(ev) {
+            newCompetitionStartDatePicker.datepicker('hide');
+        });
 
     // Fetch competitions from api and bind with knockout.
     ko.applyBindings(new ViewModel());

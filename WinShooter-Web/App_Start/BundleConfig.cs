@@ -83,27 +83,16 @@ namespace WinShooter.App_Start
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/Flat-ui/flatui-checkbox.js",
-                "~/Scripts/Flat-ui/flatui-radio.js"));
+                "~/Scripts/Flat-ui/flatui-radio.js",
+                "~/Scripts/bootstrap-datepicker.js",
+                "~/Scripts/bootstrap-datepicker.sv.js"));
 
             bundles.Add(new StyleBundle("~/Content/styles").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/bootstrap-responsive.css",
                 "~/Content/flat-ui/flat-ui.css",
+                "~/Content/datepicker.css",
                 "~/Content/site.css"));
-
-            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
-                        "~/Content/themes/base/jquery.ui.core.css",
-                        "~/Content/themes/base/jquery.ui.resizable.css",
-                        "~/Content/themes/base/jquery.ui.selectable.css",
-                        "~/Content/themes/base/jquery.ui.accordion.css",
-                        "~/Content/themes/base/jquery.ui.autocomplete.css",
-                        "~/Content/themes/base/jquery.ui.button.css",
-                        "~/Content/themes/base/jquery.ui.dialog.css",
-                        "~/Content/themes/base/jquery.ui.slider.css",
-                        "~/Content/themes/base/jquery.ui.tabs.css",
-                        "~/Content/themes/base/jquery.ui.datepicker.css",
-                        "~/Content/themes/base/jquery.ui.progressbar.css",
-                        "~/Content/themes/base/jquery.ui.theme.css"));
         }
     }
 }
