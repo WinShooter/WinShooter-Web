@@ -23,4 +23,13 @@ legend.station-border {
   visibility: visible;
   opacity: 1;
   width: auto;
-} 
+}
+
+@media (max-width: 767px) {
+    h1 {
+        font-size: 30px;
+    }
+    h3 {
+        font-size: 18px;
+    }
+}
