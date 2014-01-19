@@ -2,17 +2,7 @@
 var competitionsApiUrl = "/api/competitions";
 var competitionApiUrl = "/api/competition";
 
-var winshooterModule = angular.module('winshooter', ['ngResource']);
-
-winshooterModule.factory('competitionsFactory', [
-    '$resource', function($resource) {
-        return $resource(competitionsApiUrl, {}, {
-            query: { method: 'GET', isArray: true }
-        });
-    }
-]);
-
-winshooterModule.controller('BodyController', function ($scope, competitionsFactory) {
+angular.module("winshooter").controller('BodyController', function ($scope, competitionsFactory) {
     //self.loginViewModel = new LoginViewModel();
 
     // Attributes for showing existing competition
