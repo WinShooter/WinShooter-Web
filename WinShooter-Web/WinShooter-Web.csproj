@@ -317,6 +317,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\AngularModules.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -336,7 +337,6 @@
     <Content Include="Scripts\App\Home\stations.js" />
     <Content Include="Scripts\Flat-ui\flatui-checkbox.js" />
     <Content Include="Scripts\Flat-ui\flatui-radio.js" />
-    <Content Include="Scripts\App\Home\index.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />

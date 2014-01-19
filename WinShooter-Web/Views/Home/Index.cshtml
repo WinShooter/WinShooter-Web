@@ -2,59 +2,57 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div ng-controller="IndexController">
+    <style type="text/css">
+        .ui-datepicker {
+            background: #FFFFFF;
+            border: 1px solid #555;
+            color: #000000;
+        }
+    </style>
 
-<style type="text/css">
-    .ui-datepicker {
-        background: #FFFFFF;
-        border: 1px solid #555;
-        color: #000000;
-    }
-</style>
+    <h1>Välkommen till WinShooter!</h1>
 
-<h1>Välkommen till WinShooter!</h1>
-
-<div class="row-fluid">
-    <div class="span2">
-        <p>Du kan nu</p>
-        <ul>
-            <li>välja en befintlig tävling att titta på eller</li>
-            <li>@Html.ActionLink("skapa en ny tävling (kräver inloggning)", "NewCompetition", "Home")</li>
-        </ul>
+    <div class="row-fluid">
+        <div class="span2">
+            <p>Du kan nu</p>
+            <ul>
+                <li>välja en befintlig tävling att titta på eller</li>
+                <li>@Html.ActionLink("skapa en ny tävling (kräver inloggning)", "NewCompetition", "Home")</li>
+            </ul>
+        </div>
     </div>
+
+    <form role="form">
+        <div class="form-group">
+            <label for="competitionid">Befintlig tävling:</label>
+            <select class="form-control" id="competitionid" data-ng-options="c.Name for c in competitions" data-ng-model="selectedCompetition"></select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" ng-click="selectCompetitionOnServer()">Välj tävling</button>
+        </div>
+
+        <h3>Information om den valda tävlingen</h3>
+        <div class="form-group">
+            <label for="selectedCompetitionName">Namn:</label>
+            <div id="selectedCompetitionName">{{selectedCompetition.Name}}</div>
+        </div>
+        <div class="form-group">
+            <label for="selectedCompetitionStartDate">Datum:</label>
+            <div id="selectedCompetitionStartDate">{{selectedCompetition.StartDate}}</div>
+        </div>
+        <div class="checkbox">
+            <label class="checkbox" for="selectedCompetitionIsPublic" ng-class="{checked: selectedCompetition.IsPublic}">
+                <input type="checkbox" id="selectedCompetitionIsPublic" data-toggle="checkbox" />
+                Publik tävling
+            </label>
+        </div>
+        <div class="checkbox">
+            <label class="checkbox" for="selectedCompetitionUseNorwegianCount" ng-class="{checked: shouldShowLoginLink}">
+                <input type="checkbox" id="selectedCompetitionUseNorwegianCount" data-toggle="checkbox" />
+                Poängfältskytte
+            </label>
+        </div>
+    </form>
 </div>
 
-<form role="form">
-    <div class="form-group">
-        <label for="competitionid">Befintlig tävling:</label>
-        <select class="form-control" id="competitionid" data-ng-options="c.Name for c in competitions" data-ng-model="selectedCompetition"></select>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary" ng-click="selectCompetitionOnServer()">Välj tävling</button>
-    </div>
-
-    <h3>Information om den valda tävlingen</h3>
-    <div class="form-group">
-        <label for="selectedCompetitionName">Namn:</label>
-        <div id="selectedCompetitionName">{{selectedCompetition.Name}}</div>
-    </div>
-    <div class="form-group">
-        <label for="selectedCompetitionStartDate">Datum:</label>
-        <div id="selectedCompetitionStartDate">{{selectedCompetition.StartDate}}</div>
-    </div>
-    <div class="checkbox">
-        <label class="checkbox" for="selectedCompetitionIsPublic" ng-class="{checked: selectedCompetition.IsPublic}">
-            <input type="checkbox" id="selectedCompetitionIsPublic" data-toggle="checkbox" />
-            Publik tävling
-        </label>
-    </div>
-    <div class="checkbox">
-        <label class="checkbox" for="selectedCompetitionUseNorwegianCount" ng-class="{checked: selectedCompetition.UseNorwegianCount}">
-            <input type="checkbox" id="selectedCompetitionUseNorwegianCount" data-toggle="checkbox"/>
-            Poängfältskytte
-        </label>
-    </div>
-</form>
-
-@section scripts {
-        @Scripts.Render("~/Scripts/App/Home/index.js")
-}
