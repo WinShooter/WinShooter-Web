@@ -43,12 +43,12 @@ namespace WinShooter.Api.Tests
         public void Test1()
         {
             var moq = new Moq.Mock<IResourceManager>();
-            moq.Setup(x => x.GetList("AdminUserNames")).Returns(new List<string> { "john.smith@example.com", " john.doe@example.com " });
+            moq.Setup(x => x.GetList("AdminEmailAddresses")).Returns(new List<string> { "john.smith@example.com", " john.doe@example.com " });
             var appConfig = new AppConfig(moq.Object);
 
-            Assert.AreEqual(2, appConfig.AdminUserNames.Count);
-            Assert.AreEqual("JOHN.SMITH@EXAMPLE.COM", appConfig.AdminUserNames[0]);
-            Assert.AreEqual("JOHN.DOE@EXAMPLE.COM", appConfig.AdminUserNames[1]);
+            Assert.AreEqual(2, appConfig.AdminEmailAddresses.Count);
+            Assert.AreEqual("JOHN.SMITH@EXAMPLE.COM", appConfig.AdminEmailAddresses[0]);
+            Assert.AreEqual("JOHN.DOE@EXAMPLE.COM", appConfig.AdminEmailAddresses[1]);
 
             Assert.IsTrue(appConfig.IsAdminUser("john.smith@example.com"));
             Assert.IsTrue(appConfig.IsAdminUser(" john.smith@example.com "));

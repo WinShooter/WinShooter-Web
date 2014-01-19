@@ -123,10 +123,7 @@ namespace WinShooter.Api.Authentication
                     this.AddAllTokensToUser(dbsession, this.User, session.ProviderOAuthAccess);
                 }
 
-                if (WinShooterApiHost.AppConfig.IsAdminUser(currentUserLoginInfo.User.Email))
-                {
-                    this.User.IsSystemAdmin = true;
-                }
+                this.User.IsSystemAdmin = WinShooterApiHost.AppConfig.IsAdminUser(currentUserLoginInfo.User.Email);
 
                 // Save the session
                 authService.SaveSession(session, this.defaultSessionValidity);
