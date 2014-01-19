@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Skapa ny tävling";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-controller="NewCompetitionController">
+    <div ng-show="currentUser.IsLoggedIn">
+        <h1>Skapa ny tävling</h1>
+
+        <div>
+            När du skapar en tävling och börjar lägga upp skyttar skapar du enligt Personuppgiftslagen ett elektroniskt register.
+        </div>
+
+        <div class="form-group">
+            <label for="newCompetitionName">Tävlingens namn:</label>
+            <input class="form-control" id="newCompetitionName" ng-model="Name" />
+        </div>
+        <div class="form-group">
+            <label for="newCompetitionStartDate">Startar datum:</label>
+            <input class="form-control" type="text" id="newCompetitionStartDate" ng-model="StartDate"
+                   datepicker-popup="'yyyy-MM-dd''" is-open="datePickerOpen" max="'2015-06-22'"
+                   datepicker-options="datePickerDateOptions" ng-required="true" close-text="Stäng" />
+        </div>
+        <div class="form-group">
+            <label for="newCompetitionStartTime">Startar tid:</label>
+            <input class="form-control" type="text" id="newCompetitionStartTime" ng-model="StartTime" />
+        </div>
+
+        <div class="form-group">
+            <label class="checkbox" for="newCompetitionIsPublic" ng-class="{checked: IsPublic}">
+                <input type="checkbox" value="" id="newCompetitionIsPublic" data-toggle="checkbox" />
+                Publik tävling
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="checkbox" for="newCompetitionUseNorwegianCount" ng-class="{checked: UseNorwegianCount}">
+                <input type="checkbox" id="newCompetitionUseNorwegianCount" data-toggle="checkbox" />
+                Poängfältskytte
+            </label>
+        </div>
+
+        <div class="form-group">
+            <input class="btn btn-primary" type="button" id="newCompetitionAddNow" value="Lägg till" ng-click="addCompetition()" />
+        </div>
+    </div>
+
+
+    <div ng-show="!currentUser.IsLoggedIn">
+        <h1>Skapa ny tävling</h1>
+    <p>
+        <small> för att kunna skapa en ny tävling måste du vara inloggad.</small>
+    </p>
+        <div>
+            För att kunna skapa en ny tävling måste du vara inloggad.
+        </div>
+        <div>
+            @Html.ActionLink("Logga in", "Login", "Account")
+        </div>
+    </div>
+</div>
