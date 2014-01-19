@@ -33,6 +33,8 @@ winshooterModule.controller('BodyController', function ($scope, competitionsFact
                 // We got some competitions back. Select first one.
                 $scope.selectedCompetition = $scope.competitions[0];
             }
+        }, function() {
+            alert("failed to retrieve competitions.");
         });
     }
 
