@@ -5,7 +5,20 @@ var winshooterModule = angular.module('winshooter', ['ngResource']);
 winshooterModule.factory('competitionsFactory', [
     '$resource', function ($resource) {
         return $resource(competitionsApiUrl, {}, {
-            query: { method: 'GET', isArray: true }
+            query: { method: 'GET', isArray: true },
+            search: { method: 'GET', isArray: false }
+        });
+    }
+]);
+
+// Create factory for competitions
+winshooterModule.factory('competitionFactory', [
+    '$resource', function ($resource) {
+        return $resource(competitionApiUrl, {
+            competitionId: '@CompetitionId'
+        }, {
+            query: { method: 'GET', isArray: true },
+            search: { method: 'GET', isArray: false }
         });
     }
 ]);
@@ -13,8 +26,13 @@ winshooterModule.factory('competitionsFactory', [
 // Create factory for current user
 winshooterModule.factory('currentUserFactory', [
     '$resource', function ($resource) {
-        return $resource(currentUserApiUrl, {}, {
-            query: { method: 'GET', isArray: false }
+        return $resource(currentUserApiUrl, {
+            competitionId: '@competitionId'
+        }, {
+            query: { method: 'GET', isArray: false },
+            search: { method: 'GET', isArray: false },
+            delete: { method: 'DELETE', isArray: false },
+            update: { method: 'POST', isArray: false }
         });
     }
 ]);
@@ -27,6 +45,10 @@ winshooterModule.controller('CurrentUserController', function ($scope, currentUs
     $scope.isLoggedIn = false;
     $scope.rights = [];
     $scope.shouldShowLoginLink = false;
+    $scope.shouldShowAddResultsLink = false;
+    $scope.shouldShowEditRightsLink = false;
+    $scope.shouldShowEditClubsLink = false;
+    $scope.shouldShowEditWeaponsLink = false;
 
     init();
 
@@ -39,60 +61,16 @@ winshooterModule.controller('CurrentUserController', function ($scope, currentUs
             if ($scope.currentUser.IsLoggedIn) {
                 $scope.displayName = $scope.currentUser.DisplayName;
                 $scope.rights = $scope.currentUser.CompetitionRights;
+
+                $scope.shouldShowAddResultsLink = -1 !== $.inArray("ReadCompetitorResult", $scope.rights);
+                $scope.shouldShowEditRightsLink = -1 !== $.inArray("ReadUserCompetitionRole", $scope.rights);
+                $scope.shouldShowEditClubsLink = -1 !== $.inArray("UpdateClub", $scope.rights);
+                $scope.shouldShowEditWeaponsLink = -1 !== $.inArray("UpdateWeapon", $scope.rights);
             }
         }, function () {
             alert("failed to retrieve current user.");
         });
     }
-
-    // calculated attributes
-    $scope.shouldShowAddResultsLink = function () {
-        if (!$scope.isLoggedIn()) {
-            return false;
-        }
-
-        return -1 !== $.inArray("ReadCompetitorResult", $scope.rights());
-    };
-
-    $scope.shouldShowEditRightsLink = function () {
-        if (!$scope.isLoggedIn()) {
-            return false;
-        }
-
-        return -1 !== $.inArray("ReadUserCompetitionRole", $scope.rights());
-    };
-
-    $scope.shouldShowEditClubsLink = function () {
-        if (!$scope.isLoggedIn()) {
-            return false;
-        }
-
-        return -1 !== $.inArray("UpdateClub", $scope.rights());
-    };
-
-    $scope.shouldShowEditWeaponsLink = function () {
-        if (!$scope.isLoggedIn()) {
-            return false;
-        }
-
-        return -1 !== $.inArray("UpdateWeapon", $scope.rights());
-    };
-
-    // Fetch competitions from api and bind with knockout.
-    //var jsonUrl = currentUserApiUrl;
-    //if (window.competitionId !== undefined) {
-    //    jsonUrl += "/" + window.competitionId;
-    //}
-    //$.getJSON(jsonUrl, function (data) {
-    //    self.isLoggedIn(data.IsLoggedIn);
-
-    //    if (data.IsLoggedIn) {
-    //        self.displayName(data.DisplayName);
-    //        self.rights(data.CompetitionRights);
-    //    }
-    //}).fail(function (data) {
-    //    alert("Failed to retrieve user info:" + data);
-    //});
 });
 
 // Here the module for the index page
@@ -129,5 +107,60 @@ winshooterModule.controller('IndexController', function ($scope, competitionsFac
             newLocation = newLocation + $scope.selectedCompetition.CompetitionId;
             window.location.href = newLocation;
         }
+    };
+});
+
+// Here the module for the competition page
+winshooterModule.controller('CompetitionController', function($scope, competitionFactory, currentUserFactory) {
+    // Attributes for showing existing competition
+    $scope.currentUser = { IsLoggedIn: false, Rights: [] };
+    $scope.competition = {};
+    $scope.userCanUpdateCompetition = false;
+    $scope.userCanDeleteCompetition = false;
+
+    init();
+
+    function init() {
+        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function() {
+            $scope.userCanUpdateCompetition = -1 !== $.inArray("UpdateCompetition", $scope.currentUser.CompetitionRights);
+            $scope.userCanDeleteCompetition = -1 !== $.inArray("DeleteCompetition", $scope.currentUser.CompetitionRights);
+        }, function() {
+            alert("failed to retrieve current user.");
+        });
+
+        $scope.competition = competitionFactory.search({ CompetitionId: window.competitionId }, function() {
+            // We got some competitions back. Select first one.
+            alert("We got: " + JSON.stringify($scope.competition));
+        }, function() {
+            alert("failed to retrieve competitions.");
+        });
+    }
+
+    $scope.updateCompetition = function() {
+        if ($scope.competition === undefined) {
+            // What? Should never happen.
+            alert("Du måste välja en tävling att uppdatera.");
+            return false;
+        }
+
+        $scope.competition.$save();
+
+        return false;
+    };
+
+    $scope.deleteCompetition = function() {
+        if ($scope.competition === undefined) {
+            // What? Should never happen.
+            alert("Du måste välja en tävling att radera.");
+            return false;
+        }
+
+        if (confirm("Vill du verkligen radera tävlingen?") === false) {
+            return false;
+        }
+
+        $scope.competition.$delete();
+
+        return false;
     };
 });

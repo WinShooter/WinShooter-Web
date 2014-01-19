@@ -331,7 +331,6 @@
     <Content Include="robots.txt" />
     <Content Include="Scripts\App\Account\Login.js" />
     <Content Include="Scripts\App\common.js" />
-    <Content Include="Scripts\App\Home\competition.js" />
     <Content Include="Scripts\App\Home\manageCompetitionRights.js" />
     <Content Include="Scripts\App\Home\newcompetition.js" />
     <Content Include="Scripts\App\Home\stations.js" />

@@ -168,7 +168,7 @@ namespace WinShooter.Api.Api.Competition
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
         [Authenticate]
-        public CompetitionResponse Delete(CompetitionDeleteRequest request)
+        public CompetitionResponse Delete(CompetitionRequest request)
         {
             this.log.Debug("Got DELETE request: " + request);
             var session = this.GetSession() as CustomUserSession;

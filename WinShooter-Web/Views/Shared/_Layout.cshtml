@@ -73,7 +73,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="~/">WinShooter @ViewBag.CompetitionName</a>
             </div>
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" ng-controller="CurrentUserController">
                 <ul class="nav navbar-nav">
                     @if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
                     {
@@ -88,8 +88,8 @@
                         <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Rättigheter", "ManageCompetitionRights", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditRightsLink" } })</li>
                     }
                     <li>
-                        @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowLoginLink()" } })
-                        <a style="display: none" data-bind="visible: loginViewModel.isLoggedIn" href="/api/auth/logout">Logga ut</a>
+                        @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { { "ng-show", "shouldShowLoginLink" } })
+                        <a ng-show="isLoggedIn" href="/api/auth/logout">Logga ut</a>
                     </li>
                 </ul>
             </div>
@@ -97,7 +97,7 @@
     </div>
 
     <div class="container">
-        <div class="winshooter-template" ng-controller="BodyController">
+        <div class="winshooter-template">
             @RenderBody()
         </div>
     </div>
@@ -109,6 +109,7 @@
     @Scripts.Render("~/bundles/angularjs-resource")
     @Scripts.Render("~/bundles/angularjs-bootstrapui")
     @Scripts.Render("~/Scripts/App/common.js")
+    @Scripts.Render("~/Scripts/App/AngularModules.js")
 
     <!-- fallback for CDN -->
     <script>
