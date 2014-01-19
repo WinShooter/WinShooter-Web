@@ -87,14 +87,14 @@
                     @if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
                     {
                         <li class="@htmlLinkCompetitionClass">@Html.ActionLink("Tävling", "Competition", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                        <li class="@htmlLinkClubsClass">@Html.ActionLink("Klubbar", "Clubs", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditClubsLink()" } })</li>
-                        <li class="@htmlLinkWeaponsClass">@Html.ActionLink("Vapen", "Weapons", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditWeaponsLink()" } })</li>
+                        <li class="@htmlLinkClubsClass">@Html.ActionLink("Klubbar", "Clubs", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "ng-show", "shouldShowEditClubsLink" } })</li>
+                        <li class="@htmlLinkWeaponsClass">@Html.ActionLink("Vapen", "Weapons", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "ng-show", "shouldShowEditWeaponsLink" } })</li>
                         <li class="@htmlLinkStationsClass">@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionId }, null)</li>
                         <li class="@htmlLinkPatrolsClass">@Html.ActionLink("Patruller", "Patrols", "Home", new { id = ViewBag.CompetitionId }, null)</li>
                         <li class="@htmlLinkCompetitorsClass">@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                        <li class="@htmlLinkEnterResultsClass">@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowAddResultsLink" } })</li>
+                        <li class="@htmlLinkEnterResultsClass">@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "ng-show", "shouldShowAddResultsLink" } })</li>
                         <li class="@htmlLinkResultsClass">@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                        <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Rättigheter", "ManageCompetitionRights", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditRightsLink" } })</li>
+                        <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Rättigheter", "ManageCompetitionRights", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "ng-show", "shouldShowEditRightsLink" } })</li>
                     }
                     <li>
                         @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { { "ng-show", "shouldShowLoginLink" } })
