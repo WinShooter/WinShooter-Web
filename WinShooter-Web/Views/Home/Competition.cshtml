@@ -3,39 +3,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 data-bind="value: competitionName"></h1>
+<div ng-controller="CompetitionController">
+    <h1>{{competition.Name}}</h1>
 
-<form role="form">
-    <div class="form-group">
-        <label for="selectedCompetitionName">Namn:</label>
-        <input class="form-control" id="selectedCompetitionName" data-bind="value: competitionName, visible:userCanUpdateCompetition()" />
-        <p data-bind="text: competitionName, visible:!userCanUpdateCompetition()"></p>
-    </div>
-    <div class="form-group">
-        <label for="selectedCompetitionStartDate">Datum:</label>
-        <input class="form-control" id="selectedCompetitionStartDate" data-bind="value: competitionStartDate, visible:userCanUpdateCompetition()">
-        <p data-bind="text: competitionStartDate, visible:!userCanUpdateCompetition()"></p>
-    </div>
+    <form role="form">
+        <div class="form-group">
+            <label for="selectedCompetitionName">Namn:</label>
+            <input class="form-control" id="selectedCompetitionName" ng-show="userCanUpdateCompetition" ng-model="competition.Name" />
+            <p ng-show="!userCanUpdateCompetition">{{competition.Name}}</p>
+        </div>
+        <div class="form-group">
+            <label for="selectedCompetitionStartDate">Datum:</label>
+            <input class="form-control" id="selectedCompetitionStartDate" ng-show="userCanUpdateCompetition" ng-model="competition.StartDate">
+            <p ng-show="!userCanUpdateCompetition">{{competition.StartDate}}</p>
+        </div>
 
-    <div class="form-group">
-        <label class="checkbox" for="selectedCompetitionIsPublic">
-            <input type="checkbox" value="" id="selectedCompetitionIsPublic" data-toggle="checkbox" />
-            Publik tävling
-        </label>
-    </div>
-    <div class="form-group">
-        <label class="checkbox" for="selectedCompetitionUseNorwegianCount">
-            <input type="checkbox" id="selectedCompetitionUseNorwegianCount" data-toggle="checkbox" />
-            Poängfältskytte
-        </label>
-    </div>
-    <div class="form-group">
-        <input type="button" class="btn btn-primary" value="Uppdatera" data-bind="visible:userCanUpdateCompetition, click: updateCompetition" />
-        <input type="button" class="btn btn-danger" value="Radera" data-bind="visible:userCanDeleteCompetition, click: deleteCompetition" />
-    </div>
-</form>
-
-
-@section scripts {
-    @Scripts.Render("~/Scripts/App/Home/competition.js")
-}
+        <div class="form-group">
+            <label class="checkbox" for="selectedCompetitionIsPublic" ng-class="{checked: competition.IsPublic}">
+                <input type="checkbox" value="" id="selectedCompetitionIsPublic" data-toggle="checkbox" />
+                Publik tävling
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="checkbox" for="selectedCompetitionUseNorwegianCount" ng-class="{checked: competition.UseNorwegianCount}">
+                <input type="checkbox" id="selectedCompetitionUseNorwegianCount" data-toggle="checkbox" />
+                Poängfältskytte
+            </label>
+        </div>
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" value="Uppdatera" ng-show="userCanUpdateCompetition" ng-click="updateCompetition()" />
+            <input type="button" class="btn btn-danger" value="Radera" ng-show="userCanDeleteCompetition" ng-click="deleteCompetition()" />
+        </div>
+    </form>
+</div>

@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.App_Start
+namespace WinShooter
 {
     using System.Web.Optimization;
 
@@ -59,20 +59,6 @@ namespace WinShooter.App_Start
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
 
-#if DEBUG
-            bundles.Add(
-                new ScriptBundle(
-                    "~/bundles/knockout",
-                    "http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.3.0.js").Include(
-                    "~/Scripts/knockout-3.0.0.debug.js"));
-#else
-            bundles.Add(
-                new ScriptBundle(
-                    "~/bundles/knockout",
-                    "http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.3.0.debug.js").Include(
-                    "~/Scripts/knockout-3.0.0.js"));
-#endif
-
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(
@@ -86,6 +72,24 @@ namespace WinShooter.App_Start
                 "~/Scripts/Flat-ui/flatui-radio.js",
                 "~/Scripts/bootstrap-datepicker.js",
                 "~/Scripts/bootstrap-datepicker.sv.js"));
+
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/angularjs",
+                    "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js")
+                    .Include("~/Scripts/angular.js"));
+
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/angularjs-resource",
+                    "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-resource.min.js").Include(
+                        "~/Scripts/angular-resource.min.js"));
+
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/angularjs-bootstrapui")
+                    .Include("~/Scripts/ui-bootstrap-{version}.js")
+                    .Include("~/Scripts/ui-bootstrap-tpls-{version}.js"));
 
             bundles.Add(new StyleBundle("~/Content/styles").Include(
                 "~/Content/bootstrap.css",

@@ -19,9 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace WinShooter
-// ReSharper restore CheckNamespace
 {
     using System.Web.Mvc;
     using System.Web.Routing;

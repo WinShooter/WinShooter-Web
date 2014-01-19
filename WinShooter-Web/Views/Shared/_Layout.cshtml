@@ -1,13 +1,14 @@
 ﻿@using System.Diagnostics
 <!DOCTYPE html>
-<html>
+<html ng-app="winshooter">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>WinShooter @ViewBag.CompetitionName</title>
     @Styles.Render("~/Content/styles")    
+    @Styles.Render("~/Content/css")    
     @Scripts.Render("~/bundles/modernizr")
-    
+
     @{
         var htmlLinkClubsClass = string.Empty;
         var htmlLinkCompetitionClass = string.Empty;
@@ -52,6 +53,9 @@
                 case "WEAPONS":
                     htmlLinkWeaponsClass = "active";
                     break;
+                case "NEWCOMPETITION":
+                    // Don't display menu when adding new competition.
+                    break;
                 default:
                     Debug.WriteLine("Unhandled action: " + ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString().ToUpper());
                     break;
@@ -60,69 +64,73 @@
     }
 
     @if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
-{
-    <script>
-        window.competitionId = '@ViewBag.CompetitionId';
-    </script>
-}
+    {
+        <script>
+            window.competitionId = '@ViewBag.CompetitionId';
+        </script>
+    }
 </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Visa menu</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="~/">WinShooter @ViewBag.CompetitionName</a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        @if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
-                        {
-                            <li class="@htmlLinkCompetitionClass">@Html.ActionLink("Tävling", "Competition", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li class="@htmlLinkClubsClass">@Html.ActionLink("Klubbar", "Clubs", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditClubsLink()" } })</li>
-                            <li class="@htmlLinkWeaponsClass">@Html.ActionLink("Vapen", "Weapons", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditWeaponsLink()" } })</li>
-                            <li class="@htmlLinkStationsClass">@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li class="@htmlLinkPatrolsClass">@Html.ActionLink("Patruller", "Patrols", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li class="@htmlLinkCompetitorsClass">@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li class="@htmlLinkEnterResultsClass">@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowAddResultsLink" } })</li>
-                            <li class="@htmlLinkResultsClass">@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Rättigheter", "ManageCompetitionRights", "Home", new RouteValueDictionary() { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditRightsLink" } })</li>
-                        }
-                        <li>
-                            @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { {"style", "display: none"}, { "data-bind", "visible: loginViewModel.shouldShowLoginLink()" } })
-                            <a style="display: none" data-bind="visible: loginViewModel.isLoggedIn" href="/api/auth/logout">Logga ut</a>
-                        </li>
-                    </ul>
-                </div>
+                <a class="navbar-brand" href="~/">WinShooter @ViewBag.CompetitionName</a>
+            </div>
+            <div class="collapse navbar-collapse" ng-controller="CurrentUserController">
+                <ul class="nav navbar-nav">
+                    @if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
+                    {
+                        <li class="@htmlLinkCompetitionClass">@Html.ActionLink("Tävling", "Competition", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                        <li class="@htmlLinkClubsClass">@Html.ActionLink("Klubbar", "Clubs", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditClubsLink()" } })</li>
+                        <li class="@htmlLinkWeaponsClass">@Html.ActionLink("Vapen", "Weapons", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditWeaponsLink()" } })</li>
+                        <li class="@htmlLinkStationsClass">@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                        <li class="@htmlLinkPatrolsClass">@Html.ActionLink("Patruller", "Patrols", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                        <li class="@htmlLinkCompetitorsClass">@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                        <li class="@htmlLinkEnterResultsClass">@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowAddResultsLink" } })</li>
+                        <li class="@htmlLinkResultsClass">@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionId }, null)</li>
+                        <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Rättigheter", "ManageCompetitionRights", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "style", "display: none" }, { "data-bind", "visible: loginViewModel.shouldShowEditRightsLink" } })</li>
+                    }
+                    <li>
+                        @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { { "ng-show", "shouldShowLoginLink" } })
+                        <a ng-show="isLoggedIn" href="/api/auth/logout">Logga ut</a>
+                    </li>
+                </ul>
             </div>
         </div>
+    </div>
 
-        <div class="container">
-            <div class="winshooter-template">
-                @RenderBody()
-            </div>
+    <div class="container">
+        <div class="winshooter-template">
+            @RenderBody()
         </div>
-        
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/jqueryui")
-        @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/bundles/knockout")
-        @Scripts.Render("~/Scripts/App/common.js")
-        
-        <!-- fallback for CDN -->
-        <script>
-            // Fallback to loading jQuery from a local path if the CDN is unavailable
-            (window.jQuery === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-2.0.3.js")"><\/script>'));
-        </script>
-        <script>
-            // Fallback to loading knockout from a local path if the CDN is unavailable
-            (window.ko === undefined && document.write('<script src="@Url.Content("~/Scripts/knockout-3.0.0.js")"><\/script>'));
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/angularjs-resource")
+    @Scripts.Render("~/bundles/angularjs-bootstrapui")
+    @Scripts.Render("~/Scripts/App/common.js")
+    @Scripts.Render("~/Scripts/App/AngularModules.js")
+
+    <!-- fallback for CDN -->
+    <script>
+        // Fallback to loading jQuery from a local path if the CDN is unavailable
+        (window.jQuery === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-2.0.3.js")"><\/script>'));
+    </script>
+    <script>
+            // Fallback to loading jQuery.ui from a local path if the CDN is unavailable
+            (window.jQuery.ui === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.js")"><\/script>'));
         </script>
 
-        @RenderSection("scripts", required: false)
-    </body>
+    @RenderSection("scripts", required: false)
+</body>
 </html>
+

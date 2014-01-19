@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.App_Start
+namespace WinShooter
 {
     using System.Web.Mvc;
 
