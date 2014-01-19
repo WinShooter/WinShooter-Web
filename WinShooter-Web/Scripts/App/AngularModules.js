@@ -133,9 +133,9 @@ winshooterModule.controller('CompetitionController', function($scope, competitio
         });
 
         $scope.competition = competitionFactory.search({ CompetitionId: window.competitionId }, function() {
-            // We got some competitions back. Select first one.
+            // Nothing to do here. Carry on!
             alert("We got: " + JSON.stringify($scope.competition));
-        }, function() {
+        }, function () {
             alert("failed to retrieve competitions.");
         });
     }
