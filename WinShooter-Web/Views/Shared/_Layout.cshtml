@@ -53,6 +53,9 @@
                 case "WEAPONS":
                     htmlLinkWeaponsClass = "active";
                     break;
+                case "NEWCOMPETITION":
+                    // Don't display menu when adding new competition.
+                    break;
                 default:
                     Debug.WriteLine("Unhandled action: " + ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString().ToUpper());
                     break;

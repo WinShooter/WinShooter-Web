@@ -3,56 +3,55 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style="display: none" data-bind="visible: loginViewModel.isLoggedIn">
-    <h1>Skapa ny tävling</h1>
+<div ng-controller="NewCompetitionController">
+    <div ng-show="currentUser.IsLoggedIn">
+        <h1>Skapa ny tävling</h1>
 
-    <div>
-        När du skapar en tävling och börjar lägga upp skyttar skapar du enligt Personuppgiftslagen ett elektroniskt register.
+        <div>
+            När du skapar en tävling och börjar lägga upp skyttar skapar du enligt Personuppgiftslagen ett elektroniskt register.
+        </div>
+
+        <div class="form-group">
+            <label for="newCompetitionName">Tävlingens namn:</label>
+            <input class="form-control" id="newCompetitionName" ng-model="Name" />
+        </div>
+        <div class="form-group">
+            <label for="newCompetitionStartDate">Startar datum:</label>
+            <input class="form-control" type="text" id="newCompetitionStartDate" ng-model="StartDate"
+                   datepicker-popup="'yyyy-MM-dd''" is-open="datePickerOpen" max="'2015-06-22'"
+                   datepicker-options="datePickerDateOptions" ng-required="true" close-text="Stäng" />
+        </div>
+        <div class="form-group">
+            <label for="newCompetitionStartTime">Startar tid:</label>
+            <input class="form-control" type="text" id="newCompetitionStartTime" ng-model="StartTime" />
+        </div>
+
+        <div class="form-group">
+            <label class="checkbox" for="newCompetitionIsPublic" ng-class="{checked: IsPublic}">
+                <input type="checkbox" value="" id="newCompetitionIsPublic" data-toggle="checkbox" />
+                Publik tävling
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="checkbox" for="newCompetitionUseNorwegianCount" ng-class="{checked: UseNorwegianCount}">
+                <input type="checkbox" id="newCompetitionUseNorwegianCount" data-toggle="checkbox" />
+                Poängfältskytte
+            </label>
+        </div>
+
+        <div class="form-group">
+            <input class="btn btn-primary" type="button" id="newCompetitionAddNow" value="Lägg till" ng-click="addCompetition()" />
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="newCompetitionName">Tävlingens namn:</label>
-        <input class="form-control" id="newCompetitionName" data-bind="value: newCompetitionName" />
-    </div>
-    <div class="form-group">
-        <label for="newCompetitionStartDate">Startar datum:</label>
-        <input class="form-control" type="text" id="newCompetitionStartDate" data-bind="value: newCompetitionStartDate" />
-    </div>
-    <div class="form-group">
-        <label for="newCompetitionStartTime">Startar tid:</label>
-        <input class="form-control" type="text" id="newCompetitionStartTime" data-bind="value: newCompetitionStartTime" />
-    </div>
 
-
-    <div class="form-group">
-        <label class="checkbox" for="newCompetitionIsPublic">
-            <input type="checkbox" value="" id="newCompetitionIsPublic" data-toggle="checkbox" />
-            Publik tävling
-        </label>
-    </div>
-    <div class="form-group">
-        <label class="checkbox" for="newCompetitionUseNorwegianCount">
-            <input type="checkbox" id="newCompetitionUseNorwegianCount" data-toggle="checkbox" />
-            Poängfältskytte
-        </label>
-    </div>
-
-    <div class="form-group">
-        <input class="btn btn-primary" type="button" id="newCompetitionAddNow" value="Lägg till" data-bind="click: addCompetition" />
+    <div ng-show="!currentUser.IsLoggedIn">
+        <h1>Skapa ny tävling</h1>
+        <div>
+            För att kunna skapa en ny tävling måste du vara inloggad.
+        </div>
+        <div>
+            @Html.ActionLink("Logga in", "Login", "Account")
+        </div>
     </div>
 </div>
-
-
-<div style="display: none" data-bind="visible: !loginViewModel.isLoggedIn()">
-    <h1>Skapa ny tävling</h1>
-    <div>
-        För att kunna skapa en ny tävling måste du vara inloggad.
-    </div>
-    <div>
-        @Html.ActionLink("Logga in", "Login", "Account")
-    </div>
-</div>
-
-@section scripts {
-    @Scripts.Render("~/Scripts/App/Home/newCompetition.js")
-}

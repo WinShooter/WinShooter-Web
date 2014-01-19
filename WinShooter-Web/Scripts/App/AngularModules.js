@@ -1,5 +1,9 @@
-﻿// Create the angular module
-var winshooterModule = angular.module('winshooter', ['ngResource']);
+﻿/// <reference path="/Scripts/App/common.js" />
+/// <reference path="/Scripts/ui-bootstrap-0.9.0.js" />
+/// <reference path="/Scripts/ui-bootstrap-tpls-0.9.0.js" />
+
+// Create the angular module
+var winshooterModule = angular.module('winshooter', ['ngResource', 'ui.bootstrap']);
 
 // Create factory for competitions
 winshooterModule.factory('competitionsFactory', [
@@ -162,5 +166,51 @@ winshooterModule.controller('CompetitionController', function($scope, competitio
         $scope.competition.$delete();
 
         return false;
+    };
+});
+
+// Here the module for the competition page
+winshooterModule.controller('NewCompetitionController', function ($scope, competitionFactory, currentUserFactory) {
+    $scope.currentUser = { IsLoggedIn: false, Rights: [] };
+
+    // Attributes for adding new competition
+    $scope.Name = "";
+    $scope.StartDate = "";
+    $scope.StartTime = "";
+    $scope.IsPublic = false;
+    $scope.UseNorwegianCount = false;
+
+    // UI attributes
+    $scope.datePickerOpen = true;
+    $scope.datePickerShowWeeks = true;
+    $scope.datePickerDateOptions = { 'year-format': 'yy', 'starting-day': 1 };
+
+    // Init our page
+    init();
+
+    function init() {
+        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function () {
+            // Nothing to do here. Carry on!
+        }, function () {
+            alert("failed to retrieve current user.");
+        });
+    }
+
+    $scope.addCompetition = function () {
+        var competition = {
+            CompetitionId: "",
+            CompetitionType: "Field",
+            Name: $scope.Name,
+            UseNorwegianCount: $scope.UseNorwegianCount,
+            IsPublic : $scope.IsPublic,
+            StartDate: $scope.StartDate.getFullYear() + "-" + $scope.StartDate.getMonth() + "-" + $scope.StartDate.getDay() + " " + $scope.StartTime,
+        };
+        
+        $.post(competitionApiUrl, competition, function(returnedData) {
+            var newLocation = "/home/competition/" + returnedData.CompetitionId;
+            window.location.href = newLocation;
+        }, "json").fail(function (data) {
+            alert("Misslyckades med att lägga till tävlingen.\r\n" + data.responseJSON.ResponseStatus.Message);
+        });
     };
 });
