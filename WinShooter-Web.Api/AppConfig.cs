@@ -22,6 +22,7 @@
 namespace WinShooter.Api
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using ServiceStack.Configuration;
 
@@ -38,12 +39,32 @@ namespace WinShooter.Api
         /// </param>
         public AppConfig(IResourceManager appSettings)
         {
-            this.AdminUserNames = appSettings.Get("AdminUserNames", new List<string>());
+            this.AdminEmailAddresses = (from adminUserName in appSettings.GetList("AdminEmailAddresses")
+                 select adminUserName.ToUpper().Trim()).ToList();
         }
 
         /// <summary>
         /// Gets or sets the admin user names.
         /// </summary>
-        public List<string> AdminUserNames { get; set; }
+        public List<string> AdminEmailAddresses { get; set; }
+
+        /// <summary>
+        /// The is admin user.
+        /// </summary>
+        /// <param name="email">
+        /// The email.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        public bool IsAdminUser(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return false;
+            }
+            var upperEmail = email.Trim().ToUpper();
+            return (from adminUser in this.AdminEmailAddresses where upperEmail == adminUser select adminUser).Any();
+        }
     }
 }

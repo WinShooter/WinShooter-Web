@@ -41,6 +41,7 @@ namespace WinShooter.Database
             this.Surname = string.Empty;
             this.Givenname = string.Empty;
             this.Email = string.Empty;
+            this.IsSystemAdmin = false;
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
@@ -83,6 +84,12 @@ namespace WinShooter.Database
         /// Gets or sets the time of the last login.
         /// </summary>
         public virtual DateTime LastLogin { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the user is system admin.
+        /// This value is NOT set from the database but during the authentication process.
+        /// </summary>
+        public virtual bool IsSystemAdmin { get; set; }
 
         /// <summary>
         /// Gets the display name.
