@@ -98,6 +98,8 @@ winshooterModule.controller('IndexController', function ($scope, competitionsFac
             if ($scope.competitions.length > 0) {
                 // We got some competitions back. Select first one.
                 $scope.selectedCompetition = $scope.competitions[0];
+            } else {
+                $scope.selectedCompetition.Name = "Inga tävlingar hittades.";
             }
         }, function () {
             alert("failed to retrieve competitions.");
@@ -134,7 +136,6 @@ winshooterModule.controller('CompetitionController', function($scope, competitio
 
         $scope.competition = competitionFactory.search({ CompetitionId: window.competitionId }, function() {
             // Nothing to do here. Carry on!
-            alert("We got: " + JSON.stringify($scope.competition));
         }, function () {
             alert("failed to retrieve competitions.");
         });
