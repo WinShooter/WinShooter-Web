@@ -28,10 +28,7 @@ namespace WinShooter
     using System.Web.Routing;
 
     using WinShooter.Api;
-    using WinShooter.App_Start;
     using WinShooter.Web.DatabaseMigrations;
-
-    using WinShooter_Web.DatabaseMigrations;
 
     /// <summary>
     /// The global.

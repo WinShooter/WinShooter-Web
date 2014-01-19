@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.App_Start
+namespace WinShooter
 {
     using System.Web.Optimization;
 
@@ -82,6 +82,11 @@ namespace WinShooter.App_Start
                     "~/bundles/angularjs-resource",
                     "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-resource.min.js").Include(
                         "~/Scripts/angular-resource.min.js"));
+
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/angularjs-bootstrapui")
+                    .Include("~/Scripts/ui-bootstrap-{version}.js"));
 
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
                 "~/Content/bootstrap.css",

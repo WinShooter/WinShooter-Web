@@ -42,14 +42,14 @@
         <div id="selectedCompetitionStartDate">{{selectedCompetition.StartDate}}</div>
     </div>
     <div class="checkbox">
-        <label class="checkbox" for="selectedCompetitionIsPublic">
+        <label class="checkbox" for="selectedCompetitionIsPublic" ng-class="{checked: selectedCompetition.IsPublic}">
             <input type="checkbox" id="selectedCompetitionIsPublic" data-toggle="checkbox" />
             Publik tävling
         </label>
     </div>
     <div class="checkbox">
-        <label class="checkbox" for="selectedCompetitionUseNorwegianCount">
-            <input type="checkbox" id="selectedCompetitionUseNorwegianCount" data-toggle="checkbox" />
+        <label class="checkbox" for="selectedCompetitionUseNorwegianCount" ng-class="{checked: selectedCompetition.UseNorwegianCount}">
+            <input type="checkbox" id="selectedCompetitionUseNorwegianCount" data-toggle="checkbox"/>
             Poängfältskytte
         </label>
     </div>
