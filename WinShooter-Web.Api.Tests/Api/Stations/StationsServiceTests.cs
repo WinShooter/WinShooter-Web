@@ -30,7 +30,7 @@ namespace WinShooter.Api.Tests.Api.Stations
     /// <summary>
     /// Tests the <see cref="StationsService"/> class.
     /// </summary>
-    [TestClass]
+    [TestClass, Ignore]
     public class StationsServiceTests
     {
         /// <summary>
