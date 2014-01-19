@@ -148,6 +148,11 @@ winshooterModule.controller('CompetitionController', function($scope, competitio
             return false;
         }
 
+        // For some reason angular cannot have a two way binding to a class.
+        // Let's pick it out with jQuery instead.
+        $scope.competition.IsPublic = $("label[for='selectedCompetitionIsPublic']").hasClass('checked');
+        $scope.competition.UseNorwegianCount = $("label[for='selectedCompetitionUseNorwegianCount']").hasClass('checked');
+
         $scope.competition.$save();
 
         return false;
