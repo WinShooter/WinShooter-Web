@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
 
@@ -49,7 +49,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Up()
         {
-            Create.Table(UsersTableName)
+            this.Create.Table(UsersTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("CardNumber").AsString()
                 .WithColumn("Surname").AsString()
@@ -59,7 +59,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("LastUpdated").AsDateTime()
                 .WithColumn("LastLogin").AsDateTime();
 
-            Create.Table(UsersLoginInfoTableName)
+            this.Create.Table(UsersLoginInfoTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("UserId").AsGuid()
                 .WithColumn("IdentityProvider").AsString().Indexed()
@@ -67,7 +67,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("IdentityProviderUsername").AsString()
                 .WithColumn("LastLogin").AsDateTime();
 
-            Create.ForeignKey(UsersLoginInfoForeignKeyName)
+            this.Create.ForeignKey(UsersLoginInfoForeignKeyName)
                 .FromTable(UsersLoginInfoTableName).ForeignColumn("UserId")
                 .ToTable(UsersTableName).PrimaryColumn("Id");
         }
@@ -77,9 +77,9 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            Delete.ForeignKey(UsersLoginInfoForeignKeyName);
-            Delete.Table(UsersTableName);
-            Delete.Table(UsersLoginInfoTableName);
+            this.Delete.ForeignKey(UsersLoginInfoForeignKeyName);
+            this.Delete.Table(UsersTableName);
+            this.Delete.Table(UsersLoginInfoTableName);
         }
     }
 }

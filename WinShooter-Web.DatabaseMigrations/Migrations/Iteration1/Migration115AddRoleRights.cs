@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Migration100CreateCompetitionTable.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Migration115AddRoleRights.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The migration which creates the competition table.
+//   Creates the users users table.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,36 +24,28 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
     using FluentMigrator;
 
     /// <summary>
-    /// The migration which creates the competition table.
+    /// Creates the users users table.
     /// </summary>
-    [Migration(100)]
-    public class Migration100CreateCompetitionTable : Migration
+    [Migration(115)]
+    public class Migration115AddRoleRights : Migration
     {
         /// <summary>
-        /// The table name.
-        /// </summary>
-        internal const string CompetitionTableName = "Competition";
-
-        /// <summary>
-        /// Upgrading the database.
+        /// Migrates the database up.
         /// </summary>
         public override void Up()
         {
-            this.Create.Table(CompetitionTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
-                .WithColumn("Name").AsString()
-                .WithColumn("StartDate").AsDateTime()
-                .WithColumn("CompetitionType").AsInt32()
-                .WithColumn("UseNorwegianCount").AsBoolean()
-                .WithColumn("IsPublic").AsBoolean();
+            this.Execute.EmbeddedScript("Migration115AddRoleOwnerRights.sql");
+            this.Execute.EmbeddedScript("Migration115AddRoleReaderRights.sql");
+            this.Execute.EmbeddedScript("Migration115AddRoleResultWriterRights.sql");
         }
 
         /// <summary>
-        /// Downgrading the database.
+        /// Migrates the database down.
         /// </summary>
         public override void Down()
         {
-            this.Delete.Table(CompetitionTableName);
+            this.Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RoleRightsInfoTableName);
+            this.Execute.Sql("DELETE FROM " + Migration112CreateRolesTable.RolesTableName);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Migration114AddRoleRights.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Migration116AddRoleRights.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -19,22 +19,24 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
 
     /// <summary>
     /// Creates the users users table.
     /// </summary>
-    [Migration(114)]
-    public class Migration114AddRoleRights : Migration
+    [Migration(116)]
+    public class Migration116AddRoleRights : Migration
     {
         /// <summary>
         /// Migrates the database up.
         /// </summary>
         public override void Up()
         {
-            Execute.EmbeddedScript("Migration114AddRoleRights.sql");
+            this.Execute.EmbeddedScript("Migration116AddRoleAdminRights.sql");
+            this.Execute.EmbeddedScript("Migration116AddRoleClubManagerRights.sql");
+            this.Execute.EmbeddedScript("Migration116AddRoleWeaponManagerRights.sql");
         }
 
         /// <summary>
@@ -42,9 +44,8 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            Execute.Sql("DELETE FROM " + Migration112CreateRolesTable.RolesTableName);
-            Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RightsTableName);
-            Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RoleRightsInfoTableName);
+            this.Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RoleRightsInfoTableName);
+            this.Execute.Sql("DELETE FROM " + Migration112CreateRolesTable.RolesTableName);
         }
     }
 }

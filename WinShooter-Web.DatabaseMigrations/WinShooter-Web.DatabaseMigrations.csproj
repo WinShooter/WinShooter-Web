@@ -50,7 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISqlDatabaseMigrator.cs" />
-    <Compile Include="Migrations\Iteration1\Migration114AddRoleRights.cs" />
+    <Compile Include="Migrations\Iteration1\Migration116AddRoleRights.cs" />
+    <Compile Include="Migrations\Iteration1\Migration115AddRoleRights.cs" />
+    <Compile Include="Migrations\Iteration1\Migration114AddRights.cs" />
     <Compile Include="Migrations\Iteration1\Migration113CreateRightsTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration112CreateRolesTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration111CreateUsersTable.cs" />
@@ -72,7 +74,47 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\Iteration1\Migration114AddRoleRights.sql">
+    <EmbeddedResource Include="Migrations\Iteration1\Migration114AddRights.sql">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\Iteration1\Migration116AddRoleClubManagerRights.sql">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\Iteration1\Migration115AddRoleOwnerRights.sql">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\Iteration1\Migration115AddRoleReaderRights.sql">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\Iteration1\Migration115AddRoleResultWriterRights.sql">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\Iteration1\Migration115AddRoleShooterManagerRights.sql">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\Iteration1\Migration115AddRoleStationManagerRights.sql">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\Iteration1\Migration116AddRoleAdminRights.sql">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\Iteration1\Migration116AddRoleWeaponManagerRights.sql">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
 
@@ -59,25 +59,25 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Up()
         {
-            Create.Table(RolesTableName)
+            this.Create.Table(RolesTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("RoleName").AsString().NotNullable();
 
-            Create.Table(UserRolesInfoTableName)
+            this.Create.Table(UserRolesInfoTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("UserId").AsGuid().NotNullable()
                 .WithColumn("RoleId").AsGuid().NotNullable()
                 .WithColumn("CompetitionId").AsGuid().Nullable();
 
-            Create.ForeignKey(UserRolesInfoRolesForeignKeyName)
+            this.Create.ForeignKey(UserRolesInfoRolesForeignKeyName)
                 .FromTable(UserRolesInfoTableName).ForeignColumn("RoleId")
                 .ToTable(RolesTableName).PrimaryColumn("Id");
 
-            Create.ForeignKey(UserRolesInfoUsersForeignKeyName)
+            this.Create.ForeignKey(UserRolesInfoUsersForeignKeyName)
                 .FromTable(UserRolesInfoTableName).ForeignColumn("UserId")
                 .ToTable(Migration111CreateUsersTable.UsersTableName).PrimaryColumn("Id");
 
-            Create.ForeignKey(UserRolesInfoCompetitionForeignKeyName)
+            this.Create.ForeignKey(UserRolesInfoCompetitionForeignKeyName)
                 .FromTable(UserRolesInfoTableName).ForeignColumn("CompetitionId")
                 .ToTable(Migration100CreateCompetitionTable.CompetitionTableName).PrimaryColumn("Id");
         }
@@ -87,11 +87,11 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            Delete.ForeignKey(UserRolesInfoCompetitionForeignKeyName);
-            Delete.ForeignKey(UserRolesInfoUsersForeignKeyName);
-            Delete.ForeignKey(UserRolesInfoRolesForeignKeyName);
-            Delete.Table(RolesTableName);
-            Delete.Table(UserRolesInfoTableName);
+            this.Delete.ForeignKey(UserRolesInfoCompetitionForeignKeyName);
+            this.Delete.ForeignKey(UserRolesInfoUsersForeignKeyName);
+            this.Delete.ForeignKey(UserRolesInfoRolesForeignKeyName);
+            this.Delete.Table(RolesTableName);
+            this.Delete.Table(UserRolesInfoTableName);
         }
     }
 }

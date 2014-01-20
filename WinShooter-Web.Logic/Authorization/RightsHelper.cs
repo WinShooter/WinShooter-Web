@@ -120,6 +120,12 @@ namespace WinShooter.Logic.Authorization
                 return this.publicCompetitionRights;
             }
 
+            if (this.CurrentUser.IsSystemAdmin)
+            {
+                // I must... obey.
+                return (WinShooterCompetitionPermissions[])Enum.GetValues(typeof(WinShooterCompetitionPermissions));
+            }
+
             var userRoleIds =
                 from userRolesInfo in
                      this.userRolesInfoRepository.FilterBy(

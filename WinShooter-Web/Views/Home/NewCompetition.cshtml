@@ -47,12 +47,9 @@
 
     <div ng-show="!currentUser.IsLoggedIn">
         <h1>Skapa ny tävling</h1>
-    <p>
-        <small> för att kunna skapa en ny tävling måste du vara inloggad.</small>
-    </p>
-        <div>
-            För att kunna skapa en ny tävling måste du vara inloggad.
-        </div>
+        <p>
+            <small> för att kunna skapa en ny tävling måste du vara inloggad.</small>
+        </p>
         <div>
             @Html.ActionLink("Logga in", "Login", "Account")
         </div>
