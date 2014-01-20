@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
 
@@ -34,7 +34,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Up()
         {
-            Execute.EmbeddedScript("Migration114AddRoleRights.sql");
+            this.Execute.EmbeddedScript("Migration114AddRoleRights.sql");
         }
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            Execute.Sql("DELETE FROM " + Migration112CreateRolesTable.RolesTableName);
-            Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RightsTableName);
-            Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RoleRightsInfoTableName);
+            this.Execute.Sql("DELETE FROM " + Migration112CreateRolesTable.RolesTableName);
+            this.Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RightsTableName);
+            this.Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RoleRightsInfoTableName);
         }
     }
 }

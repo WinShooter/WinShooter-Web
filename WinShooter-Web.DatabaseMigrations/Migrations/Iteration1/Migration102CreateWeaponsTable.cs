@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
 
@@ -39,7 +39,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Up()
         {
-            Create.Table(WeaponsTableName)
+            this.Create.Table(WeaponsTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("Manufacturer").AsString()
                 .WithColumn("Model").AsString()
@@ -53,7 +53,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            Delete.Table(WeaponsTableName);
+            this.Delete.Table(WeaponsTableName);
         }
     }
 }

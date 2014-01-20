@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
 
@@ -99,55 +99,55 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Up()
         {
-            Create.ForeignKey(ForeignKeyTeamsTeamsToCompetitorsName)
+            this.Create.ForeignKey(ForeignKeyTeamsTeamsToCompetitorsName)
                 .FromTable("TeamToCompetitor").ForeignColumn("TeamId")
                 .ToTable("Teams").PrimaryColumn("Id");
 
-            Create.ForeignKey(ForeignKeyCompetitorsTeamsToCompetitorsName)
+            this.Create.ForeignKey(ForeignKeyCompetitorsTeamsToCompetitorsName)
                 .FromTable("TeamToCompetitor").ForeignColumn("CompetitorId")
                 .ToTable("Competitors").PrimaryColumn("Id");
 
-            Create.ForeignKey(ForeignKeyClubsTeamsName)
+            this.Create.ForeignKey(ForeignKeyClubsTeamsName)
                 .FromTable("Teams").ForeignColumn("ClubId")
                 .ToTable("Clubs").PrimaryColumn("Id");
             
-            Create.ForeignKey(ForeignKeyCompetitorsCompetitorResultsName)
+            this.Create.ForeignKey(ForeignKeyCompetitorsCompetitorResultsName)
                 .FromTable("CompetitorResults").ForeignColumn("CompetitorId")
                 .ToTable("Competitors").PrimaryColumn("Id");
 
-            Create.ForeignKey(ForeignKeyStationsCompetitorResultsName)
+            this.Create.ForeignKey(ForeignKeyStationsCompetitorResultsName)
                 .FromTable("CompetitorResults").ForeignColumn("StationId")
                 .ToTable("Stations").PrimaryColumn("Id");
 
-            Create.ForeignKey(ForeignKeyPatrolsCompetitorsName)
+            this.Create.ForeignKey(ForeignKeyPatrolsCompetitorsName)
                 .FromTable("Competitors").ForeignColumn("PatrolId")
                 .ToTable("Patrols").PrimaryColumn("Id");
 
-            Create.ForeignKey(ForeignKeyShootersCompetitionName)
+            this.Create.ForeignKey(ForeignKeyShootersCompetitionName)
                 .FromTable("Shooters").ForeignColumn("CompetitionId")
                 .ToTable("Competition").PrimaryColumn("Id");
 
-            Create.ForeignKey(ForeignKeyShootersCompetitorsName)
+            this.Create.ForeignKey(ForeignKeyShootersCompetitorsName)
                 .FromTable("Competitors").ForeignColumn("ShooterId")
                 .ToTable("Shooters").PrimaryColumn("Id");
 
-            Create.ForeignKey(ForeignKeyWeaponsCompetitorsName)
+            this.Create.ForeignKey(ForeignKeyWeaponsCompetitorsName)
                 .FromTable("Competitors").ForeignColumn("WeaponId")
                 .ToTable("Weapons").PrimaryColumn("Id");
 
-            Create.ForeignKey(ForeignKeyCompetitionsCompetitorsName)
+            this.Create.ForeignKey(ForeignKeyCompetitionsCompetitorsName)
                 .FromTable("Competitors").ForeignColumn("CompetitionId")
                 .ToTable("Competition").PrimaryColumn("Id");
 
-            Create.ForeignKey(ForeignKeyCompetitionPatrolsName)
+            this.Create.ForeignKey(ForeignKeyCompetitionPatrolsName)
                 .FromTable("Patrols").ForeignColumn("CompetitionId")
                 .ToTable("Competition").PrimaryColumn("Id");
 
-            Create.ForeignKey(ForeignKeyCompetitionStationsName)
+            this.Create.ForeignKey(ForeignKeyCompetitionStationsName)
                 .FromTable("Stations").ForeignColumn("CompetitionId")
                 .ToTable("Competition").PrimaryColumn("Id");
 
-            Create.ForeignKey(ForeignKeyClubsShootersName)
+            this.Create.ForeignKey(ForeignKeyClubsShootersName)
                 .FromTable("Shooters").ForeignColumn("ClubId")
                 .ToTable("Clubs").PrimaryColumn("Id");
         }
@@ -157,18 +157,18 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            Delete.ForeignKey(ForeignKeyTeamsTeamsToCompetitorsName);
-            Delete.ForeignKey(ForeignKeyCompetitorsTeamsToCompetitorsName);
-            Delete.ForeignKey(ForeignKeyClubsTeamsName);
-            Delete.ForeignKey(ForeignKeyCompetitorsCompetitorResultsName);
-            Delete.ForeignKey(ForeignKeyStationsCompetitorResultsName);
-            Delete.ForeignKey(ForeignKeyPatrolsCompetitorsName);
-            Delete.ForeignKey(ForeignKeyShootersCompetitorsName);
-            Delete.ForeignKey(ForeignKeyWeaponsCompetitorsName);
-            Delete.ForeignKey(ForeignKeyCompetitionsCompetitorsName);
-            Delete.ForeignKey(ForeignKeyCompetitionPatrolsName);
-            Delete.ForeignKey(ForeignKeyClubsShootersName);
-            Delete.ForeignKey(ForeignKeyCompetitionStationsName);
+            this.Delete.ForeignKey(ForeignKeyTeamsTeamsToCompetitorsName);
+            this.Delete.ForeignKey(ForeignKeyCompetitorsTeamsToCompetitorsName);
+            this.Delete.ForeignKey(ForeignKeyClubsTeamsName);
+            this.Delete.ForeignKey(ForeignKeyCompetitorsCompetitorResultsName);
+            this.Delete.ForeignKey(ForeignKeyStationsCompetitorResultsName);
+            this.Delete.ForeignKey(ForeignKeyPatrolsCompetitorsName);
+            this.Delete.ForeignKey(ForeignKeyShootersCompetitorsName);
+            this.Delete.ForeignKey(ForeignKeyWeaponsCompetitorsName);
+            this.Delete.ForeignKey(ForeignKeyCompetitionsCompetitorsName);
+            this.Delete.ForeignKey(ForeignKeyCompetitionPatrolsName);
+            this.Delete.ForeignKey(ForeignKeyClubsShootersName);
+            this.Delete.ForeignKey(ForeignKeyCompetitionStationsName);
         }
     }
 }

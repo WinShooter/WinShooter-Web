@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
 
@@ -39,7 +39,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Up()
         {
-            Create.Table(PatrolsTableName)
+            this.Create.Table(PatrolsTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("PatrolId").AsInt32()
                 .WithColumn("StartTime").AsDateTime()
@@ -53,7 +53,7 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            Delete.Table(PatrolsTableName);
+            this.Delete.Table(PatrolsTableName);
         }
     }
 }

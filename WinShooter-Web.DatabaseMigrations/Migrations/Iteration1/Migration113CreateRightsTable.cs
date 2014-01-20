@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
 
@@ -54,20 +54,20 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Up()
         {
-            Create.Table(RightsTableName)
+            this.Create.Table(RightsTableName)
                 .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
                 .WithColumn("Name").AsString().NotNullable();
 
-            Create.Table(RoleRightsInfoTableName)
+            this.Create.Table(RoleRightsInfoTableName)
                 .WithColumn("Id").AsInt32().Identity()
                 .WithColumn("RoleId").AsGuid().NotNullable()
                 .WithColumn("RightId").AsGuid().NotNullable();
 
-            Create.ForeignKey(RoleRightsInfoRolesForeignKeyName)
+            this.Create.ForeignKey(RoleRightsInfoRolesForeignKeyName)
                 .FromTable(RoleRightsInfoTableName).ForeignColumn("RoleId")
                 .ToTable(Migration112CreateRolesTable.RolesTableName).PrimaryColumn("Id");
 
-            Create.ForeignKey(RoleRightsInfoRightsForeignKeyName)
+            this.Create.ForeignKey(RoleRightsInfoRightsForeignKeyName)
                 .FromTable(RoleRightsInfoTableName).ForeignColumn("RightId")
                 .ToTable(RightsTableName).PrimaryColumn("Id");
         }
@@ -77,10 +77,10 @@ namespace WinShooter_Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            Delete.ForeignKey(RoleRightsInfoRightsForeignKeyName);
-            Delete.ForeignKey(RoleRightsInfoRolesForeignKeyName);
-            Delete.Table(RightsTableName);
-            Delete.Table(RoleRightsInfoTableName);
+            this.Delete.ForeignKey(RoleRightsInfoRightsForeignKeyName);
+            this.Delete.ForeignKey(RoleRightsInfoRolesForeignKeyName);
+            this.Delete.Table(RightsTableName);
+            this.Delete.Table(RoleRightsInfoTableName);
         }
     }
 }
