@@ -19,6 +19,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using FluentMigrator.Runner.Extensions;
+
 namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
@@ -40,7 +42,7 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             this.Create.Table(ClubsTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
+                .WithColumn("Id").AsGuid()
                 .WithColumn("ClubId").AsString()
                 .WithColumn("Name").AsString()
                 .WithColumn("Country").AsString()
@@ -48,6 +50,11 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("Plusgiro").AsString()
                 .WithColumn("Bankgiro").AsString()
                 .WithColumn("LastUpdated").AsDateTime();
+
+            this.Create.PrimaryKey(string.Format("PK_{0}", ClubsTableName))
+                .OnTable(ClubsTableName)
+                .Column("Id")
+                .Clustered();
         }
 
         /// <summary>

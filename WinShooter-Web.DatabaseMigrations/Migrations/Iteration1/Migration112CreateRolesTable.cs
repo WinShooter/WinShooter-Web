@@ -19,6 +19,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using FluentMigrator.Runner.Extensions;
+
 namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
@@ -60,14 +62,24 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             this.Create.Table(RolesTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
+                .WithColumn("Id").AsGuid()
                 .WithColumn("RoleName").AsString().NotNullable();
 
+            this.Create.PrimaryKey(string.Format("PK_{0}", RolesTableName))
+                .OnTable(RolesTableName)
+                .Column("Id")
+                .Clustered();
+
             this.Create.Table(UserRolesInfoTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
+                .WithColumn("Id").AsGuid()
                 .WithColumn("UserId").AsGuid().NotNullable()
                 .WithColumn("RoleId").AsGuid().NotNullable()
                 .WithColumn("CompetitionId").AsGuid().Nullable();
+
+            this.Create.PrimaryKey(string.Format("PK_{0}", UserRolesInfoTableName))
+                .OnTable(UserRolesInfoTableName)
+                .Column("Id")
+                .Clustered();
 
             this.Create.ForeignKey(UserRolesInfoRolesForeignKeyName)
                 .FromTable(UserRolesInfoTableName).ForeignColumn("RoleId")
