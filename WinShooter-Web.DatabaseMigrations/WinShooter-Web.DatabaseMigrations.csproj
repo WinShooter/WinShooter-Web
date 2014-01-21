@@ -34,8 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentMigrator">
-      <HintPath>..\packages\FluentMigrator.1.1.1.0\lib\40\FluentMigrator.dll</HintPath>
+    <Reference Include="FluentMigrator, Version=1.1.2.1, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentMigrator.1.1.2.1\lib\40\FluentMigrator.dll</HintPath>
     </Reference>
     <Reference Include="FluentMigrator.Runner">
       <HintPath>..\packages\FluentMigrator.Tools.1.1.1.0\tools\AnyCPU\40\FluentMigrator.Runner.dll</HintPath>
@@ -50,9 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISqlDatabaseMigrator.cs" />
-    <Compile Include="Migrations\Iteration1\Migration116AddRoleRights.cs" />
-    <Compile Include="Migrations\Iteration1\Migration115AddRoleRights.cs" />
-    <Compile Include="Migrations\Iteration1\Migration114AddRights.cs" />
+    <Compile Include="Migrations\Iteration1\Migration114AddRoleRights.cs" />
     <Compile Include="Migrations\Iteration1\Migration113CreateRightsTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration112CreateRolesTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration111CreateUsersTable.cs" />
@@ -74,47 +73,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\Iteration1\Migration114AddRights.sql">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\Iteration1\Migration116AddRoleClubManagerRights.sql">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\Iteration1\Migration115AddRoleOwnerRights.sql">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\Iteration1\Migration115AddRoleReaderRights.sql">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\Iteration1\Migration115AddRoleResultWriterRights.sql">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\Iteration1\Migration115AddRoleShooterManagerRights.sql">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\Iteration1\Migration115AddRoleStationManagerRights.sql">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\Iteration1\Migration116AddRoleAdminRights.sql">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\Iteration1\Migration116AddRoleWeaponManagerRights.sql">
+    <EmbeddedResource Include="Migrations\Iteration1\Migration114AddRoleRights.sql">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

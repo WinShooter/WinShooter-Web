@@ -19,6 +19,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using FluentMigrator.Runner.Extensions;
+
 namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
@@ -50,7 +52,7 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             this.Create.Table(UsersTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
+                .WithColumn("Id").AsGuid()
                 .WithColumn("CardNumber").AsString()
                 .WithColumn("Surname").AsString()
                 .WithColumn("Givenname").AsString()
@@ -59,13 +61,23 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("LastUpdated").AsDateTime()
                 .WithColumn("LastLogin").AsDateTime();
 
+            this.Create.PrimaryKey(string.Format("PK_{0}", UsersTableName))
+                .OnTable(UsersTableName)
+                .Column("Id")
+                .Clustered();
+
             this.Create.Table(UsersLoginInfoTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
+                .WithColumn("Id").AsGuid()
                 .WithColumn("UserId").AsGuid()
                 .WithColumn("IdentityProvider").AsString().Indexed()
                 .WithColumn("IdentityProviderId").AsString().Indexed()
                 .WithColumn("IdentityProviderUsername").AsString()
                 .WithColumn("LastLogin").AsDateTime();
+
+            this.Create.PrimaryKey(string.Format("PK_{0}", UsersLoginInfoTableName))
+                .OnTable(UsersLoginInfoTableName)
+                .Column("Id")
+                .Clustered();
 
             this.Create.ForeignKey(UsersLoginInfoForeignKeyName)
                 .FromTable(UsersLoginInfoTableName).ForeignColumn("UserId")

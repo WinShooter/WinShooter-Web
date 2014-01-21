@@ -19,6 +19,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using FluentMigrator.Runner.Extensions;
+
 namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
@@ -40,12 +42,17 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             this.Create.Table(CompetitionTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
+                .WithColumn("Id").AsGuid()
                 .WithColumn("Name").AsString()
                 .WithColumn("StartDate").AsDateTime()
                 .WithColumn("CompetitionType").AsInt32()
                 .WithColumn("UseNorwegianCount").AsBoolean()
                 .WithColumn("IsPublic").AsBoolean();
+
+            this.Create.PrimaryKey(string.Format("PK_{0}", CompetitionTableName))
+                .OnTable(CompetitionTableName)
+                .Column("Id")
+                .Clustered();
         }
 
         /// <summary>

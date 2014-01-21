@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Migration116AddRoleRights.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="Migration114AddRoleRights.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -26,17 +26,15 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
     /// <summary>
     /// Creates the users users table.
     /// </summary>
-    [Migration(116)]
-    public class Migration116AddRoleRights : Migration
+    [Migration(114)]
+    public class Migration114AddRoleRights : Migration
     {
         /// <summary>
         /// Migrates the database up.
         /// </summary>
         public override void Up()
         {
-            this.Execute.EmbeddedScript("Migration116AddRoleAdminRights.sql");
-            this.Execute.EmbeddedScript("Migration116AddRoleClubManagerRights.sql");
-            this.Execute.EmbeddedScript("Migration116AddRoleWeaponManagerRights.sql");
+            this.Execute.EmbeddedScript("Migration114AddRoleRights.sql");
         }
 
         /// <summary>
@@ -44,8 +42,9 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            this.Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RoleRightsInfoTableName);
             this.Execute.Sql("DELETE FROM " + Migration112CreateRolesTable.RolesTableName);
+            this.Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RightsTableName);
+            this.Execute.Sql("DELETE FROM " + Migration113CreateRightsTable.RoleRightsInfoTableName);
         }
     }
 }

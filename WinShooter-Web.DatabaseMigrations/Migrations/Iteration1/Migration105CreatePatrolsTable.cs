@@ -19,6 +19,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using FluentMigrator.Runner.Extensions;
+
 namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
@@ -40,12 +42,17 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             this.Create.Table(PatrolsTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
+                .WithColumn("Id").AsGuid()
                 .WithColumn("PatrolId").AsInt32()
                 .WithColumn("StartTime").AsDateTime()
                 .WithColumn("CompetitionId").AsGuid().Nullable()
                 .WithColumn("PatrolClass").AsInt32()
                 .WithColumn("StartTimeDisplay").AsDateTime();
+
+            this.Create.PrimaryKey(string.Format("PK_{0}", PatrolsTableName))
+                .OnTable(PatrolsTableName)
+                .Column("Id")
+                .Clustered();
         }
 
         /// <summary>

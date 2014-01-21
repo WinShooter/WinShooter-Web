@@ -19,6 +19,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using FluentMigrator.Runner.Extensions;
+
 namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
@@ -40,7 +42,7 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             this.Create.Table(CompetitorsTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
+                .WithColumn("Id").AsGuid()
                 .WithColumn("ShooterId").AsGuid().Nullable()
                 .WithColumn("ShooterClass").AsInt32()
                 .WithColumn("WeaponId").AsGuid()
@@ -48,6 +50,11 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("Lane").AsInt32()
                 .WithColumn("FinalShootingPlace").AsInt32()
                 .WithColumn("CompetitionId").AsGuid();
+
+            this.Create.PrimaryKey(string.Format("PK_{0}", CompetitorsTableName))
+                .OnTable(CompetitorsTableName)
+                .Column("Id")
+                .Clustered();
         }
 
         /// <summary>

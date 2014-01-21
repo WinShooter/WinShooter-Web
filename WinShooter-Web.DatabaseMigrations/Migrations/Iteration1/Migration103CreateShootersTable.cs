@@ -19,6 +19,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using FluentMigrator.Runner.Extensions;
+
 namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
@@ -40,7 +42,7 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         public override void Up()
         {
             this.Create.Table(ShootersTableName)
-                .WithColumn("Id").AsGuid().PrimaryKey().Indexed()
+                .WithColumn("Id").AsGuid()
                 .WithColumn("CompetitionId").AsGuid().Nullable()
                 .WithColumn("CardNumber").AsString()
                 .WithColumn("Surname").AsString()
@@ -52,6 +54,11 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("HasArrived").AsBoolean()
                 .WithColumn("SendResultsByEmail").AsBoolean()
                 .WithColumn("LastUpdated").AsDateTime();
+
+            this.Create.PrimaryKey(string.Format("PK_{0}", ShootersTableName))
+                .OnTable(ShootersTableName)
+                .Column("Id")
+                .Clustered();
         }
 
         /// <summary>
