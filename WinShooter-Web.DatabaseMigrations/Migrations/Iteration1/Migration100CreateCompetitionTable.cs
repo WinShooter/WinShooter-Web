@@ -19,11 +19,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using FluentMigrator.Runner.Extensions;
-
 namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
     using FluentMigrator;
+    using FluentMigrator.Runner.Extensions;
 
     /// <summary>
     /// The migration which creates the competition table.
