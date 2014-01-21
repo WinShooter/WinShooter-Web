@@ -63,6 +63,7 @@ namespace WinShooter.Api
             {
                 return false;
             }
+
             var upperEmail = email.Trim().ToUpper();
             return (from adminUser in this.AdminEmailAddresses where upperEmail == adminUser select adminUser).Any();
         }
