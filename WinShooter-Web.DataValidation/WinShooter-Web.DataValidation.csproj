@@ -45,6 +45,7 @@
     <Compile Include="ThrowHelper.cs" />
     <Compile Include="Validation.cs" />
     <Compile Include="ValidationExtenderClass.cs" />
+    <Compile Include="ValidationExtenderDateTimes.cs" />
     <Compile Include="ValidationExtenderGuids.cs" />
     <Compile Include="ValidationExtenderStrings.cs" />
   </ItemGroup>

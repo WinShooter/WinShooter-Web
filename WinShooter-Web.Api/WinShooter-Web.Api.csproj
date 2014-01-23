@@ -128,6 +128,10 @@
       <Project>{457dcbb2-7bfc-466f-96e7-72c22630d74a}</Project>
       <Name>WinShooter-Web.Database</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WinShooter-Web.DataValidation\WinShooter-Web.DataValidation.csproj">
+      <Project>{D78ABBE2-0C40-4B90-B4C3-50A0BFE120B0}</Project>
+      <Name>WinShooter-Web.DataValidation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WinShooter-Web.Logic\WinShooter-Web.Logic.csproj">
       <Project>{42a3aa79-1702-4995-b85e-c267e7225e1d}</Project>
       <Name>WinShooter-Web.Logic</Name>

@@ -27,6 +27,7 @@ namespace WinShooter.Api.Api.Competition
     using ServiceStack.ServiceHost;
 
     using WinShooter.Database;
+    using WinShooter.Web.DataValidation;
 
     /// <summary>
     /// Represents a competition from the client.
@@ -111,6 +112,24 @@ namespace WinShooter.Api.Api.Competition
                 this.UseNorwegianCount);
 
             return toReturn.ToString();
+        }
+
+        /// <summary>
+        /// Validate values.
+        /// </summary>
+        /// <param name="isNewCompetition">
+        /// The is new competition.
+        /// </param>
+        public void ValidateValues(bool isNewCompetition)
+        {
+            if (!isNewCompetition)
+            {
+                this.CompetitionId.Require("CompetitionId").NotNull().LongerThan(5).ShorterThan(50);
+            }
+
+            this.CompetitionType.Require("CompetitionType").NotNull().LongerThan(3).ShorterThan(10);
+            this.Name.Require("Name").NotNull().LongerThan(5).ShorterThan(255);
+            this.StartDate.Require("StartDate").NotDefault().WithinYears(2);
         }
     }
 }

@@ -143,6 +143,7 @@ namespace WinShooter.Api.Api.Competition
 
             if (string.IsNullOrEmpty(request.CompetitionId))
             {
+                request.ValidateValues(true);
                 this.log.Debug("Adding a competition.");
                 request.CompetitionId = this.logic.AddCompetition(session.User, request.GetDatabaseCompetition()).Id.ToString();
 
@@ -150,6 +151,7 @@ namespace WinShooter.Api.Api.Competition
             }
             else
             {
+                request.ValidateValues(false);
                 this.log.Debug("Updating a competition.");
                 this.logic.UpdateCompetition(request.GetDatabaseCompetition());
             }
