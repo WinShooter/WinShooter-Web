@@ -57,14 +57,14 @@ namespace WinShooter.Api.Api.Competition
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether Norwegian count should be used.
-        /// </summary>
-        public bool UseNorwegianCount { get; set; }
-
-        /// <summary>
         /// Gets or sets the start date.
         /// </summary>
         public DateTime StartDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Norwegian count should be used.
+        /// </summary>
+        public bool UseNorwegianCount { get; set; }
 
         /// <summary>
         /// Get a database competition.
