@@ -181,7 +181,12 @@ winshooterModule.controller('CompetitionController', function($scope, competitio
             return false;
         }
 
-        $scope.competition.$delete();
+        $scope.competition.$delete(function(data, status) {
+            var newLocation = "/";
+            window.location.href = newLocation;
+        }, function(data, status) {
+            alert("Failed to delete competition: " + data);
+        });
 
         return false;
     };
@@ -226,9 +231,10 @@ winshooterModule.controller('NewCompetitionController', function ($scope, $http,
 
         $http.post(competitionApiUrl, competition)
             .success(function (data, status) {
-                alert("success!");
+                var newLocation = "/home/competition/" + data.CompetitionId;
+                window.location.href = newLocation;
             }).error(function (data, status) {
-                alert("error");
+                alert("error:" + data);
             });
     };
 });
@@ -244,9 +250,10 @@ winshooterModule.controller('StationsController', function ($scope, stationsFact
     init();
 
     function init() {
-        $scope.stations = stationsFactory.search({ CompetitionId: window.competitionId }, function () {
+        $scope.stations = stationsFactory.search({ CompetitionId: window.competitionId }, function() {
             // Nothing to do here. Carry on!
-        }, function () {
+        }, function() {
             alert("failed to retrieve current user.");
         });
+    }
 });
