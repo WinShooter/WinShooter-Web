@@ -49,12 +49,6 @@ namespace WinShooter
                     "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js").Include(
                         "~/Scripts/jquery-{version}.js"));
 
-            bundles.Add(
-                new ScriptBundle(
-                    "~/bundles/jqueryui",
-                    "http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.js").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
