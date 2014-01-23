@@ -573,6 +573,7 @@
     <Content Include="Views\Home\NewCompetition.cshtml" />
     <Content Include="Views\Home\ManageCompetitionRights.cshtml" />
     <Content Include="Views\Home\Patrols.cshtml" />
+    <Content Include="Views\Shared\_GoogleAnalytics.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
