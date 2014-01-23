@@ -41,6 +41,18 @@ winshooterModule.factory('currentUserFactory', [
     }
 ]);
 
+// Create factory for stations
+winshooterModule.factory('stationsFactory', [
+    '$resource', function ($resource) {
+        return $resource(stationsApiUrl, {
+            competitionId: '@StationId'
+        }, {
+            query: { method: 'GET', isArray: true },
+            search: { method: 'GET', isArray: false }
+        });
+    }
+]);
+
 // Here's the viewModel for the header
 winshooterModule.controller('CurrentUserController', function ($scope, currentUserFactory) {
     // Attributes
@@ -176,7 +188,7 @@ winshooterModule.controller('CompetitionController', function($scope, competitio
 });
 
 // Here the module for the competition page
-winshooterModule.controller('NewCompetitionController', function ($scope, competitionFactory, currentUserFactory) {
+winshooterModule.controller('NewCompetitionController', function ($scope, $http, competitionFactory, currentUserFactory) {
     $scope.currentUser = { IsLoggedIn: false, Rights: [] };
 
     // Attributes for adding new competition
@@ -208,15 +220,33 @@ winshooterModule.controller('NewCompetitionController', function ($scope, compet
             CompetitionType: "Field",
             Name: $scope.Name,
             UseNorwegianCount: $scope.UseNorwegianCount,
-            IsPublic : $scope.IsPublic,
-            StartDate: $scope.StartDate.getFullYear() + "-" + $scope.StartDate.getMonth() + "-" + $scope.StartDate.getDay() + " " + $scope.StartTime,
+            IsPublic: $scope.IsPublic,
+            StartDate: $scope.StartDate.toISOString()
         };
-        
-        $.post(competitionApiUrl, competition, function(returnedData) {
-            var newLocation = "/home/competition/" + returnedData.CompetitionId;
-            window.location.href = newLocation;
-        }, "json").fail(function (data) {
-            alert("Misslyckades med att lägga till tävlingen.\r\n" + data.responseJSON.ResponseStatus.Message);
-        });
+
+        $http.post(competitionApiUrl, competition)
+            .success(function (data, status) {
+                alert("success!");
+            }).error(function (data, status) {
+                alert("error");
+            });
     };
+});
+
+// Here the module for the station page
+winshooterModule.controller('StationsController', function ($scope, stationsFactory) {
+    $scope.currentUser = { IsLoggedIn: false, Rights: [] };
+
+    // Attributes for adding new competition
+    $scope.stations = [];
+
+    // Init our page
+    init();
+
+    function init() {
+        $scope.stations = stationsFactory.search({ CompetitionId: window.competitionId }, function () {
+            // Nothing to do here. Carry on!
+        }, function () {
+            alert("failed to retrieve current user.");
+        });
 });

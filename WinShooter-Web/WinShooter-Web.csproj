@@ -281,7 +281,6 @@
     <Content Include="Scripts\App\Account\Login.js" />
     <Content Include="Scripts\App\common.js" />
     <Content Include="Scripts\App\Home\manageCompetitionRights.js" />
-    <Content Include="Scripts\App\Home\stations.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.sv.js" />
     <Content Include="Scripts\Flat-ui\flatui-checkbox.js" />
@@ -588,6 +587,10 @@
     <ProjectReference Include="..\WinShooter-Web.DatabaseMigrations\WinShooter-Web.DatabaseMigrations.csproj">
       <Project>{ab5b1093-247b-4916-a2b7-93d70621f984}</Project>
       <Name>WinShooter-Web.DatabaseMigrations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinShooter-Web.DataValidation\WinShooter-Web.DataValidation.csproj">
+      <Project>{d78abbe2-0c40-4b90-b4c3-50a0bfe120b0}</Project>
+      <Name>WinShooter-Web.DataValidation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
