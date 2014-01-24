@@ -129,7 +129,7 @@ winshooterModule.controller('IndexController', function ($scope, competitionsFac
 });
 
 // Here the module for the competition page
-winshooterModule.controller('CompetitionController', function($scope, competitionFactory, currentUserFactory) {
+winshooterModule.controller('CompetitionController', function ($scope, $modal, competitionFactory, currentUserFactory) {
     // Attributes for showing existing competition
     $scope.currentUser = { IsLoggedIn: false, Rights: [] };
     $scope.competition = {};
@@ -177,20 +177,49 @@ winshooterModule.controller('CompetitionController', function($scope, competitio
             return false;
         }
 
-        if (confirm("Vill du verkligen radera tävlingen?") === false) {
-            return false;
-        }
+        // Show confirmation dialog first.
+        var modal = $modal.open({
+            templateUrl: 'confirmationModalContent',
+            controller: DialogConfirmController,
+            resolve: {
+                items: function () {
+                    return {
+                        header: "Radera tävling",
+                        body: "Är du säker på att du vill radera " + $scope.competition.Name + "?"
+                };
+                }
+            }
+        });
 
-        $scope.competition.$delete(function(data, status) {
-            var newLocation = "/";
-            window.location.href = newLocation;
-        }, function(data, status) {
-            alert("Failed to delete competition: " + data);
+        modal.result.then(function () {
+            // In a production site we would submit the order via Ajax here.
+            $scope.competition.$delete(function (data, status) {
+                var newLocation = "/";
+                window.location.href = newLocation;
+            }, function (data, status) {
+                alert("Failed to delete competition: " + data);
+            });
+        }, function () {
+            // Do nothing.
         });
 
         return false;
     };
 });
+
+// Controller for dialog modal instances.
+var DialogConfirmController = function ($scope, $modalInstance, items) {
+    $scope.header = items.header;
+    $scope.body = items.body;
+
+    $scope.ok = function () {
+        $modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+};
 
 // Here the module for the competition page
 winshooterModule.controller('NewCompetitionController', function ($scope, $http, competitionFactory, currentUserFactory) {
