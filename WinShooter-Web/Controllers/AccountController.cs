@@ -29,6 +29,19 @@ namespace WinShooter.Controllers
     public class AccountController : Controller
     {
         /// <summary>
+        /// Key used for storing the referrer in the session.
+        /// </summary>
+        private static readonly string SessionRefererKey = "AuthenticationReferrer";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountController"/> class.
+        /// </summary>
+        public AccountController()
+        {
+            ViewBag.Referrer = "/";
+        }
+
+        /// <summary>
         /// GET: /Home/Index/{id}
         /// </summary>
         /// <returns>
@@ -36,6 +49,20 @@ namespace WinShooter.Controllers
         /// </returns>
         public ActionResult Login()
         {
+            if (Request.UrlReferrer != null &&
+                Request.Url != null &&
+                Request.UrlReferrer.Host == Request.Url.Host)
+            {
+                this.Session[SessionRefererKey] = Request.UrlReferrer.AbsoluteUri;
+            }
+
+            if (Request.UrlReferrer == null &&
+                this.Session[SessionRefererKey] != null)
+            {
+                // Very likely coming back from authentication in ServiceStack
+                ViewBag.Referrer = this.Session[SessionRefererKey];
+            }
+
             return this.View();
         }
     }
