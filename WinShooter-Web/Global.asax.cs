@@ -27,6 +27,8 @@ namespace WinShooter
     using System.Web.Optimization;
     using System.Web.Routing;
 
+    using log4net;
+
     using WinShooter.Api;
     using WinShooter.Web.DatabaseMigrations;
 
@@ -35,6 +37,19 @@ namespace WinShooter
     /// </summary>
     public class Global : HttpApplication
     {
+        /// <summary>
+        /// The log.
+        /// </summary>
+        private ILog log;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Global"/> class.
+        /// </summary>
+        public Global()
+        {
+            this.log = LogManager.GetLogger(this.GetType());
+        }
+
         /// <summary>
         /// The win shooter API host.
         /// </summary>
@@ -60,6 +75,23 @@ namespace WinShooter
 
             var sqlDatabaseMigrator = new SqlDatabaseMigrator();
             sqlDatabaseMigrator.MigrateToLatest(ConfigurationManager.ConnectionStrings["WinShooterConnection"].ConnectionString);
+        }
+
+        /// <summary>
+        /// Code that runs with unhandled exceptions.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            // Get the exception object.
+            var exc = Server.GetLastError();
+
+            this.log.Error("Unexpected error: " + exc.ToString());
         }
     }
 }
