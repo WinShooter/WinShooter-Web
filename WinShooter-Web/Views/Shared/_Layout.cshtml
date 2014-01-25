@@ -23,7 +23,8 @@
             switch (ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString().ToUpper())
             {
                 case "INDEX":
-                    // Don't to anything
+                case "ABOUT":
+                    // Don't do anything
                     break;
                 case "CLUBS":
                     htmlLinkClubsClass = "active";
@@ -99,6 +100,7 @@
                         @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { { "ng-show", "shouldShowLoginLink" } })
                         <a ng-show="isLoggedIn" href="/api/auth/logout">Logga ut</a>
                     </li>
+                    <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Om WinShooter", "About", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } })</li>
                 </ul>
             </div>
         </div>

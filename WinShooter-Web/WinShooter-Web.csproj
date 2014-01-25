@@ -191,6 +191,7 @@
     <Content Include="Content\images\sign-in-with-linkedin.png" />
     <Content Include="Content\images\sign-in-with-twitter-l.png" />
     <Content Include="Content\images\sign-in-with-yahoo.png" />
+    <Content Include="Content\images\sponsors\ayoylogo.png" />
     <Content Include="Content\images\switch\mask-square.png" />
     <Content Include="Content\images\switch\mask.png" />
     <Content Include="Content\images\tile\ribbon-2x.png" />
@@ -572,6 +573,7 @@
     <Content Include="Views\Home\NewCompetition.cshtml" />
     <Content Include="Views\Home\ManageCompetitionRights.cshtml" />
     <Content Include="Views\Home\Patrols.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

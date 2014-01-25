@@ -41,6 +41,18 @@ namespace WinShooter.Controllers
         }
 
         /// <summary>
+        /// Show some text about WinShooter.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult About()
+        {
+            this.ViewBag.CompetitionId = string.Empty;
+            return this.View();
+        }
+
+        /// <summary>
         /// Create a new competition.
         /// </summary>
         /// <returns>
