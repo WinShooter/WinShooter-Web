@@ -108,7 +108,7 @@ winshooterModule.controller('CurrentUserController', function ($scope, $modal, c
 });
 
 // Here the module for the index page
-winshooterModule.controller('IndexController', function ($scope, competitionsFactory) {
+winshooterModule.controller('IndexController', function ($scope, $modal, competitionsFactory) {
     //self.loginViewModel = new LoginViewModel();
 
     // Attributes for showing existing competition
@@ -131,8 +131,26 @@ winshooterModule.controller('IndexController', function ($scope, competitionsFac
             } else {
                 $scope.selectedCompetition.Name = "Inga tävlingar hittades.";
             }
-        }, function () {
-            alert("failed to retrieve competitions.");
+        }, function (data) {
+            var error = "Misslyckades med att hämta tävlingar";
+            if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+            } else {
+                error += ".";
+            }
+            // Show error dialog.
+            var modal = $modal.open({
+                templateUrl: 'errorModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Ett fel inträffade",
+                            body: error
+                        };
+                    }
+                }
+            });
         });
     }
 
@@ -160,21 +178,71 @@ winshooterModule.controller('CompetitionController', function ($scope, $modal, c
         $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function() {
             $scope.userCanUpdateCompetition = -1 !== $.inArray("UpdateCompetition", $scope.currentUser.CompetitionRights);
             $scope.userCanDeleteCompetition = -1 !== $.inArray("DeleteCompetition", $scope.currentUser.CompetitionRights);
-        }, function() {
-            alert("failed to retrieve current user.");
+        }, function(data) {
+            var error = "Misslyckades med att hämta användaruppgifter";
+            if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+            } else {
+                error += ".";
+            }
+            // Show error dialog.
+            var modal = $modal.open({
+                templateUrl: 'errorModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Ett fel inträffade",
+                            body: error
+                        };
+                    }
+                }
+            });
         });
 
         $scope.competition = competitionFactory.search({ CompetitionId: window.competitionId }, function() {
             // Nothing to do here. Carry on!
-        }, function () {
-            alert("failed to retrieve competitions.");
+        }, function (data) {
+            var error = "Misslyckades med att hämta tävlingar";
+            if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+            } else {
+                error += ".";
+            }
+            // Show error dialog.
+            var modal = $modal.open({
+                templateUrl: 'errorModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Ett fel inträffade",
+                            body: error
+                        };
+                    }
+                }
+            });
         });
     }
 
     $scope.updateCompetition = function() {
         if ($scope.competition === undefined) {
             // What? Should never happen.
-            alert("Du måste välja en tävling att uppdatera.");
+            var error = "Du måste välja en tävling att uppdatera.";
+
+            // Show error dialog.
+            var modal = $modal.open({
+                templateUrl: 'errorModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Ett fel inträffade",
+                            body: error
+                        };
+                    }
+                }
+            });
             return false;
         }
 
@@ -191,7 +259,25 @@ winshooterModule.controller('CompetitionController', function ($scope, $modal, c
     $scope.deleteCompetition = function() {
         if ($scope.competition === undefined) {
             // What? Should never happen.
-            alert("Du måste välja en tävling att radera.");
+            var error = "Du måste välja en tävling att radera.";
+            if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+            } else {
+                error += ".";
+            }
+            // Show error dialog.
+            var modal = $modal.open({
+                templateUrl: 'errorModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Ett fel inträffade",
+                            body: error
+                        };
+                    }
+                }
+            });
             return false;
         }
 
@@ -215,7 +301,25 @@ winshooterModule.controller('CompetitionController', function ($scope, $modal, c
                 var newLocation = "/";
                 window.location.href = newLocation;
             }, function (data, status) {
-                alert("Failed to delete competition: " + data);
+                var error = "Misslyckades med att radera tävling";
+                if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                    error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+                } else {
+                    error += ".";
+                }
+                // Show error dialog.
+                var modal = $modal.open({
+                    templateUrl: 'errorModalContent',
+                    controller: DialogConfirmController,
+                    resolve: {
+                        items: function () {
+                            return {
+                                header: "Ett fel inträffade",
+                                body: error
+                            };
+                        }
+                    }
+                });
             });
         }, function () {
             // Do nothing.
@@ -240,7 +344,7 @@ var DialogConfirmController = function ($scope, $modalInstance, items) {
 };
 
 // Here the module for the competition page
-winshooterModule.controller('NewCompetitionController', function ($scope, $http, competitionFactory, currentUserFactory) {
+winshooterModule.controller('NewCompetitionController', function ($scope, $modal, $http, competitionFactory, currentUserFactory) {
     $scope.currentUser = { IsLoggedIn: false, Rights: [] };
 
     // Attributes for adding new competition
@@ -262,7 +366,25 @@ winshooterModule.controller('NewCompetitionController', function ($scope, $http,
         $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function () {
             // Nothing to do here. Carry on!
         }, function () {
-            alert("failed to retrieve current user.");
+            var error = "Misslyckades med att hämta användaruppgifter";
+            if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+            } else {
+                error += ".";
+            }
+            // Show error dialog.
+            var modal = $modal.open({
+                templateUrl: 'errorModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Ett fel inträffade",
+                            body: error
+                        };
+                    }
+                }
+            });
         });
     }
 
@@ -281,13 +403,31 @@ winshooterModule.controller('NewCompetitionController', function ($scope, $http,
                 var newLocation = "/home/competition/" + data.CompetitionId;
                 window.location.href = newLocation;
             }).error(function (data, status) {
-                alert("error:" + data);
+                var error = "Misslyckades med att lägga till tävlingen";
+                if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                    error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+                } else {
+                    error += ".";
+                }
+                // Show error dialog.
+                var modal = $modal.open({
+                    templateUrl: 'errorModalContent',
+                    controller: DialogConfirmController,
+                    resolve: {
+                        items: function () {
+                            return {
+                                header: "Ett fel inträffade",
+                                body: error
+                            };
+                        }
+                    }
+                });
             });
     };
 });
 
 // Here the module for the station page
-winshooterModule.controller('StationsController', function ($scope, stationsFactory) {
+winshooterModule.controller('StationsController', function ($scope, $modal, stationsFactory) {
     $scope.currentUser = { IsLoggedIn: false, Rights: [] };
 
     // Attributes for adding new competition
@@ -300,7 +440,25 @@ winshooterModule.controller('StationsController', function ($scope, stationsFact
         $scope.stations = stationsFactory.search({ CompetitionId: window.competitionId }, function() {
             // Nothing to do here. Carry on!
         }, function() {
-            alert("failed to retrieve current user.");
+            var error = "Misslyckades med att hämta användaruppgifter";
+            if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+            } else {
+                error += ".";
+            }
+            // Show error dialog.
+            var modal = $modal.open({
+                templateUrl: 'errorModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Ett fel inträffade",
+                            body: error
+                        };
+                    }
+                }
+            });
         });
     }
 });
