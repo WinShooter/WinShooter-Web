@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BundleConfig.cs" company="Copyright ©2013 John Allberg & Jonas Fredriksson">
+// <copyright file="BundleConfig.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -48,12 +48,6 @@ namespace WinShooter
                     "~/bundles/jquery",
                     "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js").Include(
                         "~/Scripts/jquery-{version}.js"));
-
-            //bundles.Add(
-            //    new ScriptBundle(
-            //        "~/bundles/jqueryui",
-            //        "http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.js").Include(
-            //            "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
