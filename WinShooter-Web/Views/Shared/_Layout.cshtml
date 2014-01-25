@@ -116,6 +116,7 @@
     @Scripts.Render("~/bundles/angularjs")
     @Scripts.Render("~/bundles/angularjs-resource")
     @Scripts.Render("~/bundles/angularjs-bootstrapui")
+    @Scripts.Render("~/bundles/angularjs-sanitize")
     @Scripts.Render("~/Scripts/App/common.js")
     @Scripts.Render("~/Scripts/App/AngularModules.js")
 
@@ -127,9 +128,7 @@
     <script>
         // Fallback to loading jQuery.ui from a local path if the CDN is unavailable
         (window.jQuery.ui === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.js")"><\/script>'));
-    </script>
-    
-    <!-- The modal confirmation dialog -->
+    </script>    <!-- The modal confirmation dialog -->
     <script type="text/ng-template" id="confirmationModalContent">
         <div class="modal-header">
             <h4 class="modal-title">{{header}}</h4>
@@ -142,6 +141,20 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-ng-click="ok()">Ja</button>
             <button type="button" class="btn btn-warning" data-ng-click="cancel()">Nej</button>
+        </div>
+    </script>
+    
+    <!-- The modal error dialog -->
+    <script type="text/ng-template" id="errorModalContent">
+        <div class="modal-header">
+            <h4 class="modal-title">{{header}}</h4>
+        </div>
+        <div class="modal-body">
+            <p ng-bind-html="body">
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-ng-click="ok()">OK</button>
         </div>
     </script>
 

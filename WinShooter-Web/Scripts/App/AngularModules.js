@@ -3,7 +3,7 @@
 /// <reference path="/Scripts/ui-bootstrap-tpls-0.9.0.js" />
 
 // Create the angular module
-var winshooterModule = angular.module('winshooter', ['ngResource', 'ui.bootstrap']);
+var winshooterModule = angular.module('winshooter', ['ngResource', 'ngSanitize', 'ui.bootstrap']);
 
 // Create factory for competitions
 winshooterModule.factory('competitionsFactory', [
@@ -54,7 +54,7 @@ winshooterModule.factory('stationsFactory', [
 ]);
 
 // Here's the viewModel for the header
-winshooterModule.controller('CurrentUserController', function ($scope, currentUserFactory) {
+winshooterModule.controller('CurrentUserController', function ($scope, $modal, currentUserFactory) {
     // Attributes
     $scope.currentUser = { IsLoggedIn: false };
     $scope.displayName = "";
@@ -83,8 +83,26 @@ winshooterModule.controller('CurrentUserController', function ($scope, currentUs
                 $scope.shouldShowEditClubsLink = -1 !== $.inArray("UpdateClub", $scope.rights);
                 $scope.shouldShowEditWeaponsLink = -1 !== $.inArray("UpdateWeapon", $scope.rights);
             }
-        }, function () {
-            alert("failed to retrieve current user.");
+        }, function (data) {
+            var error = "Misslyckades med att hämta användaruppgifter";
+            if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+            } else {
+                error += ".";
+            }
+            // Show error dialog.
+            var modal = $modal.open({
+                templateUrl: 'errorModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Ett fel inträffade",
+                            body: error
+                        };
+                    }
+                }
+            });
         });
     }
 });

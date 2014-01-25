@@ -83,7 +83,12 @@ namespace WinShooter
                 new ScriptBundle(
                     "~/bundles/angularjs-resource",
                     "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-resource.min.js").Include(
-                        "~/Scripts/angular-resource.min.js"));
+                        "~/Scripts/angular-resource.js"));
+
+            bundles.Add(
+                new ScriptBundle(
+                    "~/bundles/angularjs-sanitize").Include(
+                    "~/Scripts/angular-sanitize.js"));
 
             bundles.Add(
                 new ScriptBundle(
