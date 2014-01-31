@@ -78,6 +78,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Competitions\CompetitionResponseTests.cs" />
+    <Compile Include="Api\CurrentUser\CurrentUserResponseTests.cs" />
     <Compile Include="Api\Stations\StationsServiceTests.cs" />
     <Compile Include="AppConfigTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
