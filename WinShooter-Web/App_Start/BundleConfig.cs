@@ -84,6 +84,11 @@ namespace WinShooter
 
             bundles.Add(
                 new ScriptBundle(
+                    "~/bundles/angulari18n/sv-se").Include(
+                    "~/Scripts/i18n/angular-locale_sv-se.js"));
+
+            bundles.Add(
+                new ScriptBundle(
                     "~/bundles/angularjs-bootstrapui")
                     .Include("~/Scripts/ui-bootstrap-{version}.js")
                     .Include("~/Scripts/ui-bootstrap-tpls-{version}.js"));
