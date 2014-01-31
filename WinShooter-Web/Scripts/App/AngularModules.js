@@ -349,15 +349,25 @@ winshooterModule.controller('NewCompetitionController', function ($scope, $modal
 
     // Attributes for adding new competition
     $scope.Name = "";
-    $scope.StartDate = "";
-    $scope.StartTime = "";
+    $scope.StartDate = new Date();
+    $scope.StartDate.setHours(9);
+    $scope.StartDate.setMinutes(0);
+    $scope.StartDate.setSeconds(0);
+    $scope.StartDate.setMilliseconds(0);
+
+    $scope.StartTime = new Date();
+    $scope.StartTime.setHours(9);
+    $scope.StartTime.setMinutes(0);
+    $scope.StartTime.setSeconds(0);
+    $scope.StartTime.setMilliseconds(0);
+
     $scope.IsPublic = false;
     $scope.UseNorwegianCount = false;
 
     // UI attributes
-    $scope.datePickerOpen = true;
+    $scope.datePickerFormat = 'yyyy-MM-dd';
     $scope.datePickerShowWeeks = true;
-    $scope.datePickerDateOptions = { 'year-format': 'yy', 'starting-day': 1 };
+    $scope.datePickerDateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
 
     // Init our page
     init();
@@ -389,14 +399,15 @@ winshooterModule.controller('NewCompetitionController', function ($scope, $modal
     }
 
     $scope.addCompetition = function () {
+        $scope.StartTime.setDate($scope.StartDate.getDate());
         var competition = {
             CompetitionId: "",
             CompetitionType: "Field",
             Name: $scope.Name,
             UseNorwegianCount: $scope.UseNorwegianCount,
             IsPublic: $scope.IsPublic,
-            StartDate: $scope.StartDate.toISOString()
-        };
+            StartDate: $scope.StartTime.toISOString()
+    };
 
         $http.post(competitionApiUrl, competition)
             .success(function (data, status) {

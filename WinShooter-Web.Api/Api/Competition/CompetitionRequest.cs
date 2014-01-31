@@ -22,6 +22,7 @@
 namespace WinShooter.Api.Api.Competition
 {
     using System;
+    using System.Globalization;
     using System.Text;
 
     using ServiceStack.ServiceHost;
@@ -60,7 +61,7 @@ namespace WinShooter.Api.Api.Competition
         /// <summary>
         /// Gets or sets the start date.
         /// </summary>
-        public DateTime StartDate { get; set; }
+        public string StartDate { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether Norwegian count should be used.
@@ -79,16 +80,25 @@ namespace WinShooter.Api.Api.Competition
             var competitionId = string.IsNullOrEmpty(this.CompetitionId) ? Guid.Empty : Guid.Parse(this.CompetitionId);
 
             var toReturn = new Competition
-                       {
-                           CompetitionType = competitionType,
-                           Id = competitionId,
-                           IsPublic = this.IsPublic,
-                           Name = this.Name,
-                           StartDate = this.StartDate,
-                           UseNorwegianCount = this.UseNorwegianCount
-                       };
+            {
+                CompetitionType = competitionType,
+                Id = competitionId,
+                IsPublic = this.IsPublic,
+                Name = this.Name,
+                StartDate = this.ParseStartDate(),
+                UseNorwegianCount = this.UseNorwegianCount
+            };
 
             return toReturn;
+        }
+
+        public DateTime ParseStartDate()
+        {
+            return DateTime.ParseExact(
+                this.StartDate,
+                "yyyy-MM-dd'T'HH:mm:ss.fff'Z'",
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
         }
 
         /// <summary>
@@ -129,7 +139,8 @@ namespace WinShooter.Api.Api.Competition
 
             this.CompetitionType.Require("CompetitionType").NotNull().LongerThan(3).ShorterThan(10);
             this.Name.Require("Name").NotNull().LongerThan(5).ShorterThan(255);
-            this.StartDate.Require("StartDate").NotDefault().WithinYears(2);
+            this.StartDate.Require("StartDate").NotNull().LongerThan(23).ShorterThan(25);
+            this.ParseStartDate().Require("StartDate").NotDefault().WithinYears(2);
         }
     }
 }

@@ -63,9 +63,7 @@ namespace WinShooter
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/Flat-ui/flatui-checkbox.js",
-                "~/Scripts/Flat-ui/flatui-radio.js",
-                "~/Scripts/bootstrap-datepicker.js",
-                "~/Scripts/bootstrap-datepicker.sv.js"));
+                "~/Scripts/Flat-ui/flatui-radio.js"));
 
             bundles.Add(
                 new ScriptBundle(
@@ -94,7 +92,6 @@ namespace WinShooter
                 "~/Content/bootstrap.css",
                 "~/Content/bootstrap-responsive.css",
                 "~/Content/flat-ui/flat-ui.css",
-                "~/Content/datepicker.css",
                 "~/Content/site.css"));
         }
     }
