@@ -188,9 +188,6 @@
     <Content Include="Content\images\login\imac.png" />
     <Content Include="Content\images\sign-in-with-facebook.png" />
     <Content Include="Content\images\sign-in-with-google.png" />
-    <Content Include="Content\images\sign-in-with-linkedin.png" />
-    <Content Include="Content\images\sign-in-with-twitter-l.png" />
-    <Content Include="Content\images\sign-in-with-yahoo.png" />
     <Content Include="Content\images\sponsors\ayoylogo.png" />
     <Content Include="Content\images\switch\mask-square.png" />
     <Content Include="Content\images\switch\mask.png" />

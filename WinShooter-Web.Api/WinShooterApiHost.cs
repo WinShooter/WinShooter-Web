@@ -34,7 +34,6 @@ namespace WinShooter.Api
     using ServiceStack.ServiceInterface.Auth;
     using ServiceStack.WebHost.Endpoints;
 
-    using WinShooter.Api.Api;
     using WinShooter.Api.Api.Competition;
     using WinShooter.Api.Authentication;
 
@@ -123,23 +122,11 @@ namespace WinShooter.Api
 
             var authProviders = new IAuthProvider[]
                                     {
-                                        // Sign-in with Twitter
-                                        new TwitterAuthProvider(appSettings), 
-
                                         // Sign-in with Facebook
                                         new FacebookAuthProvider(appSettings),
 
-                                        // Register new OpenId providers you want to allow authentication with
-                                        new GoogleOpenIdOAuthProvider(appSettings),
-
-                                        // Sign-in with Goolge OpenId
-                                        new YahooOpenIdOAuthProvider(appSettings),
-
-                                        // Sign-in with Yahoo OpenId
-                                        new OpenIdOAuthProvider(appSettings),
-
-                                        // Sign-in with LinkedIn
-                                        new LinkedinAuthProvider(appSettings)
+                                        // Sign-in with Google
+                                        new GoogleOpenIdOAuthProvider(appSettings)
                                     };
             var serviceRoutes = new Dictionary<Type, string[]>
                                     {

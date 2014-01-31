@@ -183,6 +183,18 @@ namespace WinShooter.Api.Authentication
                     dbsession.Save(userLoginInfo);
                 }
 
+                if (firstName != null)
+                {
+                    user.Givenname = firstName;
+                }
+
+                if (lastName != null)
+                {
+                    user.Surname = lastName;
+                }
+
+                dbsession.Update(user);
+
                 transaction.Commit();
             }
 
