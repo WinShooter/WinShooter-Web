@@ -13,9 +13,15 @@
             <p ng-show="!userCanUpdateCompetition">{{competition.Name}}</p>
         </div>
         <div class="form-group">
-            <label for="selectedCompetitionStartDate">Datum:</label>
-            <input class="form-control" id="selectedCompetitionStartDate" ng-show="userCanUpdateCompetition" ng-model="competition.StartDate">
-            <p ng-show="!userCanUpdateCompetition">{{competition.StartDate}}</p>
+            <p><label for="newCompetitionStartDate">Startar datum:</label></p>
+            <div style="display:inline-block; min-height:290px;" id="newCompetitionStartDate">
+                <div class="well well-sm" ng-model="competition.StartDate">
+                    <datepicker min="minDate" show-weeks="datePickerShowWeeks" format="datePickerFormat" starting-day="1"></datepicker>
+                </div>
+            </div>
+            <div ng-model="competition.StartDate" style="display:inline-block;">
+                <timepicker hour-step="'1'" minute-step="'15'" show-meridian="ismeridian"></timepicker>
+            </div>
         </div>
 
         <div class="form-group">

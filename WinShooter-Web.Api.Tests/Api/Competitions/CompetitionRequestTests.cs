@@ -28,34 +28,32 @@ namespace WinShooter.Api.Tests.Api.Competitions
     using ServiceStack.Text;
 
     using WinShooter.Api.Api.Competition;
-    using WinShooter.Database;
 
     /// <summary>
-    /// Tests the <see cref="CompetitionResponse"/> class.
+    /// Tests the <see cref="CompetitionRequest"/> class.
     /// </summary>
     [TestClass]
-    public class CompetitionResponseTests
+    public class CompetitionRequestTests
     {
         /// <summary>
         /// Verify serialization.
         /// </summary>
         [TestMethod]
-        public void Serialize()
+        public void Deserialize()
         {
-            var dbcompetition = new Competition 
-            {
-                Id = Guid.Parse("74ec4f92-4b72-4c40-927a-de308269e074"),
-                CompetitionType = CompetitionType.Field,
-                IsPublic = true,
-                Name = "Name",
-                StartDate = DateTime.Parse("2014-01-31 21:41:00"),
-                UseNorwegianCount = true
-            };
+            var competitionRequest = 
+            JsonSerializer.DeserializeFromString<CompetitionRequest>(
+                "{\"CompetitionId\":\"9cfc716f-f218-44e2-a72b-a2c40109a2eb\",\"CompetitionType\":\"Field\",\"IsPublic\":true,\"Name\":\"aaaaaaaaaaaaaaaaaa\",\"StartDate\":\"2014-01-31T12:00:00.000Z\",\"UseNorwegianCount\":true}");
 
-            var response = new CompetitionResponse(dbcompetition);
-            Assert.AreEqual(
-                "{\"CompetitionId\":\"74ec4f92-4b72-4c40-927a-de308269e074\",\"CompetitionType\":\"Field\",\"IsPublic\":true,\"Name\":\"Name\",\"StartDate\":\"2014-01-31T20:41:00.000Z\",\"UseNorwegianCount\":true}",
-                JsonSerializer.SerializeToString(response));
+            Assert.IsNotNull(competitionRequest);
+
+            Assert.AreEqual("9cfc716f-f218-44e2-a72b-a2c40109a2eb", competitionRequest.CompetitionId);
+            Assert.AreEqual("Field", competitionRequest.CompetitionType);
+            Assert.AreEqual(true, competitionRequest.IsPublic);
+            Assert.AreEqual("aaaaaaaaaaaaaaaaaa", competitionRequest.Name);
+            Assert.AreEqual("2014-01-31T12:00:00.000Z", competitionRequest.StartDate);
+            Assert.AreEqual(true, competitionRequest.UseNorwegianCount);
+            Assert.AreEqual(DateTime.Parse("2014-01-31 13:00:00.000"), competitionRequest.ParseStartDate());
         }
     }
 }

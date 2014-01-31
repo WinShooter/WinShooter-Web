@@ -92,13 +92,19 @@ namespace WinShooter.Api.Api.Competition
             return toReturn;
         }
 
+        /// <summary>
+        /// Parse start date as a <see cref="DateTime"/>.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="DateTime"/>.
+        /// </returns>
         public DateTime ParseStartDate()
         {
             return DateTime.ParseExact(
                 this.StartDate,
                 "yyyy-MM-dd'T'HH:mm:ss.fff'Z'",
                 CultureInfo.InvariantCulture,
-                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+                DateTimeStyles.AssumeUniversal);
         }
 
         /// <summary>

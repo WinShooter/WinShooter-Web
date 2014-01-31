@@ -39,7 +39,7 @@ namespace WinShooter.Api.Api.Competition
             this.CompetitionId = dbcompetition.Id.ToString();
             this.CompetitionType = dbcompetition.CompetitionType.ToString();
             this.Name = dbcompetition.Name;
-            this.StartDate = dbcompetition.StartDate.ToString("yyyy-MM-dd hh:mm");
+            this.StartDate = dbcompetition.StartDate.ToUniversalTime().ToString("yyyy-MM-dd\\THH:mm:ss.fff\\Z");
             this.IsPublic = dbcompetition.IsPublic;
             this.UseNorwegianCount = dbcompetition.UseNorwegianCount;
         }
@@ -93,7 +93,7 @@ namespace WinShooter.Api.Api.Competition
             var toReturn = new StringBuilder();
 
             toReturn.AppendFormat(
-                "CompetitionId: {0}, CompetitionType: {1}, IsPublic: {2}, Name: {3}, StartDate: {4}, UseNorwegianCount: {5}, UserCanUpdateCompetition: {6}, UserCanDeleteCompetition: {7}", 
+                "CompetitionId: {0}, CompetitionType: {1}, IsPublic: {2}, Name: {3}, StartDate: {4}, UseNorwegianCount: {5}", 
                 this.CompetitionId, 
                 this.CompetitionType, 
                 this.IsPublic,

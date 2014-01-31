@@ -202,6 +202,7 @@ winshooterModule.controller('CompetitionController', function ($scope, $modal, c
 
         $scope.competition = competitionFactory.search({ CompetitionId: window.competitionId }, function() {
             // Nothing to do here. Carry on!
+            $scope.competition.StartDate = new Date($scope.competition.StartDate);
         }, function (data) {
             var error = "Misslyckades med att hämta tävlingar";
             if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
@@ -251,7 +252,35 @@ winshooterModule.controller('CompetitionController', function ($scope, $modal, c
         $scope.competition.IsPublic = $("label[for='selectedCompetitionIsPublic']").hasClass('checked');
         $scope.competition.UseNorwegianCount = $("label[for='selectedCompetitionUseNorwegianCount']").hasClass('checked');
 
-        $scope.competition.$save();
+        $scope.competition.$save(function() {
+            // Show error dialog.
+            var modal = $modal.open({
+                templateUrl: 'informationModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Sparad",
+                            body: "Tävlingen sparades"
+                        };
+                    }
+                }
+            });
+        }, function() {
+            // Show error dialog.
+            var modal = $modal.open({
+                templateUrl: 'errorModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Ett fel inträffade",
+                            body: "Kunde inte spara tävlingen"
+                        };
+                    }
+                }
+            });
+        });
 
         return false;
     };
@@ -355,12 +384,6 @@ winshooterModule.controller('NewCompetitionController', function ($scope, $modal
     $scope.StartDate.setSeconds(0);
     $scope.StartDate.setMilliseconds(0);
 
-    $scope.StartTime = new Date();
-    $scope.StartTime.setHours(9);
-    $scope.StartTime.setMinutes(0);
-    $scope.StartTime.setSeconds(0);
-    $scope.StartTime.setMilliseconds(0);
-
     $scope.IsPublic = false;
     $scope.UseNorwegianCount = false;
 
@@ -399,14 +422,13 @@ winshooterModule.controller('NewCompetitionController', function ($scope, $modal
     }
 
     $scope.addCompetition = function () {
-        $scope.StartTime.setDate($scope.StartDate.getDate());
         var competition = {
             CompetitionId: "",
             CompetitionType: "Field",
             Name: $scope.Name,
             UseNorwegianCount: $scope.UseNorwegianCount,
             IsPublic: $scope.IsPublic,
-            StartDate: $scope.StartTime.toISOString()
+            StartDate: $scope.StartDate.toISOString()
     };
 
         $http.post(competitionApiUrl, competition)

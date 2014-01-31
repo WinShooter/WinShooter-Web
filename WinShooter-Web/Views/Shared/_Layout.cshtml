@@ -127,7 +127,8 @@
         // Fallback to loading jQuery from a local path if the CDN is unavailable
         (window.jQuery === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-2.0.3.js")"><\/script>'));
     </script>
-    </script>    <!-- The modal confirmation dialog -->
+    
+    <!-- The modal confirmation dialog -->
     <script type="text/ng-template" id="confirmationModalContent">
         <div class="modal-header">
             <h4 class="modal-title">{{header}}</h4>
@@ -154,6 +155,20 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-ng-click="ok()">OK</button>
+        </div>
+    </script>
+
+    <!-- The modal information dialog -->
+    <script type="text/ng-template" id="informationModalContent">
+        <div class="modal-header">
+            <h4 class="modal-title">{{header}}</h4>
+        </div>
+        <div class="modal-body">
+            <p ng-bind-html="body">
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-ng-click="ok()">OK</button>
         </div>
     </script>
 
