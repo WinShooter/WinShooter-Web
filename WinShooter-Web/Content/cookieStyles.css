@@ -1,0 +1,55 @@
+﻿/* 
+========================================================================
+Cookie Compliance Script
+========================================================================
+*/
+body
+{
+  margin: 0;
+  padding: 0;
+}
+#cookieMessageWrapper
+{
+	background: #fd8;
+	font-family: "Segoe UI",Verdana,Arial,Helvetica,Sans-Serif; 
+	font-size: 11pt; 
+	font-weight: normal; 
+	color: #333;
+	padding: 0;
+	margin: 0;
+	display: none;
+	border-bottom: solid 1px #f80;
+}
+#cookieMessage
+{
+	width: 640px; /* this needs to be set to the width of the centre container */
+	padding: 75px 0 3px 0;
+	margin: 0 auto;
+	position: relative;
+}
+#cookieMessage:after
+{
+	content: "."; 
+	display: block; 
+	height: 0; 
+	clear: both; 
+	visibility: hidden;
+}
+#cookieMessage p
+{
+	margin: 5px 0 0;
+}
+#cookieClose
+{
+	float: right;
+	display: block;
+	padding: 0px 5px;
+	text-decoration: none;
+	background: #f80;
+	border: solid 1px #000;
+	border-radius: 2px;
+	color: #fff;
+	font-size: 100%;
+	margin-top: 6px;
+	font-weight: bold;
+}

@@ -53,6 +53,18 @@ namespace WinShooter.Controllers
         }
 
         /// <summary>
+        /// Show some privacy text.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ActionResult"/>.
+        /// </returns>
+        public ActionResult Privacy()
+        {
+            this.ViewBag.CompetitionId = string.Empty;
+            return this.View();
+        }
+
+        /// <summary>
         /// Create a new competition.
         /// </summary>
         /// <returns>

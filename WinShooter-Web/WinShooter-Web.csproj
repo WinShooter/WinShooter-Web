@@ -144,6 +144,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\cookieStyles.css" />
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\flat-ui\flat-ui.css" />
     <Content Include="Content\fonts\Flat-UI-Icons.dev.svg" />
@@ -264,6 +265,7 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\App\AngularModules.js" />
+    <Content Include="Scripts\App\cookieScript.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -572,6 +574,7 @@
     <Content Include="Views\Home\Patrols.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Shared\_GoogleAnalytics.cshtml" />
+    <Content Include="Views\Home\Privacy.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
