@@ -36,7 +36,7 @@ namespace WinShooter.Api.Api.Stations
         /// </param>
         public StationResponse(Database.Station dbstation)
         {
-            this.Id = dbstation.Id.ToString();
+            this.StationId = dbstation.Id.ToString();
             this.CompetitionId = dbstation.Competition.Id.ToString();
             this.Distinguish = dbstation.Distinguish;
             this.NumberOfShots = dbstation.NumberOfShots;
@@ -53,14 +53,19 @@ namespace WinShooter.Api.Api.Stations
         }
 
         /// <summary>
-        /// Gets or sets the id.
-        /// </summary>
-        public string Id { get; set; }
-
-        /// <summary>
         /// Gets or sets the competition id.
         /// </summary>
         public string CompetitionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
+        public string StationId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station number.
+        /// </summary>
+        public int StationNumber { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether distinguish.
@@ -83,11 +88,6 @@ namespace WinShooter.Api.Api.Stations
         public bool Points { get; set; }
 
         /// <summary>
-        /// Gets or sets the station number.
-        /// </summary>
-        public int StationNumber { get; set; }
-
-        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>
@@ -100,7 +100,7 @@ namespace WinShooter.Api.Api.Stations
 
             toReturn.AppendFormat(
                 "StationResponse [Id: {0}, CompetitionId: {1}, Distinguish: {2}, NumberOfShots: {3}, NumberOfTargets: {4}, Points: {5}, StationNumber: {6}]", 
-                this.Id,
+                this.StationId,
                 this.CompetitionId,
                 this.Distinguish,
                 this.NumberOfShots,

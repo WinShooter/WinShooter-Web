@@ -155,7 +155,7 @@ namespace WinShooter.Api.Api.Stations
         /// The <see cref="StationResponse"/>.
         /// </returns>
         [Authenticate]
-        public StationResponse Delete(StationDeleteRequest deleteRequest)
+        public StationResponse Delete(StationRequest deleteRequest)
         {
             this.log.Debug("Got DELETE request: " + deleteRequest);
             var session = this.GetSession() as CustomUserSession;
@@ -169,12 +169,12 @@ namespace WinShooter.Api.Api.Stations
             this.logic.CurrentUser = session.User;
             this.log.Debug("User is " + this.logic.CurrentUser);
 
-            if (deleteRequest.StationId.Equals(Guid.Empty))
+            if (deleteRequest.ParseStationId().Equals(Guid.Empty))
             {
                 throw new Exception("There has to be a station id");
             }
 
-            this.logic.DeleteStation(deleteRequest.StationId);
+            this.logic.DeleteStation(deleteRequest.ParseStationId());
 
             // This is needed to get IE to be happy.
             return new StationResponse();

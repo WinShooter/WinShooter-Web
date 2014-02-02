@@ -39,6 +39,16 @@ namespace WinShooter.Api.Api.Stations
         public Guid CompetitionId { get; set; }
 
         /// <summary>
+        /// Gets or sets the station id.
+        /// </summary>
+        public string StationId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station number.
+        /// </summary>
+        public int StationNumber { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether distinguish.
         /// </summary>
         public bool Distinguish { get; set; }
@@ -59,16 +69,6 @@ namespace WinShooter.Api.Api.Stations
         public bool Points { get; set; }
 
         /// <summary>
-        /// Gets or sets the station number.
-        /// </summary>
-        public int StationNumber { get; set; }
-
-        /// <summary>
-        /// Gets or sets the station id.
-        /// </summary>
-        public string StationId { get; set; }
-
-        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>
@@ -86,7 +86,7 @@ namespace WinShooter.Api.Api.Stations
                 "Distinguish: {3}, " +
                 "NumberOfShots: {4}, " +
                 "NumberOfTargets{5}, " +
-                "Points: {6}, ]",
+                "Points: {6} ]",
                 this.StationId,
                 this.CompetitionId,
                 this.StationNumber,
@@ -109,7 +109,7 @@ namespace WinShooter.Api.Api.Stations
             var newStation = new Database.Station
             {
                 Distinguish = this.Distinguish,
-                Id = this.StationId == null ? Guid.Empty : Guid.Parse(this.StationId),
+                Id = this.ParseStationId(),
                 NumberOfShots = this.NumberOfShots,
                 NumberOfTargets = this.NumberOfTargets,
                 Points = this.Points,
@@ -117,6 +117,29 @@ namespace WinShooter.Api.Api.Stations
             };
 
             return newStation;
+        }
+
+        /// <summary>
+        /// Parse the <see cref="StationId"/>.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="Guid"/>.
+        /// </returns>
+        public Guid ParseStationId()
+        {
+            if (string.IsNullOrEmpty(this.StationId))
+            {
+                return Guid.Empty;
+            }
+
+            try
+            {
+                return Guid.Parse(this.StationId);
+            }
+            catch (Exception)
+            {
+                return Guid.Empty;
+            }
         }
     }
 }
