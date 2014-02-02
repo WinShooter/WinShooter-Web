@@ -1,6 +1,7 @@
 ﻿/// <reference path="/Scripts/App/common.js" />
 /// <reference path="/Scripts/ui-bootstrap-0.9.0.js" />
 /// <reference path="/Scripts/ui-bootstrap-tpls-0.9.0.js" />
+/// <reference path="/Scripts/angular.js" />
 
 // Create the angular module
 var winshooterModule = angular.module('winshooter', ['ngResource', 'ngSanitize', 'ui.bootstrap']);
@@ -31,11 +32,10 @@ winshooterModule.factory('competitionFactory', [
 winshooterModule.factory('currentUserFactory', [
     '$resource', function ($resource) {
         return $resource(currentUserApiUrl, {
-            competitionId: '@competitionId'
+            competitionId: '@CompetitionId'
         }, {
             query: { method: 'GET', isArray: false },
             search: { method: 'GET', isArray: false },
-            delete: { method: 'DELETE', isArray: false },
             update: { method: 'POST', isArray: false }
         });
     }
@@ -45,7 +45,8 @@ winshooterModule.factory('currentUserFactory', [
 winshooterModule.factory('stationsFactory', [
     '$resource', function ($resource) {
         return $resource(stationsApiUrl, {
-            competitionId: '@StationId'
+            competitionId: '@CompetitionId',
+            stationId: '@StationId'
         }, {
             query: { method: 'GET', isArray: true },
             search: { method: 'GET', isArray: false }
@@ -253,7 +254,7 @@ winshooterModule.controller('CompetitionController', function ($scope, $modal, c
         $scope.competition.UseNorwegianCount = $("label[for='selectedCompetitionUseNorwegianCount']").hasClass('checked');
 
         $scope.competition.$save(function() {
-            // Show error dialog.
+            // Show success dialog.
             var modal = $modal.open({
                 templateUrl: 'informationModalContent',
                 controller: DialogConfirmController,
@@ -319,7 +320,7 @@ winshooterModule.controller('CompetitionController', function ($scope, $modal, c
                     return {
                         header: "Radera tävling",
                         body: "Är du säker på att du vill radera " + $scope.competition.Name + "?"
-                };
+                    };
                 }
             }
         });
