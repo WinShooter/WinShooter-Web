@@ -97,11 +97,14 @@
                             <li class="@htmlLinkResultsClass">@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionId }, null)</li>
                             <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Rättigheter", "ManageCompetitionRights", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "ng-show", "shouldShowEditRightsLink" } })</li>
                         }
+                        else
+                        {
+                            <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Om WinShooter", "About", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } })</li>
+                        }
                         <li>
                             @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { { "ng-show", "shouldShowLoginLink" } })
                             <a ng-show="isLoggedIn" href="/api/auth/logout">Logga ut</a>
                         </li>
-                        <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Om WinShooter", "About", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } })</li>
                     </ul>
                 </div>
             </div>
