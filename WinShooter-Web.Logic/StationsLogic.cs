@@ -300,7 +300,21 @@ namespace WinShooter.Logic
         /// </param>
         private void RenumberStations(Competition competition)
         {
-            // TODO: Implement
+            using (var transaction = this.stationRepository.StartTransaction())
+            {
+                var stations =
+                    this.stationRepository.FilterBy(station => station.Competition.Id.Equals(competition.Id))
+                        .OrderBy(station => station.StationNumber);
+
+                var stationNumber = 0;
+                foreach (var station in stations)
+                {
+                    stationNumber++;
+                    station.StationNumber = stationNumber;
+                }
+
+                transaction.Commit();
+            }
         }
     }
 }
