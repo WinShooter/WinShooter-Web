@@ -4,4 +4,3 @@ var competitionApiUrl = "/api/competition";
 var userApiUrl = "/api/user";
 var currentUserApiUrl = "/api/currentuser";
 var stationsApiUrl = "/api/stations";
-var stationApiUrl = "/api/station";
