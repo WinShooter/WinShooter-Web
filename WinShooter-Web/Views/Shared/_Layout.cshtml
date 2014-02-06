@@ -10,12 +10,14 @@
     @Scripts.Render("~/bundles/modernizr")
 
     @{
+        var htmlLinkAboutClass = string.Empty;
         var htmlLinkClubsClass = string.Empty;
         var htmlLinkCompetitionClass = string.Empty;
         var htmlLinkCompetitorsClass = string.Empty;
         var htmlLinkEnterResultsClass = string.Empty;
         var htmlLinkManageCompetitionRightsClass = string.Empty;
         var htmlLinkPatrolsClass = string.Empty;
+        var htmlLinkPrivacyClass = string.Empty;
         var htmlLinkResultsClass = string.Empty;
         var htmlLinkStationsClass = string.Empty;
         var htmlLinkWeaponsClass = string.Empty;
@@ -24,8 +26,10 @@
             switch (ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString().ToUpper())
             {
                 case "INDEX":
+                // Don't do anything
+                    break;
                 case "ABOUT":
-                    // Don't do anything
+                    htmlLinkAboutClass = "active";
                     break;
                 case "CLUBS":
                     htmlLinkClubsClass = "active";
@@ -45,6 +49,9 @@
                 case "PATROLS":
                     htmlLinkPatrolsClass = "active";
                     break;
+                case "PRIVACY":
+                    htmlLinkPrivacyClass = "active";
+                    break;
                 case "RESULTS":
                     htmlLinkResultsClass = "active";
                     break;
@@ -63,57 +70,48 @@
             }
         }
     }
-
-    @if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
-    {
-        <script>
-            window.competitionId = '@ViewBag.CompetitionId';
-        </script>
-    }
 </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Visa menu</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="~/">WinShooter @ViewBag.CompetitionName</a>
-                </div>
-                <div class="collapse navbar-collapse" ng-controller="CurrentUserController">
-                    <ul class="nav navbar-nav">
-                        @if (!string.IsNullOrEmpty(ViewBag.CompetitionId))
-                        {
-                            <li class="@htmlLinkCompetitionClass">@Html.ActionLink("Tävling", "Competition", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li class="@htmlLinkClubsClass">@Html.ActionLink("Klubbar", "Clubs", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "ng-show", "shouldShowEditClubsLink" } })</li>
-                            <li class="@htmlLinkWeaponsClass">@Html.ActionLink("Vapen", "Weapons", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "ng-show", "shouldShowEditWeaponsLink" } })</li>
-                            <li class="@htmlLinkStationsClass">@Html.ActionLink("Stationer", "Stations", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li class="@htmlLinkPatrolsClass">@Html.ActionLink("Patruller", "Patrols", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li class="@htmlLinkCompetitorsClass">@Html.ActionLink("Tävlande", "Competitors", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li class="@htmlLinkEnterResultsClass">@Html.ActionLink("Resultatinmatning", "EnterResults", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "ng-show", "shouldShowAddResultsLink" } })</li>
-                            <li class="@htmlLinkResultsClass">@Html.ActionLink("Resultat", "Results", "Home", new { id = ViewBag.CompetitionId }, null)</li>
-                            <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Rättigheter", "ManageCompetitionRights", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } }, new Dictionary<string, object> { { "ng-show", "shouldShowEditRightsLink" } })</li>
-                        }
-                        else
-                        {
-                            <li class="@htmlLinkManageCompetitionRightsClass">@Html.ActionLink("Om WinShooter", "About", "Home", new RouteValueDictionary { { "id", ViewBag.CompetitionId } })</li>
-                        }
-                        <li>
-                            @Html.ActionLink("Logga in", "Login", "Account", null, new Dictionary<string, object> { { "ng-show", "shouldShowLoginLink" } })
-                            <a ng-show="isLoggedIn" href="/api/auth/logout">Logga ut</a>
-                        </li>
-                    </ul>
+        <div ng-controller="CurrentUserController">
+            <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Visa menu</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/" ng-click="openHome()">WinShooter</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="@htmlLinkCompetitionClass"><a href ng-show="shouldShowCompetitionLink" ng-click="openCompetition()">Tävling</a></li>
+                            <li class="@htmlLinkClubsClass"><a href="/Home/Clubs" ng-show="shouldShowEditClubsLink" ng-click="openClubs()">Klubbar</a></li>
+                            <li class="@htmlLinkWeaponsClass"><a href="/Home/Weapons" ng-show="shouldShowEditWeaponsLink" ng-click="openWeapons()">Vapen</a></li>
+                            <li class="@htmlLinkStationsClass"><a href ng-show="shouldShowStationsLink" ng-click="openStations()">Stationer</a></li>
+                            <li class="@htmlLinkPatrolsClass"><a href ng-show="shouldShowPatrolsLink" ng-click="openPatrols()">Patruller</a></li>
+                            <li class="@htmlLinkCompetitorsClass"><a href ng-show="shouldShowCompetitorsLink" ng-click="openCompetitors()">Tävlande</a></li>
+                            <li class="@htmlLinkEnterResultsClass"><a href ng-show="shouldShowAddResultsLink" ng-click="openEnterResults()">Resultatinmatning</a></li>
+                            <li class="@htmlLinkResultsClass"><a href ng-show="shouldShowAddResultsLink" ng-click="openResults()">Resultat</a></li>
+                            <li class="@htmlLinkManageCompetitionRightsClass"><a href ng-show="shouldShowEditRightsLink">Rättigheter</a></li>
+
+                            <li class="@htmlLinkAboutClass"><a href ng-show="shouldShowAboutLink" ng-click="openAbout()">Om WinShooter</a></li>
+                            <li class="@htmlLinkPrivacyClass"><a href ng-show="shouldShowPrivacyLink" ng-click="openPrivacy()">Privacy</a></li>
+                            <li>
+                                <a href="/Account/Login" target="_self" ng-show="shouldShowLoginLink">Logga in</a>
+                                <a href="/api/auth/logout" target="_self" ng-show="isLoggedIn">Logga ut</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div id="cookieMessageWrapper">
-            <div id="cookieMessage">
-                <a id="cookieClose" href="#">Stäng</a>
-                <p><strong>WinShooter använder kakor ("cookies").</strong> Du kan läsa mer om hur vi använder dem <a href="/Home/Privacy">här</a>.</p>
+
+            <div id="cookieMessageWrapper">
+                <div id="cookieMessage">
+                    <a id="cookieClose" href="#">Stäng</a>
+                    <p><strong>WinShooter använder kakor ("cookies").</strong> Du kan läsa mer om hur vi använder dem <a href ng-click="openPrivacy()">här</a>.</p>
+                </div>
             </div>
         </div>
 
@@ -126,6 +124,7 @@
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @Scripts.Render("~/bundles/angularjs")
+        @Scripts.Render("~/bundles/angularjs-route");
         @Scripts.Render("~/bundles/angularjs-resource")
         @Scripts.Render("~/bundles/angularjs-bootstrapui")
         @Scripts.Render("~/bundles/angularjs-sanitize")

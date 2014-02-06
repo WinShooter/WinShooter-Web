@@ -73,6 +73,12 @@ namespace WinShooter
 
             bundles.Add(
                 new ScriptBundle(
+                    "~/bundles/angularjs-route",
+                    "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-route.min.js").Include(
+                        "~/Scripts/angular-route.js"));
+
+            bundles.Add(
+                new ScriptBundle(
                     "~/bundles/angularjs-resource",
                     "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-resource.min.js").Include(
                         "~/Scripts/angular-resource.js"));

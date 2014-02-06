@@ -30,6 +30,7 @@ namespace WinShooter.Api.Api.Competition
     using WinShooter.Api.Authentication;
     using WinShooter.Database;
     using WinShooter.Logic;
+    using WinShooter.Web.DataValidation;
 
     /// <summary>
     /// The competition service.
@@ -82,9 +83,11 @@ namespace WinShooter.Api.Api.Competition
         /// </returns>
         public CompetitionResponse Get(CompetitionRequest request)
         {
+            this.log.Debug("Got GET request: " + request);
+            request.CompetitionId.Require("CompetitionId").NotNull().LongerThan(5);
+
             try
             {
-                this.log.Debug("Got GET request: " + request);
                 var requestedCompetitionId = Guid.Parse(request.CompetitionId);
 
                 var session = this.GetSession() as CustomUserSession;

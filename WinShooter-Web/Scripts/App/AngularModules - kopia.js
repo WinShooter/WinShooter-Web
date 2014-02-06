@@ -1,25 +1,10 @@
 ﻿/// <reference path="/Scripts/App/common.js" />
 /// <reference path="/Scripts/ui-bootstrap-0.9.0.js" />
 /// <reference path="/Scripts/ui-bootstrap-tpls-0.9.0.js" />
-/// <reference path="/Scripts/angular.js" />
-/// <reference path="/Scripts/angular-route.js" />
-
+/// <reference path="/Scripts\angular.js" />
 
 // Create the angular module
-var winshooterModule = angular.module('winshooter', ['ngRoute', 'ngResource', 'ngSanitize', 'ui.bootstrap'])
-    .config(function ($routeProvider, $locationProvider, $logProvider) {
-    $routeProvider
-        .when("/Home/NewCompetition", { templateUrl: "/partials/newcompetition.html", controller: "NewCompetitionController" })
-        .when("/Home/Competition/:competitionId", { templateUrl: "/partials/competition.html", controller: "CompetitionController" })
-        .when("/Home/Stations/:competitionId", { templateUrl: "/partials/stations.html", controller: "StationsController" })
-        .when("/Home/Patrols/:competitionId", { templateUrl: "/partials/patrols.html", controller: "PatrolsController" })
-        .when("/Home/About", { templateUrl: "/partials/about.html" })
-        .when("/Home/Privacy", { templateUrl: "/partials/privacy.html" })
-        .otherwise({ templateUrl: "/partials/index.html", controller: "IndexController" });
-
-    $locationProvider.html5Mode(true);
-    $logProvider.debugEnabled(true);
-});
+var winshooterModule = angular.module('winshooter', ['ngResource', 'ngSanitize', 'ui.bootstrap']);
 
 // Create factory for competitions
 winshooterModule.factory('competitionsFactory', [
@@ -70,50 +55,22 @@ winshooterModule.factory('stationsFactory', [
 ]);
 
 // Here's the viewModel for the header
-winshooterModule.controller('CurrentUserController', function ($rootScope, $scope, $location, $modal, currentUserFactory) {
+winshooterModule.controller('CurrentUserController', function ($scope, $modal, currentUserFactory) {
     // Attributes
-    $scope.competitionId = window.competitionId;
-
     $scope.currentUser = { IsLoggedIn: false };
     $scope.displayName = "";
     $scope.isLoggedIn = false;
     $scope.rights = [];
     $scope.shouldShowLoginLink = false;
-
-    $scope.shouldShowCompetitionLink = false;
-    $scope.shouldShowStationsLink = false;
-    $scope.shouldShowPatrolsLink = false;
-    $scope.shouldShowCompetitorsLink = false;
-
     $scope.shouldShowAddResultsLink = false;
     $scope.shouldShowEditRightsLink = false;
     $scope.shouldShowEditClubsLink = false;
     $scope.shouldShowEditWeaponsLink = false;
 
-    $scope.shouldShowAboutLink = false;
-    $scope.shouldShowPrivacyLink = false;
+    init();
 
-    $scope.init = function () {
-        $scope.competitionId = window.competitionId;
-        if (window.competitionId == undefined || window.competitionId == "") {
-            $scope.shouldShowCompetitionLink = false;
-            $scope.shouldShowStationsLink = false;
-            $scope.shouldShowPatrolsLink = false;
-            $scope.shouldShowCompetitorsLink = false;
-
-            $scope.shouldShowAboutLink = true;
-            $scope.shouldShowPrivacyLink = true;
-        } else {
-            $scope.shouldShowCompetitionLink = true;
-            $scope.shouldShowStationsLink = true;
-            $scope.shouldShowPatrolsLink = true;
-            $scope.shouldShowCompetitorsLink = true;
-
-            $scope.shouldShowAboutLink = false;
-            $scope.shouldShowPrivacyLink = false;
-        }
-
-        $scope.currentUser = currentUserFactory.query(function() {
+    function init() {
+        $scope.currentUser = currentUserFactory.query(function () {
             // Get data
             $scope.shouldShowLoginLink = !$scope.currentUser.IsLoggedIn;
             $scope.isLoggedIn = $scope.currentUser.IsLoggedIn;
@@ -127,7 +84,7 @@ winshooterModule.controller('CurrentUserController', function ($rootScope, $scop
                 $scope.shouldShowEditClubsLink = -1 !== $.inArray("UpdateClub", $scope.rights);
                 $scope.shouldShowEditWeaponsLink = -1 !== $.inArray("UpdateWeapon", $scope.rights);
             }
-        }, function(data) {
+        }, function (data) {
             var error = "Misslyckades med att hämta användaruppgifter";
             if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
                 error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
@@ -139,7 +96,7 @@ winshooterModule.controller('CurrentUserController', function ($rootScope, $scop
                 templateUrl: 'errorModalContent',
                 controller: DialogConfirmController,
                 resolve: {
-                    items: function() {
+                    items: function () {
                         return {
                             header: "Ett fel inträffade",
                             body: error
@@ -148,60 +105,12 @@ winshooterModule.controller('CurrentUserController', function ($rootScope, $scop
                 }
             });
         });
-    };
-
-    $scope.init();
-
-    $scope.$on("competitionChanged", function () {
-        $scope.init();
-    });
-
-    $scope.openCompetitionLocation = function(baseUrl) {
-        baseUrl = baseUrl + window.competitionId;
-        $location.path(baseUrl);
-    };
-
-    $scope.openHome = function() {
-        $location.path("/");
-    };
-
-    $scope.openCompetition = function () {
-        $scope.openCompetitionLocation("/Home/Competition/");
-    };
-
-    $scope.openStations = function () {
-        $scope.openCompetitionLocation("/Home/Stations/");
-    };
-
-    $scope.openClubs = function () {
-        $scope.openCompetitionLocation("/Home/Clubs/");
-    };
-
-    $scope.openWeapons = function () {
-        $scope.openCompetitionLocation("/Home/Weapons/");
-    };
-
-    $scope.openPatrols = function () {
-        $scope.openCompetitionLocation("/Home/Patrols/");
-    };
-
-    $scope.openCompetitors = function () {
-        $scope.openCompetitionLocation("/Home/Competitors/");
-    };
-
-    $scope.openAbout = function() {
-        $location.path("/Home/About");
-    };
-
-    $scope.openPrivacy = function () {
-        $location.path("/Home/Privacy");
-    };
+    }
 });
 
 // Here the module for the index page
-winshooterModule.controller('IndexController', function ($rootScope, $scope, $modal, $location, competitionsFactory) {
-    window.competitionId = '';
-    $rootScope.$broadcast("competitionChanged", {});
+winshooterModule.controller('IndexController', function ($scope, $modal, competitionsFactory) {
+    //self.loginViewModel = new LoginViewModel();
 
     // Attributes for showing existing competition
     $scope.competitions = [];
@@ -248,22 +157,16 @@ winshooterModule.controller('IndexController', function ($rootScope, $scope, $mo
 
     // Selects the current competition
     $scope.selectCompetitionOnServer = function () {
-        var newLocation = "/Home/Competition/";
+        var newLocation = "/home/competition/";
         if ($scope.selectedCompetition !== undefined) {
-            window.competitionId = $scope.selectedCompetition.CompetitionId;
             newLocation = newLocation + $scope.selectedCompetition.CompetitionId;
-            $location.path(newLocation);
-            $rootScope.$broadcast("competitionChanged", {});
+            window.location.href = newLocation;
         }
     };
 });
 
 // Here the module for the competition page
-winshooterModule.controller('CompetitionController', function ($scope, $routeParams, $modal, competitionFactory, currentUserFactory) {
-    if ($routeParams.competitionId != undefined) {
-        window.competitionId = $routeParams.competitionId;
-    }
-
+winshooterModule.controller('CompetitionController', function ($scope, $modal, competitionFactory, currentUserFactory) {
     // Attributes for showing existing competition
     $scope.currentUser = { IsLoggedIn: false, Rights: [] };
     $scope.competition = {};
@@ -473,6 +376,7 @@ var DialogConfirmController = function ($scope, $modalInstance, items) {
 // Here the module for the competition page
 winshooterModule.controller('NewCompetitionController', function ($scope, $modal, $http, competitionFactory, currentUserFactory) {
     $scope.currentUser = { IsLoggedIn: false, Rights: [] };
+    $scope.isEditingStation = false;
 
     // Attributes for adding new competition
     $scope.Name = "";
@@ -558,31 +462,29 @@ winshooterModule.controller('NewCompetitionController', function ($scope, $modal
 });
 
 // Here the module for the station page
-winshooterModule.controller('StationsController', function ($scope, $routeParams, $modal, currentUserFactory, stationsFactory) {
+winshooterModule.controller('StationsController', function ($rootScope, $scope, $modal, $http, currentUserFactory, stationsFactory) {
     $scope.currentUser = { IsLoggedIn: false, Rights: [] };
+    $scope.userCanUpdateStation = false;
+    $scope.userCanDeleteStation = false;
+    $scope.userCanAddStation = false;
 
     // Attributes for adding new competition
     $scope.stations = [];
 
-    // Init our page
-    init();
-
-    function init() {
-        $scope.currentUser = currentUserFactory.query(function () {
+    $scope.init = function() {
+        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function() {
             // Get data
             $scope.shouldShowLoginLink = !$scope.currentUser.IsLoggedIn;
             $scope.isLoggedIn = $scope.currentUser.IsLoggedIn;
 
             if ($scope.currentUser.IsLoggedIn) {
-                $scope.displayName = $scope.currentUser.DisplayName;
                 $scope.rights = $scope.currentUser.CompetitionRights;
 
                 $scope.userCanUpdateStation = -1 !== $.inArray("UpdateStation", $scope.rights);
-                $scope.shouldShowEditRightsLink = -1 !== $.inArray("UpdateStation", $scope.rights);
-                $scope.shouldShowEditClubsLink = -1 !== $.inArray("UpdateClub", $scope.rights);
-                $scope.shouldShowEditWeaponsLink = -1 !== $.inArray("UpdateWeapon", $scope.rights);
+                $scope.userCanDeleteStation = -1 !== $.inArray("DeleteStation", $scope.rights);
+                $scope.userCanAddStation = -1 !== $.inArray("AddStation", $scope.rights);
             }
-        }, function (data) {
+        }, function(data) {
             var error = "Misslyckades med att hämta användaruppgifter";
             if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
                 error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
@@ -594,7 +496,7 @@ winshooterModule.controller('StationsController', function ($scope, $routeParams
                 templateUrl: 'errorModalContent',
                 controller: DialogConfirmController,
                 resolve: {
-                    items: function () {
+                    items: function() {
                         return {
                             header: "Ett fel inträffade",
                             body: error
@@ -606,6 +508,111 @@ winshooterModule.controller('StationsController', function ($scope, $routeParams
 
         $scope.stations = stationsFactory.query({ CompetitionId: window.competitionId }, function () {
             // Nothing to do here. Carry on!
+            if (window.console) {
+                console.log("Got stations");
+            }
+        }, function() {
+            var error = "Misslyckades med att hämta användaruppgifter";
+            if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+            } else {
+                error += ".";
+            }
+            // Show error dialog.
+            var modal = $modal.open({
+                templateUrl: 'errorModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function() {
+                        return {
+                            header: "Ett fel inträffade",
+                            body: error
+                        };
+                    }
+                }
+            });
+        });
+    };
+
+    // Init our page
+    $scope.init();
+
+    $scope.addNewStation = function() {
+        var station = {
+            CompetitionId: window.competitionId,
+            Distinguish: false,
+            NumberOfShots: 6,
+            NumberOfTargets: 3,
+            Points: false,
+            StationNumber: -1,
+            StationId: ""
+        };
+
+        $http.post(stationsApiUrl, station)
+            .success(function (data, status) {
+                if (window.console) {
+                    console.log("Added new station");
+                }
+
+                $scope.init();
+            }).error(function (data, status) {
+                if (window.console) {
+                    console.log("Failed to add new station");
+                }
+                var error = "Misslyckades med att lägga till tävlingen";
+                if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                    error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+                } else {
+                    error += ".";
+                }
+                // Show error dialog.
+                var modal = $modal.open({
+                    templateUrl: 'errorModalContent',
+                    controller: DialogConfirmController,
+                    resolve: {
+                        items: function() {
+                            return {
+                                header: "Ett fel inträffade",
+                                body: error
+                            };
+                        }
+                    }
+                });
+            });
+    };
+
+    $scope.updateStation = function(station) {
+        if (window.console) {
+            console.log("Update station");
+        }
+
+        $scope.isEditingStation = true;
+        $rootScope.$broadcast('updateStation', { StationId: station.StationId } );
+    };
+});
+
+// Here the module for the station page
+winshooterModule.controller('StationController', function ($scope, $modal, $http, currentUserFactory, stationsFactory) {
+    $scope.currentUser = { IsLoggedIn: false, Rights: [] };
+    $scope.userCanUpdateStation = false;
+    $scope.userCanDeleteStation = false;
+    $scope.userCanAddStation = false;
+
+    $scope.isEditingStation = false;
+
+    $scope.$on('updateStation', function(args) {
+        if (window.console) {
+            console.log("Update station started in StationController");
+        }
+
+        $scope.isEditingStation = true;
+        var stationId = args.StationId;
+
+        $scope.station = stationsFactory.search({ StationId: stationId }, function () {
+            // Nothing to do here. Carry on!
+            if (window.console) {
+                console.log("Got station");
+            }
         }, function () {
             var error = "Misslyckades med att hämta användaruppgifter";
             if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
@@ -627,32 +634,23 @@ winshooterModule.controller('StationsController', function ($scope, $routeParams
                 }
             });
         });
-    }
-});
+    });
 
-// Here the module for the station page
-winshooterModule.controller('PatrolsController', function ($scope, $routeParams, $modal, currentUserFactory, stationsFactory) {
-    $scope.currentUser = { IsLoggedIn: false, Rights: [] };
+    // Attributes for adding new competition
+    $scope.station = {};
 
-    $scope.userCanUpdatePatrol = false;
-
-    // Attributes
-    $scope.patrols = [];
-
-    // Init our page
-    init();
-
-    function init() {
-        $scope.currentUser = currentUserFactory.query(function () {
+    $scope.init = function () {
+        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function () {
             // Get data
             $scope.shouldShowLoginLink = !$scope.currentUser.IsLoggedIn;
             $scope.isLoggedIn = $scope.currentUser.IsLoggedIn;
 
             if ($scope.currentUser.IsLoggedIn) {
-                $scope.displayName = $scope.currentUser.DisplayName;
                 $scope.rights = $scope.currentUser.CompetitionRights;
 
-                $scope.userCanUpdatePatrol = -1 !== $.inArray("UpdatePatrol", $scope.rights);
+                $scope.userCanUpdateStation = -1 !== $.inArray("UpdateStation", $scope.rights);
+                $scope.userCanDeleteStation = -1 !== $.inArray("DeleteStation", $scope.rights);
+                $scope.userCanAddStation = -1 !== $.inArray("AddStation", $scope.rights);
             }
         }, function (data) {
             var error = "Misslyckades med att hämta användaruppgifter";
@@ -675,5 +673,142 @@ winshooterModule.controller('PatrolsController', function ($scope, $routeParams,
                 }
             });
         });
-    }
+    };
+
+    // Init our page
+    $scope.init();
+
+    $scope.addNewStation = function () {
+        var station = {
+            CompetitionId: window.competitionId,
+            Distinguish: false,
+            NumberOfShots: 6,
+            NumberOfTargets: 3,
+            Points: false,
+            StationNumber: -1,
+            StationId: ""
+        };
+
+        $http.post(stationsApiUrl, station)
+            .success(function (data, status) {
+                if (window.console) {
+                    console.log("Added new station");
+                }
+
+                $scope.init();
+            }).error(function (data, status) {
+                if (window.console) {
+                    console.log("Failed to add new station");
+                }
+                var error = "Misslyckades med att lägga till tävlingen";
+                if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                    error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+                } else {
+                    error += ".";
+                }
+                // Show error dialog.
+                var modal = $modal.open({
+                    templateUrl: 'errorModalContent',
+                    controller: DialogConfirmController,
+                    resolve: {
+                        items: function () {
+                            return {
+                                header: "Ett fel inträffade",
+                                body: error
+                            };
+                        }
+                    }
+                });
+            });
+    };
+
+    $scope.deleteStation = function (station) {
+        if (window.console) {
+            console.log("Delete station");
+        }
+
+        // Show confirmation dialog first.
+        var modal = $modal.open({
+            templateUrl: 'confirmationModalContent',
+            controller: DialogConfirmController,
+            resolve: {
+                items: function () {
+                    return {
+                        header: "Radera tävling",
+                        body: "Är du säker på att du vill radera station " + station.StationNumber + "?"
+                    };
+                }
+            }
+        });
+
+        modal.result.then(function () {
+            // In a production site we would submit the order via Ajax here.
+            station.$delete(function (data, status) {
+                // Delete succeded
+                $scope.init();
+            }, function (data, status) {
+                var error = "Misslyckades med att radera station";
+                if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
+                    error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
+                } else {
+                    error += ".";
+                }
+                // Show error dialog.
+                var modal = $modal.open({
+                    templateUrl: 'errorModalContent',
+                    controller: DialogConfirmController,
+                    resolve: {
+                        items: function () {
+                            return {
+                                header: "Ett fel inträffade",
+                                body: error
+                            };
+                        }
+                    }
+                });
+            });
+        }, function () {
+            // User canceled delete.
+        });
+    };
+
+    $scope.updateStation = function (station) {
+        if (window.console) {
+            console.log("Update station");
+        }
+
+        station.$save(function () {
+            var modal = $modal.open({
+                templateUrl: 'informationModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Uppdatera station",
+                            body: "Stationen uppdaterades"
+                        };
+                    }
+                }
+            });
+
+            $scope.init();
+        }, function () {
+            // Show error dialog.
+            var error = "Misslyckades att uppdatera stationen";
+            var modal = $modal.open({
+                templateUrl: 'errorModalContent',
+                controller: DialogConfirmController,
+                resolve: {
+                    items: function () {
+                        return {
+                            header: "Ett fel inträffade",
+                            body: error
+                        };
+                    }
+                }
+            });
+
+            $scope.init();
+        });
+    };
 });
