@@ -116,6 +116,8 @@
     <Content Include="Scripts\App\AngularModulesTests.js" />
     <Content Include="Scripts\jasmine-html.js" />
     <Content Include="Scripts\jasmine.js" />
+    <Content Include="Scripts\Tmp\home.js" />
+    <Content Include="Scripts\Tmp\home.tests.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
