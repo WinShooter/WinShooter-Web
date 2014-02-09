@@ -59,7 +59,7 @@ _ReSharper*
 StyleCop.Cache
 
 # DotCover is a .NET test runner add-in
-*.DotSettings
+*.DotSettings.user
 
 # NCrunch
 *.ncrunch*
