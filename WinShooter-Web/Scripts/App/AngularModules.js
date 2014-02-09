@@ -3,6 +3,7 @@
 /// <reference path="/Scripts/ui-bootstrap-tpls-0.9.0.js" />
 /// <reference path="/Scripts/angular.js" />
 /// <reference path="/Scripts/angular-route.js" />
+/// <reference path="/Scripts/angular-sanitize.js"/>
 
 
 // Create the angular module
