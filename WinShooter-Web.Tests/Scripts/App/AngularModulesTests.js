@@ -28,17 +28,19 @@ describe("CurrentUserController", function () {
     }));
 
     // Check the httpBackend for all operations
-    //afterEach($httpBackend.verifyNoOutstandingExpectation());
+    afterEach(function() {
+        $httpBackend.verifyNoOutstandingExpectation();
+    });
 
     // tests start here
     it('Check that the user isnt logged in, no competition selected', function () {
         angular.mock.inject(function ($rootScope, $controller, $location, $modal, currentUserFactory) {
             //create an empty scope
             scope = $rootScope.$new();
-            debugger;
 
             // backend response
             $httpBackend.when('GET', '/api/currentuser?CompetitionId=').respond({ IsLoggedIn: false }, {});
+            $httpBackend.expectGET('/api/currentuser?CompetitionId=');
 
             // Set the current cometition
             window.competitionId = "";
@@ -85,6 +87,7 @@ describe("CurrentUserController", function () {
 
             // backend response
             $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: false }, {});
+            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Set the current competition
             window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
@@ -133,6 +136,7 @@ describe("CurrentUserController", function () {
 
             // backend response
             $httpBackend.when('GET', '/api/currentuser?CompetitionId=').respond({ IsLoggedIn: true, DisplayName: 'John Smith', CompetitionRights: ['right1', 'right2'] }, {});
+            $httpBackend.expectGET('/api/currentuser?CompetitionId=');
 
             // Set the current competition
             window.competitionId = "";
@@ -180,6 +184,7 @@ describe("CurrentUserController", function () {
 
             // backend response
             $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: true, DisplayName: 'John Smith', CompetitionRights: ['right1', 'right2'] }, {});
+            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Set the current competition
             window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
@@ -232,6 +237,7 @@ describe("CurrentUserController", function () {
                     DisplayName: 'John Smith',
                     CompetitionRights: ['AddCompetitorResult', 'ReadUserCompetitionRole', 'UpdateClub', 'UpdateWeapon']
                 }, {});
+            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Set the current competition
             window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
