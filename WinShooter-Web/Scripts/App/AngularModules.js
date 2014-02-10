@@ -114,7 +114,7 @@ winshooterModule.controller('CurrentUserController', function ($rootScope, $scop
             $scope.shouldShowPrivacyLink = false;
         }
 
-        $scope.currentUser = currentUserFactory.query(function() {
+        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function () {
             // Get data
             $scope.shouldShowLoginLink = !$scope.currentUser.IsLoggedIn;
             $scope.isLoggedIn = $scope.currentUser.IsLoggedIn;
@@ -123,7 +123,7 @@ winshooterModule.controller('CurrentUserController', function ($rootScope, $scop
                 $scope.displayName = $scope.currentUser.DisplayName;
                 $scope.rights = $scope.currentUser.CompetitionRights;
 
-                $scope.shouldShowAddResultsLink = -1 !== $.inArray("ReadCompetitorResult", $scope.rights);
+                $scope.shouldShowAddResultsLink = -1 !== $.inArray("AddCompetitorResult", $scope.rights);
                 $scope.shouldShowEditRightsLink = -1 !== $.inArray("ReadUserCompetitionRole", $scope.rights);
                 $scope.shouldShowEditClubsLink = -1 !== $.inArray("UpdateClub", $scope.rights);
                 $scope.shouldShowEditWeaponsLink = -1 !== $.inArray("UpdateWeapon", $scope.rights);
