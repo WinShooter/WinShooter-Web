@@ -45,7 +45,7 @@ namespace WinShooter.Logic.Authorization
         /// <summary>
         /// The public competition rights.
         /// </summary>
-        private readonly WinShooterCompetitionPermissions[] publicCompetitionRights =
+        public readonly WinShooterCompetitionPermissions[] publicCompetitionRights =
             {
                 WinShooterCompetitionPermissions
                     .ReadClub,

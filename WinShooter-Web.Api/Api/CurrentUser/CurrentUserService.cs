@@ -79,7 +79,20 @@ namespace WinShooter.Api.Api.CurrentUser
 
             if (session == null || session.User == null)
             {
-                return new CurrentUserResponse { IsLoggedIn = false };
+                var anonymousRights = new string[0];
+                if (!string.IsNullOrEmpty(request.CompetitionId))
+                {
+                    anonymousRights = (from right in this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(request.CompetitionId)) 
+                                       select right.ToString()).ToArray();
+                }
+
+                return new CurrentUserResponse
+                {
+                    IsLoggedIn = false,
+                    CompetitionRights = anonymousRights, 
+                    DisplayName = string.Empty, 
+                    Email = string.Empty
+                };
             }
 
             this.rightsHelper.CurrentUser = session.User;
