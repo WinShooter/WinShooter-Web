@@ -67,6 +67,7 @@ namespace WinShooter
         protected void Application_Start(object sender, EventArgs e)
         {
             log4net.Config.XmlConfigurator.Configure();
+            this.log.Info("Winshooter web starting.");
             this.winShooterApiHost = new WinShooterApiHost();
             this.winShooterApiHost.Init();
 
@@ -75,6 +76,7 @@ namespace WinShooter
 
             var sqlDatabaseMigrator = new SqlDatabaseMigrator();
             sqlDatabaseMigrator.MigrateToLatest(ConfigurationManager.ConnectionStrings["WinShooterConnection"].ConnectionString);
+            this.log.Info("Winshooter web startup complete.");
         }
 
         /// <summary>

@@ -74,12 +74,12 @@
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Visa menu</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Visa menu</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href="~/">WinShooter @ViewBag.CompetitionName</a>
             </div>
             <div class="collapse navbar-collapse" ng-controller="CurrentUserController">
@@ -127,7 +127,7 @@
         // Fallback to loading jQuery from a local path if the CDN is unavailable
         (window.jQuery === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-2.0.3.js")"><\/script>'));
     </script>
-    
+
     <!-- The modal confirmation dialog -->
     <script type="text/ng-template" id="confirmationModalContent">
         <div class="modal-header">
@@ -143,7 +143,7 @@
             <button type="button" class="btn btn-warning" data-ng-click="cancel()">Nej</button>
         </div>
     </script>
-    
+
     <!-- The modal error dialog -->
     <script type="text/ng-template" id="errorModalContent">
         <div class="modal-header">
@@ -173,6 +173,7 @@
     </script>
 
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/Scripts/App/error-reporter.js")
     @{ Html.RenderPartial("~/Views/Shared/_GoogleAnalytics.cshtml"); }
 </body>
 </html>
