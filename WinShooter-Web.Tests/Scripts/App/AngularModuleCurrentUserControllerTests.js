@@ -9,7 +9,7 @@
 
 'use strict';
 
-describe("CurrentUserController", function () {
+describe("AngularModules-CurrentUserController", function () {
     // For now, disable resharper callback
     //jasmine.getEnv().currentRunner_.finishCallback = function () { };
 
