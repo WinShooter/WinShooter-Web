@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserMap.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
+// <copyright file="Migration115AddAcceptedTermsToUser.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,36 +15,39 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Creates the mapping between the user class and the database.
+//   Add columns HasAcceptedTerms to users table.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Database
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
-    using FluentNHibernate.Mapping;
+    using FluentMigrator;
 
     /// <summary>
-    /// Creates the mapping between the user class and the database.
+    /// Add columns HasAcceptedTerms to users table.
     /// </summary>
-    public class UserMap : ClassMap<User>
+    [Migration(115)]
+    public class Migration115AddAcceptedTermsToUser : Migration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserMap"/> class.
+        /// The column name.
         /// </summary>
-        public UserMap()
+        private const string HasAcceptedTermsColumnName = "HasAcceptedTerms";
+
+        /// <summary>
+        /// Migrates the database up.
+        /// </summary>
+        public override void Up()
         {
-            this.Id(x => x.Id);
+            Alter.Table(Migration111CreateUsersTable.UsersTableName).AddColumn(HasAcceptedTermsColumnName).AsInt32().WithDefaultValue(0);
+        }
 
-            this.Map(x => x.CardNumber);
-            this.Map(x => x.Surname);
-            this.Map(x => x.Givenname);
-            this.Map(x => x.Email);
-            this.Map(x => x.ClubId);
-            this.Map(x => x.HasAcceptedTerms);
-            this.Map(x => x.LastUpdated);
-            this.Map(x => x.LastLogin);
-
-            this.Table("Users");
+        /// <summary>
+        /// Migrates the database down.
+        /// </summary>
+        public override void Down()
+        {
+            Delete.Column(HasAcceptedTermsColumnName).FromTable(Migration111CreateUsersTable.UsersTableName);
         }
     }
 }

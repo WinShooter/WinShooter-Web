@@ -44,11 +44,12 @@ namespace WinShooter.Api.Tests.Api.CurrentUser
                                    CompetitionRights = new[] { "right1", "right2" },
                                    DisplayName = "My Display Name",
                                    Email = "email@example.com",
+                                   HasAcceptedTerms = 0,
                                    IsLoggedIn = true
                                };
 
             Assert.AreEqual(
-                "{\"IsLoggedIn\":true,\"DisplayName\":\"My Display Name\",\"Email\":\"email@example.com\",\"CompetitionRights\":[\"right1\",\"right2\"]}",
+                "{\"IsLoggedIn\":true,\"DisplayName\":\"My Display Name\",\"Email\":\"email@example.com\",\"HasAcceptedTerms\":0,\"CompetitionRights\":[\"right1\",\"right2\"]}",
                 JsonSerializer.SerializeToString(response));
         }
     }

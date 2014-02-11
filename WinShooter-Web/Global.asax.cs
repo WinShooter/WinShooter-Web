@@ -40,7 +40,12 @@ namespace WinShooter
         /// <summary>
         /// The log.
         /// </summary>
-        private ILog log;
+        private readonly ILog log;
+
+        /// <summary>
+        /// The win shooter API host.
+        /// </summary>
+        private WinShooterApiHost winShooterApiHost;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Global"/> class.
@@ -49,11 +54,6 @@ namespace WinShooter
         {
             this.log = LogManager.GetLogger(this.GetType());
         }
-
-        /// <summary>
-        /// The win shooter API host.
-        /// </summary>
-        private WinShooterApiHost winShooterApiHost;
 
         /// <summary>
         /// The application start, where everything is setup.
@@ -92,6 +92,24 @@ namespace WinShooter
             var exc = Server.GetLastError();
 
             this.log.Error("Unexpected error: " + exc.ToString());
+        }
+
+        /// <summary>
+        /// The application begin request.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            var originalPath = HttpContext.Current.Request.Path.ToLower();
+            if (originalPath.Contains("/account/loggedin"))
+            {
+                Context.RewritePath(originalPath.Replace("/account/loggedin", "/?LoggedIn=true"));
+            }
         }
     }
 }

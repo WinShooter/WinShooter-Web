@@ -42,6 +42,11 @@ namespace WinShooter.Api.Api.CurrentUser
         public string Email { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this is the first authentication.
+        /// </summary>
+        public int HasAcceptedTerms { get; set; }
+
+        /// <summary>
         /// Gets or sets the user email.
         /// </summary>
         public string[] CompetitionRights { get; set; }

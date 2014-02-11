@@ -154,7 +154,7 @@ namespace WinShooter.Api.Authentication
 
             using (var transaction = dbsession.BeginTransaction())
             {
-                var user = new User { LastLogin = DateTime.Now, LastUpdated = DateTime.Now };
+                var user = new User { LastLogin = DateTime.Now, LastUpdated = DateTime.Now, HasAcceptedTerms = 0 };
 
                 dbsession.Save(user);
 

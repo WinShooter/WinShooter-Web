@@ -1,0 +1,27 @@
+﻿<div ng-show="notInitialized">
+    <h1>Loggar in</h1>
+    <p>
+        Var god vänta...
+    </p>
+</div>
+<div ng-show="firstTimeWinShooter">
+    <h1>Välkommen!</h1>
+    <p>
+        Det verkar vara första gången du loggar in på WinShooter. Det gläder oss att
+        du har valt att använda WinShooter.
+    </p>
+    <p>
+        För att hålla lagstiftarna på lagom avstånd måste vi låta dig ange att
+        du tycker det OK att vi hanterar dina personuppgifter, ett så kallat
+        PUL-godkännande.
+    </p>
+    <p>
+        Du kan alltid radera dina egna personuppgifter på webbsida. Kom bara ihåg att 
+        de rättigheter och kopplingar till tävlingar som gjorts då kommer att tas
+        bort och du måste kontakta ägarna till de tävlingarna för att återställa det.
+    </p>
+    <p>
+        <input type="button" class="btn btn-primary" value="Jag accepterar" ng-click="accept()" />
+        <input type="button" class="btn btn-warning" value="Har jag något val?" ng-click="doIHaveAChoice()" />
+    </p>
+</div>

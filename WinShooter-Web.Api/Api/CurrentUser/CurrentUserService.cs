@@ -28,6 +28,7 @@ namespace WinShooter.Api.Api.CurrentUser
 
     using WinShooter.Api.Authentication;
     using WinShooter.Database;
+    using WinShooter.Logic;
     using WinShooter.Logic.Authorization;
 
     /// <summary>
@@ -46,12 +47,18 @@ namespace WinShooter.Api.Api.CurrentUser
         private readonly IRightsHelper rightsHelper;
 
         /// <summary>
+        /// The user repository.
+        /// </summary>
+        private readonly UsersLogic usersLogic;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CurrentUserService"/> class.
         /// </summary>
         public CurrentUserService()
         {
             this.databaseSession = NHibernateHelper.OpenSession();
             this.rightsHelper = new RightsHelper(new Repository<UserRolesInfo>(this.databaseSession), new Repository<RoleRightsInfo>(this.databaseSession));
+            this.usersLogic = new UsersLogic(this.databaseSession);
         }
 
         /// <summary>
@@ -91,7 +98,8 @@ namespace WinShooter.Api.Api.CurrentUser
                     IsLoggedIn = false,
                     CompetitionRights = anonymousRights, 
                     DisplayName = string.Empty, 
-                    Email = string.Empty
+                    Email = string.Empty,
+                    HasAcceptedTerms = 0
                 };
             }
 
@@ -109,8 +117,67 @@ namespace WinShooter.Api.Api.CurrentUser
                            IsLoggedIn = true,
                            DisplayName = session.User.DisplayName,
                            Email = session.User.Email,
+                           HasAcceptedTerms = session.User.HasAcceptedTerms,
                            CompetitionRights = (from right in rights select right.ToString()).ToArray()
                        };
+        }
+
+
+
+        /// <summary>
+        /// The any.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="CurrentUserResponse"/>.
+        /// </returns>
+        public CurrentUserResponse Post(CurrentUserRequest request)
+        {
+            var session = this.GetSession() as CustomUserSession;
+
+            if (session == null || session.User == null)
+            {
+                var anonymousRights = new string[0];
+                if (!string.IsNullOrEmpty(request.CompetitionId))
+                {
+                    anonymousRights = (from right in this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(request.CompetitionId))
+                                       select right.ToString()).ToArray();
+                }
+
+                return new CurrentUserResponse
+                {
+                    IsLoggedIn = false,
+                    CompetitionRights = anonymousRights,
+                    DisplayName = string.Empty,
+                    Email = string.Empty,
+                    HasAcceptedTerms = 0
+                };
+            }
+
+            // It's the same user.
+            this.usersLogic.CurrentUser = session.User;
+            this.usersLogic.CurrentUser.HasAcceptedTerms = request.HasAcceptedTerms;
+            this.usersLogic.UpdateUser(this.usersLogic.CurrentUser);
+
+            this.rightsHelper.CurrentUser = session.User;
+            var rights = new WinShooterCompetitionPermissions[0];
+            if (!string.IsNullOrEmpty(request.CompetitionId))
+            {
+                rights = this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(request.CompetitionId));
+            }
+
+            rights = this.rightsHelper.AddRightsWithNoDuplicate(rights, this.rightsHelper.GetSystemRightsForTheUser());
+
+            return new CurrentUserResponse
+            {
+                IsLoggedIn = true,
+                DisplayName = session.User.DisplayName,
+                Email = session.User.Email,
+                HasAcceptedTerms = session.User.HasAcceptedTerms,
+                CompetitionRights = (from right in rights select right.ToString()).ToArray()
+            };
         }
 
         /// <summary>

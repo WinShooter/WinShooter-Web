@@ -4,10 +4,13 @@
 <div id="google-signin">
     <form action="/api/auth/googleopenid" method="POST">
         <input type="image" src="/Content/images/sign-in-with-google.png" alt="Sign in with Google">
+        <input type="hidden" name="Continue" value="/Account/LoggedIn" />
     </form>
 </div>
 
 <div id="facebook-signin">
-    <a href="/api/auth/facebook">
-        <img src="/Content/images/sign-in-with-facebook.png" alt="Sign-in with Facebook" /></a>
+    <form action="/api/auth/facebook" method="POST">
+        <input type="image" src="/Content/images/sign-in-with-facebook.png" alt="Sign-in with Facebook" />
+        <input type="hidden" name="Continue" value="/Account/LoggedIn" />
+    </form>
 </div>

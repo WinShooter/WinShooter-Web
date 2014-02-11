@@ -42,6 +42,7 @@ namespace WinShooter.Database
             this.Givenname = string.Empty;
             this.Email = string.Empty;
             this.IsSystemAdmin = false;
+            this.HasAcceptedTerms = 0;
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
@@ -74,6 +75,11 @@ namespace WinShooter.Database
         /// Gets or sets the club Id.
         /// </summary>
         public virtual Guid ClubId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this is the first authentication.
+        /// </summary>
+        public virtual int HasAcceptedTerms { get; set; }
 
         /// <summary>
         /// Gets or sets the last updated.
@@ -148,6 +154,24 @@ namespace WinShooter.Database
             toReturn.AppendFormat("LastUpdated={0} ]", this.LastUpdated);
 
             return toReturn.ToString();
+        }
+
+        /// <summary>
+        /// Update this user from other.
+        /// </summary>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        public virtual void UpdateFromOther(User user)
+        {
+            this.CardNumber = user.CardNumber;
+            this.ClubId = user.ClubId;
+            this.Email = user.Email;
+            this.Givenname = user.Givenname;
+            this.HasAcceptedTerms = user.HasAcceptedTerms;
+            this.LastLogin = user.LastLogin;
+            this.Surname = user.Surname;
+            this.LastUpdated = DateTime.Now;
         }
     }
 }

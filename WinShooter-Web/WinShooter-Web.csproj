@@ -254,6 +254,7 @@
     <Content Include="newrelic\extensions\extension.xsd">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="partials\accountloggedin.html" />
     <Content Include="partials\index.html" />
     <Content Include="partials\newcompetition.html" />
     <Content Include="partials\stations.html" />
