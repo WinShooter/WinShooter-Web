@@ -41,7 +41,7 @@ describe("AngularModules-AccountLoggedInController", function () {
             // backend response
             $httpBackend.when('GET', '/api/currentuser?').respond({ IsLoggedIn: true, DisplayName: 'John Smith', Email: 'email@example.com', HasAcceptedTerms: 0 }, {});
             $httpBackend.expectGET('/api/currentuser?');
-        
+
             //declare the controller and inject our empty scope
             var myController = $controller('AccountLoggedInController', {
                 $scope: scope,
@@ -71,6 +71,39 @@ describe("AngularModules-AccountLoggedInController", function () {
 
             // Run the HTTP request
             $httpBackend.flush();
+        });
+    });
+
+    // tests start here
+    it('User has authenticated before', function () {
+        angular.mock.inject(function ($rootScope, $controller, $location, currentUserFactory) {
+            //create an empty scope
+            scope = $rootScope.$new();
+
+            // backend response
+            $httpBackend.when('GET', '/api/currentuser?').respond({ IsLoggedIn: true, DisplayName: 'John Smith', Email: 'email@example.com', HasAcceptedTerms: 1 }, {});
+            $httpBackend.expectGET('/api/currentuser?');
+
+            //declare the controller and inject our empty scope
+            var myController = $controller('AccountLoggedInController', {
+                $scope: scope,
+                $location: $location,
+                currentUserFactory: currentUserFactory
+            });
+
+            expect(myController).toBeDefined();
+
+            // Check the result before HTTP
+            expect(scope.notInitialized).toEqual(true);
+            expect(scope.firstTimeWinShooter).toEqual(false);
+
+            // Run the HTTP request
+            $httpBackend.flush();
+
+            // Check the result after HTTP
+            expect(scope.notInitialized).toEqual(false);
+            expect(scope.firstTimeWinShooter).toEqual(false);
+            expect($location.url()).toEqual('/Home/Index');
         });
     });
 });
