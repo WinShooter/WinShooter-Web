@@ -77,7 +77,7 @@ describe("AngularModules-NewCompetitionController", function () {
 
     // tests start here
     it('Create new competition', function () {
-        angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, competitionFactory, currentUserFactory) {
+        angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, $location, competitionFactory, currentUserFactory) {
             //create an empty scope
             scope = $rootScope.$new();
 
@@ -88,11 +88,32 @@ describe("AngularModules-NewCompetitionController", function () {
             // Set the current cometition
             window.competitionId = "";
 
+            // Prepare for catching the modal
+            var fakeModal = {
+                result: {
+                    then: function (confirmCallback, cancelCallback) {
+                        //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+                        this.confirmCallBack = confirmCallback;
+                        this.cancelCallback = cancelCallback;
+                    }
+                },
+                close: function (item) {
+                    //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+                    this.result.confirmCallBack(item);
+                },
+                dismiss: function (type) {
+                    //The user clicked cancel on the modal dialog, call the stored cancel callback
+                    this.result.cancelCallback(type);
+                }
+            };
+            spyOn($modal, 'open').andReturn(fakeModal);
+
             //declare the controller and inject our empty scope
             var myController = $controller('NewCompetitionController', {
                 $scope: scope,
                 $routeParams: $routeParams,
                 $modal: $modal,
+                $location: $location,
                 competitionFactory: competitionFactory,
                 currentUserFactory: currentUserFactory
             });
@@ -120,17 +141,19 @@ describe("AngularModules-NewCompetitionController", function () {
             scope.Name = "Some name";
             scope.IsPublic = true;
             scope.UseNorwegianCount = true;
-            scope.StartDate.setDate("2014-02-01");
 
             // Prepare for competition
-            $httpBackend.when('GET', '/api/currentuser?CompetitionId=').respond({ IsLoggedIn: true }, {});
-            $httpBackend.expectPOST('/api/currentuser?CompetitionId=');
+            $httpBackend.when('POST', '/api/competition').respond({ 'CompetitionId': 'A6109CFD-C4D8-4003-A6E7-A2BB006A81EA' }, {});
+            $httpBackend.expectPOST('/api/competition');
 
             // Create the competition
             scope.addCompetition();
 
             // Run the HTTP request
             $httpBackend.flush();
+
+            // Check the redirect
+            expect($location.path()).toEqual('/home/competition/A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
         });
     });
 });

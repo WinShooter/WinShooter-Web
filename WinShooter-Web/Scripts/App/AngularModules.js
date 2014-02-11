@@ -477,7 +477,7 @@ var DialogConfirmController = function ($scope, $modalInstance, items) {
 };
 
 // Here the module for the competition page
-winshooterModule.controller('NewCompetitionController', function ($scope, $modal, $http, competitionFactory, currentUserFactory) {
+winshooterModule.controller('NewCompetitionController', function ($scope, $modal, $http, $location, competitionFactory, currentUserFactory) {
     $scope.currentUser = { IsLoggedIn: false, Rights: [] };
 
     // Attributes for adding new competition
@@ -538,7 +538,7 @@ winshooterModule.controller('NewCompetitionController', function ($scope, $modal
         $http.post(competitionApiUrl, competition)
             .success(function (data, status) {
                 var newLocation = "/home/competition/" + data.CompetitionId;
-                window.location.href = newLocation;
+                $location.path(newLocation);
             }).error(function (data, status) {
                 var error = "Misslyckades med att lägga till tävlingen";
                 if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
