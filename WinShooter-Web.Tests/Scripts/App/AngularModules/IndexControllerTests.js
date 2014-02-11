@@ -118,7 +118,7 @@ describe("AngularModules-IndexController", function () {
 
             // Check the result after HTTP
             expect(scope.selectedCompetition.Name).toEqual("Name");
-            expect(scope.selectedCompetition.StartDate).toEqual("2014-02-10T21:42:00.000Z");
+            expect(scope.selectedCompetition.StartDate).toEqual(new Date("2014-02-10T21:42:00.000Z"));
             expect(scope.selectedCompetition.CompetitionId).toEqual("CompetitionId");
             expect(scope.selectedCompetition.IsPublic).toEqual(true);
             expect(scope.selectedCompetition.UseNorwegianCount).toEqual(true);

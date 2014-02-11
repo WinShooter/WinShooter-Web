@@ -224,6 +224,11 @@ winshooterModule.controller('IndexController', function ($rootScope, $scope, $mo
             } else {
                 $scope.selectedCompetition.Name = "Inga tävlingar hittades.";
             }
+
+            $scope.competitions.forEach(function (competition) {
+                competition.StartDate = new Date(competition.StartDate);
+            });
+
         }, function (data) {
             var error = "Misslyckades med att hämta tävlingar";
             if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
