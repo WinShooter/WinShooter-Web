@@ -122,6 +122,10 @@ describe("AngularModules-IndexController", function () {
             expect(scope.selectedCompetition.CompetitionId).toEqual("CompetitionId");
             expect(scope.selectedCompetition.IsPublic).toEqual(true);
             expect(scope.selectedCompetition.UseNorwegianCount).toEqual(true);
+
+            // Select competition
+            scope.selectCompetitionOnServer();
+            expect($location.path()).toEqual('/Home/Competition/CompetitionId');
         });
     });
 });
