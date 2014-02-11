@@ -10,6 +10,7 @@
 var winshooterModule = angular.module('winshooter', ['ngRoute', 'ngResource', 'ngSanitize', 'ui.bootstrap'])
     .config(function ($routeProvider, $locationProvider, $logProvider) {
     $routeProvider
+        .when("/Account/Login", { templateUrl: "/partials/accountlogin.html" })
         .when("/Home/NewCompetition", { templateUrl: "/partials/newcompetition.html", controller: "NewCompetitionController" })
         .when("/Home/Competition/:competitionId", { templateUrl: "/partials/competition.html", controller: "CompetitionController" })
         .when("/Home/Stations/:competitionId", { templateUrl: "/partials/stations.html", controller: "StationsController" })

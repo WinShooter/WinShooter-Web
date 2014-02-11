@@ -291,6 +291,7 @@
     <Content Include="partials\About.html" />
     <Content Include="partials\privacy.html" />
     <Content Include="partials\patrols.html" />
+    <Content Include="partials\accountlogin.html" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="newrelic\NewRelic.Profiler.dll" />
     <Content Include="robots.txt" />
