@@ -111,4 +111,163 @@ describe("AngularModules-CompetitionController", function () {
             expect(scope.competition.UseNorwegianCount).toEqual(true);
         });
     });
+
+    it('Update competition', function () {
+        angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, competitionFactory, currentUserFactory) {
+            //create an empty scope
+            scope = $rootScope.$new();
+
+            // backend response
+            $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: false }, {});
+            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
+            $httpBackend.when('GET', '/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ "CompetitionId": "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA", "CompetitionType": "Field", "IsPublic": true, "Name": "Name", "StartDate": "2014-01-31T20:41:00.000Z", "UseNorwegianCount": true }, {});
+            $httpBackend.expectGET('/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
+
+            // Set the current competition
+            window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            $routeParams.competitionId = window.competitionId;
+
+            // Prepare for catching the modal
+            var fakeModal = {
+                result: {
+                    then: function (confirmCallback, cancelCallback) {
+                        //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+                        this.confirmCallBack = confirmCallback;
+                        this.cancelCallback = cancelCallback;
+                    }
+                },
+                close: function (item) {
+                    //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+                    this.result.confirmCallBack(item);
+                },
+                dismiss: function (type) {
+                    //The user clicked cancel on the modal dialog, call the stored cancel callback
+                    this.result.cancelCallback(type);
+                }
+            };
+            spyOn($modal, 'open').andReturn(fakeModal);
+
+            //declare the controller and inject our empty scope
+            var myController = $controller('CompetitionController', {
+                $scope: scope,
+                $routeParams: $routeParams,
+                $modal: $modal,
+                competitionFactory: competitionFactory,
+                currentUserFactory: currentUserFactory
+            });
+
+            expect(myController).toBeDefined();
+
+            // Check the result before HTTP
+            expect(scope.competition.Name).toBeUndefined();
+            expect(scope.competition.StartDate).toBeUndefined();
+            expect(scope.competition.CompetitionId).toBeUndefined();
+            expect(scope.competition.IsPublic).toBeUndefined();
+            expect(scope.competition.UseNorwegianCount).toBeUndefined();
+
+            // Run the HTTP request
+            $httpBackend.flush();
+
+            // Update the values
+            scope.competition.Name = "updated";
+            scope.competition.StartDate = new Date("2014-02-11T10:55:00.000Z");
+            scope.competition.IsPublic = false;
+
+            // Prepare for HTTP update
+            $httpBackend.when('POST', '/api/competition?competitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({}, {});
+            $httpBackend.expectPOST(
+                '/api/competition?competitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA',
+                '{"CompetitionId":"A6109CFD-C4D8-4003-A6E7-A2BB006A81EA","CompetitionType":"Field","IsPublic":false,"Name":"updated","StartDate":"2014-02-11T10:55:00.000Z","UseNorwegianCount":false}');
+
+            // Tell controller to update
+            scope.updateCompetition();
+
+            // Run the HTTP request
+            $httpBackend.flush();
+
+            // Check the result after HTTP
+            $httpBackend.verifyNoOutstandingExpectation();
+        });
+    });
+
+    it('Delete competition', function () {
+        angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, competitionFactory, currentUserFactory) {
+            //create an empty scope
+            scope = $rootScope.$new();
+
+            // backend response
+            $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: false }, {});
+            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
+            $httpBackend.when('GET', '/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ "CompetitionId": "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA", "CompetitionType": "Field", "IsPublic": true, "Name": "Name", "StartDate": "2014-01-31T20:41:00.000Z", "UseNorwegianCount": true }, {});
+            $httpBackend.expectGET('/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
+
+            // Set the current competition
+            window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            $routeParams.competitionId = window.competitionId;
+
+            // Prepare for catching the modal
+            var fakeModal = {
+                result: {
+                    then: function (confirmCallback, cancelCallback) {
+                        //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
+                        this.confirmCallBack = confirmCallback;
+                        this.cancelCallback = cancelCallback;
+                    }
+                },
+                close: function (item) {
+                    //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
+                    this.result.confirmCallBack(item);
+                },
+                dismiss: function (type) {
+                    //The user clicked cancel on the modal dialog, call the stored cancel callback
+                    this.result.cancelCallback(type);
+                }
+            };
+            spyOn($modal, 'open').andReturn(fakeModal);
+
+            //declare the controller and inject our empty scope
+            var myController = $controller('CompetitionController', {
+                $scope: scope,
+                $routeParams: $routeParams,
+                $modal: $modal,
+                competitionFactory: competitionFactory,
+                currentUserFactory: currentUserFactory
+            });
+
+            expect(myController).toBeDefined();
+
+            // Check the result before HTTP
+            expect(scope.competition.Name).toBeUndefined();
+            expect(scope.competition.StartDate).toBeUndefined();
+            expect(scope.competition.CompetitionId).toBeUndefined();
+            expect(scope.competition.IsPublic).toBeUndefined();
+            expect(scope.competition.UseNorwegianCount).toBeUndefined();
+
+            // Run the HTTP request
+            $httpBackend.flush();
+
+            // Update the values
+            scope.competition.Name = "updated";
+            scope.competition.StartDate = new Date("2014-02-11T10:55:00.000Z");
+            scope.competition.IsPublic = false;
+
+            // Prepare for HTTP update
+            $httpBackend.when('DELETE', '/api/competition?competitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({}, {});
+            $httpBackend.expectDELETE(
+                '/api/competition?competitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA',
+                { "Accept": "application/json, text/plain, */*" });
+
+            // Tell controller to delete
+            scope.deleteCompetition();
+
+            // Press yes on modal
+            fakeModal.close(fakeModal);
+
+            // Run the HTTP request
+            $httpBackend.flush();
+
+            // Check the result after HTTP
+            $httpBackend.verifyNoOutstandingExpectation();
+        });
+    });
 });
