@@ -114,14 +114,17 @@ winshooterModule.controller('CurrentUserController', function ($rootScope, $scop
             $scope.shouldShowPrivacyLink = false;
         }
 
-        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function () {
+        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function (currentUserData) {
+            if (currentUserData.IsLoggedIn == undefined) {
+                return;
+            }
             // Get data
-            $scope.shouldShowLoginLink = !$scope.currentUser.IsLoggedIn;
-            $scope.isLoggedIn = $scope.currentUser.IsLoggedIn;
+            $scope.shouldShowLoginLink = !currentUserData.IsLoggedIn;
+            $scope.isLoggedIn = currentUserData.IsLoggedIn;
 
-            if ($scope.currentUser.IsLoggedIn) {
-                $scope.displayName = $scope.currentUser.DisplayName;
-                $scope.rights = $scope.currentUser.CompetitionRights;
+            if (currentUserData.IsLoggedIn) {
+                $scope.displayName = currentUserData.DisplayName;
+                $scope.rights = currentUserData.CompetitionRights;
 
                 $scope.shouldShowAddResultsLink = -1 !== $.inArray("AddCompetitorResult", $scope.rights);
                 $scope.shouldShowEditRightsLink = -1 !== $.inArray("ReadUserCompetitionRole", $scope.rights);
@@ -279,9 +282,9 @@ winshooterModule.controller('CompetitionController', function ($scope, $routePar
     init();
 
     function init() {
-        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function() {
-            $scope.userCanUpdateCompetition = -1 !== $.inArray("UpdateCompetition", $scope.currentUser.CompetitionRights);
-            $scope.userCanDeleteCompetition = -1 !== $.inArray("DeleteCompetition", $scope.currentUser.CompetitionRights);
+        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function(currentUserData) {
+            $scope.userCanUpdateCompetition = -1 !== $.inArray("UpdateCompetition", currentUserData.CompetitionRights);
+            $scope.userCanDeleteCompetition = -1 !== $.inArray("DeleteCompetition", currentUserData.CompetitionRights);
         }, function(data) {
             var error = "Misslyckades med att hämta användaruppgifter";
             if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
@@ -500,7 +503,7 @@ winshooterModule.controller('NewCompetitionController', function ($scope, $modal
     init();
 
     function init() {
-        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function () {
+        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function (currentUserData) {
             // Nothing to do here. Carry on!
         }, function () {
             var error = "Misslyckades med att hämta användaruppgifter";
@@ -538,7 +541,7 @@ winshooterModule.controller('NewCompetitionController', function ($scope, $modal
         $http.post(competitionApiUrl, competition)
             .success(function (data, status) {
                 var newLocation = "/home/competition/" + data.CompetitionId;
-                $location.path(newLocation);
+                $location.url(newLocation);
             }).error(function (data, status) {
                 var error = "Misslyckades med att lägga till tävlingen";
                 if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
@@ -574,14 +577,14 @@ winshooterModule.controller('StationsController', function ($scope, $routeParams
     init();
 
     function init() {
-        $scope.currentUser = currentUserFactory.query(function () {
+        $scope.currentUser = currentUserFactory.query(function (currentUserData) {
             // Get data
-            $scope.shouldShowLoginLink = !$scope.currentUser.IsLoggedIn;
-            $scope.isLoggedIn = $scope.currentUser.IsLoggedIn;
+            $scope.shouldShowLoginLink = !currentUserData.IsLoggedIn;
+            $scope.isLoggedIn = currentUserData.IsLoggedIn;
 
-            if ($scope.currentUser.IsLoggedIn) {
-                $scope.displayName = $scope.currentUser.DisplayName;
-                $scope.rights = $scope.currentUser.CompetitionRights;
+            if (currentUserData.IsLoggedIn) {
+                $scope.displayName = currentUserData.DisplayName;
+                $scope.rights = currentUserData.CompetitionRights;
 
                 $scope.userCanUpdateStation = -1 !== $.inArray("UpdateStation", $scope.rights);
                 $scope.shouldShowEditRightsLink = -1 !== $.inArray("UpdateStation", $scope.rights);
@@ -649,14 +652,14 @@ winshooterModule.controller('PatrolsController', function ($scope, $routeParams,
     init();
 
     function init() {
-        $scope.currentUser = currentUserFactory.query(function () {
+        $scope.currentUser = currentUserFactory.query(function (currentUserData) {
             // Get data
-            $scope.shouldShowLoginLink = !$scope.currentUser.IsLoggedIn;
-            $scope.isLoggedIn = $scope.currentUser.IsLoggedIn;
+            $scope.shouldShowLoginLink = !currentUserData.IsLoggedIn;
+            $scope.isLoggedIn = currentUserData.IsLoggedIn;
 
-            if ($scope.currentUser.IsLoggedIn) {
-                $scope.displayName = $scope.currentUser.DisplayName;
-                $scope.rights = $scope.currentUser.CompetitionRights;
+            if (currentUserData.IsLoggedIn) {
+                $scope.displayName = currentUserData.DisplayName;
+                $scope.rights = currentUserData.CompetitionRights;
 
                 $scope.userCanUpdatePatrol = -1 !== $.inArray("UpdatePatrol", $scope.rights);
             }

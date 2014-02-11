@@ -1,6 +1,5 @@
-﻿var userApiUrl = "/api/user";
-$.getJSON(userApiUrl, function (data) {
-    if (data.DisplayName) {
+﻿$.getJSON(currentUserApiUrl, function (data) {
+    if (data.IsLoggedIn) {
         window.location = window.referrer;
     }
 });
