@@ -158,6 +158,11 @@ winshooterModule.controller('CurrentUserController', function ($rootScope, $scop
 
     $scope.init();
 
+    $scope.isActive = function (viewLocation) {
+        var path = $location.path();
+        return viewLocation === path;
+    };
+
     $scope.$on("competitionChanged", function () {
         $scope.init();
     });
