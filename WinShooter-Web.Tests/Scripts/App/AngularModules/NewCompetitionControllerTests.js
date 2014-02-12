@@ -47,6 +47,7 @@ describe("AngularModules-NewCompetitionController", function () {
 
             //declare the controller and inject our empty scope
             var myController = $controller('NewCompetitionController', {
+                $rootScope: scope,
                 $scope: scope,
                 $routeParams: $routeParams,
                 $modal: $modal,
@@ -110,6 +111,7 @@ describe("AngularModules-NewCompetitionController", function () {
 
             //declare the controller and inject our empty scope
             var myController = $controller('NewCompetitionController', {
+                $rootScope: scope,
                 $scope: scope,
                 $routeParams: $routeParams,
                 $modal: $modal,
@@ -153,7 +155,7 @@ describe("AngularModules-NewCompetitionController", function () {
             $httpBackend.flush();
 
             // Check the redirect
-            expect($location.path()).toEqual('/home/competition/A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
+            expect($location.path()).toEqual('/Home/Competition/A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
         });
     });
 });
