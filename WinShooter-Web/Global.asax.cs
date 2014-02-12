@@ -23,6 +23,7 @@ namespace WinShooter
 {
     using System;
     using System.Configuration;
+    using System.Text.RegularExpressions;
     using System.Web;
     using System.Web.Optimization;
     using System.Web.Routing;
@@ -53,6 +54,38 @@ namespace WinShooter
         public Global()
         {
             this.log = LogManager.GetLogger(this.GetType());
+        }
+
+        /// <summary>
+        /// Check if a path is a file path
+        /// </summary>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        /// <returns>
+        /// True if it is a file, meaning it has an extension
+        /// </returns>
+        public static bool IsFile(string path)
+        {
+            var regex = new Regex("^.*\\.[\\w]*$");
+
+            return regex.IsMatch(path);
+        }
+
+        /// <summary>
+        /// Check if a path is a API call
+        /// </summary>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        /// <returns>
+        /// True if it is a API call.
+        /// </returns>
+        public static bool IsApi(string path)
+        {
+            var regex = new Regex("^/api/", RegexOptions.IgnoreCase);
+
+            return regex.IsMatch(path);
         }
 
         /// <summary>
@@ -91,7 +124,7 @@ namespace WinShooter
             // Get the exception object.
             var exc = Server.GetLastError();
 
-            this.log.Error("Unexpected error: " + exc.ToString());
+            this.log.Error("Unexpected error: " + exc);
         }
 
         /// <summary>
@@ -105,11 +138,48 @@ namespace WinShooter
         /// </param>
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            var originalPath = HttpContext.Current.Request.Path.ToLower();
-            if (originalPath.Contains("/account/loggedin"))
+            // For each call, validate if it's an api or file call.
+            // If it is, let the call through.
+            // If it's a call to a path, it's supposed to go to
+            // Angular, which is on the root so we rewrite the path
+            // internally
+            var path = HttpContext.Current.Request.Path;
+
+            if (IsStrangeDebuggerCall(path))
             {
-                Context.RewritePath(originalPath.Replace("/account/loggedin", "/?LoggedIn=true"));
+                return;
             }
+
+            if (IsApi(path))
+            {
+                return;
+            }
+
+            if (IsFile(path))
+            {
+                return;
+            }
+
+            Context.RewritePath("/");
+        }
+
+        /// <summary>
+        /// Check if a path is a strange debugger call.
+        /// </summary>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        private static bool IsStrangeDebuggerCall(string path)
+        {
+            if (path.StartsWith("/__browser"))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
