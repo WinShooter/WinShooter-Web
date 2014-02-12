@@ -141,7 +141,7 @@ namespace WinShooter.Logic
         {
             if (!this.CurrentUser.Id.Equals(userId))
             {
-                this.log.WarnFormat("User {0} is trying to delete user {1}", this.CurrentUser, user);
+                this.log.WarnFormat("User {0} is trying to delete user {1}", this.CurrentUser, userId);
                 throw new Exception("You can only delete yourself.");
             }
 
