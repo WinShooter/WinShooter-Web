@@ -62,11 +62,15 @@ namespace WinShooter.Logic.Authorization
         /// <param name="user">
         /// The user.
         /// </param>
-        internal UserCompetitionRights(Guid competitionId, User user)
+        /// <param name="rightsHelper">
+        /// The rights Helper.
+        /// </param>
+        internal UserCompetitionRights(Guid competitionId, User user, IRightsHelper rightsHelper)
         {
             this.CompetitionId = competitionId;
             this.Permissions = new List<WinShooterCompetitionPermissions>();
 
+            this.rightsHelper = rightsHelper;
             this.rightsHelper.CurrentUser = user;
             this.Permissions.AddRange(this.rightsHelper.GetRightsForCompetitionIdAndTheUser(competitionId));
         }

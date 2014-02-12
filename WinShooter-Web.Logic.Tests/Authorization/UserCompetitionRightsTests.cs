@@ -26,6 +26,8 @@ namespace WinShooter.Logic.Tests.Authorization
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    using Moq;
+
     using WinShooter.Database;
     using WinShooter.Logic.Authorization;
 
@@ -57,7 +59,9 @@ namespace WinShooter.Logic.Tests.Authorization
             var user = new User { Id = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5f0") };
             var competitionId = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5e9");
 
-            var rights = new UserCompetitionRights(competitionId, user);
+            var rightsHelper = new Mock<IRightsHelper>();
+
+            var rights = new UserCompetitionRights(competitionId, user, rightsHelper.Object);
             rights.Permissions.Add(WinShooterCompetitionPermissions.CreateCompetition);
             Assert.IsTrue(rights.HasPermission(WinShooterCompetitionPermissions.CreateCompetition));
             Assert.IsFalse(rights.HasPermission(WinShooterCompetitionPermissions.CreateUserCompetitionRole));
