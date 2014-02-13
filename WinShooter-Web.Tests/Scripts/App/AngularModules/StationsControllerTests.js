@@ -172,6 +172,7 @@ describe("AngularModules-StationsController", function () {
 
             //declare the controller and inject our empty scope
             var myController = $controller('StationsController', {
+                $rootScope: scope,
                 $scope: scope,
                 $routeParams: $routeParams,
                 $modal: $modal,
@@ -198,7 +199,7 @@ describe("AngularModules-StationsController", function () {
             $httpBackend.expectGET('/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Add station
-            scope.addStation();
+            scope.addNewStation();
 
             // Run the HTTP request
             $httpBackend.flush();

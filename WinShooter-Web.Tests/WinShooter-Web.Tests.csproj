@@ -53,7 +53,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\App\AngularModules\AccountLoggedInControllerTests.js" />
-    <Content Include="Scripts\App\AngularModules\StationTests.js" />
+    <Content Include="Scripts\App\AngularModules\StationsControllerTests.js" />
     <Content Include="Scripts\App\AngularModules\NewCompetitionControllerTests.js" />
     <Content Include="Scripts\App\AngularModules\CompetitionControllerTests.js" />
     <Content Include="Scripts\App\AngularModules\IndexControllerTests.js" />
