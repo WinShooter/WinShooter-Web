@@ -209,7 +209,7 @@ winshooterModule.controller('CurrentUserController', function ($rootScope, $scop
     };
 });
 
-winshooterModule.controller('AccountLoggedInController', function ($scope, $location, $modal, currentUserFactory) {
+winshooterModule.controller('AccountLoggedInController', function ($rootScope, $scope, $location, $modal, currentUserFactory) {
     $scope.minimumTermsAccepted = 1;
     $scope.currentUser = { DisplayName: '' };
     $scope.firstTimeWinShooter = false;
@@ -251,6 +251,8 @@ winshooterModule.controller('AccountLoggedInController', function ($scope, $loca
     $scope.accept = function () {
         $scope.currentUser.HasAcceptedTerms = $scope.minimumTermsAccepted;
         $scope.currentUser.$save(function () {
+            window.competitionId = '';
+            $rootScope.$broadcast("competitionChanged", {});
             $location.url("/");
         }, function(data) {
         // Show error dialog.
@@ -655,6 +657,7 @@ winshooterModule.controller('StationsController', function ($scope, $routeParams
     if ($routeParams.competitionId != undefined) {
         window.competitionId = $routeParams.competitionId;
     }
+
     $scope.currentUser = { IsLoggedIn: false, Rights: [] };
     $scope.userCanCreateStation = false;
     $scope.userCanUpdateStation = false;
