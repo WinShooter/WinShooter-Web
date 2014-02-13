@@ -162,6 +162,11 @@ namespace WinShooter
                 return;
             }
 
+            if (path.ToUpper() == "/JSERRORLOGGER")
+            {
+                return;
+            }
+
             Context.RewritePath("/");
         }
 
