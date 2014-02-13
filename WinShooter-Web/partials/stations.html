@@ -2,49 +2,44 @@
     <h1>Stationer</h1>
 
     <div class="row">
-        <div class="col-md-3">
-            <button class="btn btn-block btn-lg btn-primary" ng-click="addNewStation()" ng-show="userCanAddStation">Lägg till station</button>
+        <div class="col-md-4">
+            <button class="btn btn-block btn-lg btn-primary" ng-click="addNewStation()" ng-show="userCanCreateStation">Lägg till station</button>
         </div>
     </div>
 
     <div class="row">
-        <div ng-repeat="station in stations">
-            <div class="col-md-3">
-                <fieldset class="station-border">
-                    <legend class="station-border">Station nummer {{station.StationNumber}}</legend>
-
-                    <div class="form-group">
-                        <label>Antal figurer:</label>
-                        <input class="form-control" value="{{station.NumberOfTargets}}" ng-show="userCanUpdateStation">
-                        <p ng-show="!userCanUpdateStation">{{station.NumberOfTargets}}</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Antal skott:</label>
-                        <input class="form-control" value="{{station.NumberOfShots}}" ng-show="userCanUpdateStation">
-                        <p ng-show="!userCanUpdateStation">{{station.NumberOfShots}}</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="checkbox">
+        <table class="table-responsive table-striped table-bordered">
+            <thead>
+                <tr>
+                    <td>Nummer</td>
+                    <td>Mål</td>
+                    <td>Skott</td>
+                    <td>Poäng</td>
+                    <td>Särskiljning</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="station in stations">
+                    <td>{{ station.StationNumber }}</td>
+                    <td>{{ station.NumberOfTargets }}</td>
+                    <td>{{ station.NumberOfShots }}</td>
+                    <td>
+                        <label class="checkbox" ng-class="{checked: station.Points}">
                             <input type="checkbox" data-toggle="checkbox" />
-                            Poängstation
                         </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="checkbox">
+                    </td>
+                    <td>
+                        <label class="checkbox" ng-class="{checked: station.Distinguish}">
                             <input type="checkbox" data-toggle="checkbox" />
-                            Särskiljning
                         </label>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="button" class="btn btn-primary" value="Uppdatera" ng-click="updateStation(station)" ng-show="userCanUpdateStation" />
-                        <input type="button" class="btn btn-danger" value="Ta bort" ng-click="deleteStation(station)" ng-show="userCanDeleteStation" />
-                    </div>
-                </fieldset>
-            </div>
-        </div>
+                    </td>
+                    <td ng-show="userCanUpdateStation || userCanDeleteStation">
+                        <a href="/Home/Station/{{station.StationId}}">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
