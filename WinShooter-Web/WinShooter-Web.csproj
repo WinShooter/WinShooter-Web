@@ -278,8 +278,15 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\App\AngularModules.js" />
+    <Content Include="Scripts\App\Controllers\CompetitionController.js" />
+    <Content Include="Scripts\App\Controllers\NewCompetitionController.js" />
+    <Content Include="Scripts\App\Controllers\PatrolsController.js" />
+    <Content Include="Scripts\App\Controllers\StationsController.js" />
     <Content Include="Scripts\App\cookieScript.js" />
     <Content Include="Scripts\App\error-reporter.js" />
+    <Content Include="Scripts\App\Controllers\AccountLoggedInController.js" />
+    <Content Include="Scripts\App\Controllers\CurrentUserController.js" />
+    <Content Include="Scripts\App\Controllers\IndexController.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -297,9 +304,7 @@
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="newrelic\NewRelic.Profiler.dll" />
     <Content Include="robots.txt" />
-    <Content Include="Scripts\App\Account\Login.js" />
     <Content Include="Scripts\App\common.js" />
-    <Content Include="Scripts\App\Home\manageCompetitionRights.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.sv.js" />
     <Content Include="Scripts\Flat-ui\flatui-checkbox.js" />

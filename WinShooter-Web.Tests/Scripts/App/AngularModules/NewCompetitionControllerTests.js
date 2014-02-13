@@ -6,6 +6,7 @@
 ///<reference path="~/../WinShooter-Web/Scripts/jquery-2.0.3.js" />
 ///<reference path="~/../WinShooter-Web/Scripts/App/common.js"/>
 ///<reference path="~/../WinShooter-Web/Scripts/App/AngularModules.js"/>
+///<reference path="~/../WinShooter-Web/Scripts/App/Controllers/NewCompetitionController.js"/>
 
 'use strict';
 
