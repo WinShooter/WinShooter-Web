@@ -285,7 +285,7 @@
     <Content Include="Scripts\App\cookieScript.js" />
     <Content Include="Scripts\App\error-reporter.js" />
     <Content Include="Scripts\App\Controllers\AccountLoggedInController.js" />
-    <Content Include="Scripts\App\Controllers\CurrentUserController.js" />
+    <Content Include="Scripts\App\Controllers\AppController.js" />
     <Content Include="Scripts\App\Controllers\IndexController.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />

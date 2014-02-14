@@ -6,7 +6,7 @@
 /// <reference path="/Scripts/angular-sanitize.js"/>
 
 // Here's the viewModel for the header
-angular.module('winshooter').controller('CurrentUserController', function ($rootScope, $scope, $location, $modal, currentUserFactory) {
+angular.module('winshooter').controller('AppController', function ($rootScope, $scope, $location, $modal, currentUserFactory) {
     // Attributes
     $scope.competitionId = window.competitionId;
 

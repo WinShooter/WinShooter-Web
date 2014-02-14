@@ -6,11 +6,11 @@
 ///<reference path="~/../WinShooter-Web/Scripts/jquery-2.0.3.js" />
 ///<reference path="~/../WinShooter-Web/Scripts/App/common.js"/>
 ///<reference path="~/../WinShooter-Web/Scripts/App/AngularModules.js"/>
-///<reference path="~/../WinShooter-Web/Scripts/App/Controllers/CurrentUserController.js"/>
+///<reference path="~/../WinShooter-Web/Scripts/App/Controllers/AppController.js"/>
 
 'use strict';
 
-describe("AngularModules-CurrentUserController", function () {
+describe("AngularModules-AppController", function () {
     // For now, disable resharper callback
     //jasmine.getEnv().currentRunner_.finishCallback = function () { };
 
@@ -47,7 +47,7 @@ describe("AngularModules-CurrentUserController", function () {
             window.competitionId = "";
 
             //declare the controller and inject our empty scope
-            var myController = $controller('CurrentUserController', {
+            var myController = $controller('AppController', {
                 $rootScope: scope,
                 $scope: scope,
                 $location: $location,
@@ -94,7 +94,7 @@ describe("AngularModules-CurrentUserController", function () {
             window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
 
             //declare the controller and inject our empty scope
-            var myController = $controller('CurrentUserController', {
+            var myController = $controller('AppController', {
                 $rootScope: scope,
                 $scope: scope,
                 $location: $location,
@@ -143,7 +143,7 @@ describe("AngularModules-CurrentUserController", function () {
             window.competitionId = "";
 
             //declare the controller and inject our empty scope
-            var myController = $controller('CurrentUserController', {
+            var myController = $controller('AppController', {
                 $rootScope: scope,
                 $scope: scope,
                 $location: $location,
@@ -191,7 +191,7 @@ describe("AngularModules-CurrentUserController", function () {
             window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
 
             //declare the controller and inject our empty scope
-            var myController = $controller('CurrentUserController', {
+            var myController = $controller('AppController', {
                 $rootScope: scope,
                 $scope: scope,
                 $location: $location,
@@ -244,7 +244,7 @@ describe("AngularModules-CurrentUserController", function () {
             window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
 
             //declare the controller and inject our empty scope
-            var myController = $controller('CurrentUserController', {
+            var myController = $controller('AppController', {
                 $rootScope: scope,
                 $scope: scope,
                 $location: $location,

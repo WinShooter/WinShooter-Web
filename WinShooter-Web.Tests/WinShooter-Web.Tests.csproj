@@ -58,7 +58,7 @@
     <Content Include="Scripts\App\AngularModules\CompetitionControllerTests.js" />
     <Content Include="Scripts\App\AngularModules\IndexControllerTests.js" />
     <Content Include="Scripts\App\cookieScriptTests.js" />
-    <Content Include="Scripts\App\AngularModules\CurrentUserControllerTests.js" />
+    <Content Include="Scripts\App\AngularModules\AppControllerTests.js" />
     <Content Include="Scripts\jasmine-html.js" />
     <Content Include="Scripts\jasmine.js" />
   </ItemGroup>
