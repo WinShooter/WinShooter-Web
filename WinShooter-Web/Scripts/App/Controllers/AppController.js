@@ -6,14 +6,24 @@
 /// <reference path="/Scripts/angular-sanitize.js"/>
 
 // Here's the viewModel for the header
-angular.module('winshooter').controller('AppController', function ($rootScope, $scope, $location, $modal, currentUserFactory) {
-    // Attributes
-    $scope.competitionId = window.competitionId;
+angular.module('winshooter').controller('AppController', function ($rootScope, $scope, $routeParams, $location, $modal, currentUserFactory) {
+    console.log("Starting AppController. routeParams:" + JSON.stringify($routeParams));
+    // Attributes that will be shared with client scopes
+    $scope.sharedData = {};
+    $scope.sharedData.userHasRight = function (right) {
+        var toReturn = -1 !== $.inArray(right, $scope.sharedData.rights);
+        console.log("SharedData: User has right '" + right + "': " + toReturn);
+        return toReturn;
+    };
 
-    $scope.currentUser = { IsLoggedIn: false };
-    $scope.displayName = "";
-    $scope.isLoggedIn = false;
-    $scope.rights = [];
+    $scope.sharedData.competitionId = $routeParams.competitionId;
+
+    $scope.sharedData.currentUser = { IsLoggedIn: false };
+    $scope.sharedData.displayName = "";
+    $scope.sharedData.isLoggedIn = false;
+    $scope.sharedData.rights = [];
+
+    // Attributes that is used by this controller or view
     $scope.shouldShowLoginLink = false;
 
     $scope.shouldShowCompetitionLink = false;
@@ -30,8 +40,9 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
     $scope.shouldShowPrivacyLink = false;
 
     $scope.init = function () {
-        $scope.competitionId = window.competitionId;
-        if (window.competitionId == undefined || window.competitionId == "") {
+        console.log("AppController: Initializing . competitionId=" + $scope.sharedData.competitionId);
+        if ($scope.sharedData.competitionId === undefined || $scope.sharedData.competitionId === "") {
+            console.log("AppController: competitionId is undefined or empty");
             $scope.shouldShowCompetitionLink = false;
             $scope.shouldShowStationsLink = false;
             $scope.shouldShowPatrolsLink = false;
@@ -40,6 +51,7 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
             $scope.shouldShowAboutLink = true;
             $scope.shouldShowPrivacyLink = true;
         } else {
+            console.log("AppController: competitionId is " + $scope.sharedData.competitionId);
             $scope.shouldShowCompetitionLink = true;
             $scope.shouldShowStationsLink = true;
             $scope.shouldShowPatrolsLink = true;
@@ -49,22 +61,25 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
             $scope.shouldShowPrivacyLink = false;
         }
 
-        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function (currentUserData) {
-            if (currentUserData.IsLoggedIn == undefined) {
+        console.log("AppController: Retrieving user data");
+        $scope.currentUser = currentUserFactory.search({ CompetitionId: $scope.sharedData.competitionId }, function (currentUserData) {
+            console.log("AppController: Got user data: " + JSON.stringify(currentUserData));
+            if (currentUserData.IsLoggedIn === undefined) {
                 return;
             }
+
             // Get data
             $scope.shouldShowLoginLink = !currentUserData.IsLoggedIn;
-            $scope.isLoggedIn = currentUserData.IsLoggedIn;
+            $scope.sharedData.isLoggedIn = currentUserData.IsLoggedIn;
 
             if (currentUserData.IsLoggedIn) {
-                $scope.displayName = currentUserData.DisplayName;
-                $scope.rights = currentUserData.CompetitionRights;
+                $scope.sharedData.displayName = currentUserData.DisplayName;
+                $scope.sharedData.rights = currentUserData.CompetitionRights;
 
-                $scope.shouldShowAddResultsLink = -1 !== $.inArray("AddCompetitorResult", $scope.rights);
-                $scope.shouldShowEditRightsLink = -1 !== $.inArray("ReadUserCompetitionRole", $scope.rights);
-                $scope.shouldShowEditClubsLink = -1 !== $.inArray("UpdateClub", $scope.rights);
-                $scope.shouldShowEditWeaponsLink = -1 !== $.inArray("UpdateWeapon", $scope.rights);
+                $scope.shouldShowAddResultsLink = $scope.sharedData.userHasRight("AddCompetitorResult");
+                $scope.shouldShowEditRightsLink = $scope.sharedData.userHasRight("ReadUserCompetitionRole");
+                $scope.shouldShowEditClubsLink = $scope.sharedData.userHasRight("UpdateClub");
+                $scope.shouldShowEditWeaponsLink = $scope.sharedData.userHasRight("UpdateWeapon");
             }
         }, function (data) {
             var error = "Misslyckades med att hämta användaruppgifter";
@@ -89,10 +104,13 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
         });
     };
 
-    $scope.init();
+    $scope.$watch('sharedData.competitionId', function () {
+        console.log("AppController: competition has changed, re-initialize");
+        $scope.init();
+    });
 
     $scope.isActive = function (viewLocation) {
-        var path = $location.path();
+        var path = $location.path().substring(0, viewLocation.length);
         return viewLocation === path;
     };
 
@@ -101,7 +119,7 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
     });
 
     $scope.openCompetitionLocation = function (baseUrl) {
-        baseUrl = baseUrl + window.competitionId;
+        baseUrl = baseUrl + $scope.sharedData.competitionId;
         $location.path(baseUrl);
     };
 

@@ -7,11 +7,11 @@
 
 // Here the module for the station page
 angular.module('winshooter').controller('StationsController', function ($scope, $routeParams, $modal, $http, currentUserFactory, stationsFactory) {
-    if ($routeParams.competitionId != undefined) {
-        window.competitionId = $routeParams.competitionId;
+    console.log("StationsController: starting");
+    if ($routeParams.competitionId !== undefined) {
+        $scope.sharedData.competitionId = $routeParams.competitionId;
     }
 
-    $scope.currentUser = { IsLoggedIn: false, Rights: [] };
     $scope.userCanCreateStation = false;
     $scope.userCanUpdateStation = false;
     $scope.userCanDeleteStation = false;
@@ -29,44 +29,25 @@ angular.module('winshooter').controller('StationsController', function ($scope, 
         return undefined;
     };
 
+    $scope.initRights = function () {
+        console.log("StationsController: Rights initializing.");
+        $scope.userCanCreateStation = $scope.sharedData.userHasRight("CreateStation");
+        $scope.userCanUpdateStation = $scope.sharedData.userHasRight("UpdateStation");
+        $scope.userCanDeleteStation = $scope.sharedData.userHasRight("DeleteStation");
+        console.log("StationsController: Rights initialized.");
+    };
+
     $scope.init = function () {
-        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function (currentUserData) {
-            // Get data
-            if (currentUserData.IsLoggedIn) {
-                $scope.displayName = currentUserData.DisplayName;
-                $scope.rights = currentUserData.CompetitionRights;
+        console.log("StationsController: Initializing.");
+        $scope.initRights();
 
-                $scope.userCanCreateStation = -1 !== $.inArray("CreateStation", $scope.rights);
-                $scope.userCanUpdateStation = -1 !== $.inArray("UpdateStation", $scope.rights);
-                $scope.userCanDeleteStation = -1 !== $.inArray("DeleteStation", $scope.rights);
-            } else {
-                $scope.userCanUpdateStation = false;
-            }
-        }, function (data) {
-            var error = "Misslyckades med att hämta användaruppgifter";
-            if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
-                error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
-            } else {
-                error += ".";
-            }
-            // Show error dialog.
-            var modal = $modal.open({
-                templateUrl: 'errorModalContent',
-                controller: DialogConfirmController,
-                resolve: {
-                    items: function () {
-                        return {
-                            header: "Ett fel inträffade",
-                            body: error
-                        };
-                    }
-                }
-            });
-        });
-
-        $scope.stations = stationsFactory.query({ CompetitionId: window.competitionId }, function () {
+        console.log("Quering for stations");
+        $scope.stations = stationsFactory.query({ CompetitionId: $scope.sharedData.competitionId }, function (data) {
             // Nothing to do here. Carry on!
-        }, function () {
+            console.log("Got " + data.length + " stations.");
+        }, function (data) {
+            console.log("Filed to get stations: " + JSON.stringify(data));
+
             var error = "Misslyckades med att hämta stationerna";
             if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
                 error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
@@ -89,16 +70,23 @@ angular.module('winshooter').controller('StationsController', function ($scope, 
         });
     };
 
-    // Init our page
-    $scope.init();
+    $scope.$watch('sharedData.competitionId', function () {
+        console.log("StationsController: competition has changed, re-initialize");
+        $scope.init();
+    });
+
+    $scope.$watch('sharedData.rights', function () {
+        console.log("StationsController: rights has changed, re-initialize");
+        $scope.initRights();
+    });
 
     $scope.addNewStation = function () {
         var station = {
-            CompetitionId: window.competitionId,
+            CompetitionId: $scope.sharedData.competitionId,
             StationId: "",
             "StationNumber": -1,
             "Distinguish": false,
-            "NumberOfShots": 3,
+            "NumberOfShots": 6,
             "NumberOfTargets": 3,
             "Points": false
         };

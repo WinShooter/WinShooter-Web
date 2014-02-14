@@ -67,7 +67,6 @@ angular.module('winshooter').controller('NewCompetitionController', function ($r
         $http.post(competitionApiUrl, competition)
             .success(function (data, status) {
                 window.competitionId = data.CompetitionId;
-                $rootScope.$broadcast("competitionChanged", {});
                 var newLocation = "/Home/Competition/" + data.CompetitionId;
                 $location.url(newLocation);
             }).error(function (data, status) {

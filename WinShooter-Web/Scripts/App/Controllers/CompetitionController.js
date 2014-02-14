@@ -7,48 +7,32 @@
 
 // Here the module for the competition page
 angular.module('winshooter').controller('CompetitionController', function ($scope, $routeParams, $modal, competitionFactory, currentUserFactory) {
+    console.log("CompetitionController: starting");
     if ($routeParams.competitionId != undefined) {
-        window.competitionId = $routeParams.competitionId;
+        $scope.sharedData.competitionId = $routeParams.competitionId;
     }
 
     // Attributes for showing existing competition
-    $scope.currentUser = { IsLoggedIn: false, Rights: [] };
     $scope.competition = {};
     $scope.userCanUpdateCompetition = false;
     $scope.userCanDeleteCompetition = false;
 
-    init();
+    $scope.initRights = function() {
+        console.log("CompetitionController: Initializing rights");
 
-    function init() {
-        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function (currentUserData) {
-            $scope.userCanUpdateCompetition = -1 !== $.inArray("UpdateCompetition", currentUserData.CompetitionRights);
-            $scope.userCanDeleteCompetition = -1 !== $.inArray("DeleteCompetition", currentUserData.CompetitionRights);
-        }, function (data) {
-            var error = "Misslyckades med att hämta användaruppgifter";
-            if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
-                error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
-            } else {
-                error += ".";
-            }
-            // Show error dialog.
-            var modal = $modal.open({
-                templateUrl: 'errorModalContent',
-                controller: DialogConfirmController,
-                resolve: {
-                    items: function () {
-                        return {
-                            header: "Ett fel inträffade",
-                            body: error
-                        };
-                    }
-                }
-            });
-        });
+        $scope.userCanUpdateCompetition = $scope.sharedData.userHasRight("UpdateCompetition");
+        $scope.userCanDeleteCompetition = $scope.sharedData.userHasRight("DeleteCompetition");
 
-        $scope.competition = competitionFactory.search({ CompetitionId: window.competitionId }, function () {
+        console.log("CompetitionController: Initialized rights");
+    };
+
+    $scope.init = function() {
+        console.log("CompetitionController: Initializing");
+
+        $scope.competition = competitionFactory.search({ CompetitionId: $scope.sharedData.competitionId }, function() {
             // Nothing to do here. Carry on!
             $scope.competition.StartDate = new Date($scope.competition.StartDate);
-        }, function (data) {
+        }, function(data) {
             var error = "Misslyckades med att hämta tävlingar";
             if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
                 error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
@@ -60,7 +44,7 @@ angular.module('winshooter').controller('CompetitionController', function ($scop
                 templateUrl: 'errorModalContent',
                 controller: DialogConfirmController,
                 resolve: {
-                    items: function () {
+                    items: function() {
                         return {
                             header: "Ett fel inträffade",
                             body: error
@@ -69,7 +53,17 @@ angular.module('winshooter').controller('CompetitionController', function ($scop
                 }
             });
         });
-    }
+    };
+
+    $scope.$watch('sharedData.competitionId', function () {
+        console.log("CompetitionController: competition has changed, re-initialize");
+        $scope.init();
+    });
+
+    $scope.$watch('sharedData.rights', function () {
+        console.log("CompetitionController: rights has changed, re-initialize");
+        $scope.initRights();
+    });
 
     $scope.updateCompetition = function () {
         if ($scope.competition === undefined) {

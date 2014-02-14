@@ -8,7 +8,6 @@
 // Here the module for the index page
 angular.module('winshooter').controller('IndexController', function ($rootScope, $scope, $modal, $location, competitionsFactory) {
     window.competitionId = '';
-    $rootScope.$broadcast("competitionChanged", {});
 
     // Attributes for showing existing competition
     $scope.competitions = [];
@@ -23,7 +22,9 @@ angular.module('winshooter').controller('IndexController', function ($rootScope,
     init();
 
     function init() {
+        console.log("IndexController: Initalizating. Running competitions query");
         $scope.competitions = competitionsFactory.query(function () {
+            console.log("IndexController: Got " + $scope.competitions.length + " competitions.");
             if ($scope.competitions.length > 0) {
                 // We got some competitions back. Select first one.
                 $scope.selectedCompetition = $scope.competitions[0];
@@ -36,6 +37,7 @@ angular.module('winshooter').controller('IndexController', function ($rootScope,
             });
 
         }, function (data) {
+            console.log("IndexController: Failed to retrive competitions:" + JSON.stringify(data));
             var error = "Misslyckades med att hämta tävlingar";
             if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
                 error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
@@ -62,10 +64,10 @@ angular.module('winshooter').controller('IndexController', function ($rootScope,
     $scope.selectCompetitionOnServer = function () {
         var newLocation = "/Home/Competition/";
         if ($scope.selectedCompetition !== undefined) {
-            window.competitionId = $scope.selectedCompetition.CompetitionId;
+            console.log("IndexController: Setting new competitionId: " + $scope.selectedCompetition.CompetitionId);
+            $scope.sharedData.competitionId = $scope.selectedCompetition.CompetitionId;
             newLocation = newLocation + $scope.selectedCompetition.CompetitionId;
             $location.path(newLocation);
-            $rootScope.$broadcast("competitionChanged", {});
         }
     };
 });

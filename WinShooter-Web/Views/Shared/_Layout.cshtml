@@ -9,7 +9,7 @@
     @Styles.Render("~/Content/cookieStyles.css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body ng-controller="CurrentUserController">
+<body ng-controller="AppController">
     <div>
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
@@ -27,8 +27,8 @@
                         <li ng-class="{ active: isActive('/Home/Competition')}"><a href ng-show="shouldShowCompetitionLink" ng-click="openCompetition()">Tävling</a></li>
                         <li ng-class="{ active: isActive('/Home/Clubs')}"><a href="/Home/Clubs" ng-show="shouldShowEditClubsLink" ng-click="openClubs()">Klubbar</a></li>
                         <li ng-class="{ active: isActive('/Home/Weapons')}"><a href="/Home/Weapons" ng-show="shouldShowEditWeaponsLink" ng-click="openWeapons()">Vapen</a></li>
-                        <li ng-class="{ active: isActive('/Home/Stations')}"><a href="/Home/Stations" ng-show="shouldshowstationslink" ng-click="openStations()">Stationer</a></li>
-                        <li ng-class="{ active: isActive('/Home/Patrols')}"><a href ng-show="shouldShowPatrolsLink" ng-click="openPatrols()">Patruller</a></li>
+                        <li ng-class="{ active: isActive('/Home/Stations')}"><a href="/Home/Stations" ng-show="shouldShowStationsLink" ng-click="openStations()">Stationer</a></li>
+                        <li ng-class="{ active: isActive('/Home/Patrols')}"><a href ng-show="shouldShowStationsLink" ng-click="openPatrols()">Patruller</a></li>
                         <li ng-class="{ active: isActive('/Home/Competitors')}"><a href ng-show="shouldShowCompetitorsLink" ng-click="openCompetitors()">Tävlande</a></li>
                         <li ng-class="{ active: isActive('/Home/AddResults')}"><a href ng-show="shouldShowAddResultsLink" ng-click="openEnterResults()">Resultatinmatning</a></li>
                         <li ng-class="{ active: isActive('/Home/Results')}"><a href ng-show="shouldShowAddResultsLink" ng-click="openResults()">Resultat</a></li>
@@ -38,7 +38,7 @@
                         <li ng-class="{ active: isActive('/Home/Privacy')}"><a href ng-show="shouldShowPrivacyLink" ng-click="openPrivacy()">Privacy</a></li>
                         <li ng-class="{ active: isActive('/Account/Login')}">
                             <a href="/Account/Login" ng-show="shouldShowLoginLink">Logga in</a>
-                            <a href="/api/auth/logout" target="_self" ng-show="isLoggedIn">Logga ut</a>
+                            <a href="/api/auth/logout" target="_self" ng-show="sharedData.isLoggedIn">Logga ut</a>
                         </li>
                     </ul>
                 </div>
@@ -71,7 +71,7 @@
     @Scripts.Render("~/Scripts/App/AngularModules.js")
     @Scripts.Render("~/Scripts/App/Controllers/AccountLoggedInController.js")
     @Scripts.Render("~/Scripts/App/Controllers/CompetitionController.js")
-    @Scripts.Render("~/Scripts/App/Controllers/CurrentUserController.js")
+    @Scripts.Render("~/Scripts/App/Controllers/AppController.js")
     @Scripts.Render("~/Scripts/App/Controllers/IndexController.js")
     @Scripts.Render("~/Scripts/App/Controllers/NewCompetitionController.js")
     @Scripts.Render("~/Scripts/App/Controllers/PatrolsController.js")

@@ -48,7 +48,6 @@ angular.module('winshooter').controller('AccountLoggedInController', function ($
         $scope.currentUser.HasAcceptedTerms = $scope.minimumTermsAccepted;
         $scope.currentUser.$save(function () {
             window.competitionId = '';
-            $rootScope.$broadcast("competitionChanged", {});
             $location.url("/");
         }, function (data) {
             // Show error dialog.

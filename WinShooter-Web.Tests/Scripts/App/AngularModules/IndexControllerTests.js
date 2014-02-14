@@ -94,7 +94,7 @@ describe("AngularModules-IndexController", function () {
             $httpBackend.expectGET('/api/competitions');
 
             // Set the current cometition
-            window.competitionId = "";
+            scope.sharedData.competitionId = "";
 
             //declare the controller and inject our empty scope
             var myController = $controller('IndexController', {
@@ -126,6 +126,7 @@ describe("AngularModules-IndexController", function () {
 
             // Select competition
             scope.selectCompetitionOnServer();
+            expect(scope.sharedData.competitionId).toEqual("CompetitionId");
             expect($location.path()).toEqual('/Home/Competition/CompetitionId');
         });
     });
