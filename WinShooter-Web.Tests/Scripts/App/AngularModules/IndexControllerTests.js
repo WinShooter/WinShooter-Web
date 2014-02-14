@@ -38,6 +38,15 @@ describe("AngularModules-IndexController", function () {
         angular.mock.inject(function ($rootScope, $controller, $location, $modal, competitionsFactory) {
             //create an empty scope
             scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            scope.sharedData.rights = [];
+            scope.sharedData.userHasRight = function (right) {
+                var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
+                console.log("SharedData: User has right '" + right + "': " + toReturn);
+                return toReturn;
+            };
 
             // backend response
             $httpBackend.when('GET', '/api/competitions').respond([], {});
@@ -80,6 +89,15 @@ describe("AngularModules-IndexController", function () {
         angular.mock.inject(function ($rootScope, $controller, $location, $modal, competitionsFactory) {
             //create an empty scope
             scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            scope.sharedData.rights = [];
+            scope.sharedData.userHasRight = function (right) {
+                var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
+                console.log("SharedData: User has right '" + right + "': " + toReturn);
+                return toReturn;
+            };
 
             // backend response
             $httpBackend.when('GET', '/api/competitions').respond([

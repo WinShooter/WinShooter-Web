@@ -38,12 +38,19 @@ describe("AngularModules-CompetitionController", function () {
         angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, competitionFactory, currentUserFactory) {
             //create an empty scope
             scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            scope.sharedData.rights = [];
+            scope.sharedData.userHasRight = function (right) {
+                var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
+                console.log("SharedData: User has right '" + right + "': " + toReturn);
+                return toReturn;
+            };
 
             // backend response
-            $httpBackend.when('GET', '/api/currentuser?CompetitionId=').respond({ IsLoggedIn: false }, {});
-            $httpBackend.expectGET('/api/currentuser?CompetitionId=');
-            $httpBackend.when('GET', '/api/competition?CompetitionId=').respond({}, {});
-            $httpBackend.expectGET('/api/competition?CompetitionId=');
+            $httpBackend.when('GET', '/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({}, {});
+            $httpBackend.expectGET('/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Set the current cometition
             window.competitionId = "";
@@ -72,10 +79,17 @@ describe("AngularModules-CompetitionController", function () {
         angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, competitionFactory, currentUserFactory) {
             //create an empty scope
             scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            scope.sharedData.rights = [];
+            scope.sharedData.userHasRight = function (right) {
+                var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
+                console.log("SharedData: User has right '" + right + "': " + toReturn);
+                return toReturn;
+            };
 
             // backend response
-            $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: false }, {});
-            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
             $httpBackend.when('GET', '/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ "CompetitionId": "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA", "CompetitionType": "Field", "IsPublic": true, "Name": "Name", "StartDate": "2014-01-31T20:41:00.000Z", "UseNorwegianCount": true }, {});
             $httpBackend.expectGET('/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
@@ -117,10 +131,17 @@ describe("AngularModules-CompetitionController", function () {
         angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, competitionFactory, currentUserFactory) {
             //create an empty scope
             scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            scope.sharedData.rights = [];
+            scope.sharedData.userHasRight = function (right) {
+                var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
+                console.log("SharedData: User has right '" + right + "': " + toReturn);
+                return toReturn;
+            };
 
             // backend response
-            $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: false }, {});
-            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
             $httpBackend.when('GET', '/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ "CompetitionId": "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA", "CompetitionType": "Field", "IsPublic": true, "Name": "Name", "StartDate": "2014-01-31T20:41:00.000Z", "UseNorwegianCount": true }, {});
             $httpBackend.expectGET('/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
@@ -195,10 +216,17 @@ describe("AngularModules-CompetitionController", function () {
         angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, competitionFactory, currentUserFactory) {
             //create an empty scope
             scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            scope.sharedData.rights = [];
+            scope.sharedData.userHasRight = function (right) {
+                var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
+                console.log("SharedData: User has right '" + right + "': " + toReturn);
+                return toReturn;
+            };
 
             // backend response
-            $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: false }, {});
-            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
             $httpBackend.when('GET', '/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ "CompetitionId": "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA", "CompetitionType": "Field", "IsPublic": true, "Name": "Name", "StartDate": "2014-01-31T20:41:00.000Z", "UseNorwegianCount": true }, {});
             $httpBackend.expectGET('/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 

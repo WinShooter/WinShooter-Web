@@ -38,10 +38,17 @@ describe("AngularModules-StationsController", function () {
         angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, competitionFactory, currentUserFactory) {
             //create an empty scope
             scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            scope.sharedData.rights = [];
+            scope.sharedData.userHasRight = function (right) {
+                var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
+                console.log("SharedData: User has right '" + right + "': " + toReturn);
+                return toReturn;
+            };
 
             // backend response
-            $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: false }, {});
-            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
             $httpBackend.when('GET', '/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([], {});
             $httpBackend.expectGET('/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
@@ -81,10 +88,17 @@ describe("AngularModules-StationsController", function () {
         angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, competitionFactory, currentUserFactory) {
             //create an empty scope
             scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            scope.sharedData.rights = ['CreateStation', 'UpdateStation', 'DeleteStation'];
+            scope.sharedData.userHasRight = function (right) {
+                var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
+                console.log("SharedData: User has right '" + right + "': " + toReturn);
+                return toReturn;
+            };
 
             // backend response
-            $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: true, CompetitionRights: ['UpdateStation', 'CreateStation', 'DeleteStation'] }, {});
-            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
             $httpBackend.when('GET', '/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([], {});
             $httpBackend.expectGET('/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
@@ -124,10 +138,17 @@ describe("AngularModules-StationsController", function () {
         angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, competitionFactory, currentUserFactory) {
             //create an empty scope
             scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            scope.sharedData.rights = [];
+            scope.sharedData.userHasRight = function (right) {
+                var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
+                console.log("SharedData: User has right '" + right + "': " + toReturn);
+                return toReturn;
+            };
 
             // backend response
-            $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: true, CompetitionRights: ['UpdateStation', 'CreateStation', 'DeleteStation'] }, {});
-            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
             $httpBackend.when('GET', '/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([{ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "StationId": "74ec4f92-4b72-4c40-927a-de308269e074", "StationNumber": 2, "Distinguish": false, "NumberOfShots": 4, "NumberOfTargets": 3, "Points": false }], {});
             $httpBackend.expectGET('/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
@@ -160,10 +181,17 @@ describe("AngularModules-StationsController", function () {
         angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, $http, competitionFactory, currentUserFactory) {
             //create an empty scope
             scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            scope.sharedData.rights = ['CreateStation', 'UpdateStation', 'DeleteStation'];
+            scope.sharedData.userHasRight = function (right) {
+                var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
+                console.log("SharedData: User has right '" + right + "': " + toReturn);
+                return toReturn;
+            };
 
             // backend response
-            $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: true, CompetitionRights: ['UpdateStation', 'CreateStation', 'DeleteStation'] }, {});
-            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
             $httpBackend.when('GET', '/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([], {});
             $httpBackend.expectGET('/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
@@ -192,10 +220,8 @@ describe("AngularModules-StationsController", function () {
 
             // Prepare to add station
             $httpBackend.when('POST', '/api/stations').respond({ 'CompetitionId': 'A6109CFD-C4D8-4003-A6E7-A2BB006A81EA' }, {});
-            $httpBackend.expectPOST('/api/stations', "{\"CompetitionId\":\"A6109CFD-C4D8-4003-A6E7-A2BB006A81EA\",\"StationId\":\"\",\"StationNumber\":-1,\"Distinguish\":false,\"NumberOfShots\":3,\"NumberOfTargets\":3,\"Points\":false}");
+            $httpBackend.expectPOST('/api/stations', "{\"CompetitionId\":\"A6109CFD-C4D8-4003-A6E7-A2BB006A81EA\",\"StationId\":\"\",\"StationNumber\":-1,\"Distinguish\":false,\"NumberOfShots\":6,\"NumberOfTargets\":3,\"Points\":false}");
 
-            $httpBackend.when('GET', '/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({ IsLoggedIn: true, CompetitionRights: ['UpdateStation', 'CreateStation', 'DeleteStation'] }, {});
-            $httpBackend.expectGET('/api/currentuser?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
             $httpBackend.when('GET', '/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([], {});
             $httpBackend.expectGET('/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
