@@ -107,7 +107,9 @@ namespace WinShooter.Api
             {
                 if (req.ResponseContentType == ContentType.Json)
                 {
-                    res.AddHeader(HttpHeaders.CacheControl, "no-cache");
+                    res.AddHeader(HttpHeaders.CacheControl, "no-cache, no-store, must-revalidate");
+                    res.AddHeader("Pragma", "no-cache");
+                    res.AddHeader("Expires", "0");
                 }
             });
         }
