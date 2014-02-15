@@ -15,6 +15,8 @@ angular.module('winshooter').controller('StationsController', function ($scope, 
     $scope.userCanCreateStation = false;
     $scope.userCanUpdateStation = false;
     $scope.userCanDeleteStation = false;
+    $scope.isEditing = false;
+    $scope.stationToEdit = {};
 
     // Attributes for adding new competition
     $scope.stations = [];
@@ -39,6 +41,8 @@ angular.module('winshooter').controller('StationsController', function ($scope, 
 
     $scope.init = function () {
         console.log("StationsController: Initializing.");
+        $scope.isEditing = false;
+        $scope.stationToEdit = {};
         $scope.initRights();
 
         console.log("Quering for stations");
@@ -117,13 +121,28 @@ angular.module('winshooter').controller('StationsController', function ($scope, 
             });
     };
 
-    $scope.updateStation = function (station) {
-        alert(JSON.station);
-
-        var stationToUpdate = $scope.findStation(station);
+    $scope.startEdit = function (station) {
+        console.log("Starting to edit station: " + JSON.stringify(station));
+        $scope.stationToEdit = station;
+        $scope.isEditing = true;
     };
 
-    $scope.deleteStation = function (station) {
-        alert(station);
+    $scope.saveEdit = function () {
+        console.log("Save edited station: " + JSON.stringify($scope.stationToEdit));
+        $scope.stationToEdit.$save(function() {
+                $scope.init();
+            }
+        );
+    };
+
+    $scope.deleteStation = function () {
+        console.log("Delete edited station: " + JSON.stringify($scope.stationToEdit));
+        $scope.stationToEdit.$delete();
+        $scope.init();
+    };
+
+    $scope.cancelEdit = function () {
+        console.log("Cancel editing station");
+        $scope.init();
     };
 });

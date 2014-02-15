@@ -1,15 +1,16 @@
 ﻿body {
-  padding-top: 50px;
+    padding-top: 50px;
 }
+
 .winshooter-template {
-  padding: 40px 15px;
+    padding: 40px 15px;
 }
 
 fieldset.station-border {
-    width:inherit; /* Or auto */
-    padding:0 10px; /* To give a bit of padding on the left and right */
-    border-bottom:none;
-    margin-bottom:0;
+    width: inherit; /* Or auto */
+    padding: 0 10px; /* To give a bit of padding on the left and right */
+    border-bottom: none;
+    margin-bottom: 0;
 }
 
 legend.station-border {
@@ -20,16 +21,26 @@ legend.station-border {
 
 /* Fix to make datepickers work in flat-ui (poorly) */
 .datepicker.dropdown-menu {
-  visibility: visible;
-  opacity: 1;
-  width: auto;
+    visibility: visible;
+    opacity: 1;
+    width: auto;
 }
 
 @media (max-width: 767px) {
     h1 {
         font-size: 30px;
     }
+
     h3 {
         font-size: 18px;
     }
+}
+
+td.header {
+    font-weight: bold;
+    padding: 2px;
+}
+
+td.body {
+    text-align: center;
 }
