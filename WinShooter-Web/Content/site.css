@@ -39,6 +39,7 @@ legend.station-border {
 td.header {
     font-weight: bold;
     padding: 2px;
+    text-align: center;
 }
 
 td.body {

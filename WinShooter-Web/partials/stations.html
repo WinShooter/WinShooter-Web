@@ -20,7 +20,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="station in stations">
+                    <tr ng-repeat="station in stations" repeat-done="initCheckboxes()">
                         <td class="body">{{ station.StationNumber }}</td>
                         <td class="body">{{ station.NumberOfTargets }}</td>
                         <td class="body">{{ station.NumberOfShots }}</td>
@@ -36,7 +36,7 @@
                         </td>
                         <td class="body" ng-show="userCanUpdateStation || userCanDeleteStation">
                             <a href ng-click="startEdit(station)">
-                                <span class="glyphicon glyphicon-edit"></span>
+                                <span class="glyphicon glyphicon-edit" title="Redigera station"></span>
                             </a>
                         </td>
                     </tr>

@@ -122,8 +122,6 @@ namespace WinShooter.Api.Api.CurrentUser
                        };
         }
 
-
-
         /// <summary>
         /// The any.
         /// </summary>

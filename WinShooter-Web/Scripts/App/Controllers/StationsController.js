@@ -74,6 +74,16 @@ angular.module('winshooter').controller('StationsController', function ($scope, 
         });
     };
 
+    $scope.initCheckboxes = function() {
+        // We need to initialize all checkboxes
+        $(function () {
+            $('[data-toggle="checkbox"]').each(function () {
+                var $checkbox = $(this);
+                $checkbox.checkbox();
+            });
+        });
+    };
+    
     $scope.$watch('sharedData.competitionId', function () {
         console.log("StationsController: competition has changed, re-initialize");
         $scope.init();
@@ -128,11 +138,11 @@ angular.module('winshooter').controller('StationsController', function ($scope, 
     };
 
     $scope.saveEdit = function () {
-        console.log("Updated temporary station with checkbox values");
+        console.log("Update stationToEdit with checkbox values");
         $scope.stationToEdit.Points = $("label[for='EditedStationIsPoints']").hasClass('checked');
         $scope.stationToEdit.Distinguish = $("label[for='EditedStationIsDistinguish']").hasClass('checked');
 
-        console.log("Save edited station: " + JSON.stringify($scope.stationToEdit));
+        console.log("Save stationToEdit: " + JSON.stringify($scope.stationToEdit));
         $scope.stationToEdit.$save(function() {
                 $scope.init();
             }
