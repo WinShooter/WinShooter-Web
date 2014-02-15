@@ -48,7 +48,7 @@
     <div ng-show="isEditing">
         <h1>Station {{ stationToEdit.StationNumber }}</h1>
 
-        <div class="row-fluid">
+        <div class="form-group">
             <div class="span4">
                 Antal mål:
             </div>
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <div class="row-fluid">
+        <div class="form-group">
             <div class="span4">
                 Antal skott:
             </div>
@@ -65,8 +65,26 @@
                 <input ng-model="stationToEdit.NumberOfShots" />
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="span4">
+                <label class="checkbox" for="EditedStationIsPoints" ng-class="{checked: stationToEdit.Points}">
+                    <input type="checkbox" value="" id="EditedStationIsPoints" data-toggle="checkbox" />
+                    Poängstation
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="span4">
+                <label class="checkbox" for="EditedStationIsDistinguish" ng-class="{checked: stationToEdit.Distinguish}">
+                    <input type="checkbox" value="" id="EditedStationIsDistinguish" data-toggle="checkbox" />
+                    Station för särskiljning
+                </label>
+            </div>
+        </div>
         
-        <div class="row-fluid">
+        <div class="form-group">
             <div class="span4">
                 <button class="btn btn-primary" ng-click="saveEdit()">Spara</button>
             </div>

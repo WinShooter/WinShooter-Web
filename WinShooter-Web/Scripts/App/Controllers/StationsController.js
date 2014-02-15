@@ -128,6 +128,10 @@ angular.module('winshooter').controller('StationsController', function ($scope, 
     };
 
     $scope.saveEdit = function () {
+        console.log("Updated temporary station with checkbox values");
+        $scope.stationToEdit.Points = $("label[for='EditedStationIsPoints']").hasClass('checked');
+        $scope.stationToEdit.Distinguish = $("label[for='EditedStationIsDistinguish']").hasClass('checked');
+
         console.log("Save edited station: " + JSON.stringify($scope.stationToEdit));
         $scope.stationToEdit.$save(function() {
                 $scope.init();
