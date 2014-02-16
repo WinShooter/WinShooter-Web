@@ -257,6 +257,7 @@
     <Content Include="partials\accountloggedin.html" />
     <Content Include="partials\index.html" />
     <Content Include="partials\newcompetition.html" />
+    <Content Include="partials\patrols.html" />
     <Content Include="partials\stations.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -299,7 +300,6 @@
     <Content Include="partials\competition.html" />
     <Content Include="partials\About.html" />
     <Content Include="partials\privacy.html" />
-    <Content Include="partials\patrols.html" />
     <Content Include="partials\accountlogin.html" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="newrelic\NewRelic.Profiler.dll" />
@@ -610,6 +610,11 @@
   <ItemGroup>
     <Folder Include="Content\themes\" />
     <Folder Include="Views\JsErrorLogger\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ExcludeFromStyleCop Include="$(IntermediateOutputPath)\**\*.cs" >
+      <Visible>False</Visible>
+    </ExcludeFromStyleCop>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
