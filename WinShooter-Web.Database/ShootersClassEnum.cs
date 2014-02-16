@@ -33,52 +33,64 @@ namespace WinShooter.Database
         /// Unknown class.
         /// </summary>
         Okänd = 0,
+
         /// <summary>
-        /// 
+        /// Class 1
         /// </summary>
         Klass1 = 1,
+
         /// <summary>
-        /// 
+        /// Class 2
         /// </summary>
         Klass2 = 2,
+
         /// <summary>
-        /// 
+        /// Class 3
         /// </summary>
         Klass3 = 3,
+
         /// <summary>
-        /// 
+        /// All classes
         /// </summary>
         Klass = 4,
+
         /// <summary>
-        /// 
+        /// Ladies class.
         /// </summary>
         Damklass = 10,
+
         /// <summary>
-        /// 
+        /// Lades class 1
         /// </summary>
         Damklass1 = 11,
+
         /// <summary>
-        /// 
+        /// Ladies class 2
         /// </summary>
         Damklass2 = 12,
+
         /// <summary>
-        /// 
+        /// Lades class 2
         /// </summary>
         Damklass3 = 13,
+
         /// <summary>
-        /// 
+        /// Junior class
         /// </summary>
         Juniorklass = 20,
+
         /// <summary>
-        /// 
+        /// Veteran class, younger.
         /// </summary>
         VeteranklassYngre = 30,
+
         /// <summary>
-        /// 
+        /// Veteran class, older
         /// </summary>
         VeteranklassÄldre = 40,
+
         /// <summary>
-        /// 
+        /// Open class
         /// </summary>
         Öppen = 50
     }
