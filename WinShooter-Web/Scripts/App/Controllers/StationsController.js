@@ -73,16 +73,6 @@ angular.module('winshooter').controller('StationsController', function ($scope, 
             });
         });
     };
-
-    $scope.initCheckboxes = function() {
-        // We need to initialize all checkboxes
-        $(function () {
-            $('[data-toggle="checkbox"]').each(function () {
-                var $checkbox = $(this);
-                $checkbox.checkbox();
-            });
-        });
-    };
     
     $scope.$watch('sharedData.competitionId', function () {
         console.log("StationsController: competition has changed, re-initialize");

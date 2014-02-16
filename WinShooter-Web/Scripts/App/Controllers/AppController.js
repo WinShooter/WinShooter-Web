@@ -158,4 +158,15 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
     $scope.openPrivacy = function () {
         $location.path("/Home/Privacy");
     };
+
+    $scope.initCheckboxes = function () {
+        // We need to initialize all checkboxes
+        console.log("Initalizing all checkboxes");
+        $(function () {
+            $('[data-toggle="checkbox"]').each(function () {
+                var $checkbox = $(this);
+                $checkbox.checkbox();
+            });
+        });
+    };
 });

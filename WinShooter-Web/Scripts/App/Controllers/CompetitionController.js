@@ -32,6 +32,7 @@ angular.module('winshooter').controller('CompetitionController', function ($scop
         $scope.competition = competitionFactory.search({ CompetitionId: $scope.sharedData.competitionId }, function() {
             // Nothing to do here. Carry on!
             $scope.competition.StartDate = new Date($scope.competition.StartDate);
+            $scope.initCheckboxes();
         }, function(data) {
             var error = "Misslyckades med att hämta tävlingar";
             if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {

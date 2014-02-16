@@ -36,6 +36,7 @@ angular.module('winshooter').controller('IndexController', function ($rootScope,
                 competition.StartDate = new Date(competition.StartDate);
             });
 
+            $scope.initCheckboxes();
         }, function (data) {
             console.log("IndexController: Failed to retrive competitions:" + JSON.stringify(data));
             var error = "Misslyckades med att hämta tävlingar";
