@@ -34,14 +34,18 @@ describe("AngularModules-AccountLoggedInController", function () {
     });
 
     // tests start here
-    it('User has never authenticated before', function () {
+    it('User isnt authenticated', function () {
         angular.mock.inject(function ($rootScope, $controller, $location, currentUserFactory) {
+            // Init $location
+            $location.url("/Account/LoggedIn");
+
             //create an empty scope
             scope = $rootScope.$new();
-
-            // backend response
-            $httpBackend.when('GET', '/api/currentuser?').respond({ IsLoggedIn: true, DisplayName: 'John Smith', Email: 'email@example.com', HasAcceptedTerms: 0 }, {});
-            $httpBackend.expectGET('/api/currentuser?');
+            scope.sharedData = {};
+            scope.sharedData.currentUser = {};
+            scope.sharedData.currentUser.HasAcceptedTerms = 0;
+            scope.sharedData.currentUser.$resolved = "not resolved";
+            scope.isLoggedIn = false;
 
             //declare the controller and inject our empty scope
             var myController = $controller('AccountLoggedInController', {
@@ -52,38 +56,76 @@ describe("AngularModules-AccountLoggedInController", function () {
 
             expect(myController).toBeDefined();
 
+            // Simulate resolving user data
+            scope.sharedData.currentUser.$resolved = "resolved";
+            scope.$apply();
+
+            // Check the redirection
+            expect($location.url()).toEqual('/Home/Index');
+        });
+    });
+
+    // tests start here
+    it('User has not accepted the terms', function () {
+        angular.mock.inject(function ($rootScope, $controller, $location) {
+            // Init $location
+            $location.url("/Account/LoggedIn");
+
+            //create an empty scope
+            scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.currentUser = {};
+            scope.sharedData.currentUser.HasAcceptedTerms = 0;
+            scope.sharedData.currentUser.hasBeenSaved = false;
+            scope.sharedData.currentUser.$save = function(callback) {
+                // Fake the storing
+                scope.sharedData.currentUser.hasBeenSaved = true;
+                callback();
+            };
+
+            //declare the controller and inject our empty scope
+            var myController = $controller('AccountLoggedInController', {
+                $scope: scope,
+                $location: $location
+            });
+
+            expect(myController).toBeDefined();
+
             // Check the result before HTTP
             expect(scope.notInitialized).toEqual(true);
             expect(scope.firstTimeWinShooter).toEqual(false);
 
-            // Run the HTTP request
-            $httpBackend.flush();
+            // Simulate resolving user data
+            scope.sharedData.currentUser.$resolved = "resolved";
+            scope.$apply();
 
             // Check the result after HTTP
             expect(scope.notInitialized).toEqual(false);
             expect(scope.firstTimeWinShooter).toEqual(true);
 
-            // Prepare for acceptance
-            $httpBackend.when('POST', '/api/currentuser?').respond({ IsLoggedIn: true, DisplayName: 'John Smith', Email: 'email@example.com', HasAcceptedTerms: 1 }, {});
-            $httpBackend.expectPOST('/api/currentuser?', { "IsLoggedIn": true, "DisplayName": "John Smith", "Email": "email@example.com", "HasAcceptedTerms": 1 });
-
             // Let user click accept
             scope.accept();
+            scope.$apply();
 
             // Run the HTTP request
-            $httpBackend.flush();
+            expect(scope.sharedData.currentUser.hasBeenSaved).toEqual(true);
+            expect($location.url()).toEqual('/Home/Index');
         });
     });
 
     // tests start here
     it('User has authenticated before', function () {
         angular.mock.inject(function ($rootScope, $controller, $location, currentUserFactory) {
+            // Init $location
+            $location.url("/Account/LoggedIn");
+
             //create an empty scope
             scope = $rootScope.$new();
-
-            // backend response
-            $httpBackend.when('GET', '/api/currentuser?').respond({ IsLoggedIn: true, DisplayName: 'John Smith', Email: 'email@example.com', HasAcceptedTerms: 1 }, {});
-            $httpBackend.expectGET('/api/currentuser?');
+            scope.sharedData = {};
+            scope.sharedData.currentUser = {};
+            scope.sharedData.currentUser.HasAcceptedTerms = 1;
+            scope.isLoggedIn = true;
 
             //declare the controller and inject our empty scope
             var myController = $controller('AccountLoggedInController', {
@@ -94,16 +136,11 @@ describe("AngularModules-AccountLoggedInController", function () {
 
             expect(myController).toBeDefined();
 
-            // Check the result before HTTP
-            expect(scope.notInitialized).toEqual(true);
-            expect(scope.firstTimeWinShooter).toEqual(false);
+            // Simulate resolving user data
+            scope.sharedData.currentUser.$resolved = "resolved";
+            scope.$apply();
 
-            // Run the HTTP request
-            $httpBackend.flush();
-
-            // Check the result after HTTP
-            expect(scope.notInitialized).toEqual(false);
-            expect(scope.firstTimeWinShooter).toEqual(false);
+            // Check the redirection
             expect($location.url()).toEqual('/Home/Index');
         });
     });

@@ -1,54 +1,52 @@
-﻿/// <reference path="/Scripts/App/common.js" />
-/// <reference path="/Scripts/ui-bootstrap-0.9.0.js" />
+﻿/// <reference path="/Scripts/ui-bootstrap-0.9.0.js" />
 /// <reference path="/Scripts/ui-bootstrap-tpls-0.9.0.js" />
 /// <reference path="/Scripts/angular.js" />
 /// <reference path="/Scripts/angular-route.js" />
 /// <reference path="/Scripts/angular-sanitize.js"/>
+/// <reference path="/Scripts/App/AngularModules.js" />
+/// <reference path="/Scripts/App/common.js" />
 
-angular.module('winshooter').controller('AccountLoggedInController', function ($rootScope, $scope, $location, $modal, currentUserFactory) {
-    $scope.minimumTermsAccepted = 1;
-    $scope.currentUser = { DisplayName: '' };
+angular.module('winshooter').controller('AccountLoggedInController', function ($rootScope, $scope, $location, $modal) {
+    $scope.currentTermsAcceptedLevel = 1;
     $scope.firstTimeWinShooter = false;
     $scope.notInitialized = true;
-    init();
 
-    function init() {
-        $scope.currentUser = currentUserFactory.search({ CompetitionId: window.competitionId }, function (currentUserData) {
-            $scope.notInitialized = false;
-            if (currentUserData.IsLoggedIn && currentUserData.HasAcceptedTerms >= $scope.minimumTermsAccepted) {
-                $location.url('/Home/Index');
-                return;
-            }
+    $scope.init = function () {
+        if ($scope.sharedData.currentUser.$resolved == false) {
+            // Failsafe
+            console.log("AccountLoggedInController: $scope.sharedData.currentUser isnt resolved yet.");
+            return;
+        }
 
-            $scope.firstTimeWinShooter = true;
-        }, function (data) {
-            var error = "Misslyckades med att hämta användaruppgifter";
-            if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
-                error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
-            } else {
-                error += ".";
-            }
-            // Show error dialog.
-            var modal = $modal.open({
-                templateUrl: 'errorModalContent',
-                controller: DialogConfirmController,
-                resolve: {
-                    items: function () {
-                        return {
-                            header: "Ett fel inträffade",
-                            body: error
-                        };
-                    }
-                }
-            });
-        });
-    }
+        $scope.notInitialized = false;
+        console.log("AccountLoggedInController: Initalizing. $scope.sharedData: " + JSON.stringify($scope.sharedData));
+        if (!$scope.sharedData.isLoggedIn) {
+            console.log("AccountLoggedInController: User isn't authenticated, redirect to home page");
+            $location.url('/Home/Index');
+            return;
+        }
+
+        if ($scope.sharedData.currentUser.HasAcceptedTerms === $scope.currentTermsAcceptedLevel) {
+            console.log("AccountLoggedInController: User has already accepted the terms, redirect to first page");
+            $location.url('/Home/Index');
+            return;
+        }
+
+        console.log("User needs to accept our terms");
+        $scope.firstTimeWinShooter = true;
+    };
+
+    $scope.$watch('sharedData.currentUser.$resolved', function () {
+        console.log("AccountLoggedInController: AppController has changed sharedData.currentUser. Run our initialization");
+        $scope.init();
+    });
 
     $scope.accept = function () {
-        $scope.currentUser.HasAcceptedTerms = $scope.minimumTermsAccepted;
-        $scope.currentUser.$save(function () {
-            window.competitionId = '';
-            $location.url("/");
+        $scope.sharedData.currentUser.HasAcceptedTerms = $scope.currentTermsAcceptedLevel;
+        console.log("AccountLoggedInController: User accepted terms. Saving");
+        $scope.sharedData.currentUser.$save(function () {
+            console.log("AccountLoggedInController: Saved. Redirect to home page.");
+            $location.url("/Home/Index");
         }, function (data) {
             // Show error dialog.
             var modal = $modal.open({
@@ -82,4 +80,3 @@ angular.module('winshooter').controller('AccountLoggedInController', function ($
         });
     };
 });
-

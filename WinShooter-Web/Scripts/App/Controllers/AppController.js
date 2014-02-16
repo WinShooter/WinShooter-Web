@@ -62,7 +62,7 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
         }
 
         console.log("AppController: Retrieving user data");
-        $scope.currentUser = currentUserFactory.search({ CompetitionId: $scope.sharedData.competitionId }, function (currentUserData) {
+        $scope.sharedData.currentUser = currentUserFactory.search({ CompetitionId: $scope.sharedData.competitionId }, function (currentUserData) {
             console.log("AppController: Got user data: " + JSON.stringify(currentUserData));
             if (currentUserData.IsLoggedIn === undefined) {
                 return;
