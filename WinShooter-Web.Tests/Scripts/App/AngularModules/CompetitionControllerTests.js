@@ -47,6 +47,9 @@ describe("AngularModules-CompetitionController", function () {
                 console.log("SharedData: User has right '" + right + "': " + toReturn);
                 return toReturn;
             };
+            scope.initCheckboxes = function () {
+                // Don't do anything
+            };
 
             // backend response
             $httpBackend.when('GET', '/api/competition?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond({}, {});
@@ -87,6 +90,9 @@ describe("AngularModules-CompetitionController", function () {
                 var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
                 console.log("SharedData: User has right '" + right + "': " + toReturn);
                 return toReturn;
+            };
+            scope.initCheckboxes = function () {
+                // Don't do anything
             };
 
             // backend response
@@ -139,6 +145,9 @@ describe("AngularModules-CompetitionController", function () {
                 var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
                 console.log("SharedData: User has right '" + right + "': " + toReturn);
                 return toReturn;
+            };
+            scope.initCheckboxes = function () {
+                // Don't do anything
             };
 
             // backend response
@@ -224,6 +233,9 @@ describe("AngularModules-CompetitionController", function () {
                 var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
                 console.log("SharedData: User has right '" + right + "': " + toReturn);
                 return toReturn;
+            };
+            scope.initCheckboxes = function() {
+                // Don't do anything
             };
 
             // backend response

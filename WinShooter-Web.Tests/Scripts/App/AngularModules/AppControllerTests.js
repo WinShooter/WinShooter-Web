@@ -110,7 +110,7 @@ describe("AngularModules-AppController", function () {
             // Run the HTTP request
             $httpBackend.flush();
 
-            expect(scope.currentUser.IsLoggedIn).toEqual(false);
+            expect(scope.sharedData.currentUser.IsLoggedIn).toEqual(false);
 
             expect(scope.sharedData.displayName).toEqual("");
             expect(scope.sharedData.isLoggedIn).toEqual(false);
@@ -160,7 +160,7 @@ describe("AngularModules-AppController", function () {
             // Run the HTTP request
             $httpBackend.flush();
 
-            expect(scope.currentUser.IsLoggedIn).toEqual(true);
+            expect(scope.sharedData.currentUser.IsLoggedIn).toEqual(true);
 
             expect(scope.sharedData.displayName).toEqual("John Smith");
             expect(scope.sharedData.isLoggedIn).toEqual(true);
@@ -210,7 +210,7 @@ describe("AngularModules-AppController", function () {
             // Run the HTTP request
             $httpBackend.flush();
 
-            expect(scope.currentUser.IsLoggedIn).toEqual(true);
+            expect(scope.sharedData.currentUser.IsLoggedIn).toEqual(true);
 
             expect(scope.sharedData.displayName).toEqual("John Smith");
             expect(scope.sharedData.isLoggedIn).toEqual(true);
@@ -263,7 +263,7 @@ describe("AngularModules-AppController", function () {
             // Verify the HTTP calls
             $httpBackend.verifyNoOutstandingExpectation();
 
-            expect(scope.currentUser.IsLoggedIn).toEqual(true);
+            expect(scope.sharedData.currentUser.IsLoggedIn).toEqual(true);
 
             expect(scope.sharedData.displayName).toEqual("John Smith");
             expect(scope.sharedData.isLoggedIn).toEqual(true);
@@ -296,7 +296,7 @@ describe("AngularModules-AppController", function () {
             // Run the HTTP request
             $httpBackend.flush();
 
-            expect(scope.currentUser.IsLoggedIn).toEqual(true);
+            expect(scope.sharedData.currentUser.IsLoggedIn).toEqual(true);
 
             expect(scope.sharedData.displayName).toEqual("John Smith");
             expect(scope.sharedData.isLoggedIn).toEqual(true);
@@ -351,7 +351,7 @@ describe("AngularModules-AppController", function () {
             // Run the HTTP request
             $httpBackend.flush();
 
-            expect(scope.currentUser.IsLoggedIn).toEqual(true);
+            expect(scope.sharedData.currentUser.IsLoggedIn).toEqual(true);
 
             expect(scope.sharedData.rights).toEqual(['AddCompetitorResult', 'ReadUserCompetitionRole', 'UpdateClub', 'UpdateWeapon']);
 

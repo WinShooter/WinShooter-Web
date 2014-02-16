@@ -47,6 +47,9 @@ describe("AngularModules-IndexController", function () {
                 console.log("SharedData: User has right '" + right + "': " + toReturn);
                 return toReturn;
             };
+            scope.initCheckboxes = function () {
+                // Don't do anything
+            };
 
             // backend response
             $httpBackend.when('GET', '/api/competitions').respond([], {});
@@ -97,6 +100,9 @@ describe("AngularModules-IndexController", function () {
                 var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
                 console.log("SharedData: User has right '" + right + "': " + toReturn);
                 return toReturn;
+            };
+            scope.initCheckboxes = function () {
+                // Don't do anything
             };
 
             // backend response
