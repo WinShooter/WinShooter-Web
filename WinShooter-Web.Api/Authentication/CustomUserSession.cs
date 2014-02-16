@@ -81,28 +81,31 @@ namespace WinShooter.Api.Authentication
             using (var dbsession = NHibernateHelper.OpenSession())
             {
                 // Using all tokens, search for a user
-                foreach (var token in session.ProviderOAuthAccess)
+                using (var transaction = dbsession.BeginTransaction())
                 {
-                    var userLoginInfo = (from info in dbsession.Query<UserLoginInfo>()
-                                         where
-                                             info.IdentityProvider == token.Provider
-                                             && info.IdentityProviderId == token.UserId
-                                         select info).SingleOrDefault();
-
-                    if (userLoginInfo == null)
+                    foreach (var token in session.ProviderOAuthAccess)
                     {
-                        continue;
-                    }
+                        var userLoginInfo = (from info in dbsession.Query<UserLoginInfo>()
+                                             where
+                                                 info.IdentityProvider == token.Provider
+                                                 && info.IdentityProviderId == token.UserId
+                                             select info).SingleOrDefault();
 
-                    userLoginInfos.Add(userLoginInfo);
+                        if (userLoginInfo == null)
+                        {
+                            continue;
+                        }
 
-                    userLoginInfo.LastLogin = DateTime.Now;
+                        userLoginInfos.Add(userLoginInfo);
 
-                    using (var transaction = dbsession.BeginTransaction())
-                    {
+                        userLoginInfo.LastLogin = DateTime.Now;
+
                         dbsession.Update(userLoginInfo);
-                        transaction.Commit();
                     }
+
+                    userLoginInfos[0].User.LastLogin = DateTime.Now;
+
+                    transaction.Commit();
                 }
 
                 if (userLoginInfos.Count == 0)
