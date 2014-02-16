@@ -138,7 +138,9 @@ namespace WinShooter.Api.Api.Patrols
         /// </returns>
         public DateTime ParseStartTime()
         {
-            return this.ParseDateTimeString(this.StartTime);
+            return string.IsNullOrEmpty(this.StartTime) 
+                ? DateTime.MinValue 
+                : this.ParseDateTimeString(this.StartTime);
         }
     }
 }
