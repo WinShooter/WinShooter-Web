@@ -47,7 +47,7 @@ namespace WinShooter.Database
         /// <summary>
         /// Gets or sets the <see cref="Patrol"/> number.
         /// </summary>
-        public virtual int PatrolId { get; set; }
+        public virtual int PatrolNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="Patrol"/> start time.
@@ -65,8 +65,17 @@ namespace WinShooter.Database
         public virtual PatrolClassEnum PatrolClass { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Patrol"/> start time to display.
+        /// Update this patrol from other patrol.
         /// </summary>
-        public virtual DateTime StartTimeDisplay { get; set; }
+        /// <param name="other">
+        /// The patrol.
+        /// </param>
+        public virtual void UpdateFromOther(Patrol other)
+        {
+            this.Id = other.Id;
+            this.PatrolNumber = other.PatrolNumber;
+            this.StartTime = other.StartTime;
+            this.PatrolClass = other.PatrolClass;
+        }
     }
 }

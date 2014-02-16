@@ -214,9 +214,8 @@ namespace WinShooter.Database.Tests
                     {
                         Competition = this.testCompetition,
                         PatrolClass = PatrolClassEnum.A,
-                        PatrolId = 1,
-                        StartTime = DateTime.Now,
-                        StartTimeDisplay = DateTime.Now
+                        PatrolNumber = 1,
+                        StartTime = DateTime.Now
                     };
 
                     using (var transaction = databaseSession.BeginTransaction())

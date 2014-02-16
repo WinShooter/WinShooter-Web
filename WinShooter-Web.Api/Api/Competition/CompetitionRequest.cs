@@ -22,7 +22,6 @@
 namespace WinShooter.Api.Api.Competition
 {
     using System;
-    using System.Globalization;
     using System.Text;
 
     using ServiceStack.ServiceHost;
@@ -35,7 +34,7 @@ namespace WinShooter.Api.Api.Competition
     /// </summary>
     [Route("/competition")]
     [Route("/competition/{CompetitionId}")]
-    public class CompetitionRequest
+    public class CompetitionRequest : RequestBase
     {
         /// <summary>
         /// Gets or sets the <see cref="Guid"/>.
@@ -100,11 +99,7 @@ namespace WinShooter.Api.Api.Competition
         /// </returns>
         public DateTime ParseStartDate()
         {
-            return DateTime.ParseExact(
-                this.StartDate,
-                "yyyy-MM-dd'T'HH:mm:ss.fff'Z'",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.AssumeUniversal);
+            return this.ParseDateTimeString(this.StartDate);
         }
 
         /// <summary>

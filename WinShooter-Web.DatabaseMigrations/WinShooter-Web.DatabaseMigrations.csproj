@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISqlDatabaseMigrator.cs" />
+    <Compile Include="Migrations\Iteration1\Migration116AdoptPatrolsTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration115AddAcceptedTermsToUser.cs" />
     <Compile Include="Migrations\Iteration1\Migration114AddRoleRights.cs" />
     <Compile Include="Migrations\Iteration1\Migration113CreateRightsTable.cs" />

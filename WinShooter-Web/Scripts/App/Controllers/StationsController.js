@@ -6,7 +6,7 @@
 /// <reference path="/Scripts/angular-sanitize.js"/>
 
 // Here the module for the station page
-angular.module('winshooter').controller('StationsController', function ($scope, $routeParams, $modal, $http, currentUserFactory, stationsFactory) {
+angular.module('winshooter').controller('StationsController', function ($scope, $routeParams, $modal, $http, stationsFactory) {
     console.log("StationsController: starting");
     if ($routeParams.competitionId !== undefined) {
         $scope.sharedData.competitionId = $routeParams.competitionId;

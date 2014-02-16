@@ -72,6 +72,19 @@ winshooterModule.factory('stationsFactory', [
     }
 ]);
 
+// Create factory for patrols
+winshooterModule.factory('patrolsFactory', [
+    '$resource', function ($resource) {
+        return $resource(patrolsApiUrl, {
+            competitionId: '@CompetitionId',
+            stationId: '@PatrolId'
+        }, {
+            query: { method: 'GET', isArray: true },
+            search: { method: 'GET', isArray: false }
+        });
+    }
+]);
+
 winshooterModule.directive('repeatDone', function() {
     return function(scope, element, attrs) {
         if (scope.$last) { // all are rendered

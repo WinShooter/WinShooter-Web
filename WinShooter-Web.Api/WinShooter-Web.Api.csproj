@@ -106,6 +106,10 @@
     <Compile Include="Api\Competition\CompetitionRightsService.cs" />
     <Compile Include="Api\CurrentUser\CurrentUserRequest.cs" />
     <Compile Include="Api\CurrentUser\CurrentUserResponse.cs" />
+    <Compile Include="Api\Patrols\PatrolRequest.cs" />
+    <Compile Include="Api\Patrols\PatrolResponse.cs" />
+    <Compile Include="Api\Patrols\PatrolsService.cs" />
+    <Compile Include="Api\RequestBase.cs" />
     <Compile Include="Api\Stations\StationResponse.cs" />
     <Compile Include="Api\Stations\StationsService.cs" />
     <Compile Include="Api\Stations\StationRequest.cs" />

@@ -119,9 +119,8 @@ namespace WinShooter.Database.Tests
                 var toAdd = new Patrol
                 {
                     Competition = this.testCompetition,
-                    PatrolId = 1,
+                    PatrolNumber = 1,
                     StartTime = DateTime.Now,
-                    StartTimeDisplay = DateTime.Now,
                     PatrolClass = PatrolClassEnum.A
                 };
 
@@ -177,9 +176,8 @@ namespace WinShooter.Database.Tests
                 var toAdd = new Patrol
                 {
                     Competition = this.testCompetition,
-                    PatrolId = 1,
+                    PatrolNumber = 1,
                     StartTime = DateTime.Now,
-                    StartTimeDisplay = DateTime.Now,
                     PatrolClass = PatrolClassEnum.A
                 };
 

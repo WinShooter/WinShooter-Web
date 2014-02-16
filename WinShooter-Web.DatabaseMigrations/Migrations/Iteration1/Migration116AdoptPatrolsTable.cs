@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CurrentUserRequest.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
+// <copyright file="Migration116AdoptPatrolsTable.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,29 +15,38 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Defines the RightsRequest type.
+//   Adopt patrols table to implementation.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api.CurrentUser
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
-    using ServiceStack.ServiceHost;
+    using FluentMigrator;
 
     /// <summary>
-    /// The user request.
+    /// Adopt patrols table to implementation.
     /// </summary>
-    [Route("/currentuser")]
-    [Route("/currentuser/{CompetitionId}")]
-    public class CurrentUserRequest : RequestBase
+    [Migration(116)]
+    public class Migration116AdoptPatrolsTable : Migration
     {
         /// <summary>
-        /// Gets or sets the competitionID the user wants rights to be included for.
+        /// The column name.
         /// </summary>
-        public string CompetitionId { get; set; }
+        private const string HasAcceptedTermsColumnName = "HasAcceptedTerms";
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user has accepted terms.
+        /// Migrates the database up.
         /// </summary>
-        public int HasAcceptedTerms { get; set; }
+        public override void Up()
+        {
+            Delete.Column("[StartTimeDisplay]").FromTable(Migration105CreatePatrolsTable.PatrolsTableName);
+        }
+
+        /// <summary>
+        /// Migrates the database down.
+        /// </summary>
+        public override void Down()
+        {
+        }
     }
 }

@@ -35,9 +35,8 @@ namespace WinShooter.Database
         {
             this.Id(x => x.Id);
 
-            this.Map(x => x.PatrolId);
+            this.Map(x => x.PatrolNumber).Column("PatrolId");
             this.Map(x => x.StartTime);
-            this.Map(x => x.StartTimeDisplay);
             this.Map(x => x.PatrolClass).CustomType<PatrolClassEnum>();
 
             this.References(x => x.Competition).Column("CompetitionId");

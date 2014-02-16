@@ -81,6 +81,8 @@
     <Compile Include="Api\Competitions\CompetitionRequestTests.cs" />
     <Compile Include="Api\Competitions\CompetitionResponseTests.cs" />
     <Compile Include="Api\CurrentUser\CurrentUserResponseTests.cs" />
+    <Compile Include="Api\Patrol\PatrolRequestTests.cs" />
+    <Compile Include="Api\Patrol\PatrolResponseTests.cs" />
     <Compile Include="Api\Stations\StationResponseTests.cs" />
     <Compile Include="Api\Stations\StationRequestTests.cs" />
     <Compile Include="AppConfigTests.cs" />
