@@ -12,41 +12,31 @@ angular.module('winshooter').controller('PatrolsController', function ($scope, $
         $scope.sharedData.competitionId = $routeParams.competitionId;
     }
 
-    $scope.userCanCreateStation = false;
-    $scope.userCanUpdateStation = false;
-    $scope.userCanDeleteStation = false;
+    $scope.userCanCreatePatrol = false;
+    $scope.userCanUpdatePatrol = false;
+    $scope.userCanDeletePatrol = false;
     $scope.isEditing = false;
     $scope.stationToEdit = {};
 
     // Attributes for adding new competition
-    $scope.stations = [];
-
-    $scope.findStation = function (stationToSelect) {
-        for (var i = 0; i < $scope.stations.length; i++) {
-            if (stationToSelect.StationId === $scope.stations[i].StationId) {
-                return $scope.stations[i];
-            }
-        }
-
-        return undefined;
-    };
+    $scope.patrols = [];
 
     $scope.initRights = function () {
         console.log("PatrolsController: Rights initializing.");
-        $scope.userCanCreateStation = $scope.sharedData.userHasRight("CreatePatrol");
-        $scope.userCanUpdateStation = $scope.sharedData.userHasRight("UpdatePatrol");
-        $scope.userCanDeleteStation = $scope.sharedData.userHasRight("DeletePatrol");
+        $scope.userCanCreatePatrol = $scope.sharedData.userHasRight("CreatePatrol");
+        $scope.userCanUpdatePatrol = $scope.sharedData.userHasRight("UpdatePatrol");
+        $scope.userCanDeletePatrol = $scope.sharedData.userHasRight("DeletePatrol");
         console.log("PatrolsController: Rights initialized.");
     };
 
     $scope.init = function () {
         console.log("PatrolsController: Initializing.");
         $scope.isEditing = false;
-        $scope.stationToEdit = {};
+        $scope.patrolToEdit = {};
         $scope.initRights();
 
         console.log("Quering for stations");
-        $scope.stations = patrolsFactory.query({ CompetitionId: $scope.sharedData.competitionId }, function (data) {
+        $scope.patrols = patrolsFactory.query({ CompetitionId: $scope.sharedData.competitionId }, function (data) {
             // Nothing to do here. Carry on!
             console.log("PatrolsController: Got " + data.length + " patrols.");
         }, function (data) {
@@ -85,17 +75,15 @@ angular.module('winshooter').controller('PatrolsController', function ($scope, $
     });
 
     $scope.addNewPatrol = function () {
-        var station = {
+        var patrol = {
             CompetitionId: $scope.sharedData.competitionId,
             PatrolId: "",
-            "StationNumber": -1,
-            "Distinguish": false,
-            "NumberOfShots": 6,
-            "NumberOfTargets": 3,
-            "Points": false
+            "PatrolNumber": -1,
+            "StartTime": "",
+            "PatrolClass": 0
         };
 
-        $http.post(stationsApiUrl, station)
+        $http.post(patrolsApiUrl, patrol)
             .success(function (data, status) {
                 $scope.init();
             }).error(function (data, status) {
@@ -122,17 +110,17 @@ angular.module('winshooter').controller('PatrolsController', function ($scope, $
     };
 
     $scope.startEdit = function (station) {
-        console.log("Starting to edit station: " + JSON.stringify(station));
+        console.log("Starting to edit patrol: " + JSON.stringify(station));
         $scope.stationToEdit = station;
         $scope.isEditing = true;
     };
 
     $scope.saveEdit = function () {
-        console.log("Update stationToEdit with checkbox values");
+        console.log("Update patrolToEdit with checkbox values");
         $scope.stationToEdit.Points = $("label[for='EditedStationIsPoints']").hasClass('checked');
         $scope.stationToEdit.Distinguish = $("label[for='EditedStationIsDistinguish']").hasClass('checked');
 
-        console.log("Save stationToEdit: " + JSON.stringify($scope.stationToEdit));
+        console.log("Save patrolToEdit: " + JSON.stringify($scope.stationToEdit));
         $scope.stationToEdit.$save(function() {
                 $scope.init();
             }
@@ -140,13 +128,13 @@ angular.module('winshooter').controller('PatrolsController', function ($scope, $
     };
 
     $scope.deleteStation = function () {
-        console.log("Delete edited station: " + JSON.stringify($scope.stationToEdit));
+        console.log("Delete edited patrol: " + JSON.stringify($scope.stationToEdit));
         $scope.stationToEdit.$delete();
         $scope.init();
     };
 
     $scope.cancelEdit = function () {
-        console.log("Cancel editing station");
+        console.log("Cancel editing patrol");
         $scope.init();
     };
 });

@@ -28,6 +28,8 @@ namespace WinShooter.Logic
 
     using NHibernate;
 
+    using Remotion.Linq.Clauses.ResultOperators;
+
     using WinShooter.Database;
     using WinShooter.Logic.Authorization;
 
@@ -162,13 +164,10 @@ namespace WinShooter.Logic
         /// <param name="competitionId">
         /// The competition Id.
         /// </param>
-        /// <param name="patrol">
-        /// The patrol.
-        /// </param>
         /// <returns>
         /// The <see cref="Patrol"/>.
         /// </returns>
-        public Patrol AddPatrol(Guid competitionId, Patrol patrol)
+        public Patrol AddPatrol(Guid competitionId)
         {
             var competition = this.competitionRepository.FilterBy(x => x.Id.Equals(competitionId)).FirstOrDefault();
 
@@ -187,10 +186,25 @@ namespace WinShooter.Logic
                 throw new NotEnoughRightsException("You don't have rights to add patrol for this competition");
             }
 
-            var patrolCount = this.patrolRepository.FilterBy(x => x.Competition.Id.Equals(competitionId)).Count();
+            var currentPatrols =
+                this.patrolRepository.FilterBy(x => x.Competition.Id.Equals(competitionId))
+                    .OrderBy(x => x.PatrolNumber)
+                    .ToList();
 
-            patrol.Competition = competition;
-            patrol.PatrolNumber = patrolCount + 1;
+            var patrol = new Patrol { Competition = competition, PatrolNumber = currentPatrols.Count + 1 };
+            if (currentPatrols.Count > 0)
+            {
+                // At least one patrol already exist
+                var lastPatrol = currentPatrols[currentPatrols.Count];
+
+                // TODO: Use this line instead: patrol.StartTime = lastPatrol.StartTime.AddMinutes(competition.MinutesBetweenPatrols);
+                patrol.StartTime = lastPatrol.StartTime.AddMinutes(15);
+            }
+            else
+            {
+                // No patrol exist
+                patrol.StartTime = competition.StartDate;
+            }
 
             using (var transaction = this.patrolRepository.StartTransaction())
             {

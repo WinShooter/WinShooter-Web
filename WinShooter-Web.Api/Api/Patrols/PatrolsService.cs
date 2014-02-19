@@ -135,7 +135,7 @@ namespace WinShooter.Api.Api.Patrols
                 this.log.Debug("Adding a patrol.");
 
                 return new PatrolResponse(
-                    this.logic.AddPatrol(request.CompetitionId, request.GetDatabasePatrol()));
+                    this.logic.AddPatrol(request.CompetitionId));
             }
 
             this.log.Debug("Updating a station.");

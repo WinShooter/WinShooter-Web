@@ -52,7 +52,6 @@ namespace WinShooter.Api.Tests.Api.Competitions
             Assert.AreEqual(true, competitionRequest.IsPublic);
             Assert.AreEqual("aaaaaaaaaaaaaaaaaa", competitionRequest.Name);
             Assert.AreEqual("2014-01-31T12:00:00.000Z", competitionRequest.StartDate);
-            Assert.AreEqual(DateTime.Parse("2014-01-31 12:00:00.000 "), competitionRequest.ParseStartDate());
             Assert.AreEqual(true, competitionRequest.UseNorwegianCount);
             Assert.AreEqual(DateTime.Parse("2014-01-31 13:00:00.000"), competitionRequest.ParseStartDate());
         }

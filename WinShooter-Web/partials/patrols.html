@@ -1,3 +1,37 @@
-﻿<h1>Patruller</h1>
+﻿<div>
+    <h1>Patruller</h1>
+    
+    <div ng-show ="!isEditing">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-block btn-lg btn-primary" ng-click="addNewPatrol()" ng-show="userCanCreatePatrol">Lägg till patrull</button>
+            </div>
+        </div>
 
-<p>Här kommer tävlingens Patruller att kunna administreras.</p>
+        <div class="row">
+            <table class="table-responsive table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <td class="header">Patrull</td>
+                        <td class="header">Starttid</td>
+                        <td class="header">Klass</td>
+                        <td class="header">Antal</td>
+                        <td class="header">Ankomna</td>
+                        <td class="header">Resultat finns</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="patrol in patrols" repeat-done="initCheckboxes()">
+                        <td class="body">{{ station.StationNumber }}</td>
+                        <td class="body">{{ station.StartTime }}</td>
+                        <td class="body">{{ station.PatrolClass }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div ng-show="isEditing">
+        <h1>Patrull {{ stationToEdit.StationNumber }}</h1>
+    </div>
+</div>
