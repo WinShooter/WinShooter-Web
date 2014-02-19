@@ -53,8 +53,7 @@ describe("AngularModules-StationsController", function () {
             $httpBackend.expectGET('/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Set the current cometition
-            window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
-            $routeParams.competitionId = window.competitionId;
+            $routeParams.competitionId = scope.sharedData.competitionId;
 
             //declare the controller and inject our empty scope
             var myController = $controller('StationsController', {
@@ -103,8 +102,7 @@ describe("AngularModules-StationsController", function () {
             $httpBackend.expectGET('/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Set the current cometition
-            window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
-            $routeParams.competitionId = window.competitionId;
+            $routeParams.competitionId = scope.sharedData.competitionId;
 
             //declare the controller and inject our empty scope
             var myController = $controller('StationsController', {
@@ -153,8 +151,7 @@ describe("AngularModules-StationsController", function () {
             $httpBackend.expectGET('/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Set the current cometition
-            window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
-            $routeParams.competitionId = window.competitionId;
+            $routeParams.competitionId = scope.sharedData.competitionId;
 
             //declare the controller and inject our empty scope
             var myController = $controller('StationsController', {
@@ -196,8 +193,7 @@ describe("AngularModules-StationsController", function () {
             $httpBackend.expectGET('/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Set the current cometition
-            window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
-            $routeParams.competitionId = window.competitionId;
+            $routeParams.competitionId = scope.sharedData.competitionId;
 
             //declare the controller and inject our empty scope
             var myController = $controller('StationsController', {
@@ -253,8 +249,7 @@ describe("AngularModules-StationsController", function () {
             $httpBackend.expectGET('/api/stations?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Set the current cometition
-            window.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
-            $routeParams.competitionId = window.competitionId;
+            $routeParams.competitionId = scope.sharedData.competitionId;
 
             //declare the controller and inject our empty scope
             var myController = $controller('StationsController', {
