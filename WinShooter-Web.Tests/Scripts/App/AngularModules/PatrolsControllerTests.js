@@ -241,7 +241,7 @@ describe("AngularModules-PatrolsController", function () {
             };
 
             // backend response
-            $httpBackend.when('GET', '/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([{ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "StationId": "74ec4f92-4b72-4c40-927a-de308269e074", "StationNumber": 2, "Distinguish": false, "NumberOfShots": 4, "NumberOfTargets": 3, "Points": false }], {});
+            $httpBackend.when('GET', '/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([{ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2, "StartTime": "2014-02-16T10:27:00.000Z", "PatrolClass": 2 }], {});
             $httpBackend.expectGET('/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Set the current cometition
@@ -264,7 +264,7 @@ describe("AngularModules-PatrolsController", function () {
 
             // Check the result after HTTP
             expect(scope.patrols.length).toEqual(1);
-            expect(scope.patrols[0].StationId).toEqual("74ec4f92-4b72-4c40-927a-de308269e074");
+            expect(scope.patrols[0].PatrolId).toEqual("74ec4f92-4b72-4c40-927a-de308269e074");
 
             // Start editing station
             scope.startEdit(scope.patrols[0]);
@@ -275,13 +275,11 @@ describe("AngularModules-PatrolsController", function () {
             expect(scope.stationToEdit).toEqual(scope.patrols[0]);
 
             // Update values
-            scope.patrolToEdit.NumberOfShots = 6;
-            scope.stationToEdit.NumberOfFigures = 6;
-            scope.stationToEdit.Distinguish = true;
+            scope.patrolToEdit.PatrolClass = 3;
 
             // Prepare backend responses
             $httpBackend.when('POST', '/api/patrols?competitionId=74ec4f92-4b72-4c40-927a-de308269e074&patrolId=74ec4f92-4b72-4c40-927a-de308269e074').respond({ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2 }, {});
-            $httpBackend.expectPOST('/api/patrols?competitionId=74ec4f92-4b72-4c40-927a-de308269e074&patrolId=74ec4f92-4b72-4c40-927a-de308269e074');
+            $httpBackend.expectPOST('/api/patrols?competitionId=74ec4f92-4b72-4c40-927a-de308269e074&patrolId=74ec4f92-4b72-4c40-927a-de308269e074', { "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2, "StartTime": "2014-02-16T10:27:00.000Z", "PatrolClass": 2 });
             $httpBackend.when('GET', '/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([{ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2 }], {});
             $httpBackend.expectGET('/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 

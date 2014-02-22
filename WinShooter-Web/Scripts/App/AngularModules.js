@@ -77,7 +77,7 @@ winshooterModule.factory('patrolsFactory', [
     '$resource', function ($resource) {
         return $resource(patrolsApiUrl, {
             competitionId: '@CompetitionId',
-            stationId: '@PatrolId'
+            patrolId: '@PatrolId'
         }, {
             query: { method: 'GET', isArray: true },
             search: { method: 'GET', isArray: false }

@@ -116,10 +116,6 @@ angular.module('winshooter').controller('PatrolsController', function ($scope, $
     };
 
     $scope.saveEdit = function () {
-        console.log("Update patrolToEdit with checkbox values");
-        $scope.stationToEdit.Points = $("label[for='EditedStationIsPoints']").hasClass('checked');
-        $scope.stationToEdit.Distinguish = $("label[for='EditedStationIsDistinguish']").hasClass('checked');
-
         console.log("Save patrolToEdit: " + JSON.stringify($scope.stationToEdit));
         $scope.stationToEdit.$save(function() {
                 $scope.init();
