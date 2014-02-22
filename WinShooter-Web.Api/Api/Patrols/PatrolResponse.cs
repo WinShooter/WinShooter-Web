@@ -22,6 +22,7 @@
 namespace WinShooter.Api.Api.Patrols
 {
     using System;
+    using System.Linq;
     using System.Text;
 
     /// <summary>
@@ -42,6 +43,24 @@ namespace WinShooter.Api.Api.Patrols
             this.PatrolNumber = dbpatrol.PatrolNumber;
             this.StartTime = dbpatrol.StartTime.ToUniversalTime().ToString("yyyy-MM-dd\\THH:mm:ss.fff\\Z");
             this.PatrolClass = (int)dbpatrol.PatrolClass;
+
+            // And calculate some values
+            this.NumberOfArrived = 
+                dbpatrol.Competitors == null 
+                ? 0 
+                : (from competitor in dbpatrol.Competitors where competitor.Shooter.HasArrived select competitor)
+                    .Count();
+
+            this.NumberWithResults = 
+                dbpatrol.Competitors == null 
+                ? 0 
+                : (from competitor in dbpatrol.Competitors where competitor.CompetitorResults.Any() select competitor)
+                    .Count();
+
+            this.NumberOfCompetitors = 
+                dbpatrol.Competitors == null 
+                ? 0 
+                : dbpatrol.Competitors.Count;
         }
 
         /// <summary>
@@ -75,6 +94,21 @@ namespace WinShooter.Api.Api.Patrols
         /// Gets or sets the number of targets.
         /// </summary>
         public int PatrolClass { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of competitors for this patrol.
+        /// </summary>
+        public int NumberOfCompetitors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of arrived competitors for this patrol.
+        /// </summary>
+        public int NumberOfArrived { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of competitors with results for this patrol.
+        /// </summary>
+        public int NumberWithResults { get; set; }
 
         /// <summary>
         /// Returns a string that represents the current object.

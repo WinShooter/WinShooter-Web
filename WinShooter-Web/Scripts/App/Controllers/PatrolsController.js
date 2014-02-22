@@ -6,7 +6,7 @@
 /// <reference path="/Scripts/angular-sanitize.js"/>
 
 // Here the module for the station page
-angular.module('winshooter').controller('PatrolsController', function ($scope, $routeParams, $modal, $http, patrolsFactory) {
+angular.module('winshooter').controller('PatrolsController', function($scope, $routeParams, $modal, $http, patrolsFactory) {
     console.log("PatrolsController: starting");
     if ($routeParams.competitionId !== undefined) {
         $scope.sharedData.competitionId = $routeParams.competitionId;
@@ -21,7 +21,7 @@ angular.module('winshooter').controller('PatrolsController', function ($scope, $
     // Attributes for adding new competition
     $scope.patrols = [];
 
-    $scope.initRights = function () {
+    $scope.initRights = function() {
         console.log("PatrolsController: Rights initializing.");
         $scope.userCanCreatePatrol = $scope.sharedData.userHasRight("CreatePatrol");
         $scope.userCanUpdatePatrol = $scope.sharedData.userHasRight("UpdatePatrol");
@@ -29,17 +29,17 @@ angular.module('winshooter').controller('PatrolsController', function ($scope, $
         console.log("PatrolsController: Rights initialized.");
     };
 
-    $scope.init = function () {
+    $scope.init = function() {
         console.log("PatrolsController: Initializing.");
         $scope.isEditing = false;
         $scope.patrolToEdit = {};
         $scope.initRights();
 
         console.log("Quering for stations");
-        $scope.patrols = patrolsFactory.query({ CompetitionId: $scope.sharedData.competitionId }, function (data) {
+        $scope.patrols = patrolsFactory.query({ CompetitionId: $scope.sharedData.competitionId }, function(data) {
             // Nothing to do here. Carry on!
             console.log("PatrolsController: Got " + data.length + " patrols.");
-        }, function (data) {
+        }, function(data) {
             console.log("PatrolsController: Failed to get stations: " + JSON.stringify(data));
 
             var error = "Misslyckades med att hämta stationerna";
@@ -53,7 +53,7 @@ angular.module('winshooter').controller('PatrolsController', function ($scope, $
                 templateUrl: 'errorModalContent',
                 controller: DialogConfirmController,
                 resolve: {
-                    items: function () {
+                    items: function() {
                         return {
                             header: "Ett fel inträffade",
                             body: error
@@ -63,13 +63,13 @@ angular.module('winshooter').controller('PatrolsController', function ($scope, $
             });
         });
     };
-    
-    $scope.$watch('sharedData.competitionId', function () {
+
+    $scope.$watch('sharedData.competitionId', function() {
         console.log("PatrolsController: competition has changed, re-initialize");
         $scope.init();
     });
 
-    $scope.$watch('sharedData.rights', function () {
+    $scope.$watch('sharedData.rights', function() {
         console.log("PatrolsController: rights has changed, re-initialize");
         $scope.initRights();
     });

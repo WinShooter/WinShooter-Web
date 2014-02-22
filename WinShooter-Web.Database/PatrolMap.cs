@@ -40,6 +40,7 @@ namespace WinShooter.Database
             this.Map(x => x.PatrolClass).CustomType<PatrolClassEnum>();
 
             this.References(x => x.Competition).Column("CompetitionId");
+            this.HasMany(x => x.Competitors).KeyColumn("PatrolId").Cascade.All();
 
             this.Table("Patrols");
         }

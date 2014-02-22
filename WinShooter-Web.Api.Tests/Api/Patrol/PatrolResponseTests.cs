@@ -63,7 +63,7 @@ namespace WinShooter.Api.Tests.Api.Patrol
 
             var response = new PatrolResponse(dbstation);
             Assert.AreEqual(
-                "{\"CompetitionId\":\"74ec4f924b724c40927ade308269e074\",\"PatrolId\":\"74ec4f92-4b72-4c40-927a-de308269e074\",\"PatrolNumber\":2,\"StartTime\":\"2014-02-16T10:27:00.000Z\",\"PatrolClass\":2}",
+                "{\"CompetitionId\":\"74ec4f924b724c40927ade308269e074\",\"PatrolId\":\"74ec4f92-4b72-4c40-927a-de308269e074\",\"PatrolNumber\":2,\"StartTime\":\"2014-02-16T10:27:00.000Z\",\"PatrolClass\":2,\"NumberOfCompetitors\":0,\"NumberOfArrived\":0,\"NumberWithResults\":0}",
                 JsonSerializer.SerializeToString(response));
         }
     }

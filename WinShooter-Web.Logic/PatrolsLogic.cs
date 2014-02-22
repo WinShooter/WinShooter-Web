@@ -28,8 +28,6 @@ namespace WinShooter.Logic
 
     using NHibernate;
 
-    using Remotion.Linq.Clauses.ResultOperators;
-
     using WinShooter.Database;
     using WinShooter.Logic.Authorization;
 
@@ -195,7 +193,7 @@ namespace WinShooter.Logic
             if (currentPatrols.Count > 0)
             {
                 // At least one patrol already exist
-                var lastPatrol = currentPatrols[currentPatrols.Count];
+                var lastPatrol = currentPatrols[currentPatrols.Count - 1];
 
                 // TODO: Use this line instead: patrol.StartTime = lastPatrol.StartTime.AddMinutes(competition.MinutesBetweenPatrols);
                 patrol.StartTime = lastPatrol.StartTime.AddMinutes(15);

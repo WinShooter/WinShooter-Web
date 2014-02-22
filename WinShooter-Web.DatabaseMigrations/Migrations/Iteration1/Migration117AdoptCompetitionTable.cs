@@ -34,6 +34,10 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Up()
         {
+            Alter.Table(Migration106CreateCompetitorsTable.CompetitorsTableName)
+                .AlterColumn("PatrolId")
+                .AsGuid()
+                .Nullable();
         }
 
         /// <summary>
@@ -41,7 +45,10 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         /// </summary>
         public override void Down()
         {
-            Delete.Column("[StartTimeDisplay]").FromTable(Migration105CreatePatrolsTable.PatrolsTableName);
+            Alter.Table(Migration106CreateCompetitorsTable.CompetitorsTableName)
+                .AlterColumn("PatrolId")
+                .AsGuid()
+                .NotNullable();
         }
     }
 }

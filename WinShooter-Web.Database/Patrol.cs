@@ -22,6 +22,7 @@
 namespace WinShooter.Database
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The patrol.
@@ -65,10 +66,15 @@ namespace WinShooter.Database
         public virtual PatrolClassEnum PatrolClass { get; set; }
 
         /// <summary>
+        /// Gets or sets the competitors.
+        /// </summary>
+        public virtual IList<Competitor> Competitors { get; set; }
+
+        /// <summary>
         /// Update this patrol from other patrol.
         /// </summary>
         /// <param name="other">
-        /// The patrol.
+        /// The other patrol.
         /// </param>
         public virtual void UpdateFromOther(Patrol other)
         {

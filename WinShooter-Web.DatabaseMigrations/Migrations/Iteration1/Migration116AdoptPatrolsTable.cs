@@ -30,11 +30,6 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
     public class Migration116AdoptPatrolsTable : Migration
     {
         /// <summary>
-        /// The column name.
-        /// </summary>
-        private const string HasAcceptedTermsColumnName = "HasAcceptedTerms";
-
-        /// <summary>
         /// Migrates the database up.
         /// </summary>
         public override void Up()

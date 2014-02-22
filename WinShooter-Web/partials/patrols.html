@@ -21,10 +21,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="patrol in patrols" repeat-done="initCheckboxes()">
-                        <td class="body">{{ station.StationNumber }}</td>
-                        <td class="body">{{ station.StartTime }}</td>
-                        <td class="body">{{ station.PatrolClass }}</td>
+                    <tr ng-repeat="patrol in patrols">
+                        <td class="body">{{ patrol.PatrolNumber }}</td>
+                        <td class="body">{{ patrol.StartTime }}</td>
+                        <td class="body">{{ patrol.PatrolClass }}</td>
+                        <td class="body">{{ patrol.NumberOfCompetitors }}</td>
+                        <td class="body">{{ patrol.NumberOfArrived }}</td>
+                        <td class="body">{{ patrol.NumberWithResults }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -32,6 +35,6 @@
     </div>
     
     <div ng-show="isEditing">
-        <h1>Patrull {{ stationToEdit.StationNumber }}</h1>
+        <h1>Patrull {{ patrolToEdit.PatrolNumber }}</h1>
     </div>
 </div>
