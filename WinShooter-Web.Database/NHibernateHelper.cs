@@ -86,8 +86,6 @@ namespace WinShooter.Database
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Role>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<RoleRightsInfo>())
 
-                .ExposeConfiguration(cfg => new SchemaExport(cfg))
-
                 .BuildSessionFactory();
         }
     }
