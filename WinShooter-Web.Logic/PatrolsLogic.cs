@@ -195,8 +195,7 @@ namespace WinShooter.Logic
                 // At least one patrol already exist
                 var lastPatrol = currentPatrols[currentPatrols.Count - 1];
 
-                // TODO: Use this line instead: patrol.StartTime = lastPatrol.StartTime.AddMinutes(competition.MinutesBetweenPatrols);
-                patrol.StartTime = lastPatrol.StartTime.AddMinutes(15);
+                patrol.StartTime = lastPatrol.StartTime.AddMinutes(competition.GetIntParameter(CompetitionParamType.MinutesBetweenPatrols));
             }
             else
             {

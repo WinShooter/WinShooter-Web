@@ -53,11 +53,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Club.cs" />
+    <Compile Include="CompetitionExtensionsMethods.cs" />
     <Compile Include="CompetitionParamMap.cs" />
     <Compile Include="CompetitionParam.cs" />
     <Compile Include="Competition.cs" />
     <Compile Include="CompetitionMap.cs" />
     <Compile Include="ClubMap.cs" />
+    <Compile Include="CompetitionParamTypeDefaultValues.cs" />
     <Compile Include="CompetitionParamType.cs" />
     <Compile Include="CompetitionType.cs" />
     <Compile Include="Competitor.cs" />
