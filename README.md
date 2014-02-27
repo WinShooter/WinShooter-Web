@@ -11,3 +11,7 @@ The master branch is automaticly compiled to
 http://winshooter.azurewebsites.net/
 
 For comments, contact john (at) winshooter.se.
+
+Developer style
+---------------
+Development style adhears to StyleCop.
