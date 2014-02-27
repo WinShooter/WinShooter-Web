@@ -145,7 +145,7 @@ describe("AngularModules-PatrolsController", function () {
             };
 
             // backend response
-            $httpBackend.when('GET', '/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([{ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2 }], {});
+            $httpBackend.when('GET', '/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([{ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2, "StartTime": "2014-02-16T10:27:00.000Z" }], {});
             $httpBackend.expectGET('/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 
             // Set the current cometition
@@ -167,6 +167,7 @@ describe("AngularModules-PatrolsController", function () {
             // Check the result after HTTP
             expect(scope.patrols.length).toEqual(1);
             expect(scope.patrols[0].PatrolId).toEqual("74ec4f92-4b72-4c40-927a-de308269e074");
+            expect(scope.patrols[0].StartTime).toEqual(new Date("2014-02-16T10:27:00.000Z"));
         });
     });
 
@@ -271,8 +272,8 @@ describe("AngularModules-PatrolsController", function () {
 
             // Check we are editing
             expect(scope.isEditing).toEqual(true);
-            expect(scope.stationToEdit).toBeDefined();
-            expect(scope.stationToEdit).toEqual(scope.patrols[0]);
+            expect(scope.patrolToEdit).toBeDefined();
+            expect(scope.patrolToEdit).toEqual(scope.patrols[0]);
 
             // Update values
             scope.patrolToEdit.PatrolClass = 3;

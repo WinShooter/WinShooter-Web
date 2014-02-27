@@ -16,7 +16,7 @@ angular.module('winshooter').controller('PatrolsController', function($scope, $r
     $scope.userCanUpdatePatrol = false;
     $scope.userCanDeletePatrol = false;
     $scope.isEditing = false;
-    $scope.stationToEdit = {};
+    $scope.patrolToEdit = {};
 
     // Attributes for adding new competition
     $scope.patrols = [];
@@ -35,10 +35,13 @@ angular.module('winshooter').controller('PatrolsController', function($scope, $r
         $scope.patrolToEdit = {};
         $scope.initRights();
 
-        console.log("Quering for stations");
+        console.log("Quering for patrols");
         $scope.patrols = patrolsFactory.query({ CompetitionId: $scope.sharedData.competitionId }, function(data) {
             // Nothing to do here. Carry on!
             console.log("PatrolsController: Got " + data.length + " patrols.");
+            for (var i = 0; i < data.length; i++) {
+                data[i].StartTime = new Date(data[i].StartTime);
+            }
         }, function(data) {
             console.log("PatrolsController: Failed to get stations: " + JSON.stringify(data));
 
@@ -111,22 +114,23 @@ angular.module('winshooter').controller('PatrolsController', function($scope, $r
 
     $scope.startEdit = function (station) {
         console.log("Starting to edit patrol: " + JSON.stringify(station));
-        $scope.stationToEdit = station;
+        $scope.patrolToEdit = station;
         $scope.isEditing = true;
     };
 
     $scope.saveEdit = function () {
-        console.log("Save patrolToEdit: " + JSON.stringify($scope.stationToEdit));
-        $scope.stationToEdit.$save(function() {
+        console.log("Save patrolToEdit: " + JSON.stringify($scope.patrolToEdit));
+        $scope.patrolToEdit.$save(function() {
                 $scope.init();
             }
         );
     };
 
-    $scope.deleteStation = function () {
-        console.log("Delete edited patrol: " + JSON.stringify($scope.stationToEdit));
-        $scope.stationToEdit.$delete();
-        $scope.init();
+    $scope.deletePatrol = function () {
+        console.log("Delete edited patrol: " + JSON.stringify($scope.patrolToEdit));
+        $scope.patrolToEdit.$delete(function() {
+            $scope.init();
+        });
     };
 
     $scope.cancelEdit = function () {
