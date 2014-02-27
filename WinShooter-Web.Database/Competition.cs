@@ -72,6 +72,11 @@ namespace WinShooter.Database
         public virtual bool IsPublic { get; set; }
 
         /// <summary>
+        /// Gets or sets the competition parameters.
+        /// </summary>
+        public virtual IList<CompetitionParam> Parameters { get; set; }
+
+        /// <summary>
         /// Gets or sets the shooters.
         /// </summary>
         public virtual IList<Shooter> Shooters { get; set; }
