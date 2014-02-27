@@ -25,6 +25,8 @@ namespace WinShooter.Api.Api.Patrols
     using System.Linq;
     using System.Text;
 
+    using WinShooter.Database;
+
     /// <summary>
     /// Represents the competition response.
     /// </summary>
@@ -36,30 +38,30 @@ namespace WinShooter.Api.Api.Patrols
         /// <param name="dbpatrol">
         /// The database station
         /// </param>
-        public PatrolResponse(Database.Patrol dbpatrol)
+        public PatrolResponse(Patrol dbpatrol)
         {
             this.PatrolId = dbpatrol.Id.ToString();
             this.CompetitionId = dbpatrol.Competition.Id;
             this.PatrolNumber = dbpatrol.PatrolNumber;
             this.StartTime = dbpatrol.StartTime.ToUniversalTime().ToString("yyyy-MM-dd\\THH:mm:ss.fff\\Z");
-            this.PatrolClass = (int)dbpatrol.PatrolClass;
+            this.PatrolClass = dbpatrol.PatrolClass;
 
             // And calculate some values
-            this.NumberOfArrived = 
-                dbpatrol.Competitors == null 
-                ? 0 
+            this.NumberOfArrived =
+                dbpatrol.Competitors == null
+                ? 0
                 : (from competitor in dbpatrol.Competitors where competitor.Shooter.HasArrived select competitor)
                     .Count();
 
-            this.NumberWithResults = 
-                dbpatrol.Competitors == null 
-                ? 0 
+            this.NumberWithResults =
+                dbpatrol.Competitors == null
+                ? 0
                 : (from competitor in dbpatrol.Competitors where competitor.CompetitorResults.Any() select competitor)
                     .Count();
 
-            this.NumberOfCompetitors = 
-                dbpatrol.Competitors == null 
-                ? 0 
+            this.NumberOfCompetitors =
+                dbpatrol.Competitors == null
+                ? 0
                 : dbpatrol.Competitors.Count;
         }
 
@@ -91,9 +93,20 @@ namespace WinShooter.Api.Api.Patrols
         public string StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of targets.
+        /// Gets or sets the class of the patrol.
         /// </summary>
-        public int PatrolClass { get; set; }
+        public PatrolClassEnum PatrolClass { get; set; }
+
+        /// <summary>
+        /// Gets the class of the patrol.
+        /// </summary>
+        public int PatrolClassInt
+        {
+            get
+            {
+                return (int)this.PatrolClass;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the number of competitors for this patrol.

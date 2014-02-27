@@ -59,7 +59,7 @@ namespace WinShooter.Api.Api.Patrols
         /// <summary>
         /// Gets or sets the number of targets.
         /// </summary>
-        public int PatrolClass { get; set; }
+        public int PatrolClassInt { get; set; }
 
         /// <summary>
         /// Returns a string that represents the current object.
@@ -82,7 +82,7 @@ namespace WinShooter.Api.Api.Patrols
                 this.CompetitionId,
                 this.PatrolNumber,
                 this.StartTime,
-                this.PatrolClass);
+                this.PatrolClassInt);
 
             return toReturn.ToString();
         }
@@ -116,7 +116,7 @@ namespace WinShooter.Api.Api.Patrols
         {
             return (PatrolClassEnum)Enum.Parse(
                 typeof(PatrolClassEnum), 
-                this.PatrolClass.ToString(CultureInfo.InvariantCulture));
+                this.PatrolClassInt.ToString(CultureInfo.InvariantCulture));
         }
 
         /// <summary>

@@ -18,6 +18,12 @@ angular.module('winshooter').controller('PatrolsController', function($scope, $r
     $scope.isEditing = false;
     $scope.patrolToEdit = {};
 
+    $scope.patrolClasses = [
+        { name: 'Okänd', value: 0 },
+        { name: 'A', value: 1 },
+        { name: 'B', value: 2 }
+    ];
+
     // Attributes for adding new competition
     $scope.patrols = [];
 

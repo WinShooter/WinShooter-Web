@@ -266,6 +266,7 @@ describe("AngularModules-PatrolsController", function () {
             // Check the result after HTTP
             expect(scope.patrols.length).toEqual(1);
             expect(scope.patrols[0].PatrolId).toEqual("74ec4f92-4b72-4c40-927a-de308269e074");
+            expect(scope.patrols[0].StartTime).toEqual(new Date("2014-02-16T10:27:00.000Z"));
 
             // Start editing station
             scope.startEdit(scope.patrols[0]);
@@ -280,7 +281,7 @@ describe("AngularModules-PatrolsController", function () {
 
             // Prepare backend responses
             $httpBackend.when('POST', '/api/patrols?competitionId=74ec4f92-4b72-4c40-927a-de308269e074&patrolId=74ec4f92-4b72-4c40-927a-de308269e074').respond({ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2, "NumberOfCompetitors": 0 }, {});
-            $httpBackend.expectPOST('/api/patrols?competitionId=74ec4f92-4b72-4c40-927a-de308269e074&patrolId=74ec4f92-4b72-4c40-927a-de308269e074', { "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2, "StartTime": "2014-02-16T10:27:00.000Z", "PatrolClass": 2, "NumberOfCompetitors": 0 });
+            $httpBackend.expectPOST('/api/patrols?competitionId=74ec4f92-4b72-4c40-927a-de308269e074&patrolId=74ec4f92-4b72-4c40-927a-de308269e074', { "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2, "StartTime": "2014-02-16T10:27:00.000Z", "PatrolClass": 3, "NumberOfCompetitors": 0 });
             $httpBackend.when('GET', '/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([{ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2, "NumberOfCompetitors": 0 }], {});
             $httpBackend.expectGET('/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
 

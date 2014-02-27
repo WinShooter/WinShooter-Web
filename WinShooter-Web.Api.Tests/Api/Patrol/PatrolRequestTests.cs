@@ -43,12 +43,12 @@ namespace WinShooter.Api.Tests.Api.Patrol
         {
             var stationRequest =
             JsonSerializer.DeserializeFromString<PatrolRequest>(
-                "{\"CompetitionId\":\"9cfc716f-f218-44e2-a72b-a2c40109a2eb\",\"PatrolId\":\"9cfc716f-f218-44e2-a72b-a2c40109a200\",\"PatrolNumber\":\"5\",\"PatrolClass\":\"1\",\"StartTime\":\"2014-02-16T13:02:00.000Z\"}");
+                "{\"CompetitionId\":\"9cfc716f-f218-44e2-a72b-a2c40109a2eb\",\"PatrolId\":\"9cfc716f-f218-44e2-a72b-a2c40109a200\",\"PatrolNumber\":\"5\",\"PatrolClassInt\":\"1\",\"StartTime\":\"2014-02-16T13:02:00.000Z\"}");
 
             Assert.IsNotNull(stationRequest);
 
             Assert.AreEqual(Guid.Parse("9cfc716f-f218-44e2-a72b-a2c40109a2eb"), stationRequest.CompetitionId);
-            Assert.AreEqual(1, stationRequest.PatrolClass);
+            Assert.AreEqual(1, stationRequest.PatrolClassInt);
             Assert.AreEqual("9cfc716f-f218-44e2-a72b-a2c40109a200", stationRequest.PatrolId);
             Assert.AreEqual(5, stationRequest.PatrolNumber);
             Assert.AreEqual("2014-02-16T13:02:00.000Z", stationRequest.StartTime);
