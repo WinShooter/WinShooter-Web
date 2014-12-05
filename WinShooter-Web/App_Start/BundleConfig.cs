@@ -46,7 +46,7 @@ namespace WinShooter
             bundles.Add(
                 new ScriptBundle(
                     "~/bundles/jquery",
-                    "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js").Include(
+                    "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js").Include(
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
