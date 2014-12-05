@@ -51,10 +51,12 @@
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="LogentriesCore">
-      <HintPath>..\packages\logentries.core.2.4.1\lib\net40\LogentriesCore.dll</HintPath>
+      <HintPath>..\packages\logentries.core.2.6.1\lib\net40\LogentriesCore.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="LogentriesLog4net">
-      <HintPath>..\packages\logentries.log4net.2.4.0\lib\net40\LogentriesLog4net.dll</HintPath>
+      <HintPath>..\packages\logentries.log4net.2.6.0\lib\net40\LogentriesLog4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
