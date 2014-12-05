@@ -65,7 +65,8 @@
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="NewRelic.Api.Agent">
-      <HintPath>..\packages\NewRelic.Azure.WebSites.2.20.25.0\lib\NewRelic.Api.Agent.dll</HintPath>
+      <HintPath>..\packages\NewRelic.Azure.WebSites.3.10.43.0\lib\NewRelic.Api.Agent.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -248,11 +249,15 @@
     <Content Include="Content\fonts\lato\lato-regular-webfont.ttf" />
     <Content Include="Content\fonts\lato\lato-regular-webfont.woff" />
     <Content Include="newrelic\extensions\CoreInstrumentation.xml" />
+    <Content Include="newrelic\extensions\Providers\TransactionContext\Asp\NewRelic.Agent.Extensions.dll" />
+    <Content Include="newrelic\extensions\Providers\TransactionContext\Asp\NewRelic.Providers.TransactionContext.Asp.Repacked.dll" />
+    <Content Include="newrelic\extensions\Providers\TransactionContext\Default\NewRelic.Agent.Extensions.dll" />
+    <Content Include="newrelic\extensions\Providers\TransactionContext\Default\NewRelic.Providers.TransactionContext.Default.Repacked.dll" />
+    <Content Include="newrelic\extensions\Providers\TransactionContext\Wcf3\NewRelic.Agent.Extensions.dll" />
+    <Content Include="newrelic\extensions\Providers\TransactionContext\Wcf3\NewRelic.Providers.TransactionContext.Wcf3.Repacked.dll" />
     <Content Include="newrelic\NewRelic.Agent.Core.dll" />
-    <Content Include="newrelic\newrelic.config" />
-    <Content Include="newrelic\extensions\extension.xsd">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="newrelic\NewRelic.Agent.Extensions.dll" />
+    <Content Include="newrelic\NewRelic.Profiler.dll" />
     <Content Include="partials\accountloggedin.html" />
     <Content Include="partials\index.html" />
     <Content Include="partials\newcompetition.html" />
@@ -301,7 +306,6 @@
     <Content Include="partials\About.html" />
     <Content Include="partials\privacy.html" />
     <Content Include="partials\accountlogin.html" />
-    <Content Include="newrelic\NewRelic.Profiler.dll" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\App\common.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
@@ -324,6 +328,13 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="newrelic\newrelic.config" />
+    <Content Include="newrelic\extensions\extension.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="newrelic\newrelic.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
