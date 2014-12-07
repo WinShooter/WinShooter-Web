@@ -96,8 +96,8 @@ namespace WinShooter
             bundles.Add(
                 new ScriptBundle(
                     "~/bundles/angularjs-bootstrapui")
-                    .Include("~/Scripts/ui-bootstrap-{version}.js")
-                    .Include("~/Scripts/ui-bootstrap-tpls-{version}.js"));
+                    .Include("~/Scripts/angular-ui/ui-bootstrap.js")
+                    .Include("~/Scripts/angular-ui/ui-bootstrap-tpls.js"));
 
             bundles.Add(
                 new ScriptBundle("~/bundles/AppControllers")
