@@ -99,6 +99,10 @@ namespace WinShooter
                     .Include("~/Scripts/ui-bootstrap-{version}.js")
                     .Include("~/Scripts/ui-bootstrap-tpls-{version}.js"));
 
+            bundles.Add(
+                new ScriptBundle("~/bundles/AppControllers")
+                    .IncludeDirectory("~/Scripts/App/Controllers", "*.js"));
+
             bundles.Add(new StyleBundle("~/Content/styles").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/bootstrap-responsive.css",

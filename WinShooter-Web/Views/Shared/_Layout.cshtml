@@ -68,19 +68,13 @@
     @Scripts.Render("~/bundles/angulari18n/sv-se")
     @Scripts.Render("~/Scripts/App/common.js")
     @Scripts.Render("~/Scripts/App/AngularModules.js")
-    @Scripts.Render("~/Scripts/App/Controllers/AccountLoggedInController.js")
-    @Scripts.Render("~/Scripts/App/Controllers/CompetitionController.js")
-    @Scripts.Render("~/Scripts/App/Controllers/AppController.js")
-    @Scripts.Render("~/Scripts/App/Controllers/IndexController.js")
-    @Scripts.Render("~/Scripts/App/Controllers/NewCompetitionController.js")
-    @Scripts.Render("~/Scripts/App/Controllers/PatrolsController.js")
-    @Scripts.Render("~/Scripts/App/Controllers/StationsController.js")
+    @Scripts.Render("~/bundles/AppControllers")
     @Scripts.Render("~/Scripts/App/cookieScript.js")
 
     <!-- fallback for CDN -->
     <script>
         // Fallback to loading jQuery from a local path if the CDN is unavailable
-        (window.jQuery === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-2.0.3.js")"><\/script>'));
+        (window.jQuery === undefined && document.write('<script src="@Url.Content("~/Scripts/jquery-2.1.1.js")"><\/script>'));
     </script>
 
     <!-- The modal confirmation dialog -->
