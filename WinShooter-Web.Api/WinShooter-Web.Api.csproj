@@ -104,9 +104,6 @@
     <Compile Include="Api\Competition\CompetitionRights.cs" />
     <Compile Include="Api\Competition\CompetitionRightsResponse.cs" />
     <Compile Include="Api\Competition\CompetitionRightsService.cs" />
-    <Compile Include="Api\Competitor\CompetitorRequest.cs" />
-    <Compile Include="Api\Competitor\CompetitorResponse.cs" />
-    <Compile Include="Api\Competitor\CompetitorsService.cs" />
     <Compile Include="Api\CurrentUser\CurrentUserRequest.cs" />
     <Compile Include="Api\CurrentUser\CurrentUserResponse.cs" />
     <Compile Include="Api\Patrols\PatrolRequest.cs" />
