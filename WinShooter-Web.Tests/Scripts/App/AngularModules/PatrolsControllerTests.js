@@ -296,4 +296,75 @@ describe("AngularModules-PatrolsController", function () {
             expect(scope.isEditing).toEqual(false);
         });
     });
+
+    // tests start here
+    it('Logged in user with rights, one patrol, edit patrol adding competitor', function () {
+        angular.mock.inject(function ($rootScope, $controller, $routeParams, $modal, patrolsFactory) {
+            //create an empty scope
+            scope = $rootScope.$new();
+            scope.sharedData = {};
+            scope.sharedData.isLoggedIn = true;
+            scope.sharedData.competitionId = "A6109CFD-C4D8-4003-A6E7-A2BB006A81EA";
+            scope.sharedData.rights = [];
+            scope.sharedData.userHasRight = function (right) {
+                var toReturn = -1 !== $.inArray(right, scope.sharedData.rights);
+                console.log("SharedData: User has right '" + right + "': " + toReturn);
+                return toReturn;
+            };
+
+            // backend response
+            $httpBackend.when('GET', '/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([{ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2, "StartTime": "2014-02-16T10:27:00.000Z", "PatrolClass": 2, "NumberOfCompetitors": 0 }], {});
+            $httpBackend.expectGET('/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
+
+            // Set the current cometition
+            $routeParams.competitionId = scope.sharedData.competitionId;
+
+            //declare the controller and inject our empty scope
+            var myController = $controller('PatrolsController', {
+                $scope: scope,
+                $routeParams: $routeParams,
+                $modal: $modal,
+                patrolsFactory: patrolsFactory
+            });
+
+            expect(myController).toBeDefined();
+            expect(scope.isEditing).toEqual(false);
+
+            // Run the HTTP request
+            $httpBackend.flush();
+            $httpBackend.verifyNoOutstandingExpectation();
+
+            // Check the result after HTTP
+            expect(scope.patrols.length).toEqual(1);
+            expect(scope.patrols[0].PatrolId).toEqual("74ec4f92-4b72-4c40-927a-de308269e074");
+            expect(scope.patrols[0].StartTime).toEqual(new Date("2014-02-16T10:27:00.000Z"));
+
+            // Start editing station
+            scope.startEdit(scope.patrols[0]);
+
+            // Check we are editing
+            expect(scope.isEditing).toEqual(true);
+            expect(scope.patrolToEdit).toBeDefined();
+            expect(scope.patrolToEdit).toEqual(scope.patrols[0]);
+
+            // Update values
+            scope.patrolToEdit.PatrolClass = 3;
+
+            // Prepare backend responses
+            $httpBackend.when('POST', '/api/patrols?competitionId=74ec4f92-4b72-4c40-927a-de308269e074&patrolId=74ec4f92-4b72-4c40-927a-de308269e074').respond({ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2, "NumberOfCompetitors": 0 }, {});
+            $httpBackend.expectPOST('/api/patrols?competitionId=74ec4f92-4b72-4c40-927a-de308269e074&patrolId=74ec4f92-4b72-4c40-927a-de308269e074', { "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2, "StartTime": "2014-02-16T10:27:00.000Z", "PatrolClass": 3, "NumberOfCompetitors": 0 });
+            $httpBackend.when('GET', '/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA').respond([{ "CompetitionId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolId": "74ec4f92-4b72-4c40-927a-de308269e074", "PatrolNumber": 2, "NumberOfCompetitors": 0 }], {});
+            $httpBackend.expectGET('/api/patrols?CompetitionId=A6109CFD-C4D8-4003-A6E7-A2BB006A81EA');
+
+            // Save values
+            scope.saveEdit();
+
+            // Run the HTTP request
+            $httpBackend.flush();
+            $httpBackend.verifyNoOutstandingExpectation();
+
+            // Verify values
+            expect(scope.isEditing).toEqual(false);
+        });
+    });
 });
