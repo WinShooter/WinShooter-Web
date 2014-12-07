@@ -1,0 +1,22 @@
+{
+  "name": "WinShooter-Web",
+  "version": "1.0.0",
+  "description": "WinShooter",
+  "main": "karma.conf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WinShooter/WinShooter-Web.git"
+  },
+  "author": "",
+  "license": "GNU GPL",
+  "bugs": {
+    "url": "https://github.com/WinShooter/WinShooter-Web/issues"
+  },
+  "homepage": "https://github.com/WinShooter/WinShooter-Web",
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  }
+}
