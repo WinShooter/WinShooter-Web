@@ -151,4 +151,11 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="$(MSBuildExtensionsPath)\StyleCop\v4.7\StyleCop.targets" />
+  <PropertyGroup>
+    <StyleCopEnabled>false</StyleCopEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <StyleCopEnabled>true</StyleCopEnabled>
+  </PropertyGroup>
 </Project>
