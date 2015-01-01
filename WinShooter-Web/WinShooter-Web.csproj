@@ -73,6 +73,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.4.0.2.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack, Version=3.9.70.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ServiceStack.3.9.70\lib\net35\ServiceStack.dll</HintPath>
@@ -1091,12 +1095,15 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JsErrorLoggerController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1110,6 +1117,11 @@
     <Content Include="Views\Shared\_GoogleAnalytics.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="SecretAuthParams.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Account\EditAccount.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1126,9 +1138,17 @@
       <Project>{ab5b1093-247b-4916-a2b7-93d70621f984}</Project>
       <Name>WinShooter-Web.DatabaseMigrations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WinShooter-Web.Database\WinShooter-Web.Database.csproj">
+      <Project>{457DCBB2-7BFC-466F-96E7-72C22630D74A}</Project>
+      <Name>WinShooter-Web.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WinShooter-Web.DataValidation\WinShooter-Web.DataValidation.csproj">
       <Project>{d78abbe2-0c40-4b90-b4c3-50a0bfe120b0}</Project>
       <Name>WinShooter-Web.DataValidation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinShooter-Web.Logic\WinShooter-Web.Logic.csproj">
+      <Project>{42a3aa79-1702-4995-b85e-c267e7225e1d}</Project>
+      <Name>WinShooter-Web.Logic</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

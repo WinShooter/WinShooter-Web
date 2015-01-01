@@ -40,8 +40,8 @@
                         <li ng-class="{ active: isActive('/Home/About')}"><a href ng-show="shouldShowAboutLink" ng-click="openAbout()">Om WinShooter</a></li>
                         <li ng-class="{ active: isActive('/Home/Privacy')}"><a href ng-show="shouldShowPrivacyLink" ng-click="openPrivacy()">Privacy</a></li>
                         <li ng-class="{ active: isActive('/Account/Login')}">
-                            <a href="/Account/Login" ng-show="shouldShowLoginLink">Logga in</a>
-                            <a href="/api/auth/logout" target="_self" ng-show="sharedData.isLoggedIn">Logga ut</a>
+                            <a href="/Account/Login" target="_self" ng-show="shouldShowLoginLink">Logga in</a>
+                            <a href="/Account/Logout" target="_self" ng-show="sharedData.isLoggedIn">Logga ut</a>
                         </li>
                     </ul>
                 </div>

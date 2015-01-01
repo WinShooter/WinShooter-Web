@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\GoogleTokenTests.cs" />
     <Compile Include="Authorization\UserCompetitionRightsTests.cs" />
     <Compile Include="CompetitionsLogicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -72,7 +72,9 @@ namespace WinShooter.Logic.Authorization
         /// <param name="roleRightsInfoRepository">
         ///     The <see cref="RoleRightsInfo"/> repository.
         /// </param>
-        public RightsHelper(IRepository<UserRolesInfo> userRolesInfoRepository, IRepository<RoleRightsInfo> roleRightsInfoRepository)
+        public RightsHelper(
+            IRepository<UserRolesInfo> userRolesInfoRepository, 
+            IRepository<RoleRightsInfo> roleRightsInfoRepository)
         {
             this.userRolesInfoRepository = userRolesInfoRepository;
             this.roleRightsInfoRepository = roleRightsInfoRepository;

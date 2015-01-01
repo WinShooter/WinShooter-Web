@@ -89,6 +89,22 @@ namespace WinShooter
         }
 
         /// <summary>
+        /// Check if a path is a account call
+        /// </summary>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        /// <returns>
+        /// True if it is a account call.
+        /// </returns>
+        public static bool IsAccount(string path)
+        {
+            var regex = new Regex("^/account/", RegexOptions.IgnoreCase);
+
+            return regex.IsMatch(path);
+        }
+
+        /// <summary>
         /// The application start, where everything is setup.
         /// </summary>
         /// <param name="sender">
@@ -124,7 +140,7 @@ namespace WinShooter
         protected void Application_Error(object sender, EventArgs e)
         {
             // Get the exception object.
-            var exc = Server.GetLastError();
+            var exc = this.Server.GetLastError();
 
             this.log.Error("Unexpected error: " + exc);
         }
@@ -152,6 +168,11 @@ namespace WinShooter
                 return;
             }
 
+            if (IsAccount(path))
+            {
+                return;
+            }
+
             if (IsApi(path))
             {
                 return;
@@ -167,7 +188,7 @@ namespace WinShooter
                 return;
             }
 
-            Context.RewritePath("/");
+            this.Context.RewritePath("/");
         }
 
         /// <summary>

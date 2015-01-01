@@ -23,7 +23,6 @@ namespace WinShooter.Logic.Authorization
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     using WinShooter.Database;
 
