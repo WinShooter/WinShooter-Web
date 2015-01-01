@@ -94,7 +94,7 @@ namespace WinShooter.Api
         /// </summary>
         private void ConfigureRoutes()
         {
-            Routes.AddFromAssembly(this.GetType().Assembly);
+            this.Routes.AddFromAssembly(this.GetType().Assembly);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace WinShooter.Api
                                         }
                                     };
 
-            Plugins.Add(new AuthFeature(() => new CustomUserSession(), authProviders) { ServiceRoutes = serviceRoutes });
+            this.Plugins.Add(new AuthFeature(() => new CustomUserSession(), authProviders) { ServiceRoutes = serviceRoutes });
         }
     }
 }

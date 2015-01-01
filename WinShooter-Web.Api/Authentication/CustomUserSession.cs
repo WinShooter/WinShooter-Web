@@ -88,7 +88,7 @@ namespace WinShooter.Api.Authentication
                         var userLoginInfo = (from info in dbsession.Query<UserLoginInfo>()
                                              where
                                                  info.IdentityProvider == token.Provider
-                                                 && info.IdentityProviderId == token.UserId
+                                                 && info.IdentityProvider == token.UserId
                                              select info).SingleOrDefault();
 
                         if (userLoginInfo == null)
@@ -223,8 +223,8 @@ namespace WinShooter.Api.Authentication
                 User = user,
                 LastLogin = DateTime.Now,
                 IdentityProvider = authToken.Provider,
-                IdentityProviderId = authToken.UserId,
-                IdentityProviderUsername = authToken.Email
+                ProviderUserId = authToken.UserId,
+                Email = authToken.Email
             };
         }
 
@@ -248,7 +248,7 @@ namespace WinShooter.Api.Authentication
                 var userLoginInfo = (from info in dbsession.Query<UserLoginInfo>()
                                      where
                                          info.IdentityProvider == authToken.Provider
-                                         && info.IdentityProviderId == authToken.UserId
+                                         && info.ProviderUserId == authToken.UserId
                                      select info).SingleOrDefault();
 
                 if (userLoginInfo != null)
