@@ -39,7 +39,7 @@ namespace WinShooter.Web.DataValidation
         /// The type that will be extended.
         /// </typeparam>
         /// <returns>
-        /// The <see cref="Validation"/>.
+        /// The validated item.
         /// </returns>
         public static Validation<T> Require<T>(this T item, string argName)
         {

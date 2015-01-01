@@ -40,7 +40,7 @@ namespace WinShooter.Web.DataValidation
         /// The limit.
         /// </param>
         /// <returns>
-        /// The <see cref="Validation"/>.
+        /// The validated item.
         /// </returns>
         /// <exception cref="ArgumentException">
         /// Thrown when the item is longer than the limit>
@@ -75,7 +75,7 @@ namespace WinShooter.Web.DataValidation
         /// The limit.
         /// </param>
         /// <returns>
-        /// The <see cref="Validation"/>.
+        /// The validated item.
         /// </returns>
         /// <exception cref="ArgumentException">
         /// Thrown when the item is longer than the limit>
@@ -116,6 +116,26 @@ namespace WinShooter.Web.DataValidation
             if (!regex.IsMatch(item.Value))
             {
                 ThrowHelper.ThrowArgumentException(item.ArgName + " has to be a valid email address.");
+            }
+
+            return item;
+        }
+
+        /// <summary>
+        /// Validates that the string is Base64 encoded.
+        /// </summary>
+        /// <param name="item">The item to validate</param>
+        /// <returns>The validated item</returns>
+        public static Validation<string> Base64Encoded(this Validation<string> item)
+        {
+            try
+            {
+                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+                Convert.FromBase64String(item.Value);
+            }
+            catch (FormatException)
+            {
+                ThrowHelper.ThrowArgumentException(item.ArgName + " has to be valid base64 encoding.");
             }
 
             return item;

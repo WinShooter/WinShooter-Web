@@ -22,6 +22,7 @@
 namespace WinShooter.Web.DataValidation.Tests
 {
     using System;
+    using System.Text;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -91,6 +92,27 @@ namespace WinShooter.Web.DataValidation.Tests
         public void ValidEmailAddressInvalid1()
         {
             "www.allberg.se".Require("Email").ValidEmailAddress();
+        }
+
+        /// <summary>
+        /// Test the base64 encoding requirement positive.
+        /// </summary>
+        [TestMethod]
+        public void Base64EncodingValid()
+        {
+            var b64String = Convert.ToBase64String(Encoding.UTF8.GetBytes("www.winshooter.se"));
+            b64String.Require("b64String").Base64Encoded();
+        }
+
+        /// <summary>
+        /// Test the base64 encoding requirement positive.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Base64EncodingInvalid1()
+        {
+            const string B64String = "www.winshooter.se";
+            B64String.Require("b64String").Base64Encoded();
         }
     }
 }
