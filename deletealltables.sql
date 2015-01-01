@@ -12,6 +12,7 @@ drop table Rights;
 drop table UserRolesInfo;
 drop table Roles;
 drop table Competition;
+drop table CompetitionParams;
 drop table UsersLoginInfo;
 drop table Users;
-drop table VersionInfo
+drop table VersionInfo;
