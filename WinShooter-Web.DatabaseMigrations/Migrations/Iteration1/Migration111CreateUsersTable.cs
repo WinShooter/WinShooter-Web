@@ -69,8 +69,8 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
                 .WithColumn("Id").AsGuid()
                 .WithColumn("UserId").AsGuid()
                 .WithColumn("IdentityProvider").AsString().Indexed()
-                .WithColumn("IdentityProviderId").AsString().Indexed()
-                .WithColumn("IdentityProviderUsername").AsString()
+                .WithColumn("ProviderUserId").AsString().Indexed()
+                .WithColumn("Email").AsString()
                 .WithColumn("LastLogin").AsDateTime();
 
             this.Create.PrimaryKey(string.Format("PK_{0}", UsersLoginInfoTableName))

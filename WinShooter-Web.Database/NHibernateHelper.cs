@@ -27,7 +27,6 @@ namespace WinShooter.Database
     using FluentNHibernate.Cfg.Db;
 
     using NHibernate;
-    using NHibernate.Tool.hbm2ddl;
 
     /// <summary>
     /// The helper.

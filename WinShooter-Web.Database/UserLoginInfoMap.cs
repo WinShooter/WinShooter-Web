@@ -36,11 +36,11 @@ namespace WinShooter.Database
             this.Id(x => x.Id);
 
             this.Map(x => x.IdentityProvider);
-            this.Map(x => x.IdentityProviderId);
-            this.Map(x => x.IdentityProviderUsername);
+            this.Map(x => x.ProviderUserId);
+            this.Map(x => x.Email);
             this.Map(x => x.LastLogin);
 
-            References(x => x.User).Column("UserId");
+            this.References(x => x.User).Column("UserId");
 
             this.Table("UsersLoginInfo");
         }

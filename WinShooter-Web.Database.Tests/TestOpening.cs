@@ -56,7 +56,7 @@ namespace WinShooter.Database.Tests
             {
                 var userLoginInfo = (from info in dbsession.Query<UserLoginInfo>()
                                      where
-                                         info.IdentityProvider == "google" && info.IdentityProviderId == "something"
+                                         info.IdentityProvider == "google" && info.ProviderUserId == "something"
                                      select info).SingleOrDefault();
                 Assert.IsNull(userLoginInfo);
             }

@@ -56,12 +56,12 @@ namespace WinShooter.Database
         /// <summary>
         /// Gets or sets the identity provider id.
         /// </summary>
-        public virtual string IdentityProviderId { get; set; }
+        public virtual string ProviderUserId { get; set; }
 
         /// <summary>
         /// Gets or sets the provider user name.
         /// </summary>
-        public virtual string IdentityProviderUsername { get; set; }
+        public virtual string Email { get; set; }
 
         /// <summary>
         /// Gets or sets the last login.
