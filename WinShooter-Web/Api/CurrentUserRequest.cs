@@ -30,10 +30,5 @@ namespace WinShooter.Api
         /// Gets or sets the competitionID the user wants rights to be included for.
         /// </summary>
         public string CompetitionId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the user has accepted terms.
-        /// </summary>
-        public int HasAcceptedTerms { get; set; }
     }
 }

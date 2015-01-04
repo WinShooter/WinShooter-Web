@@ -1082,7 +1082,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BaseApiController.cs" />
+    <Compile Include="Api\CompetitionRequest.cs" />
     <Compile Include="Api\CompetitionResponse.cs" />
+    <Compile Include="Api\CompetitionController.cs" />
     <Compile Include="Api\CompetitionsRequest.cs" />
     <Compile Include="Api\CompetitionsController.cs" />
     <Compile Include="Api\CurrentUserController.cs" />

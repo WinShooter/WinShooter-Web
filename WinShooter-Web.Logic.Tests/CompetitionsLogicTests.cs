@@ -30,6 +30,7 @@ namespace WinShooter.Logic.Tests
 
     using WinShooter.Database;
     using WinShooter.Logic;
+    using WinShooter.Logic.Authentication;
     using WinShooter.Logic.Authorization;
 
     /// <summary>
@@ -106,7 +107,7 @@ namespace WinShooter.Logic.Tests
 
             var userRolesInfoMock = new Mock<IRepository<UserRolesInfo>>();
 
-            var competitions = new CompetitionsLogic(repository, userRolesInfoMock.Object, rightsHelperMock.Object) { CurrentUser = new User() };
+            var competitions = new CompetitionsLogic(repository, userRolesInfoMock.Object, rightsHelperMock.Object) { CurrentUser = new CustomPrincipal("identity") };
 
             var result = competitions.GetCompetitions();
             Assert.AreEqual(2, result.Count());
@@ -144,7 +145,7 @@ namespace WinShooter.Logic.Tests
 
             var userRolesInfoMock = new Mock<IRepository<UserRolesInfo>>();
 
-            var competitions = new CompetitionsLogic(repository, userRolesInfoMock.Object, rightsHelperMock.Object) { CurrentUser = new User() };
+            var competitions = new CompetitionsLogic(repository, userRolesInfoMock.Object, rightsHelperMock.Object) { CurrentUser = new CustomPrincipal("identity") };
 
             var result = competitions.GetCompetitions();
             Assert.AreEqual(2, result.Count());

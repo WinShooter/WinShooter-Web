@@ -72,20 +72,31 @@ namespace WinShooter.Api
         /// <summary>
         /// Gets the current user information.
         /// </summary>
-        /// <param name="request">The request parameters</param>
         /// <returns>The current user information.</returns>
         [HttpPost]
         [HttpGet]
-        public CurrentUserResponse Get(CurrentUserRequest request)
+        public CurrentUserResponse Get()
+        {
+            return this.Get(null);
+        }
+
+        /// <summary>
+        /// Gets the current user information.
+        /// </summary>
+        /// <param name="competitionId">The competition request</param>
+        /// <returns>The current user information.</returns>
+        [HttpPost]
+        [HttpGet]
+        public CurrentUserResponse Get(string competitionId)
         {
             try
             {
                 if (this.Principal == null)
                 {
                     var anonymousRights = new string[0];
-                    if (request != null && !string.IsNullOrEmpty(request.CompetitionId))
+                    if (!string.IsNullOrEmpty(competitionId))
                     {
-                        anonymousRights = (from right in this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(request.CompetitionId))
+                        anonymousRights = (from right in this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(competitionId))
                                            select right.ToString()).ToArray();
                     }
 
@@ -108,9 +119,9 @@ namespace WinShooter.Api
                 }
 
                 var rights = new WinShooterCompetitionPermissions[0];
-                if (request != null && !string.IsNullOrEmpty(request.CompetitionId))
+                if (!string.IsNullOrEmpty(competitionId))
                 {
-                    rights = this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(request.CompetitionId));
+                    rights = this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(competitionId));
                 }
 
                 rights = this.rightsHelper.AddRightsWithNoDuplicate(rights, this.rightsHelper.GetSystemRightsForTheUser());

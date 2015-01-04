@@ -21,6 +21,7 @@
 
 namespace WinShooter.Api
 {
+    using System.Linq;
     using System.Web;
     using System.Web.Http;
 
@@ -34,11 +35,17 @@ namespace WinShooter.Api
     /// </summary>
     public abstract class BaseApiController : ApiController
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseApiController"/> class.
+        /// </summary>
         protected BaseApiController()
         {
             this.DatabaseSession = NHibernateHelper.OpenSession();
         }
 
+        /// <summary>
+        /// Gets or sets the active database session.
+        /// </summary>
         protected ISession DatabaseSession { get; set; }
 
         /// <summary>
@@ -49,6 +56,28 @@ namespace WinShooter.Api
             get { return HttpContext.Current.User as CustomPrincipal; }
         }
 
+        /// <summary>
+        /// Get the user from the <see cref="Principal"/>.
+        /// </summary>
+        /// <returns>The user if one exist, otherwise null.</returns>
+        protected virtual User GetUser()
+        {
+            if (this.Principal == null)
+            {
+                return null;
+            }
+
+            var userRepository = new Repository<User>(this.DatabaseSession);
+
+            return userRepository.FilterBy(user => user.Id == this.Principal.UserId).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Dispose the current object.
+        /// </summary>
+        /// <param name="disposing">
+        /// If we are disposing.
+        /// </param>
         protected override void Dispose(bool disposing)
         {
             if (!disposing)

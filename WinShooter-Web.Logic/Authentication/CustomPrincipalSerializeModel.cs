@@ -30,17 +30,17 @@ namespace WinShooter.Logic.Authentication
     public class CustomPrincipalSerializeModel
     {
         /// <summary>
-        /// The user ID.
+        /// Gets or sets the user ID.
         /// </summary>
         public Guid UserId { get; set; }
 
         /// <summary>
-        /// The user first name.
+        /// Gets or sets the user first name.
         /// </summary>
         public string FirstName { get; set; }
 
         /// <summary>
-        /// The user last name.
+        /// Gets or sets the user last name.
         /// </summary>
         public string LastName { get; set; }
 
