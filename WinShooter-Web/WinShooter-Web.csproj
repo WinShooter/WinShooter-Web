@@ -1114,9 +1114,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BaseApiController.cs" />
-    <Compile Include="Api\CurrentUserController.cs" />
-    <Compile Include="Api\CurrentUserRequest.cs" />
-    <Compile Include="Api\CurrentUserResponse.cs" />
+    <Compile Include="Api\CurrentUser\CurrentUserController.cs" />
+    <Compile Include="Api\CurrentUser\CurrentUserRequest.cs" />
+    <Compile Include="Api\CurrentUser\CurrentUserResponse.cs" />
     <Compile Include="Api\RequestBase.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

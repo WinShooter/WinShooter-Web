@@ -134,7 +134,16 @@ namespace WinShooter
             this.log.Info("Winshooter web startup complete.");
         }
 
-        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        /// <summary>
+        /// The application post authenticate request handler.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
         {
             var authCookie = this.Request.Cookies[FormsAuthentication.FormsCookieName];
 
@@ -155,7 +164,7 @@ namespace WinShooter
 
             var newUser = new CustomPrincipal(authTicket.Name)
             {
-                Id = serializeModel.Id,
+                UserId = serializeModel.UserId,
                 IsSystemAdmin = serializeModel.IsSystemAdmin,
                 FirstName = serializeModel.FirstName,
                 LastName = serializeModel.LastName

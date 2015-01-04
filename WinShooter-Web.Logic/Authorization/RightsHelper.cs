@@ -100,7 +100,7 @@ namespace WinShooter.Logic.Authorization
             var competitionIds =
                 from userRolesInfo in
                     this.userRolesInfoRepository.FilterBy(
-                        x => x.User.Id.Equals(this.CurrentUser.Id) && x.Competition.IsPublic == includePublic)
+                        x => x.User.Id.Equals(this.CurrentUser.UserId) && x.Competition.IsPublic == includePublic)
                 select userRolesInfo.Competition.Id;
 
             return competitionIds.ToArray();
@@ -132,7 +132,7 @@ namespace WinShooter.Logic.Authorization
             var userRoleIds =
                 from userRolesInfo in
                      this.userRolesInfoRepository.FilterBy(
-                         x => x.User.Id.Equals(this.CurrentUser.Id) && x.Competition.Id.Equals(competitionId))
+                         x => x.User.Id.Equals(this.CurrentUser.UserId) && x.Competition.Id.Equals(competitionId))
                  select userRolesInfo.Role.Id;
 
             var rightStrings =
@@ -161,7 +161,7 @@ namespace WinShooter.Logic.Authorization
             var userRoles =
                 from userRolesInfo in
                     this.userRolesInfoRepository.FilterBy(
-                        x => x.User.Id.Equals(this.CurrentUser.Id) && x.Competition.Id.Equals(competitionId))
+                        x => x.User.Id.Equals(this.CurrentUser.UserId) && x.Competition.Id.Equals(competitionId))
                 select userRolesInfo.Role.RoleName;
 
             return userRoles.ToArray();
@@ -178,7 +178,7 @@ namespace WinShooter.Logic.Authorization
             var listOfuserRights =
                 (from userRolesInfo in
                      this.userRolesInfoRepository.FilterBy(
-                         x => x.User.Id.Equals(this.CurrentUser.Id) && x.Role.RoleName.StartsWith("System"))
+                         x => x.User.Id.Equals(this.CurrentUser.UserId) && x.Role.RoleName.StartsWith("System"))
                  select (from roleRightsInfo in userRolesInfo.Role.RoleRightsInfos select roleRightsInfo.Right)).ToArray();
 
             // Flatten array of arrays
@@ -199,7 +199,7 @@ namespace WinShooter.Logic.Authorization
             var userRoles =
                 (from userRolesInfo in
                      this.userRolesInfoRepository.FilterBy(
-                         x => x.User.Id.Equals(this.CurrentUser.Id) && x.Role.RoleName.StartsWith("System"))
+                         x => x.User.Id.Equals(this.CurrentUser.UserId) && x.Role.RoleName.StartsWith("System"))
                  select userRolesInfo.Role.RoleName).ToArray();
 
             return userRoles;

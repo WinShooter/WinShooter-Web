@@ -102,7 +102,7 @@ namespace WinShooter.Logic
         /// <summary>
         /// Creates a list from a string with separated values.
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="input">The delimiter separated string.</param>
         /// <returns>A list of parameters</returns>
         private static List<string> GetList(string input)
         {

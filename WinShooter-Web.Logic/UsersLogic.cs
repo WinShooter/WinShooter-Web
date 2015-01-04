@@ -116,7 +116,7 @@ namespace WinShooter.Logic
         /// </param>
         public void UpdateUser(User user)
         {
-            if (!this.CurrentUser.Id.Equals(user.Id))
+            if (!this.CurrentUser.UserId.Equals(user.Id))
             {
                 this.log.WarnFormat("User {0} is trying to delete user {1}", this.CurrentUser, user);
                 throw new Exception("You can only update yourself.");
@@ -140,7 +140,7 @@ namespace WinShooter.Logic
         /// </param>
         public void DeleteUser(Guid userId)
         {
-            if (!this.CurrentUser.Id.Equals(userId))
+            if (!this.CurrentUser.UserId.Equals(userId))
             {
                 this.log.WarnFormat("User {0} is trying to delete user {1}", this.CurrentUser, userId);
                 throw new Exception("You can only delete yourself.");

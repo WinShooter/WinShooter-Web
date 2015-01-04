@@ -56,7 +56,7 @@ namespace WinShooter.Logic.Tests.Authorization
         [TestMethod]
         public void TestFetchingRightsFromDatabase()
         {
-            var user = new CustomPrincipal("id") { Id = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5f0") };
+            var user = new CustomPrincipal("id") { UserId = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5f0") };
             var competitionId = Guid.Parse("731bc7fd-1ab6-49ae-8056-92b507eef5e9");
 
             var rightsHelper = new Mock<IRightsHelper>();

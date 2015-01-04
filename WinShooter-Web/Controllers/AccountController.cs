@@ -47,6 +47,9 @@ namespace WinShooter.Controllers
         /// </summary>
         private readonly AppConfig appConfig;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountController" /> class.
+        /// </summary>
         public AccountController()
         {
             this.appConfig = new AppConfig();
@@ -55,10 +58,12 @@ namespace WinShooter.Controllers
         /// <summary>
         /// The login view.
         /// </summary>
-        /// <returns>The <see cref="ActionResult"/>.</returns>
+        /// <returns>The view</returns>
         public ActionResult Login()
         {
-            this.ViewBag.GoogleUrl = this.CreateGoogleUrl();
+            var securityToken = CreateSecurityToken();
+            this.Session[WinShooterSessionKeys.SecurityToken] = securityToken;
+            this.ViewBag.GoogleUrl = this.CreateGoogleUrl(securityToken);
             return this.View();
         }
 
@@ -75,7 +80,7 @@ namespace WinShooter.Controllers
         /// <summary>
         /// Where the user can edit his/her details.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view</returns>
         public ActionResult EditAccount()
         {
             return this.View();
@@ -84,7 +89,7 @@ namespace WinShooter.Controllers
         /// <summary>
         /// Where the user can edit his/her details.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view</returns>
         public ActionResult NewAccount()
         {
             return this.View("EditAccount");
@@ -93,7 +98,7 @@ namespace WinShooter.Controllers
         /// <summary>
         /// Return from a google authentication.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Redirect to NewAccount or Home.</returns>
         public async Task<ActionResult> SigninGoogle()
         {
             // TODO What does this look like if auth failed?
@@ -122,7 +127,7 @@ namespace WinShooter.Controllers
 
                 var serializeModel = new CustomPrincipalSerializeModel
                 {
-                    Id = user.Id,
+                    UserId = user.Id,
                     FirstName = user.Givenname,
                     LastName = user.Surname,
                     IsSystemAdmin = user.IsSystemAdmin
@@ -141,8 +146,8 @@ namespace WinShooter.Controllers
                     userData);
 
                 var encTicket = FormsAuthentication.Encrypt(authTicket);
-                var faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket) { HttpOnly = true };
-                this.Response.Cookies.Add(faCookie);
+                var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket) { HttpOnly = true };
+                this.Response.Cookies.Add(cookie);
                 
                 return user.HasAcceptedTerms < this.appConfig.CurrentConditionLevel
                     ? this.RedirectToAction("NewAccount")
@@ -151,41 +156,21 @@ namespace WinShooter.Controllers
         }
 
         /// <summary>
-        /// Create the google login URL.
-        /// </summary>
-        /// <returns>The URL</returns>
-        private string CreateGoogleUrl()
-        {
-            return
-                string.Format(
-                    "https://accounts.google.com/o/oauth2/auth?response_type={0}&client_id={1}&redirect_uri={2}&scope={3}&state={4}",
-                    "code",
-                    ConfigurationManager.AppSettings[WinShooterAppSettings.GoogleOauthClientId],
-                    UrlEncode(this.GetRedirectUrl()),
-                    UrlEncode("openid email"),
-                    SecurityToken());
-        }
-
-        private string GetRedirectUrl()
-        {
-            return this.Url.Action("SigninGoogle", "Account", null, this.Request.Url.Scheme);
-        }
-
-        /// <summary>
         /// Create a security token
         /// </summary>
-        /// <returns></returns>
-        private static string SecurityToken()
+        /// <returns>The security token.</returns>
+        private static string CreateSecurityToken()
         {
             // TODO Implement
             return "qwerrtyuop0181";
         }
 
-        private static string UrlEncode(string input)
-        {
-            return HttpUtility.UrlEncode(input);
-        }
-
+        /// <summary>
+        /// Get a Google ID token.
+        /// </summary>
+        /// <param name="code">The OpenID Connect code.</param>
+        /// <param name="redirectUri">Our redirect URI</param>
+        /// <returns>The Google token.</returns>
         private static async Task<GoogleToken> GetGoogleIdToken(
             string code,
             string redirectUri)
@@ -200,6 +185,15 @@ namespace WinShooter.Controllers
             return new GoogleToken(result["id_token"], clientId, GoogleTrustCertificateFetcher.GetInstance);
         }
 
+        /// <summary>
+        /// Get a generic OpenID Connect token.
+        /// </summary>
+        /// <param name="url">The URL to connect to.</param>
+        /// <param name="code">The code.</param>
+        /// <param name="clientId">The client ID</param>
+        /// <param name="clientSecret">The client secret.</param>
+        /// <param name="redirectUri">Our redirect URI.</param>
+        /// <returns>The ID token.</returns>
         private static async Task<string> GetIdToken(Uri url, string code, string clientId, string clientSecret, string redirectUri)
         {
             var client = new WebClient();
@@ -220,6 +214,11 @@ namespace WinShooter.Controllers
             return responseJson;
         }
 
+        /// <summary>
+        /// Prepare the string for uploading the parameters.
+        /// </summary>
+        /// <param name="parameters">The parameters to POST</param>
+        /// <returns>The <see cref="string"/> for posting.</returns>
         private static string PrepareUploadParams(Dictionary<string, string> parameters)
         {
             var toReturn = new StringBuilder();
@@ -237,6 +236,36 @@ namespace WinShooter.Controllers
             }
 
             return toReturn.ToString();
+        }
+
+        /// <summary>
+        ///     Create the google login URL.
+        /// </summary>
+        /// <param name="securityToken">
+        ///     The security token.
+        /// </param>
+        /// <returns>
+        ///     The URL
+        /// </returns>
+        private string CreateGoogleUrl(string securityToken)
+        {
+            return
+                string.Format(
+                    "https://accounts.google.com/o/oauth2/auth?response_type={0}&client_id={1}&redirect_uri={2}&scope={3}&state={4}",
+                    "code",
+                    ConfigurationManager.AppSettings[WinShooterAppSettings.GoogleOauthClientId],
+                    HttpUtility.UrlEncode(this.GetRedirectUrl()),
+                    HttpUtility.UrlEncode("openid email"),
+                    securityToken);
+        }
+
+        /// <summary>
+        /// Get our redirect URI.
+        /// </summary>
+        /// <returns>The URI of the Google action.</returns>
+        private string GetRedirectUrl()
+        {
+            return this.Url.Action("SigninGoogle", "Account", null, this.Request.Url.Scheme);
         }
     }
 }
