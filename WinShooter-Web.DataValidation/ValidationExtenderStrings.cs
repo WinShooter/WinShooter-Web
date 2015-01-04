@@ -140,5 +140,25 @@ namespace WinShooter.Web.DataValidation
 
             return item;
         }
+
+        /// <summary>
+        /// Validates that the string is a GUID.
+        /// </summary>
+        /// <param name="item">The item to validate</param>
+        /// <returns>The validated item</returns>
+        public static Validation<string> IsGuid(this Validation<string> item)
+        {
+            try
+            {
+                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+                Guid.Parse(item.Value);
+            }
+            catch (FormatException)
+            {
+                ThrowHelper.ThrowArgumentException(item.ArgName + " has to be valid GUID.");
+            }
+
+            return item;
+        }
     }
 }

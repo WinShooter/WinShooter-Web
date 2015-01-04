@@ -23,6 +23,7 @@ namespace WinShooter.Logic.Authentication
 {
     using System;
     using System.Security.Principal;
+    using System.Text;
 
     using WinShooter.Database;
 
@@ -94,6 +95,18 @@ namespace WinShooter.Logic.Authentication
         public bool IsInRole(string role)
         {
             return false;
+        }
+
+        public override string ToString()
+        {
+            var toReturn = new StringBuilder();
+
+            toReturn.AppendFormat("UserID: \"{0}\", ", this.UserId);
+            toReturn.AppendFormat("FirstName: \"{0}\", ", this.FirstName);
+            toReturn.AppendFormat("LastName: \"{0}\", ", this.LastName);
+            toReturn.AppendFormat("IsSystemAdmin: {0}", this.IsSystemAdmin);
+
+            return toReturn.ToString();
         }
     }
 }

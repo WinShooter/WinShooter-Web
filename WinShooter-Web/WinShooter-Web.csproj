@@ -1091,6 +1091,9 @@
     <Compile Include="Api\CurrentUserRequest.cs" />
     <Compile Include="Api\CurrentUserResponse.cs" />
     <Compile Include="Api\RequestBase.cs" />
+    <Compile Include="Api\StationRequest.cs" />
+    <Compile Include="Api\StationResponse.cs" />
+    <Compile Include="Api\StationsController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
