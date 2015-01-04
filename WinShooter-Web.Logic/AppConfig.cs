@@ -96,7 +96,7 @@ namespace WinShooter.Logic
             }
 
             var upperEmail = email.Trim().ToUpper();
-            return (from adminUser in this.AdminEmailAddresses where upperEmail == adminUser select adminUser).Any();
+            return (from adminUser in this.AdminEmailAddresses where upperEmail == adminUser.ToUpper() select adminUser).Any();
         }
 
         /// <summary>
