@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CurrentUserRequest.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
+// <copyright file="CurrentUserResponse.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,25 +15,40 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Defines the RightsRequest type.
+//   The user response.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.CurrentUser
+namespace WinShooter.Api
 {
     /// <summary>
-    /// The user request.
+    /// The user response.
     /// </summary>
-    public class CurrentUserRequest : RequestBase
+    public class CurrentUserResponse
     {
         /// <summary>
-        /// Gets or sets the competitionID the user wants rights to be included for.
+        /// Gets or sets a value indicating whether the user is logged in.
         /// </summary>
-        public string CompetitionId { get; set; }
+        public bool IsLoggedIn { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user has accepted terms.
+        /// Gets or sets the user display name.
+        /// </summary>
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user email.
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this is the first authentication.
         /// </summary>
         public int HasAcceptedTerms { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user email.
+        /// </summary>
+        public string[] CompetitionRights { get; set; }
     }
 }

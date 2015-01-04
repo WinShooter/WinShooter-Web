@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.CurrentUser
+namespace WinShooter.Api
 {
     using System;
     using System.Linq;
@@ -74,6 +74,7 @@ namespace WinShooter.Api.CurrentUser
         /// </summary>
         /// <param name="request">The request parameters</param>
         /// <returns>The current user information.</returns>
+        [HttpPost]
         [HttpGet]
         public CurrentUserResponse Get(CurrentUserRequest request)
         {
