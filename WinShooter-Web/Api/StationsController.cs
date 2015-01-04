@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StationsService.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
+// <copyright file="StationsController.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   The competitions service.
+//   The stations API.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -28,13 +28,11 @@ namespace WinShooter.Api
 
     using log4net;
 
-    using WinShooter.Database;
     using WinShooter.Logic;
-    using WinShooter.Logic.Authorization;
     using WinShooter.Web.DataValidation;
 
     /// <summary>
-    /// The stations service.
+    /// The stations API.
     /// </summary>
     public class StationsController : BaseApiController
     {
@@ -133,19 +131,21 @@ namespace WinShooter.Api
         }
 
         /// <summary>
-        /// The delete.
+        ///     Delete a station.
         /// </summary>
-        /// <param name="deleteRequest">
-        /// The delete request.
+        /// <param name="stationId">
+        ///     The id of the station to delete.
         /// </param>
         /// <returns>
-        /// The <see cref="StationResponse"/>.
+        ///     The <see cref="StationResponse"/>.
         /// </returns>
         [Authorize]
         [HttpDelete]
-        public StationResponse Delete(StationRequest deleteRequest)
+        public StationResponse Delete(string stationId)
         {
-            this.log.Debug("Got DELETE request: " + deleteRequest);
+            this.log.DebugFormat("Got DELETE request. stationId=\"{0}\".", stationId);
+
+            stationId.Require("stationId").NotNull().IsGuid();
 
             if (this.Principal == null)
             {
@@ -157,12 +157,14 @@ namespace WinShooter.Api
             this.logic.CurrentUser = this.Principal;
             this.log.Debug("User is " + this.logic.CurrentUser);
 
-            if (deleteRequest.ParseStationId().Equals(Guid.Empty))
+            var stationGuid = Guid.Parse(stationId);
+
+            if (stationGuid.Equals(Guid.Empty))
             {
                 throw new Exception("There has to be a station id");
             }
 
-            this.logic.DeleteStation(deleteRequest.ParseStationId());
+            this.logic.DeleteStation(stationGuid);
 
             // This is needed to get IE to be happy.
             return new StationResponse();

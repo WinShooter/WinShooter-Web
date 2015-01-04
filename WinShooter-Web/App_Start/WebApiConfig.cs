@@ -31,7 +31,7 @@ namespace WinShooter
         /// <summary>
         /// Static method for configuring web API.
         /// </summary>
-        /// <param name="config"></param>
+        /// <param name="config">The HTTP configuration module.</param>
         public static void Register(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
@@ -39,8 +39,7 @@ namespace WinShooter
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                defaults: new { id = RouteParameter.Optional });
         }
     }
 }

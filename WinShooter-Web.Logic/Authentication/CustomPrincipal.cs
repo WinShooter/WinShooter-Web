@@ -97,6 +97,10 @@ namespace WinShooter.Logic.Authentication
             return false;
         }
 
+        /// <summary>
+        /// Returns a string representation of the object.
+        /// </summary>
+        /// <returns>The string representation.</returns>
         public override string ToString()
         {
             var toReturn = new StringBuilder();
