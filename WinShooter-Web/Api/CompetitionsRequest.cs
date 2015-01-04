@@ -19,7 +19,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Api.Api.Competition
+namespace WinShooter.Api
 {
     /// <summary>
     /// Represents a competition from the client.

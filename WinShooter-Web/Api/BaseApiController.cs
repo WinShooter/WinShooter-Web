@@ -24,6 +24,9 @@ namespace WinShooter.Api
     using System.Web;
     using System.Web.Http;
 
+    using NHibernate;
+
+    using WinShooter.Database;
     using WinShooter.Logic.Authentication;
 
     /// <summary>
@@ -31,12 +34,31 @@ namespace WinShooter.Api
     /// </summary>
     public abstract class BaseApiController : ApiController
     {
+        protected BaseApiController()
+        {
+            this.DatabaseSession = NHibernateHelper.OpenSession();
+        }
+
+        protected ISession DatabaseSession { get; set; }
+
         /// <summary>
         /// Gets the current user principal.
         /// </summary>
         protected virtual CustomPrincipal Principal
         {
             get { return HttpContext.Current.User as CustomPrincipal; }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            this.DatabaseSession.Dispose();
+
+            base.Dispose(true);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace WinShooter.Logic
         /// <summary>
         /// The current user.
         /// </summary>
-        private User currentUser;
+        private CustomPrincipal currentUser;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompetitionsLogic"/> class.
@@ -100,7 +100,7 @@ namespace WinShooter.Logic
         /// <summary>
         /// Gets or sets the current user.
         /// </summary>
-        public User CurrentUser
+        public CustomPrincipal CurrentUser
         {
             get
             {
@@ -109,7 +109,7 @@ namespace WinShooter.Logic
 
             set
             {
-                this.RightsHelper.CurrentUser = new CustomPrincipal(value);
+                this.RightsHelper.CurrentUser = value;
                 this.currentUser = value;
             }
         } 
@@ -138,7 +138,7 @@ namespace WinShooter.Logic
         /// </returns>
         public Competition[] GetPrivateCompetitions()
         {
-            if (this.CurrentUser == null || this.CurrentUser.Id.Equals(Guid.Empty))
+            if (this.CurrentUser == null || this.CurrentUser.UserId.Equals(Guid.Empty))
             {
                 // Quick bailout if anonymous
                 return new Competition[0];
