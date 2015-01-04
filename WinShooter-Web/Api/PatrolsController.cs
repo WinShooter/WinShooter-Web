@@ -32,7 +32,7 @@ namespace WinShooter.Api
     using WinShooter.Web.DataValidation;
 
     /// <summary>
-    /// The stations service.
+    /// The stations API.
     /// </summary>
     public class PatrolsController : BaseApiController
     {
