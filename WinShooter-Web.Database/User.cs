@@ -22,6 +22,7 @@
 namespace WinShooter.Database
 {
     using System;
+    using System.Collections.Generic;
     using System.Text;
 
     /// <summary>
@@ -57,12 +58,12 @@ namespace WinShooter.Database
         public virtual string CardNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets the surname.
+        /// Gets or sets the surname (last name).
         /// </summary>
         public virtual string Surname { get; set; }
 
         /// <summary>
-        /// Gets or sets the given name.
+        /// Gets or sets the given name (first name).
         /// </summary>
         public virtual string Givenname { get; set; }
 
@@ -77,9 +78,14 @@ namespace WinShooter.Database
         public virtual Guid ClubId { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this is the first authentication.
+        /// Gets or sets what version of terms the user has accepted.
         /// </summary>
         public virtual int HasAcceptedTerms { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of <see cref="UserLoginInfo"/>.
+        /// </summary>
+        public virtual IList<UserLoginInfo> LoginInfos { get; set; }
 
         /// <summary>
         /// Gets or sets the last updated.

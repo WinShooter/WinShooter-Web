@@ -44,6 +44,8 @@ namespace WinShooter.Database
             this.Map(x => x.LastUpdated);
             this.Map(x => x.LastLogin);
 
+            this.HasMany(x => x.LoginInfos).KeyColumn("UserId").Cascade.AllDeleteOrphan();
+
             this.Table("Users");
         }
     }
