@@ -28,6 +28,7 @@ namespace WinShooter.Logic
     using log4net;
 
     using WinShooter.Database;
+    using WinShooter.Logic.Authentication;
     using WinShooter.Logic.Authorization;
 
     /// <summary>
@@ -108,7 +109,7 @@ namespace WinShooter.Logic
 
             set
             {
-                this.RightsHelper.CurrentUser = value;
+                this.RightsHelper.CurrentUser = new CustomPrincipal(value);
                 this.currentUser = value;
             }
         } 

@@ -1,6 +1,7 @@
 ﻿namespace WinShooter.Logic.Authentication
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using NHibernate;
@@ -20,13 +21,21 @@
         {
             var userLoginInfoRepository = new Repository<UserLoginInfo>(this.dbSession);
 
-            var loginInfos =
+            var loginInfo =
                 userLoginInfoRepository.FilterBy(
                     userLoginInfo =>
                     userLoginInfo.ProviderUserId == uniqueId && userLoginInfo.IdentityProvider == provider)
                     .FirstOrDefault();
 
-            return loginInfos == null ? this.CreateDefaultUser(uniqueId, provider, email, loginTime) : loginInfos.User;
+            var userEmails = new string[] { email };
+            if (loginInfo != null)
+            {
+                userEmails = loginInfo.User.LoginInfos.Select(userLoginInfo => userLoginInfo.Email).ToArray();
+            }
+
+            var user = loginInfo == null ? this.CreateDefaultUser(uniqueId, provider, email, loginTime) : loginInfo.User;
+
+            return ComplementSettingsAdmin(user, userEmails);
         }
 
         public User CreateDefaultUser(string uniqueId, string provider, string email, DateTime loginTime)
@@ -59,6 +68,47 @@
 
                 return user;
             }
+        }
+
+        public User GetUser(Guid userId)
+        {
+            var userRepository = new Repository<User>(this.dbSession);
+
+            var user = userRepository.FilterBy(
+                    userInfo =>
+                    userInfo.Id == userId)
+                    .FirstOrDefault();
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var userEmails = user.LoginInfos.Select(info => info.Email).ToArray();
+
+            return ComplementSettingsAdmin(user, userEmails);
+        }
+
+        private static User ComplementSettingsAdmin(User user, IEnumerable<string> userLoginEmails)
+        {
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (userLoginEmails == null)
+            {
+                return user;
+            }
+
+            var config = new AppConfig();
+
+            if (userLoginEmails.Any(email => email != null && config.IsAdminUser(email)))
+            {
+                user.IsSystemAdmin = true;
+            }
+
+            return user;
         }
     }
 }

@@ -27,6 +27,7 @@ namespace WinShooter.Logic
     using log4net;
 
     using WinShooter.Database;
+    using WinShooter.Logic.Authentication;
     using WinShooter.Logic.Authorization;
 
     /// <summary>
@@ -47,7 +48,7 @@ namespace WinShooter.Logic
         /// <summary>
         /// The current user.
         /// </summary>
-        private User currentUser;
+        private CustomPrincipal currentUser;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersLogic"/> class.
@@ -88,7 +89,7 @@ namespace WinShooter.Logic
         /// <summary>
         /// Gets or sets the current user.
         /// </summary>
-        public User CurrentUser
+        public CustomPrincipal CurrentUser
         {
             get
             {

@@ -25,12 +25,16 @@ namespace WinShooter
     using System.Configuration;
     using System.Text.RegularExpressions;
     using System.Web;
+    using System.Web.Http;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using System.Web.Script.Serialization;
+    using System.Web.Security;
 
     using log4net;
+    using log4net.Config;
 
-    using WinShooter.Api;
+    using WinShooter.Logic.Authentication;
     using WinShooter.Web.DatabaseMigrations;
 
     /// <summary>
@@ -44,17 +48,19 @@ namespace WinShooter
         private readonly ILog log;
 
         /// <summary>
-        /// The win shooter API host.
-        /// </summary>
-        private WinShooterApiHost winShooterApiHost;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Global"/> class.
         /// </summary>
         public Global()
         {
             this.log = LogManager.GetLogger(this.GetType());
+
+            this.GoogleTrustCertificateFetcher = new GoogleTrustCertificateFetcher();
         }
+
+        /// <summary>
+        /// Gets the Google trust certificate fetcher.
+        /// </summary>
+        public GoogleTrustCertificateFetcher GoogleTrustCertificateFetcher { get; private set; }
 
         /// <summary>
         /// Check if a path is a file path
@@ -115,10 +121,10 @@ namespace WinShooter
         /// </param>
         protected void Application_Start(object sender, EventArgs e)
         {
-            log4net.Config.XmlConfigurator.Configure();
+            XmlConfigurator.Configure();
             this.log.Info("Winshooter web starting.");
-            this.winShooterApiHost = new WinShooterApiHost();
-            this.winShooterApiHost.Init();
+
+            GlobalConfiguration.Configure(WebApiConfig.Register);
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
@@ -126,6 +132,36 @@ namespace WinShooter
             var sqlDatabaseMigrator = new SqlDatabaseMigrator();
             sqlDatabaseMigrator.MigrateToLatest(ConfigurationManager.ConnectionStrings["WinShooterConnection"].ConnectionString);
             this.log.Info("Winshooter web startup complete.");
+        }
+
+        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        {
+            var authCookie = this.Request.Cookies[FormsAuthentication.FormsCookieName];
+
+            if (authCookie == null)
+            {
+                return;
+            }
+
+            var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+            if (authTicket == null || authTicket.UserData == null || authTicket.UserData == string.Empty)
+            {
+                return;
+            }
+
+            var serializer = new JavaScriptSerializer();
+
+            var serializeModel = serializer.Deserialize<CustomPrincipalSerializeModel>(authTicket.UserData);
+
+            var newUser = new CustomPrincipal(authTicket.Name)
+            {
+                Id = serializeModel.Id,
+                IsSystemAdmin = serializeModel.IsSystemAdmin,
+                FirstName = serializeModel.FirstName,
+                LastName = serializeModel.LastName
+            };
+
+            HttpContext.Current.User = newUser;
         }
 
         /// <summary>

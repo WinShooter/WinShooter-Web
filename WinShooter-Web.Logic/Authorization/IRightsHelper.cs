@@ -24,7 +24,7 @@ namespace WinShooter.Logic.Authorization
     using System;
     using System.Collections.Generic;
 
-    using WinShooter.Database;
+    using WinShooter.Logic.Authentication;
 
     /// <summary>
     /// The interface for <see cref="RightsHelper"/>.
@@ -34,7 +34,7 @@ namespace WinShooter.Logic.Authorization
         /// <summary>
         /// Gets or sets the current user.
         /// </summary>
-        User CurrentUser { get; set; }
+        CustomPrincipal CurrentUser { get; set; }
 
         /// <summary>
         /// Get competition ids the user has rights on.
@@ -93,7 +93,7 @@ namespace WinShooter.Logic.Authorization
         /// The rights 2.
         /// </param>
         /// <returns>
-        /// The <see cref="WinShooterCompetitionPermissions[]"/>.
+        /// The <see cref="WinShooterCompetitionPermissions"/> array.
         /// </returns>
         WinShooterCompetitionPermissions[] AddRightsWithNoDuplicate(
             IEnumerable<WinShooterCompetitionPermissions> rights1,

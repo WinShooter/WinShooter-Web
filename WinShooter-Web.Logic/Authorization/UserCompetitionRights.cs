@@ -25,6 +25,7 @@ namespace WinShooter.Logic.Authorization
     using System.Collections.Generic;
 
     using WinShooter.Database;
+    using WinShooter.Logic.Authentication;
 
     /// <summary>
     /// Gets the user rights on a certain competition.
@@ -64,7 +65,7 @@ namespace WinShooter.Logic.Authorization
         /// <param name="rightsHelper">
         /// The rights Helper.
         /// </param>
-        internal UserCompetitionRights(Guid competitionId, User user, IRightsHelper rightsHelper)
+        internal UserCompetitionRights(Guid competitionId, CustomPrincipal user, IRightsHelper rightsHelper)
         {
             this.CompetitionId = competitionId;
             this.Permissions = new List<WinShooterCompetitionPermissions>();

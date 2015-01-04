@@ -64,8 +64,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfig.cs" />
+    <Compile Include="Authentication\CustomPrincipal.cs" />
+    <Compile Include="Authentication\CustomPrincipalSerializeModel.cs" />
     <Compile Include="Authentication\GenericToken.cs" />
     <Compile Include="Authentication\GoogleToken.cs" />
+    <Compile Include="Authentication\GoogleTrustCertificateFetcher.cs" />
+    <Compile Include="Authentication\ICustomPrincipal.cs" />
+    <Compile Include="Authentication\IGoogleTrustCertificateFetcher.cs" />
     <Compile Include="Authentication\UserManager.cs" />
     <Compile Include="Authorization\IRightsHelper.cs" />
     <Compile Include="Authorization\NotEnoughRightsException.cs" />

@@ -2,6 +2,6 @@
 {
     public static class WinShooterSessionKeys
     {
-        public static string User = "User";
+        //public static string User = "User";
     }
 }

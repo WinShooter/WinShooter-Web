@@ -1,4 +1,25 @@
-﻿namespace WinShooter.Controllers
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AccountController.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of the GNU General Public License
+//   as published by the Free Software Foundation; either version 2
+//   of the License, or (at your option) any later version.
+//   
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. See the
+//   GNU General Public License for more details.
+//   
+//   You should have received a copy of the GNU General Public License
+//   along with this program; if not, write to the Free Software
+//   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+// </copyright>
+// <summary>
+//   The controller handles the account.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace WinShooter.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +38,7 @@
     using WinShooter.Logic.WinShooterConstants;
 
     /// <summary>
-    /// The class handles the account.
+    /// The controller handles the account.
     /// </summary>
     public class AccountController : Controller
     {
@@ -39,6 +60,16 @@
         {
             this.ViewBag.GoogleUrl = this.CreateGoogleUrl();
             return this.View();
+        }
+
+        /// <summary>
+        /// The login view.
+        /// </summary>
+        /// <returns>The <see cref="ActionResult"/>.</returns>
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return this.RedirectToAction("Index", "Home");
         }
 
         /// <summary>
@@ -75,8 +106,8 @@
             var sessionState = this.Request.QueryString["session_state"];
             var prompt = this.Request.QueryString["prompt"];
 
-            var googleToken = await GetGoogleIdToken( 
-                code, 
+            var googleToken = await GetGoogleIdToken(
+                code,
                 this.GetRedirectUrl());
 
             if (!googleToken.IsValid())
@@ -89,11 +120,32 @@
                 var userManager = new UserManager(dbsession);
                 var user = userManager.GetUser(googleToken.IdentityProviderId, "google", googleToken.Email, DateTime.Now);
 
-                FormsAuthentication.SetAuthCookie(user.Id.ToString(), false);
-                this.Session[WinShooterSessionKeys.User] = user;
+                var serializeModel = new CustomPrincipalSerializeModel
+                {
+                    Id = user.Id,
+                    FirstName = user.Givenname,
+                    LastName = user.Surname,
+                    IsSystemAdmin = user.IsSystemAdmin
+                };
 
+                var serializer = new JavaScriptSerializer();
+
+                var userData = serializer.Serialize(serializeModel);
+
+                var authTicket = new FormsAuthenticationTicket(
+                    1,
+                    user.Id.ToString(),
+                    DateTime.Now,
+                    DateTime.Now.AddMinutes(15),
+                    false,
+                    userData);
+
+                var encTicket = FormsAuthentication.Encrypt(authTicket);
+                var faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket) { HttpOnly = true };
+                this.Response.Cookies.Add(faCookie);
+                
                 return user.HasAcceptedTerms < this.appConfig.CurrentConditionLevel
-                    ? this.RedirectToAction("NewAccount") 
+                    ? this.RedirectToAction("NewAccount")
                     : this.RedirectToAction("Index", "Home");
             }
         }
@@ -145,7 +197,7 @@
             var jsonString = await GetIdToken(url, code, clientId, clientSecret, redirectUri);
             var jsonSerializer = new JavaScriptSerializer();
             var result = jsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
-            return new GoogleToken(result["id_token"], clientId);
+            return new GoogleToken(result["id_token"], clientId, GoogleTrustCertificateFetcher.GetInstance);
         }
 
         private static async Task<string> GetIdToken(Uri url, string code, string clientId, string clientSecret, string redirectUri)
@@ -178,7 +230,7 @@
                 {
                     toReturn.Append("&");
                 }
-                
+
                 toReturn.Append(key);
                 toReturn.Append("=");
                 toReturn.Append(parameters[key]);

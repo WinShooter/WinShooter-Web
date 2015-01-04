@@ -3,25 +3,20 @@
     using System;
     using System.Collections.Generic;
     using System.IdentityModel.Tokens;
-    using System.IO;
     using System.Linq;
-    using System.Net;
-    using System.Security.Cryptography.X509Certificates;
-    using System.Web.Script.Serialization;
+    using System.Security.Claims;
 
     using WinShooter.Web.DataValidation;
 
     public class GoogleToken : GenericToken
     {
-        // Used for string parsing the Certificates from Google
-        private const string BeginCert = "-----BEGIN CERTIFICATE-----";
-        private const string EndCert = "-----END CERTIFICATE-----";
-
         private readonly string expectedAudience;
+
+        private readonly IGoogleTrustCertificateFetcher certificateFetcher;
 
         private readonly JwtSecurityToken token;
 
-        public GoogleToken(string jsonInput, string expectedAudience)
+        public GoogleToken(string jsonInput, string expectedAudience, IGoogleTrustCertificateFetcher certificateFetcher)
         {
             jsonInput.Require("jsonInput").NotNull();
             jsonInput.Require("expectedAudience").NotNull();
@@ -33,6 +28,7 @@
             }
 
             this.expectedAudience = expectedAudience;
+            this.certificateFetcher = certificateFetcher;
 
             this.token = new JwtSecurityToken(jsonInput);
             if (this.token.Audiences.FirstOrDefault() != expectedAudience)
@@ -46,7 +42,7 @@
             this.Claims = this.token.Claims;
         }
 
-        public IEnumerable<System.Security.Claims.Claim> Claims;
+        public IEnumerable<Claim> Claims;
 
         public string IdentityProviderId
         {
@@ -109,35 +105,10 @@
             //    return false;
             //}
 
-            var googleCertificates = this.GetGoogleCertificates();
+            var googleCertificates = this.certificateFetcher.GetCertificates();
 
             // TODO Implement
             return true;
-        }
-
-        /// <summary>
-        /// Retrieves the certificates for Google and returns them as byte arrays.
-        /// </summary>
-        /// <returns>An array of byte arrays representing the Google certificates.</returns>
-        private X509Certificate2[] GetGoogleCertificates()
-        {
-            // The request will be made to the authentication server.
-            var request = WebRequest.Create("https://www.googleapis.com/oauth2/v1/certs");
-
-            string responseFromServer;
-            using (var reader = new StreamReader(request.GetResponse().GetResponseStream()))
-            {
-                responseFromServer = reader.ReadToEnd();
-            }
-
-            var ser = new JavaScriptSerializer();
-            var content = ser.Deserialize<Dictionary<string, string>>(responseFromServer);
-
-            return
-                content.Select(x => x.Value.Replace(BeginCert, string.Empty).Replace(EndCert, string.Empty))
-                    .Select(Convert.FromBase64String)
-                    .Select(certificateBytes => new X509Certificate2(certificateBytes))
-                    .ToArray();
         }
 
         private string GetNamedClaim(string claimName)

@@ -26,6 +26,7 @@ namespace WinShooter.Logic.Authorization
     using System.Linq;
 
     using WinShooter.Database;
+    using WinShooter.Logic.Authentication;
 
     /// <summary>
     /// A helper class to help the logic classes handle rights in a coherent way.
@@ -83,7 +84,7 @@ namespace WinShooter.Logic.Authorization
         /// <summary>
         /// Gets or sets the current user.
         /// </summary>
-        public User CurrentUser { get; set; }
+        public CustomPrincipal CurrentUser { get; set; }
 
         /// <summary>
         /// Get competition ids the user has rights on.
@@ -181,7 +182,7 @@ namespace WinShooter.Logic.Authorization
                  select (from roleRightsInfo in userRolesInfo.Role.RoleRightsInfos select roleRightsInfo.Right)).ToArray();
 
             // Flatten array of arrays
-            var userRights = listOfuserRights.SelectMany(rights => rights).ToArray();
+            var userRights = listOfuserRights.ToArray().SelectMany(rights => rights).ToArray();
 
             return (from userRight in userRights
                     select
