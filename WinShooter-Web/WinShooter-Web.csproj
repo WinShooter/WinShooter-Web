@@ -1090,6 +1090,9 @@
     <Compile Include="Api\CurrentUserController.cs" />
     <Compile Include="Api\CurrentUserRequest.cs" />
     <Compile Include="Api\CurrentUserResponse.cs" />
+    <Compile Include="Api\PatrolRequest.cs" />
+    <Compile Include="Api\PatrolResponse.cs" />
+    <Compile Include="Api\PatrolsController.cs" />
     <Compile Include="Api\RequestBase.cs" />
     <Compile Include="Api\StationRequest.cs" />
     <Compile Include="Api\StationResponse.cs" />
