@@ -28,7 +28,7 @@ angular.module('winshooter').controller('UserLoggedInController', function ($roo
 
         if ($scope.sharedData.currentUser.HasAcceptedTerms === $scope.currentTermsAcceptedLevel) {
             console.log("AccountLoggedInController: User has already accepted the terms, redirect to first page");
-            $location.url('/Home/Index');
+            $scope.doRedirection();
             return;
         }
 
@@ -37,8 +37,10 @@ angular.module('winshooter').controller('UserLoggedInController', function ($roo
     };
 
     $scope.$watch('sharedData.currentUser.$resolved', function () {
-        console.log("AccountLoggedInController: AppController has changed sharedData.currentUser. Run our initialization");
-        $scope.init();
+        if ($scope.sharedData.currentUser.$resolved) {
+            console.log("AccountLoggedInController: AppController has changed sharedData.currentUser. Run our initialization");
+            $scope.init();
+        }
     });
 
     $scope.accept = function () {
@@ -46,7 +48,7 @@ angular.module('winshooter').controller('UserLoggedInController', function ($roo
         console.log("AccountLoggedInController: User accepted terms. Saving");
         $scope.sharedData.currentUser.$save(function () {
             console.log("AccountLoggedInController: Saved. Redirect to home page.");
-            $location.url("/Home/Index");
+            $scope.doRedirection();
         }, function (data) {
             // Show error dialog.
             var modal = $modal.open({
@@ -79,4 +81,12 @@ angular.module('winshooter').controller('UserLoggedInController', function ($roo
             }
         });
     };
+
+    $scope.doRedirection = function() {
+        if ($scope.sharedData.currentUser.CardNumber !== "") {
+            $location.url("/Home/Index");
+        }
+
+        $location.url("/User/Edit");
+    }
 });

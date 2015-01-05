@@ -246,6 +246,7 @@
     <Content Include="newrelic\NewRelic.Agent.Core.dll" />
     <Content Include="newrelic\NewRelic.Agent.Extensions.dll" />
     <Content Include="newrelic\NewRelic.Profiler.dll" />
+    <Content Include="partials\useredit.html" />
     <Content Include="partials\userloggedin.html" />
     <Content Include="partials\index.html" />
     <Content Include="partials\newcompetition.html" />
@@ -281,6 +282,7 @@
     <Content Include="Scripts\App\AngularModules.js" />
     <Content Include="Scripts\App\Controllers\CompetitionController.js" />
     <Content Include="Scripts\App\Controllers\NewCompetitionController.js" />
+    <Content Include="Scripts\App\Controllers\UserEditController.js" />
     <Content Include="Scripts\App\Controllers\PatrolsController.js" />
     <Content Include="Scripts\App\Controllers\StationsController.js" />
     <Content Include="Scripts\App\cookieScript.js" />

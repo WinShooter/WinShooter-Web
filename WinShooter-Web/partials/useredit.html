@@ -1,0 +1,38 @@
+﻿<div ng-show="notInitialized">
+    <h1>Hämtar information</h1>
+    <p>
+        Hämtar din användarinformation. Var god vänta...
+    </p>
+</div>
+<div ng-show="showUserInfo">
+    <p>
+        Här är din användarinformation.
+    </p>
+    <p>
+        <div>Visningsnamn:</div>
+        <div><input ng-model="userInfo.DisplayName" /></div>
+    </p>
+    <p>
+        <div>Förnamn:</div>
+        <div><input ng-model="userInfo.Givenname" /></div>
+    </p>
+    <p>
+        <div>Efternamn:</div>
+        <div><input ng-model="userInfo.Surname" /></div>
+    </p>
+    <p>
+        <div>Epost:</div>
+        <div><input ng-model="userInfo.Email" /></div>
+    </p>
+    <p>
+        <div>Skyttekortsnummer:</div>
+        <div><input ng-model="userInfo.CardNumber"/></div>
+    </p>
+
+    <div ng-show="userInfo.IsSystemAdmin">Systemadministratör: Ja</div>
+
+    <p>
+        <input type="button" class="btn btn-primary" value="Uppdatera" ng-click="update()" />
+        <input type="button" class="btn btn-warning" value="Avbryt" ng-click="cancel()" />
+    </p>
+</div>

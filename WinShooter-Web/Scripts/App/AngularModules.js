@@ -16,6 +16,7 @@ var winshooterModule = angular.module('winshooter', ['ngRoute', 'ngResource', 'n
         .when("/Home/Patrols/:competitionId", { templateUrl: "/partials/patrols.html", controller: "PatrolsController" })
         .when("/Home/About", { templateUrl: "/partials/about.html" })
         .when("/Home/Privacy", { templateUrl: "/partials/privacy.html" })
+        .when("/User/Edit", { templateUrl: "/partials/useredit.html", controller: "UserEditController" })
         .when("/User/LoggedIn", { templateUrl: "/partials/userloggedin.html", controller: "UserLoggedInController" })
         .otherwise({ templateUrl: "/partials/index.html", controller: "IndexController" });
 
@@ -80,6 +81,17 @@ winshooterModule.factory('patrolsFactory', [
         }, {
             query: { method: 'GET', isArray: true },
             search: { method: 'GET', isArray: false }
+        });
+    }
+]);
+
+// Create factory for user
+winshooterModule.factory('usersFactory', [
+    '$resource', function ($resource) {
+        return $resource(usersApiUrl, {
+            UserId: '@UserId'
+        }, {
+            query: { method: 'GET', isArray: false }
         });
     }
 ]);

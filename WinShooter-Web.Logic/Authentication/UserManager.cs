@@ -28,6 +28,7 @@ namespace WinShooter.Logic.Authentication
     using NHibernate;
 
     using WinShooter.Database;
+    using WinShooter.Web.DataValidation;
 
     /// <summary>
     /// The user manager.
@@ -133,6 +134,19 @@ namespace WinShooter.Logic.Authentication
             }
 
             return user;
+        }
+
+        public void UpdateUser(User user)
+        {
+            user.Require("user").NotNull();
+
+            var userRepository = new Repository<User>(this.dbSession);
+
+            using (var transaction = this.dbSession.BeginTransaction())
+            {
+                userRepository.Update(user);
+                transaction.Commit();
+            }
         }
     }
 }
