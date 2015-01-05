@@ -92,7 +92,7 @@
     <Content Include="phantomjs-license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\App\AngularModules\AccountLoggedInControllerTests.js" />
+    <Content Include="Scripts\App\AngularModules\UserLoggedInControllerTests.js" />
     <Content Include="Scripts\App\AngularModules\PatrolsControllerTests.js" />
     <Content Include="Scripts\App\AngularModules\StationsControllerTests.js" />
     <Content Include="Scripts\App\AngularModules\NewCompetitionControllerTests.js" />

@@ -33,7 +33,6 @@ namespace WinShooter.Controllers
     using System.Web.Security;
 
     using WinShooter.Database;
-    using WinShooter.Logic;
     using WinShooter.Logic.Authentication;
     using WinShooter.Logic.WinShooterConstants;
 
@@ -42,19 +41,6 @@ namespace WinShooter.Controllers
     /// </summary>
     public class AccountController : Controller
     {
-        /// <summary>
-        /// The application configuration.
-        /// </summary>
-        private readonly AppConfig appConfig;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AccountController" /> class.
-        /// </summary>
-        public AccountController()
-        {
-            this.appConfig = new AppConfig();
-        }
-
         /// <summary>
         /// The login view.
         /// </summary>
@@ -75,24 +61,6 @@ namespace WinShooter.Controllers
         {
             FormsAuthentication.SignOut();
             return this.RedirectToAction("Index", "Home");
-        }
-
-        /// <summary>
-        /// Where the user can edit his/her details.
-        /// </summary>
-        /// <returns>The view</returns>
-        public ActionResult EditAccount()
-        {
-            return this.View();
-        }
-
-        /// <summary>
-        /// Where the user can edit his/her details.
-        /// </summary>
-        /// <returns>The view</returns>
-        public ActionResult NewAccount()
-        {
-            return this.View("EditAccount");
         }
 
         /// <summary>
@@ -148,10 +116,8 @@ namespace WinShooter.Controllers
                 var encTicket = FormsAuthentication.Encrypt(authTicket);
                 var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket) { HttpOnly = true };
                 this.Response.Cookies.Add(cookie);
-                
-                return user.HasAcceptedTerms < this.appConfig.CurrentConditionLevel
-                    ? this.RedirectToAction("NewAccount")
-                    : this.RedirectToAction("Index", "Home");
+
+                return this.Redirect("~/User/LoggedIn");
             }
         }
 

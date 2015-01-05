@@ -3,10 +3,10 @@
 ///<reference path="~/../WinShooter-Web/Scripts/angular-resource.js" />
 ///<reference path="~/../WinShooter-Web/Scripts/angular-sanitize.js"/>
 ///<reference path="~/../WinShooter-Web/Scripts/angular-mocks.js" />
-///<reference path="~/../WinShooter-Web/Scripts/jquery-2.0.3.js" />
+///<reference path="~/../WinShooter-Web/Scripts/jquery-2.1.1.js" />
 ///<reference path="~/../WinShooter-Web/Scripts/App/common.js"/>
 ///<reference path="~/../WinShooter-Web/Scripts/App/AngularModules.js"/>
-///<reference path="~/../WinShooter-Web/Scripts/App/Controllers/AccountLoggedInController.js"/>
+///<reference path="~/../WinShooter-Web/Scripts/App/Controllers/UserLoggedInController.js"/>
 
 'use strict';
 

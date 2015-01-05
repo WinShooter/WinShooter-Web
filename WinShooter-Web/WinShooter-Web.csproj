@@ -246,7 +246,7 @@
     <Content Include="newrelic\NewRelic.Agent.Core.dll" />
     <Content Include="newrelic\NewRelic.Agent.Extensions.dll" />
     <Content Include="newrelic\NewRelic.Profiler.dll" />
-    <Content Include="partials\accountloggedin.html" />
+    <Content Include="partials\userloggedin.html" />
     <Content Include="partials\index.html" />
     <Content Include="partials\newcompetition.html" />
     <Content Include="partials\patrols.html" />
@@ -285,7 +285,7 @@
     <Content Include="Scripts\App\Controllers\StationsController.js" />
     <Content Include="Scripts\App\cookieScript.js" />
     <Content Include="Scripts\App\error-reporter.js" />
-    <Content Include="Scripts\App\Controllers\AccountLoggedInController.js" />
+    <Content Include="Scripts\App\Controllers\UserLoggedInController.js" />
     <Content Include="Scripts\App\Controllers\AppController.js" />
     <Content Include="Scripts\App\Controllers\IndexController.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -293,7 +293,6 @@
     <Content Include="partials\competition.html" />
     <Content Include="partials\About.html" />
     <Content Include="partials\privacy.html" />
-    <Content Include="partials\accountlogin.html" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\App\common.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
@@ -1097,6 +1096,8 @@
     <Compile Include="Api\StationRequest.cs" />
     <Compile Include="Api\StationResponse.cs" />
     <Compile Include="Api\StationsController.cs" />
+    <Compile Include="Api\UserResponse.cs" />
+    <Compile Include="Api\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -1119,7 +1120,6 @@
     <Content Include="SecretAuthParams.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Account\EditAccount.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

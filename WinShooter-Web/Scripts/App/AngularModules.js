@@ -5,19 +5,18 @@
 /// <reference path="/Scripts/angular-route.js" />
 /// <reference path="/Scripts/angular-sanitize.js"/>
 
-
 // Create the angular module
 var winshooterModule = angular.module('winshooter', ['ngRoute', 'ngResource', 'ngSanitize', 'ui.bootstrap'])
     .config(function ($routeProvider, $locationProvider, $logProvider) {
     $routeProvider
         .when("/Account/Login", { templateUrl: "/partials/accountlogin.html" })
-        .when("/Account/LoggedIn", { templateUrl: "/partials/accountloggedin.html", controller: "AccountLoggedInController" })
         .when("/Home/NewCompetition", { templateUrl: "/partials/newcompetition.html", controller: "NewCompetitionController" })
         .when("/Home/Competition/:competitionId", { templateUrl: "/partials/competition.html", controller: "CompetitionController" })
         .when("/Home/Stations/:competitionId", { templateUrl: "/partials/stations.html", controller: "StationsController" })
         .when("/Home/Patrols/:competitionId", { templateUrl: "/partials/patrols.html", controller: "PatrolsController" })
         .when("/Home/About", { templateUrl: "/partials/about.html" })
         .when("/Home/Privacy", { templateUrl: "/partials/privacy.html" })
+        .when("/User/LoggedIn", { templateUrl: "/partials/userloggedin.html", controller: "UserLoggedInController" })
         .otherwise({ templateUrl: "/partials/index.html", controller: "IndexController" });
 
     $locationProvider.html5Mode(true);

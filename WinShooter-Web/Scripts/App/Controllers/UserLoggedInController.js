@@ -6,13 +6,13 @@
 /// <reference path="/Scripts/App/AngularModules.js" />
 /// <reference path="/Scripts/App/common.js" />
 
-angular.module('winshooter').controller('AccountLoggedInController', function ($rootScope, $scope, $location, $modal) {
+angular.module('winshooter').controller('UserLoggedInController', function ($rootScope, $scope, $location, $modal) {
     $scope.currentTermsAcceptedLevel = 1;
     $scope.firstTimeWinShooter = false;
     $scope.notInitialized = true;
 
     $scope.init = function () {
-        if ($scope.sharedData.currentUser.$resolved == false) {
+        if ($scope.sharedData.currentUser.$resolved === false) {
             // Failsafe
             console.log("AccountLoggedInController: $scope.sharedData.currentUser isnt resolved yet.");
             return;

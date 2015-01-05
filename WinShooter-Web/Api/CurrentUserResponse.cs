@@ -21,11 +21,51 @@
 
 namespace WinShooter.Api
 {
+    using WinShooter.Database;
+
     /// <summary>
     /// The user response.
     /// </summary>
     public class CurrentUserResponse
     {
+        public CurrentUserResponse()
+        {
+        }
+
+        public CurrentUserResponse(User user, string[] competitionRights)
+        {
+            this.UserId = user.Id.ToString();
+            this.ClubId = user.ClubId.ToString();
+            this.IsLoggedIn = true;
+            this.DisplayName = user.DisplayName;
+            this.Email = user.Email;
+            this.HasAcceptedTerms = user.HasAcceptedTerms;
+
+            this.CompetitionRights = competitionRights;
+        }
+
+        public CurrentUserResponse(string[] anonymousRights)
+        {
+            this.CompetitionRights = anonymousRights;
+            
+            this.UserId = string.Empty;
+            this.ClubId = string.Empty;
+            this.IsLoggedIn = false;
+            this.DisplayName = string.Empty;
+            this.Email = string.Empty;
+            this.HasAcceptedTerms = 0;
+        }
+
+        /// <summary>
+        /// Gets or sets the user ID.
+        /// </summary>
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the club ID.
+        /// </summary>
+        public string ClubId { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether the user is logged in.
         /// </summary>

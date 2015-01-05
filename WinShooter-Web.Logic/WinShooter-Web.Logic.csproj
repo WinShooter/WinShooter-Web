@@ -75,7 +75,6 @@
     <Compile Include="Authorization\IRightsHelper.cs" />
     <Compile Include="Authorization\NotEnoughRightsException.cs" />
     <Compile Include="Authorization\RightsHelper.cs" />
-    <Compile Include="Authorization\UserCompetitionRights.cs" />
     <Compile Include="Authorization\WinShooterCompetitionPermissions.cs" />
     <Compile Include="PatrolsLogic.cs" />
     <Compile Include="UsersLogic.cs" />
