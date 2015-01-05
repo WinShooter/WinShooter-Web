@@ -1,6 +1,6 @@
 ﻿/// <reference path="/Scripts/App/common.js" />
-/// <reference path="/Scripts/ui-bootstrap-0.9.0.js" />
-/// <reference path="/Scripts/ui-bootstrap-tpls-0.9.0.js" />
+/// <reference path="/Scripts/angular-ui/ui-bootstrap.js" />
+/// <reference path="/Scripts/angular-ui/ui-bootstrap-tpls.js" />
 /// <reference path="/Scripts/angular.js" />
 /// <reference path="/Scripts/angular-route.js" />
 /// <reference path="/Scripts/angular-sanitize.js"/>
