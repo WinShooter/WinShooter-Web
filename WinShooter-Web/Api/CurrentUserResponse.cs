@@ -42,7 +42,7 @@ namespace WinShooter.Api
         public string Email { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this is the first authentication.
+        /// Gets or sets a value indicating what version of terms the user has accepted.
         /// </summary>
         public int HasAcceptedTerms { get; set; }
 
