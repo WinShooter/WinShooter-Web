@@ -175,6 +175,11 @@ namespace WinShooter.Logic.Authorization
         /// </returns>
         public WinShooterCompetitionPermissions[] GetSystemRightsForTheUser()
         {
+            if (this.CurrentUser.IsSystemAdmin)
+            {
+                return (WinShooterCompetitionPermissions[])Enum.GetValues(typeof(WinShooterCompetitionPermissions));
+            }
+
             var listOfuserRights =
                 (from userRolesInfo in
                      this.userRolesInfoRepository.FilterBy(
