@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ClubMap.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
+// <copyright file="Migration119AddAdminUserToClubs.cs" company="Copyright ©2014 John Allberg & Jonas Fredriksson">
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of the GNU General Public License
 //   as published by the Free Software Foundation; either version 2
@@ -15,37 +15,41 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   Creates the mapping between the user class and the database.
+//   Create the competition parameters table.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace WinShooter.Database
+namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
 {
-    using FluentNHibernate.Mapping;
+    using FluentMigrator;
 
     /// <summary>
-    /// Creates the mapping between the user class and the database.
+    /// Update the club table with a reference to user table.
     /// </summary>
-    public class ClubMap : ClassMap<Club>
+    [Migration(119)]
+    public class Migration119AddAdminUserToClubs : Migration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ClubMap"/> class.
+        /// The column name to use.
         /// </summary>
-        public ClubMap()
+        private const string ColumnName = "AdminUserId";
+
+        /// <summary>
+        /// Upgrading the database.
+        /// </summary>
+        public override void Up()
         {
-            this.Id(x => x.Id);
+            this.Alter.Table(Migration104CreateClubsTable.ClubsTableName)
+                .AddColumn(ColumnName).AsGuid().Nullable();
+        }
 
-            this.Map(x => x.ClubId);
-            this.Map(x => x.Name);
-            this.Map(x => x.Country);
-            this.Map(x => x.Email);
-            this.Map(x => x.Plusgiro);
-            this.Map(x => x.Bankgiro);
-            this.Map(x => x.LastUpdated);
-
-            this.References(x => x.AdminUser).Column("AdminUserId");
-
-            this.Table("Clubs");
+        /// <summary>
+        /// Downgrading the database.
+        /// </summary>
+        public override void Down()
+        {
+            this.Delete.Column(ColumnName)
+                .FromTable(Migration104CreateClubsTable.ClubsTableName);
         }
     }
 }

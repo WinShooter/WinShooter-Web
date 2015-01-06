@@ -14,10 +14,13 @@ var winshooterModule = angular.module('winshooter', ['ngRoute', 'ngResource', 'n
         .when("/Home/Competition/:competitionId", { templateUrl: "/partials/competition.html", controller: "CompetitionController" })
         .when("/Home/Stations/:competitionId", { templateUrl: "/partials/stations.html", controller: "StationsController" })
         .when("/Home/Patrols/:competitionId", { templateUrl: "/partials/patrols.html", controller: "PatrolsController" })
+        .when("/Home/Clubs/:competitionId", { templateUrl: "/partials/clubs.html", controller: "ClubsController" })
+        .when("/Home/Clubs", { templateUrl: "/partials/clubs.html", controller: "ClubsController" })
         .when("/Home/About", { templateUrl: "/partials/about.html" })
         .when("/Home/Privacy", { templateUrl: "/partials/privacy.html" })
         .when("/User/Edit", { templateUrl: "/partials/useredit.html", controller: "UserEditController" })
         .when("/User/LoggedIn", { templateUrl: "/partials/userloggedin.html", controller: "UserLoggedInController" })
+        .when("/Help/ClubOwnerMissing", { templateUrl: "/partials/help/clubOwnerMissing.html" })
         .otherwise({ templateUrl: "/partials/index.html", controller: "IndexController" });
 
     $locationProvider.html5Mode(true);
@@ -78,6 +81,18 @@ winshooterModule.factory('patrolsFactory', [
         return $resource(patrolsApiUrl, {
             competitionId: '@CompetitionId',
             patrolId: '@PatrolId'
+        }, {
+            query: { method: 'GET', isArray: true },
+            search: { method: 'GET', isArray: false }
+        });
+    }
+]);
+
+// Create factory for clubs
+winshooterModule.factory('clubsFactory', [
+    '$resource', function ($resource) {
+        return $resource(clubsApiUrl, {
+            ClubId: '@Id'
         }, {
             query: { method: 'GET', isArray: true },
             search: { method: 'GET', isArray: false }

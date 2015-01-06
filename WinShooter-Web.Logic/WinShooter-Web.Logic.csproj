@@ -76,6 +76,8 @@
     <Compile Include="Authorization\NotEnoughRightsException.cs" />
     <Compile Include="Authorization\RightsHelper.cs" />
     <Compile Include="Authorization\WinShooterCompetitionPermissions.cs" />
+    <Compile Include="ClubsLogic.cs" />
+    <Compile Include="DependencysExistException.cs" />
     <Compile Include="PatrolsLogic.cs" />
     <Compile Include="UsersLogic.cs" />
     <Compile Include="CompetitionsLogic.cs" />

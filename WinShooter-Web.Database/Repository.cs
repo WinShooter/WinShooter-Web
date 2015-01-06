@@ -90,6 +90,21 @@ namespace WinShooter.Database
         /// </returns>
         public bool Add(T item)
         {
+            if (this.session.Transaction != null && !this.session.Transaction.IsActive)
+            {
+                using (var transaction = this.session.BeginTransaction())
+                {
+                    if (this.Add(item))
+                    {
+                        transaction.Commit();
+
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+
             this.session.Save(item);
             return true;
         }
@@ -105,6 +120,21 @@ namespace WinShooter.Database
         /// </returns>
         public bool Add(System.Collections.Generic.IEnumerable<T> items)
         {
+            if (this.session.Transaction != null && !this.session.Transaction.IsActive)
+            {
+                using (var transaction = this.session.BeginTransaction())
+                {
+                    if (this.Add(items))
+                    {
+                        transaction.Commit();
+
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+
             foreach (T item in items)
             {
                 this.session.Save(item);
@@ -124,6 +154,21 @@ namespace WinShooter.Database
         /// </returns>
         public bool Update(T item)
         {
+            if (this.session.Transaction != null && !this.session.Transaction.IsActive)
+            {
+                using (var transaction = this.session.BeginTransaction())
+                {
+                    if (this.Update(item))
+                    {
+                        transaction.Commit();
+
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+
             this.session.Update(item);
             return true;
         }
@@ -139,6 +184,21 @@ namespace WinShooter.Database
         /// </returns>
         public bool Delete(T entity)
         {
+            if (this.session.Transaction != null && !this.session.Transaction.IsActive)
+            {
+                using (var transaction = this.session.BeginTransaction())
+                {
+                    if (this.Delete(entity))
+                    {
+                        transaction.Commit();
+
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+
             this.session.Delete(entity);
             return true;
         }
@@ -154,6 +214,21 @@ namespace WinShooter.Database
         /// </returns>
         public bool Delete(System.Collections.Generic.IEnumerable<T> entities)
         {
+            if (this.session.Transaction != null && !this.session.Transaction.IsActive)
+            {
+                using (var transaction = this.session.BeginTransaction())
+                {
+                    if (this.Delete(entities))
+                    {
+                        transaction.Commit();
+
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+
             foreach (T entity in entities)
             {
                 this.session.Delete(entity);

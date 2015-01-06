@@ -15,20 +15,20 @@
 //   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // </copyright>
 // <summary>
-//   A number of static strings to use for keys in aplication session.
+//   A number of static strings to use for keys in application session.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace WinShooter.Logic.WinShooterConstants
 {
     /// <summary>
-    /// A number of static strings to use for keys in aplication session.
+    /// A number of static strings to use for keys in application session.
     /// </summary>
     public static class WinShooterSessionKeys
     {
         /// <summary>
         /// The security token.
         /// </summary>
-        public static string SecurityToken = "SecurityToken";
+        public static readonly string SecurityToken = "SecurityToken";
     }
 }

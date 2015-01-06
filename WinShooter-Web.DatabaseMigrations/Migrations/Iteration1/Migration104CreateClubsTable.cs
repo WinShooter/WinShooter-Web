@@ -33,7 +33,7 @@ namespace WinShooter.Web.DatabaseMigrations.Migrations.Iteration1
         /// <summary>
         /// The table name.
         /// </summary>
-        private const string ClubsTableName = "Clubs";
+        internal const string ClubsTableName = "Clubs";
 
         /// <summary>
         /// Function for upgrading the database.

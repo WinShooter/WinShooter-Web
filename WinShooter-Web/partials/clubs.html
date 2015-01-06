@@ -1,0 +1,110 @@
+﻿<div>
+    <div ng-show="!isEditing">
+        <h1>Klubbar</h1>
+
+        <div class="row">
+            <div class="col-md-4">
+                <select ng-options="club as club.Name for club in clubs track by club.ClubId" ng-model="clubToEdit"></select>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-block btn-lg btn-primary" ng-click="startEdit()" ng-show="userCanCreateClub">Ändra vald klubb</button>
+            </div>
+        </div>
+
+        <div style="height: 100px"></div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-block btn-lg btn-primary" ng-click="addNewClub()" ng-show="userCanCreateClub">Lägg till ny klubb</button>
+            </div>
+            <div class="col-md-4">
+                När du lägger till en klubb blir du "ägare" till klubben och
+                är den som kan göra ändringar och se vilka medlemmar i
+                klubben som anmält sig på winshooter.se.
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="isEditing">
+        <h1>Klubb {{ clubToEdit.ClubId }}</h1>
+
+        <div class="form-group" ng-show="isAdding">
+            <div class="col-md-4">
+                Klubbnummer:
+            </div>
+            <div class="col-md-4">
+                <input ng-model="clubToEdit.ClubId" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                Namn:
+            </div>
+            <div class="col-md-4">
+                <input ng-model="clubToEdit.Name" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                Land:
+            </div>
+            <div class="col-md-4">
+                <select ng-model="clubToEdit.Country">
+                    <option value="SE">Sverige</option>
+                    <option value="NO">Norge</option>
+                    <option value="FI">Finland</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                Epost:
+            </div>
+            <div class="col-md-4">
+                <input ng-model="clubToEdit.Email" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                Bankgiro:
+            </div>
+            <div class="col-md-4">
+                <input ng-model="clubToEdit.Bankgiro" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                Plusgiro:
+            </div>
+            <div class="col-md-4">
+                <input ng-model="clubToEdit.Plusgiro" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                Administratör:
+            </div>
+            <div class="col-md-4">
+                <a href="{{ clubToEdit.AdminLink }}">{{ clubToEdit.AdminName}}</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ng-click="save()">Spara</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-warning" ng-click="cancel()">Avbryt</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-danger" ng-click="delete()">Radera</button>
+            </div>
+        </div>
+    </div>
+</div>

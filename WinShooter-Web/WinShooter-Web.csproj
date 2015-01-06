@@ -246,6 +246,8 @@
     <Content Include="newrelic\NewRelic.Agent.Core.dll" />
     <Content Include="newrelic\NewRelic.Agent.Extensions.dll" />
     <Content Include="newrelic\NewRelic.Profiler.dll" />
+    <Content Include="partials\help\clubOwnerMissing.html" />
+    <Content Include="partials\clubs.html" />
     <Content Include="partials\useredit.html" />
     <Content Include="partials\userloggedin.html" />
     <Content Include="partials\index.html" />
@@ -282,6 +284,7 @@
     <Content Include="Scripts\App\AngularModules.js" />
     <Content Include="Scripts\App\Controllers\CompetitionController.js" />
     <Content Include="Scripts\App\Controllers\NewCompetitionController.js" />
+    <Content Include="Scripts\App\Controllers\ClubsController.js" />
     <Content Include="Scripts\App\Controllers\UserEditController.js" />
     <Content Include="Scripts\App\Controllers\PatrolsController.js" />
     <Content Include="Scripts\App\Controllers\StationsController.js" />
@@ -1083,6 +1086,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BaseApiController.cs" />
+    <Compile Include="Api\ClubResponse.cs" />
     <Compile Include="Api\CompetitionRequest.cs" />
     <Compile Include="Api\CompetitionResponse.cs" />
     <Compile Include="Api\CompetitionController.cs" />
@@ -1093,6 +1097,7 @@
     <Compile Include="Api\CurrentUserResponse.cs" />
     <Compile Include="Api\PatrolRequest.cs" />
     <Compile Include="Api\PatrolResponse.cs" />
+    <Compile Include="Api\ClubsController.cs" />
     <Compile Include="Api\PatrolsController.cs" />
     <Compile Include="Api\RequestBase.cs" />
     <Compile Include="Api\StationRequest.cs" />

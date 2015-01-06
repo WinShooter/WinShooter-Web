@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISqlDatabaseMigrator.cs" />
+    <Compile Include="Migrations\Iteration1\Migration119AddAdminUserToClubs.cs" />
     <Compile Include="Migrations\Iteration1\Migration118CreateCompetitionParamsTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration117AdoptCompetitionTable.cs" />
     <Compile Include="Migrations\Iteration1\Migration116AdoptPatrolsTable.cs" />

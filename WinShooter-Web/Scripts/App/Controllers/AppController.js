@@ -78,7 +78,7 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
 
                 $scope.shouldShowAddResultsLink = $scope.sharedData.userHasRight("AddCompetitorResult");
                 $scope.shouldShowEditRightsLink = $scope.sharedData.userHasRight("ReadUserCompetitionRole");
-                $scope.shouldShowEditClubsLink = $scope.sharedData.userHasRight("UpdateClub");
+                $scope.shouldShowEditClubsLink = $scope.sharedData.userHasRight("CreateClub") || $scope.sharedData.userHasRight("UpdateClub");
                 $scope.shouldShowEditWeaponsLink = $scope.sharedData.userHasRight("UpdateWeapon");
             }
         }, function (data) {
@@ -136,7 +136,7 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
     };
 
     $scope.openClubs = function () {
-        $scope.openCompetitionLocation("/Home/Clubs/");
+        $location.path("/Home/Clubs/");
     };
 
     $scope.openWeapons = function () {

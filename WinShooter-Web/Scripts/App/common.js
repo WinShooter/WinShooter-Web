@@ -6,3 +6,4 @@ var currentUserApiUrl = "/api/currentuser";
 var stationsApiUrl = "/api/stations";
 var patrolsApiUrl = "/api/patrols";
 var usersApiUrl = "/api/users";
+var clubsApiUrl = "/api/clubs";

@@ -81,5 +81,10 @@ namespace WinShooter.Database
         /// Gets or sets the club last updated.
         /// </summary>
         public virtual DateTime LastUpdated { get; set; }
+
+        /// <summary>
+        /// Gets or sets the administrator of the club.
+        /// </summary>
+        public virtual User AdminUser { get; set; }
     }
 }

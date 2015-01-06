@@ -21,7 +21,9 @@
 
 namespace WinShooter.Api
 {
+    using System;
     using System.Linq;
+    using System.Text;
     using System.Web;
     using System.Web.Http;
 
@@ -70,6 +72,11 @@ namespace WinShooter.Api
             var userRepository = new Repository<User>(this.DatabaseSession);
 
             return userRepository.FilterBy(user => user.Id == this.Principal.UserId).FirstOrDefault();
+        }
+
+        protected string GetApplicationPath()
+        {
+            return this.Url == null ? null : this.Url.Content("/").TrimEnd('/') + "/";
         }
 
         /// <summary>
