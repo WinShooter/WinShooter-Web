@@ -23,6 +23,7 @@ namespace WinShooter.Logic
 {
     using System;
     using System.Runtime.Serialization;
+    using System.Security.Permissions;
 
     /// <summary>
     /// Thrown when there is a dependency that could not be deleted.
@@ -30,6 +31,12 @@ namespace WinShooter.Logic
     [Serializable]
     public class DependencysExistException : Exception
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DependencysExistException"/> class.
+        /// </summary>
+        public DependencysExistException()
+        {
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="DependencysExistException"/> class.
         /// </summary>
@@ -65,6 +72,14 @@ namespace WinShooter.Logic
         protected DependencysExistException(SerializationInfo info, StreamingContext context) 
             : base(info, context)
         {
+        }
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+
+            info.AddValue("ConflictingDepencency", this.ConflictingDepencency);
         }
 
         /// <summary>
