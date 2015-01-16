@@ -68,6 +68,10 @@ angular.module('winshooter').controller('UserEditController', function ($scope, 
         $location.url("/");
     }
 
+    $scope.continue = function() {
+        $location.url("/");
+    }
+
     $scope.cancel = function () {
         $location.url("/");
     }

@@ -24,6 +24,7 @@ namespace WinShooter.Logic.Authorization
     using System;
     using System.Collections.Generic;
 
+    using WinShooter.Database;
     using WinShooter.Logic.Authentication;
 
     /// <summary>
@@ -68,6 +69,12 @@ namespace WinShooter.Logic.Authorization
         /// The <see cref="WinShooterCompetitionPermissions"/> array.
         /// </returns>
         string[] GetRolesForCompetitionIdAndTheUser(Guid competitionId);
+
+        /// <summary>
+        /// Get the permissions for a certain club.
+        /// </summary>
+        /// <returns>The club permissions.</returns>
+        WinShooterCompetitionPermissions[] GetClubRightsForTheUser(Club clubGuid);
 
         /// <summary>
         /// Get the system rights the user has.

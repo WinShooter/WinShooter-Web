@@ -30,5 +30,10 @@ namespace WinShooter.Api
         /// Gets or sets the competitionID the user wants rights to be included for.
         /// </summary>
         public string CompetitionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the club the user wants rights to be included for.
+        /// </summary>
+        public string ClubId { get; set; }
     }
 }

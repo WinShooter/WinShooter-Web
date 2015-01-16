@@ -74,28 +74,28 @@ namespace WinShooter.Api
         /// Gets the current user information.
         /// </summary>
         /// <returns>The current user information.</returns>
-        [HttpGet]
-        public CurrentUserResponse Get()
-        {
-            return this.Get(null);
-        }
+        //[HttpGet]
+        //public CurrentUserResponse Get()
+        //{
+        //    return this.Get(null);
+        //}
 
         /// <summary>
         /// Gets the current user information.
         /// </summary>
-        /// <param name="competitionId">The competition request</param>
+        /// <param name="currentUserRequest">The competition request</param>
         /// <returns>The current user information.</returns>
         [HttpGet]
-        public CurrentUserResponse Get(string competitionId)
+        public CurrentUserResponse Get([FromUri]CurrentUserRequest currentUserRequest)
         {
             try
             {
                 if (this.Principal == null)
                 {
                     var anonymousRights = new string[0];
-                    if (!string.IsNullOrEmpty(competitionId))
+                    if (currentUserRequest != null && !string.IsNullOrEmpty(currentUserRequest.CompetitionId))
                     {
-                        anonymousRights = (from right in this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(competitionId))
+                        anonymousRights = (from right in this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(currentUserRequest.CompetitionId))
                                            select right.ToString()).ToArray();
                     }
 
@@ -111,12 +111,24 @@ namespace WinShooter.Api
                 }
 
                 var rights = new WinShooterCompetitionPermissions[0];
-                if (!string.IsNullOrEmpty(competitionId))
+                if (!string.IsNullOrEmpty(currentUserRequest.CompetitionId))
                 {
-                    rights = this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(competitionId));
+                    rights = this.rightsHelper.GetRightsForCompetitionIdAndTheUser(Guid.Parse(currentUserRequest.CompetitionId));
                 }
 
-                rights = this.rightsHelper.AddRightsWithNoDuplicate(rights, this.rightsHelper.GetSystemRightsForTheUser());
+                if (!string.IsNullOrEmpty(currentUserRequest.ClubId))
+                {
+                    var clubGuid = Guid.Parse(currentUserRequest.ClubId);
+                    var clubRepository = new Repository<Club>(this.DatabaseSession);
+                    var club = clubRepository.FilterBy(dbclub => dbclub.Id.Equals(clubGuid)).FirstOrDefault();
+                    rights = this.rightsHelper.AddRightsWithNoDuplicate(
+                        rights,
+                        this.rightsHelper.GetClubRightsForTheUser(club));
+                }
+
+                rights = this.rightsHelper.AddRightsWithNoDuplicate(
+                    rights, 
+                    this.rightsHelper.GetSystemRightsForTheUser());
 
                 return new CurrentUserResponse(user, rights.Select(right => right.ToString()).ToArray());
             }

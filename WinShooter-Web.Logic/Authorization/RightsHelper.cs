@@ -24,6 +24,7 @@ namespace WinShooter.Logic.Authorization
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Remoting.Channels;
 
     using WinShooter.Database;
     using WinShooter.Logic.Authentication;
@@ -145,6 +146,28 @@ namespace WinShooter.Logic.Authorization
                          Enum.Parse(typeof(WinShooterCompetitionPermissions), rightString);
 
             return this.AddRightsWithNoDuplicate(rights, this.publicCompetitionRights);
+        }
+
+        /// <summary>
+        /// Get the permissions for a certain club.
+        /// </summary>
+        /// <returns>The club permissions.</returns>
+        public WinShooterCompetitionPermissions[] GetClubRightsForTheUser(Club club)
+        {
+            if (this.CurrentUser == null)
+            {
+                return new WinShooterCompetitionPermissions[0];
+            }
+
+            var allRights = (WinShooterCompetitionPermissions[])Enum.GetValues(typeof(WinShooterCompetitionPermissions));
+            var allClubRights = allRights.Where(right => right.ToString().EndsWith("Club")).ToArray();
+
+            if (club != null && club.AdminUser != null && this.CurrentUser.UserId.Equals(club.AdminUser.Id))
+            {
+                return allClubRights;
+            }
+
+            return this.CurrentUser.IsSystemAdmin ? allClubRights : new WinShooterCompetitionPermissions[0];
         }
 
         /// <summary>

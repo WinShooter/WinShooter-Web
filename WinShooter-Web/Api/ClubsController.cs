@@ -24,7 +24,9 @@ namespace WinShooter.Api
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Mvc;
+    using System.Net;
+    using System.Net.Http;
+    using System.Web.Http;
 
     using log4net;
 
@@ -78,7 +80,7 @@ namespace WinShooter.Api
         /// <returns>
         /// The <see cref="CompetitionResponse"/>.
         /// </returns>
-        [HttpGet]
+        [System.Web.Mvc.HttpGet]
         public List<ClubResponse> Get()
         {
             try
@@ -96,7 +98,8 @@ namespace WinShooter.Api
             catch (Exception exception)
             {
                 this.log.Error("An exception occurred: " + exception);
-                throw;
+                throw new HttpResponseException(
+                    this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal error."));
             }
         }
 
@@ -109,8 +112,8 @@ namespace WinShooter.Api
         /// <returns>
         /// The <see cref="ClubResponse"/>.
         /// </returns>
-        [Authorize]
-        [HttpPost]
+        [System.Web.Mvc.Authorize]
+        [System.Web.Mvc.HttpPost]
         public ClubResponse Post(ClubResponse request)
         {
             try
@@ -141,6 +144,12 @@ namespace WinShooter.Api
                     return new ClubResponse(addedClub, this.AdminBaseLink, this.NoAdminLink);
                 }
 
+                if (!this.GetUser().Equals(club.AdminUser))
+                {
+                    this.log.ErrorFormat("Användaren {0} försökte ändra på klubben {1} till {2}.", this.GetUser(), club, request);
+                    this.Request.CreateErrorResponse(HttpStatusCode.Forbidden, "No rights on club.");
+                }
+
                 this.log.Debug("Updating a club.");
                 request.UpdateClub(club);
                 var updatedClub = this.logic.UpdateClub(club);
@@ -152,7 +161,8 @@ namespace WinShooter.Api
             catch (Exception exception)
             {
                 this.log.Error("An exception occurred: " + exception);
-                throw;
+                throw new HttpResponseException(
+                    this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal error."));
             }
         }
 
@@ -165,8 +175,8 @@ namespace WinShooter.Api
         /// <returns>
         /// The <see cref="ClubResponse"/>.
         /// </returns>
-        [Authorize]
-        [HttpDelete]
+        [System.Web.Mvc.Authorize]
+        [System.Web.Mvc.HttpDelete]
         public ClubResponse Delete(string clubId)
         {
             try
@@ -197,7 +207,9 @@ namespace WinShooter.Api
                 }
                 catch (DependencysExistException exception)
                 {
-                    // TODO send this to the client
+                    throw new HttpResponseException(
+                    this.Request.CreateErrorResponse(HttpStatusCode.Forbidden, 
+                        "Det finns objekt som beror på denna klubb: " + exception.ConflictingDepencency));
                 }
 
                 // This is needed to get IE to be happy.
@@ -206,7 +218,8 @@ namespace WinShooter.Api
             catch (Exception exception)
             {
                 this.log.Error("An exception occurred: " + exception);
-                throw;
+                throw new HttpResponseException(
+                    this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal error."));
             }
         }
     }

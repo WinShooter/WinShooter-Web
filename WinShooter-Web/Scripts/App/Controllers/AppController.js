@@ -17,6 +17,7 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
     };
 
     $scope.sharedData.competitionId = $routeParams.competitionId;
+    $scope.sharedData.clubId = "";
 
     $scope.sharedData.currentUser = { IsLoggedIn: false };
     $scope.sharedData.displayName = "";
@@ -39,7 +40,7 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
     $scope.shouldShowAboutLink = false;
     $scope.shouldShowPrivacyLink = false;
 
-    $scope.init = function () {
+    $scope.initShared = function () {
         console.log("AppController: Initializing . competitionId=" + $scope.sharedData.competitionId);
         if ($scope.sharedData.competitionId === undefined || $scope.sharedData.competitionId === "") {
             console.log("AppController: competitionId is undefined or empty");
@@ -62,7 +63,7 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
         }
 
         console.log("AppController: Retrieving user data");
-        $scope.sharedData.currentUser = currentUserFactory.search({ CompetitionId: $scope.sharedData.competitionId }, function (currentUserData) {
+        $scope.sharedData.currentUser = currentUserFactory.search({ CompetitionId: $scope.sharedData.competitionId, clubId: $scope.sharedData.clubId }, function (currentUserData) {
             console.log("AppController: Got user data: " + JSON.stringify(currentUserData));
             if (currentUserData.IsLoggedIn === undefined) {
                 return;
@@ -104,9 +105,14 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
         });
     };
 
-    $scope.$watch('sharedData.competitionId', function () {
+    $scope.$watch("sharedData.competitionId", function () {
         console.log("AppController: competition has changed, re-initialize");
-        $scope.init();
+        $scope.initShared();
+    });
+
+    $scope.$watch("sharedData.clubId", function () {
+        console.log("AppController: clubId has changed, re-initialize");
+        $scope.initShared();
     });
 
     $scope.isActive = function (viewLocation) {
@@ -115,7 +121,7 @@ angular.module('winshooter').controller('AppController', function ($rootScope, $
     };
 
     $scope.$on("competitionChanged", function () {
-        $scope.init();
+        $scope.initShared();
     });
 
     $scope.openCompetitionLocation = function (baseUrl) {

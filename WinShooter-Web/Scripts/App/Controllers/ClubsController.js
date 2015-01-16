@@ -91,35 +91,11 @@ angular.module('winshooter').controller('ClubsController', function($scope, $rou
         $scope.clubToEdit = club;
         $scope.isEditing = true;
         $scope.isAdding = true;
-
-        /*$http.post(clubsApiUrl, club)
-            .success(function (data, status) {
-                $scope.init();
-            }).error(function (data, status) {
-                var error = "Misslyckades med att lägga till tävlingen";
-                if (data !== undefined && data.data !== undefined && data.data.ResponseStatus !== undefined && data.data.ResponseStatus.Message !== undefined) {
-                    error += ":<br />" + JSON.stringify(data.data.ResponseStatus.Message);
-                } else {
-                    error += ".";
-                }
-                // Show error dialog.
-                var modal = $modal.open({
-                    templateUrl: 'errorModalContent',
-                    controller: DialogConfirmController,
-                    resolve: {
-                        items: function () {
-                            return {
-                                header: "Ett fel inträffade",
-                                body: error
-                            };
-                        }
-                    }
-                });
-            });*/
     };
 
     $scope.startEdit = function () {
         console.log("Starting to edit: " + JSON.stringify($scope.clubToEdit));
+        $scope.sharedData.clubId = $scope.clubToEdit.Id;
         $scope.isEditing = true;
     };
 
@@ -132,9 +108,12 @@ angular.module('winshooter').controller('ClubsController', function($scope, $rou
     };
 
     $scope.delete = function () {
-        console.log("Delete: " + JSON.stringify($scope.clubToEdit));
-        $scope.clubToEdit.$delete(function () {
+        console.log("Trying to delete: " + JSON.stringify($scope.clubToEdit));
+        $scope.clubToEdit.$delete(function (data) {
+            console.log("Success: " + JSON.stringify(data));
             $scope.init();
+        }, function(data) {
+            console.log("Error: " + JSON.stringify(data));
         });
     };
 
