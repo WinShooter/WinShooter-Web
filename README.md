@@ -14,6 +14,18 @@ http://winshooter.azurewebsites.net/
 
 For comments, contact john (at) winshooter.se.
 
+Developer prerequisites
+------------------------
+To be able to run development, you need to create a config file
+"SecretAuthParams.config" with the following content:
+<appSettings>
+  <add key="GoogleOauthClientId" value="<your-google-clientID>"/>
+  <add key="GoogleOauthSecret" value="<your-google-secret>"/>
+</appSettings>
+
+This is because your Google secret is, well, secret and should 
+not be committed to a public repository. :-)
+
 Developer style
 ---------------
 Development style adhears to StyleCop.
