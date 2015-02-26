@@ -1127,6 +1127,7 @@
     <Content Include="SecretAuthParams.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Shared\_AzureAppInsights.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
